@@ -1,0 +1,106 @@
+package artur 
+{
+	import artur.display.BaseButton;
+	import artur.display.ByeWin;
+	import artur.display.InfoWin;
+	import artur.display.LockSpr;
+	import artur.units.U_Warwar;
+	import artur.units.UnitCache;
+	import artur.util.SoundManager;
+	import artur.win.WinManajer;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
+	import report.Report;
+	
+
+	
+	
+	public class App extends Sprite
+	{
+		[Embed(source = "../../bin/sounds/BramaCnock.mp3")]    private var s_Cnock:Class;
+		[Embed(source = "../../bin/sounds/BramaMove.mp3")]      private var s_Move:Class;
+		[Embed(source = "../../bin/sounds/overItem.mp3")]          private var over_item:Class;
+		[Embed(source = "../../bin/sounds/inventar.mp3")]              private var s_inventar:Class;
+		
+		[Embed(source = "../../bin/sounds/Pall_Death.mp3")] private var s_pall_death:Class;
+		[Embed(source = "../../bin/sounds/Pall_Hurt.mp3")] private var s_pall_hurt:Class;
+		[Embed(source = "../../bin/sounds/War_hurt.mp3")] private var s_war_hurt:Class;
+		[Embed(source = "../../bin/sounds/Win.mp3")] private var s_win:Class;
+		
+		public static var sound:SoundManager = SoundManager.getInstance();
+		public static var winManajer:WinManajer;
+		public static var spr:Sprite;
+		public static var prepare:PrepareGr = new PrepareGr();
+		public static var btnOverFilter:GlowFilter = new GlowFilter(0xFFFFFF, 1, 4, 4, 5);
+		public static var byeWin:ByeWin 
+	    static public var btns:Array = [];
+		public static var btnRoot:BaseButton ;
+		public static var info:InfoWin = new InfoWin();
+		public static var lock:LockSpr = new LockSpr();
+		
+		public function App() 
+		{
+			sound.addSound('cnock', new s_Cnock());
+			sound.addSound('move', new s_Move());
+			sound.addSound('over1', new Over());
+			sound.addSound('click1', new Click());
+			sound.addSound('over3', new Over3());
+			sound.addSound('click3', new Click3());
+			sound.addSound('overItem', new over_item());
+			sound.addSound('gold', new S_Gold());
+			sound.addSound('gloves1', new S_Gloves1());
+			sound.addSound('inventar', new s_inventar());
+			sound.addSound('bot1_attack', new bot1_attack());
+			sound.addSound('bot1_hurt', new bot1_hurt());
+			sound.addSound('bot1_init', new bot1_Init());
+			sound.addSound('bot1_fs1', new bot1_fs1);
+			sound.addSound('bot1_fs2', new bot1_fs2);
+			sound.addSound('bow1', new Bow1());
+			sound.addSound('pall_hurt', new s_pall_hurt());
+			sound.addSound('pall_death', new s_pall_death());
+			sound.addSound('fow1', new Fow1());
+			sound.addSound('fow2', new Fow2());
+			sound.addSound('blade1', new Blade1());
+			sound.addSound('blade2', new Blade2());
+			sound.addSound('war_hurt', new s_war_hurt());
+			sound.addSound('win', new s_win());
+			spr = Sprite(this);
+			winManajer = new WinManajer();
+			this.addEventListener(Event.ENTER_FRAME, update);
+			this.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
+			byeWin = new ByeWin();
+			btnRoot = new BaseButton(14); btnRoot.x = 400; btnRoot.y = 10;
+			btnRoot.addEventListener(MouseEvent.CLICK, onRoot);
+		}
+		
+		private function onRoot(e:MouseEvent):void 
+		{
+			App.winManajer.swapWin(0);
+		}
+		
+		private function mouseUp(e:MouseEvent):void 
+		{
+			for (var i:int = 0; i < btns.length; i++) 
+			{
+				btns[i].scaleX = 1;
+				btns[i].scaleY = 1;
+			}
+		}
+		
+		private function update(e:Event):void 
+		{
+			info.update();
+			winManajer.update();
+			UnitCache.update();
+		}
+		public static function clear():void
+		{
+			while (spr.numChildren > 0)
+			 spr.removeChildAt(0);
+		}
+		
+	}
+
+}
