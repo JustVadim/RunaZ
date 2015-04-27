@@ -55,6 +55,7 @@ package artur.win
 		}
 		public function init():void
 		{
+			
 			bg = bgs[currMap];
 			App.spr.addChild(bg);
 			var lastTown:int = GetServerData.getLastTown();
