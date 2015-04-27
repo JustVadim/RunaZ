@@ -1,0 +1,3 @@
+git commit -a -m'version name' - скан версии на комп
+git push origin master - залываем на сервер
+git pull - скачуем з верера
