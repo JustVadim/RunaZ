@@ -372,6 +372,8 @@ package artur.display
 			mcText.txtInic2.text = "0";
 			mcText.txtSpeed.text = String(un.sp);
 			mcText.txtSpeed2.text = "0";
+			mcText.txtDied.text = String(un.l);
+			mcText.txtKilled.text = String(un.k);
 			this.heroType = heroType;
 			bin = true;
 			this.addChild(progresEXP); progresEXP.x = 10;  progresEXP.y = 283; this.progresEXP.txt.text = un.exp + "/" + un.nle; this.progresEXP.gotoAndStop(int(100 * un.exp / un.nle));

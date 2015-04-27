@@ -38,12 +38,14 @@ package artur.win
 		public  var chekLifeBar:CheckLife = new CheckLife();
 		public  var chekAvtoboi:ChecAvtoboi = new ChecAvtoboi();
 		public var bin:Boolean = false;
-		public static var winAfterBattle:mcAfterBattle = new mcAfterBattle();
 		private var unitsInWin:Array = [];
+		public static var winAfterBattle:mcAfterBattle = new mcAfterBattle();
+		public static var looseAfterBattle:mcAfterBattleLose = new mcAfterBattleLose();
 		public function WinBattle() 
 		{
 			//winAfterBattle.x = 340; winAfterBattle.y = 100;
-			winAfterBattle.btn.addEventListener(MouseEvent.CLICK, onCloseWin);
+			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
+			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			inst = this;
 			arrow.gotoAndStop(1);
 			atackNode = new AttackNode();
@@ -152,53 +154,57 @@ package artur.win
 			}
 			else if(obj.is_w != null)
 			{
-				Report.addMassage(JSON2.encode(obj));
-				if (obj.is_w)
+				this.endBattle(obj)
+			}
+		}
+		
+		private function endBattle(obj:Object):void 
+		{
+			Report.addMassage(JSON2.encode(obj));
+			var mc:MovieClip;
+			if (obj.is_w)
+			{
+				mc = WinBattle.winAfterBattle;
+				App.sound.playSound('win', App.sound.onVoice, 1);
+			}
+			else
+			{
+				mc = WinBattle.looseAfterBattle;
+			}
+			mc.gotoAndPlay(1);
+			App.spr.addChild(mc);
+			for (var i:int = 0; i < 4; i++) 
+			{
+				var blank:mcBlankWinn = mc[String("k" + i)];
+				if (UserStaticData.hero.units[i] != null)
 				{
-					App.spr.addChild(WinBattle.winAfterBattle);
-					WinBattle.winAfterBattle.gotoAndPlay(1);
-					App.sound.playSound('win', App.sound.onVoice, 1);
-					for (var i:int = 0; i < 4; i++) 
+					blank.txt2.visible =true;
+					var unit:Object = UnitCache.getUnit(Slot.namesUnit[UserStaticData.hero.units[i].t]);
+					unit.init(blank);
+					unit.x = 25;
+					unit.y = 50;
+					unitsInWin.push(unit);
+					var living:Boolean = (obj.st[i].d == 0);
+					blank.txt1.text = "Убито: " + obj.st[i].k;
+					if (living) 
 					{
-						  var blank:mcBlankWinn = WinBattle.winAfterBattle[String("k" + i)]
-						  if (UserStaticData.hero.units[i]) 
-						  {
-								blank.txt2.visible =true;
-								var unit:Object = UnitCache.getUnit(Slot.namesUnit[UserStaticData.hero.units[i].t]);
-								unit.init(blank);
-								unit.x = 25;
-								unit.y = 50;
-								unitsInWin.push(unit);
-								var living:Boolean = (obj.st[i].d == 0);
-								//blank.txt1.visible = living;//
-								blank.txt1.text = "Убито: " + obj.st[i].k;
-								if (living) 
-								{
-									blank.txt2.textColor = 0x62F523; blank.txt2.text = "+" + obj.exp +" опыта";
-								}
-								else
-								{
-									 blank.txt2.textColor = 0xF52323 ; blank.txt2.text = "Умер";
-								}
-								var unit:Object = UserStaticData.hero.units[i];
-								unit.exp += obj.exp;
-								unit.k += obj.st[i].k;
-								unit.l+=obj.st[i].d;
-						  }
-						  else
-						  {
-							  blank.txt1.visible = false;
-							  blank.txt2.visible = false;
-						  }
+						blank.txt2.textColor = 0x62F523; blank.txt2.text = "+" + obj.exp +" опыта";
 					}
+					else
+					{
+						 blank.txt2.textColor = 0xF52323 ; blank.txt2.text = "Умер";
+					}
+					var unit_data:Object = UserStaticData.hero.units[i];
+					unit_data.exp += obj.exp;
+					unit_data.k += obj.st[i].k;
+					unit_data.l+=obj.st[i].d;
 				}
 				else
 				{
-					
+					blank.txt1.visible = false;
+					blank.txt2.visible = false;
 				}
 			}
-			
-			
 		}
 		
 		private function isAlive(ul:Object, user_pos:int):Boolean 
