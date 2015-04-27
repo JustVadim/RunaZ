@@ -90,11 +90,12 @@ package artur.win
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.error == null)
 			{
-				var unit:Object = UserStaticData.hero.units[obj.num];
-				unit.exp = 0;
-				unit.lvl = obj.lvl;
-				unit.nle = obj.nle;
-				unit.fs = obj.fs;
+				 var unit:Object = UserStaticData.hero.units[obj.num];
+				 unit.exp = 0;
+				 unit.lvl = obj.lvl;
+				 unit.nle = obj.nle;
+				 unit.fs = obj.fs;
+				  App.closedDialog.init("У одного из вашых воинов повысился уровень, зайдите  в замок чтобы улучшить его");
 			}
 			else
 			{

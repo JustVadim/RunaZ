@@ -2,6 +2,7 @@ package artur
 {
 	import artur.display.BaseButton;
 	import artur.display.ByeWin;
+	import artur.display.CloseDialog;
 	import artur.display.InfoWin;
 	import artur.display.LockSpr;
 	import artur.units.U_Warwar;
@@ -35,6 +36,7 @@ package artur
 		public static var prepare:PrepareGr = new PrepareGr();
 		public static var btnOverFilter:GlowFilter = new GlowFilter(0xFFFFFF, 1, 4, 4, 5);
 		public static var byeWin:ByeWin 
+		public static var closedDialog:CloseDialog
 	    static public var btns:Array = [];
 		public static var btnRoot:BaseButton ;
 		public static var info:InfoWin = new InfoWin();
@@ -71,6 +73,7 @@ package artur
 			this.addEventListener(Event.ENTER_FRAME, update);
 			this.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 			byeWin = new ByeWin();
+			closedDialog = new CloseDialog();
 			btnRoot = new BaseButton(14); btnRoot.x = 400; btnRoot.y = 10;
 			btnRoot.addEventListener(MouseEvent.CLICK, onRoot);
 		}

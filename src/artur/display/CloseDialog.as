@@ -18,7 +18,7 @@ package artur.display
 			 btnEx.addEventListener(MouseEvent.CLICK, onBtn);
 			 this.addChild(btnEx);
 			 this.txt.y+=20
-			 //this.txt.height += 40;
+			 this.txt.height += 20;
 		}
 		private function onBtn(e:MouseEvent):void 
 		{
