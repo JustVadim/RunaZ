@@ -4,11 +4,14 @@ package artur.win
 	import artur.display.MyBitMap;
 	import flash.display.Bitmap;
 	import report.Report;
+	import Server.COMMANDS;
+	import Server.DataExchange;
+	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
 	
 	public class WinManajer 
 	{
-		public var windows:Array = [new WinRoot(), new WinCastle(), new WinMap(),new WinBattle];
+		public var windows:Array = [new WinRoot(), new WinCastle(), new WinMap(), new WinBattle];
 		public var currWin:int=0;
 		public var neadWin:int=0;
 		private var brama:mcAnimBrama = new mcAnimBrama();
@@ -55,10 +58,47 @@ package artur.win
 				}
 				else if (brama.currentFrame == brama.totalFrames)
 				{
-					 App.spr.removeChild(brama);
-					 brama.stop();
-					 swapMode = false;
+					App.spr.removeChild(brama);
+					brama.stop();
+					swapMode = false;
+					if (this.currWin < 3)
+					{
+						this.isLevelUp();
+					}
 				}
+			}
+		}
+		
+		private function isLevelUp():void 
+		{
+			for (var key:Object in UserStaticData.hero.units)
+			{
+				var unit:Object = UserStaticData.hero.units[key];
+				if (unit.exp >= unit.nle)
+				{
+					Report.addMassage(unit.exp + "  " + unit.nle);
+					var data:DataExchange = new DataExchange();
+					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onLevelUpRes);
+					data.sendData(COMMANDS.UNIT_LEVEL_UP, key.toString(), true);
+				}
+			}
+		}
+		
+		private function onLevelUpRes(e:DataExchangeEvent):void 
+		{
+			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onLevelUpRes);
+			var obj:Object = JSON2.decode(e.result);
+			if (obj.error == null)
+			{
+				var unit:Object = UserStaticData.hero.units[obj.num];
+				unit.exp = 0;
+				unit.lvl = obj.lvl;
+				unit.nle = obj.nle;
+				unit.fs = obj.fs;
+			}
+			else
+			{
+				App.lock.init(obj.error);
 			}
 		}
 		
