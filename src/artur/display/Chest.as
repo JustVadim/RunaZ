@@ -404,8 +404,10 @@ package artur.display
 				WinCastle.chest.frees();
 				WinCastle.chest.init();
 				App.lock.frees();
-				
-				WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(  Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]) );
+				if (UserStaticData.hero.units[int(WinCastle.currSlotClick)] != null)
+				{
+					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(  Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
+				}
 			}
 			else
 			{
