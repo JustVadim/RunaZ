@@ -27,6 +27,8 @@ package artur.display
 		 
 		public function Slot() 
 		{
+			this.tabEnabled = false;
+			this.tabChildren = false;
 			btnByeUnit = new BaseButton(8, 0.9, 5, 'click1', 'over1', 0x000000);
 			this.addEventListener(MouseEvent.CLICK, onSlotClick);
 			this.addEventListener(MouseEvent.ROLL_OVER, over);
