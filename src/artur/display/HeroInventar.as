@@ -51,54 +51,34 @@ package artur.display
 			this.x = 119.75;
 			this.y = 60.5;
 			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6, 137,177,217,257];
-			 
-			
 			for (var j:int = 0; j < parts.length; j++) 
-				 {
-				    
-					   parts[j].x = 192;
-					   parts[j].y = yps[j];
-					   parts[j].addEventListener(MouseEvent.ROLL_OVER, over);
-					   parts[j].addEventListener(MouseEvent.ROLL_OUT, out);
-					   parts[j].addEventListener(MouseEvent.CLICK, onItem);
-					   parts[j].addEventListener(MouseEvent.MOUSE_DOWN, strFrag );
-					   parts[j].buttonMode = true;
-				       parts[j].greenRect.visible = false;
-					   parts[j].yRect.visible = false;
-					   parts[j].name = String(j);
-				 }
-				 
-				 for (var i:int = 0; i < guns1.length; i++) 
-				 {
-					 guns1[i].x = 192;
-					 guns1[i].y = 165.7;
-					 guns1[i].addEventListener(MouseEvent.ROLL_OVER, over);
-					 guns1[i].addEventListener(MouseEvent.ROLL_OUT, out);
-					 guns1[i].addEventListener(MouseEvent.CLICK, onItem);
-					 guns1[i].addEventListener(MouseEvent.MOUSE_DOWN, strFrag );
-					 guns1[i].buttonMode = true;
-				     guns1[i].greenRect.visible = false;
-					 guns1[i].yRect.visible = false;
-					 guns1[i].name = String(5);
-					 
-					 guns2[i].x = 192;
-					 guns2[i].y = 165.7;
-					 guns2[i].addEventListener(MouseEvent.ROLL_OVER, over);
-					 guns2[i].addEventListener(MouseEvent.ROLL_OUT, out);
-					 guns2[i].addEventListener(MouseEvent.CLICK, onItem);
-					 guns2[i].addEventListener(MouseEvent.MOUSE_DOWN, strFrag );
-					 guns2[i].buttonMode = true;
-					 if (guns2[i].greenRect)
-					 {
-				         guns2[i].greenRect.visible = false;
-						 guns2[i].yRect.visible = false;
-					 }
-					 guns2[i].name = String(6);
-					 
-				 }
-				currInv1.x = 40; 
-				currInv2.x = currInv1.x ; currInv3.x = currInv2.x ; currInv4.x = currInv3.x ;
+			{
+				this.setItem(MovieClip(parts[j]),192, yps[j], j);
+			}	 
+			for (var i:int = 0; i < guns1.length; i++) 
+			{
+				this.setItem(guns1[i], 192, 165.7, 5)
+				this.setItem(guns2[i], 192, 165.7, 6)
+			}
+			currInv1.x = 40; 
+			currInv2.x = currInv1.x ; currInv3.x = currInv2.x ; currInv4.x = currInv3.x ;
+		}
 		
+		private function setItem(mc:MovieClip, xx:Number, yy:Number, name:int):void 
+		{
+			mc.x = xx;
+			mc.y = yy;
+			mc.addEventListener(MouseEvent.ROLL_OVER, over);
+			mc.addEventListener(MouseEvent.ROLL_OUT, out);
+			mc.addEventListener(MouseEvent.CLICK, onItem);
+			mc.addEventListener(MouseEvent.MOUSE_DOWN, strFrag );
+			mc.buttonMode = true;
+			if (mc.greenRect)
+			{
+				mc.greenRect.visible = false;
+				mc.yRect.visible = false;
+			}
+			mc.name = String(name.toString());
 		}
 		
 		private function strFrag(e:MouseEvent):void 
