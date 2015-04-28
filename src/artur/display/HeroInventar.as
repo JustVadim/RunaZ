@@ -372,13 +372,25 @@ package artur.display
 			mcText.txtInic2.text = "0";
 			mcText.txtSpeed.text = String(un.sp);
 			mcText.txtSpeed2.text = "0";
-			mcText.txtDied.text = String(un.l);
-			mcText.txtKilled.text = String(un.k);
+			mcText.txtKilled.text = String(" Убил: " + un.k);
+			mcText.txtDied.text = String(" Умер: " + un.l);
 			this.heroType = heroType;
 			bin = true;
 			this.addChild(progresEXP); progresEXP.x = 10;  progresEXP.y = 283; this.progresEXP.txt.text = un.exp + "/" + un.nle; this.progresEXP.gotoAndStop(int(100 * un.exp / un.nle));
 			this.progresEXP.txt2.text = un.lvl;
 			App.spr.addChild(this);
+			
+			this.updateSkills();
+		}
+		
+		private function updateSkills():void 
+		{
+			var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+			this.mcText.txt_sk_crit.text = unit.b[0].l;
+			this.mcText.txt_sk_miss.text = unit.b[1].l;
+			this.mcText.txt_sk_double.text = unit.b[2].l;
+			this.mcText.txt_sk_out.text = unit.b[3].l;
+			this.mcText.txt_sk_return.text = unit.b[4].l;	
 		}
 		
 		
