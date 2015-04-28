@@ -9,7 +9,9 @@ package artur.display
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.ui.Mouse;
+	import mx.core.FlexMovieClip;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -43,6 +45,7 @@ package artur.display
 		private var mcText:mcTextHeroInventar = new mcTextHeroInventar();
 		private var call:ItemCall;
 		private var progresEXP:progresBar = new progresBar();
+		
 		public function HeroInventar()
 		{
 			bg = new MyBitMap(App.prepare.cach[13]);
@@ -61,7 +64,12 @@ package artur.display
 				this.setItem(guns2[i], 192, 165.7, 6)
 			}
 			currInv1.x = 40; 
-			currInv2.x = currInv1.x ; currInv3.x = currInv2.x ; currInv4.x = currInv3.x ;
+			currInv2.x = currInv1.x ; currInv3.x = currInv2.x ; currInv4.x = currInv3.x;
+			this.addEventsToBuffBtn(this.mcText.sk_crit);
+			this.addEventsToBuffBtn(this.mcText.sk_miss);
+			this.addEventsToBuffBtn(this.mcText.sk_double);
+			this.addEventsToBuffBtn(this.mcText.sk_out);
+			this.addEventsToBuffBtn(this.mcText.sk_return);
 		}
 		
 		private function setItem(mc:MovieClip, xx:Number, yy:Number, name:int):void 
@@ -359,8 +367,17 @@ package artur.display
 			this.addChild(progresEXP); progresEXP.x = 10;  progresEXP.y = 283; this.progresEXP.txt.text = un.exp + "/" + un.nle; this.progresEXP.gotoAndStop(int(100 * un.exp / un.nle));
 			this.progresEXP.txt2.text = un.lvl;
 			App.spr.addChild(this);
-			
 			this.updateSkills();
+		}
+		
+		private function addEventsToBuffBtn(mc:MovieClip):void 
+		{
+			mc.mouseChildren = false;
+			mc.addEventListener(MouseEvent.MOUSE_OVER, this.onBuffOver);
+			mc.addEventListener(MouseEvent.MOUSE_OUT, this.onBuffOut);
+			mc.buttonMode = true;
+			mc.tabEnabled = false;
+			mc.tabChildren = false;
 		}
 		
 		private function updateSkills():void 
@@ -370,13 +387,120 @@ package artur.display
 			this.mcText.txt_sk_miss.text = unit.b[1].l;
 			this.mcText.txt_sk_double.text = unit.b[2].l;
 			this.mcText.txt_sk_out.text = unit.b[3].l;
-			this.mcText.txt_sk_return.text = unit.b[4].l;	
+			this.mcText.txt_sk_return.text = unit.b[4].l;
+			this.mcText.mcFreeskils.textf.text = "Доступно: " + unit.fs;
+			
+			
+			
+			
+			if (unit.fs > 0)
+			{
+				this.mcText.mcFreeskils.visible = true;
+				this.addBuffClick(this.mcText.sk_crit);
+				this.addBuffClick(this.mcText.sk_miss);
+				this.addBuffClick(this.mcText.sk_double);
+				this.addBuffClick(this.mcText.sk_out);
+				this.addBuffClick(this.mcText.sk_return);	
+			}
+			else
+			{
+				this.mcText.mcFreeskils.visible = false;
+				this.removeBuffClick(this.mcText.sk_crit);
+				this.removeBuffClick(this.mcText.sk_miss);
+				this.removeBuffClick(this.mcText.sk_double);
+				this.removeBuffClick(this.mcText.sk_out);
+				this.removeBuffClick(this.mcText.sk_return);
+			}
+		}
+		
+		private function removeBuffClick(mc:MovieClip):void 
+		{
+			mc.removeEventListener(MouseEvent.CLICK, this.onBuffClick);
+		}
+		
+		private function addBuffClick(mc:MovieClip):void 
+		{
+			mc.addEventListener(MouseEvent.CLICK, this.onBuffClick);
+			
+		}
+		
+		private function onBuffClick(e:MouseEvent):void 
+		{
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			UserStaticData.hero.units[WinCastle.currSlotClick].fs--;
+			switch(true)
+			{
+				case(mc == this.mcText.sk_crit):
+					UserStaticData.hero.units[WinCastle.currSlotClick].b[0].l++;
+					break;
+				case(this.mcText.sk_miss == mc):
+					UserStaticData.hero.units[WinCastle.currSlotClick].b[1].l++;
+					break;
+				case(this.mcText.sk_double == mc):
+					UserStaticData.hero.units[WinCastle.currSlotClick].b[2].l++;
+					break;
+				case(this.mcText.sk_out == mc):
+					UserStaticData.hero.units[WinCastle.currSlotClick].b[3].l++;
+					break;
+				case(this.mcText.sk_return == mc):
+					UserStaticData.hero.units[WinCastle.currSlotClick].b[4].l++;
+					break;
+			}
+			this.updateSkills();
+			this.onBuffOut(e);
+			this.onBuffOver(e);
+		}
+		
+		
+		private function onBuffOut(e:MouseEvent):void 
+		{
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			mc.filters = [];
+			App.info.frees();
+		}
+		
+		private function onBuffOver(e:MouseEvent):void 
+		{
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			if (this.mcText.mcFreeskils.visible)
+			{
+				App.btnOverFilter.color = 0xFFFFFF;
+				mc.filters = [App.btnOverFilter];
+			}
+			var p:Point = mc.localToGlobal(new Point(0, 0));
+			var descr:String = "";
+			var ub:Object = UserStaticData.hero.units[WinCastle.currSlotClick].b;
+			
+			switch(true)
+			{
+				case(mc == this.mcText.sk_crit):
+					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[0][ub[0].l]+"% шанс нанести двойной урон</font>\n Следующий уровень - " + UserStaticData.buffs_chances[0][ub[0].l+1] + "%";
+					break;
+				case(this.mcText.sk_miss == mc):
+					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[1][ub[1].l]+"% шанс уклониться от удара</font>\n Следующий уровень - " + UserStaticData.buffs_chances[1][ub[1].l+1] + "%";
+					break;
+				case(this.mcText.sk_double == mc):
+					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[2][ub[2].l]+"% шанс атаковать два раза</font>\n Следующий уровень - " + UserStaticData.buffs_chances[2][ub[2].l+1] + "%";
+					break;
+				case(this.mcText.sk_out == mc):
+					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[3][ub[3].l]+"% шанс атаковать сквозь защиту</font>\n Следующий уровень - " + UserStaticData.buffs_chances[3][ub[3].l+1] + "%";
+					break;
+				case(this.mcText.sk_return == mc):
+					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[4][ub[4].l]+"% шанс нанести ответный удар</font>\n Следующий уровень - " + UserStaticData.buffs_chances[4][ub[4].l+1] + "%";
+					break;
+			}
+			if (this.mcText.mcFreeskils.visible)
+			{
+				descr += "\n\n<font color=\"#00FF00\" size=\"10\">Нажмите что бы улучшить!</font>"
+			}
+			
+			App.info.init(p.x + 35, p.y + 35, { type:0, title:"Навык", txtInfo_w:290, txtInfo_h:48, txtInfo_t:descr} );
 		}
 		
 		
 		public function update():void
 		{
-		
+			
 		}
 		
 		public function frees():void

@@ -19,5 +19,6 @@
 		static public var levels:Object = [0,100];
 		static public var magaz_units:Object = new Object();
 		static public var magazin_items:Object = new Object();//
+		static public var buffs_chances:Array = new Array();
 	}
 }
