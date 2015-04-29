@@ -446,6 +446,7 @@ package artur.display
 					UserStaticData.hero.units[WinCastle.currSlotClick].b[4].l++;
 					break;
 			}
+			Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).higlightLvlStar();
 			this.updateSkills();
 			this.onBuffOut(e);
 			this.onBuffOver(e);

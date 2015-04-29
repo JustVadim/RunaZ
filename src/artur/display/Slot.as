@@ -140,11 +140,11 @@ package artur.display
 			}
 		}
 		
-		private function higlightLvlStar():void 
+		public function higlightLvlStar():void 
 		{
 			var obj:Object = UserStaticData.hero.units[this.name];
-			this.lvl_star.
-			if (UserStaticData.hero.units[this.name].fs > 0)
+			this.lvl_star.txt.text = obj.lvl;
+			if (obj.fs > 0)
 			{
 				this.lvl_star.gotoAndStop(2);
 			}
