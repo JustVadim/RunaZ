@@ -22,6 +22,7 @@ package artur.display
 		 namesUnit[0] = 'Barbarian';
 		 namesUnit[1] = 'Paladin';
 		 namesUnit[2] = 'Lyk';
+		 namesUnit[3] = 'Mag'
 		 namesUnit[100] = 'Bot1';
 		 
 		 

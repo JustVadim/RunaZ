@@ -7,8 +7,11 @@ package artur.units
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import report.Report;
-	
-	public class U_Paladin extends PallDoll
+	/**
+	 * ...
+	 * @author art
+	 */
+	public class U_Mag extends MagDoll
 	{
 		private var heads         :Array ;
 		private var bodys         :Array ;
@@ -25,7 +28,7 @@ package artur.units
 		private var legs2L       :Array;
 		private var legs3L       :Array;
 		private var sikirs2       :Array;
-		public var type:String = 'Paladin';
+		public var type:String = 'Mag';
 		public var free:Boolean = true;
 		private var isOver:Boolean = false;
 		private var parts:Array ;
@@ -33,27 +36,27 @@ package artur.units
 		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
 		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 }, { id:'pall_hurt', frame:78 },{id:'blade1',frame:75}];
 		public static var andAtackFrame:int = 72;
-		 
-		public function U_Paladin() 
+		
+		public function U_Mag() 
 		{
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh)
-			heads = PrepareGr.creatBms(new ItemHeadPall());
-			bodys = PrepareGr.creatBms(new ItemBodyPall());
-			sikirs = PrepareGr.creatBms(new ItemGun1Pall());
-			appArmsR = PrepareGr.creatBms(new ItemUpArmPall());
-			hends1R  = PrepareGr.creatBms(new ItemHand1RPall());
-			hends2R  = PrepareGr.creatBms(new ItemHand2RPall());
-			hends1L  = PrepareGr.creatBms(new ItemHand1LPall());
-			hends2L  = PrepareGr.creatBms(new ItemHand2LPall());
-			legs1R =  PrepareGr.creatBms(new ItemLeg1RPall());
-			legs2R =  PrepareGr.creatBms(new ItemLeg2RPall());
-			legs3R =  PrepareGr.creatBms(new ItemLeg3RPall());
-			legs1L =  PrepareGr.creatBms(new ItemLeg1LPall());
-			legs2L =  PrepareGr.creatBms(new ItemLeg2LPall());
-			legs3L =  PrepareGr.creatBms(new ItemLeg3LPall());
-			sikirs2 =  PrepareGr.creatBms(new ItemShildPall());
+			heads = PrepareGr.creatBms(new ItemHeadMag());
+			bodys = PrepareGr.creatBms(new ItemBodyMag());
+			sikirs = PrepareGr.creatBms(new ItemGun1Mag());
+			appArmsR = PrepareGr.creatBms(new ItemUpArmMag());
+			hends1R  = PrepareGr.creatBms(new ItemHand1RMag());
+			hends2R  = PrepareGr.creatBms(new ItemHand2RMag());
+			hends1L  = PrepareGr.creatBms(new ItemHand1LMag());
+			hends2L  = PrepareGr.creatBms(new ItemHand2LMag());
+			legs1R =  PrepareGr.creatBms(new ItemLeg1RMag());
+			legs2R =  PrepareGr.creatBms(new ItemLeg2RMag());
+			legs3R =  PrepareGr.creatBms(new ItemLeg3RMag());
+			legs1L =  PrepareGr.creatBms(new ItemLeg1LMag());
+			legs2L =  PrepareGr.creatBms(new ItemLeg2LMag());
+			legs3L =  PrepareGr.creatBms(new ItemLeg3LMag());
+			sikirs2 =  PrepareGr.creatBms(new ItemPlaschMag());
 			parts = [this._head, this._body, this._sikira, this._appArmR, this._appArmL, this._hend1R, this._hend2R, this._hend2L,  this._leg1R, this._leg2R, this._leg3R, this._leg1L, this._leg2L, this._leg3L,_sikira2];
 			parts_of_parts = [heads, bodys, sikirs, appArmsR, hends1L, hends1R, hends2R,  hends2L, legs1R, legs2R, legs3R, legs1L, legs2L, legs3L,sikirs2];
 			//parts = [heads,bodys,sikirs,appArmsR,hends1R,hends2R,hends3R,appArmsL,hends1L,hends2L,hends3L];
@@ -132,7 +135,6 @@ package artur.units
 			}
 			
 		}
-		
 		public function itemUpdate(obj:Object):void
 		{
 			
@@ -165,7 +167,6 @@ package artur.units
 			   }
 			}
 		}
-		
 		
 	}
 
