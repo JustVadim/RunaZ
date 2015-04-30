@@ -178,26 +178,28 @@ package artur.win
 				var blank:mcBlankWinn = mc[String("k" + i)];
 				if (UserStaticData.hero.units[i] != null)
 				{
-					blank.txt2.visible =true;
-					var unit:Object = UnitCache.getUnit(Slot.namesUnit[UserStaticData.hero.units[i].t]);
-					unit.init(blank);
-					unit.x = 25;
-					unit.y = 50;
-					unitsInWin.push(unit);
+					blank.txt1.visible = true;
+					blank.txt2.visible = true;
+					var unit_data:Object = UserStaticData.hero.units[i];
+					var unit:Object = UnitCache.getUnit(Slot.namesUnit[unit_data.t]);
 					var living:Boolean = (obj.st[i].d == 0);
+					unit.init(blank);
+					unit.x = 25; unit.y = 50;
+					this.unitsInWin.push(unit);
 					blank.txt1.text = "Убито: " + obj.st[i].k;
 					if (living) 
 					{
-						blank.txt2.textColor = 0x62F523; blank.txt2.text = "+" + obj.exp +" опыта";
+						blank.txt2.textColor = 0x62F523; 
+						blank.txt2.text = "+" + obj.exp +" опыта";
+						unit_data.exp += obj.exp;
 					}
 					else
 					{
-						 blank.txt2.textColor = 0xF52323 ; blank.txt2.text = "Умер";
+						blank.txt2.textColor = 0xF52323 ; 
+						blank.txt2.text = "Умер";
+						unit_data.l+=obj.st[i].d;
 					}
-					var unit_data:Object = UserStaticData.hero.units[i];
-					unit_data.exp += obj.exp;
 					unit_data.k += obj.st[i].k;
-					unit_data.l+=obj.st[i].d;
 				}
 				else
 				{
