@@ -23,7 +23,7 @@ package artur.display
 		private var whRect:sideRect = new sideRect();
 		private var unit:Object;
 		private var unitType:String;
-		public static var names:Array = ['Варвар','Омник','Лучник'];
+		public static var names:Array = ['Варвар','Омник','Лучник', "Маг"];
 		
 		public function UnitBlank(index:int, unit:String, chars:Object) 
 		{

@@ -33,8 +33,8 @@ package artur.display
 		
 		private var currGun:MovieClip;
 		
-		public var guns1:Array =  [new I_WarGun() ,new I_PallGun1() ,new I_Bows()];
-		public var guns2:Array = [new MovieClip() ,new I_PallGun2(),new I_PallGun2()];
+		public var guns1:Array =  [new I_WarGun() ,new I_PallGun1() ,new I_Bows(), new I_WarGun()];
+		public var guns2:Array = [new MovieClip() ,new I_PallGun2(),new I_PallGun2(), new MovieClip()];
 		
 		public var heroType:int;
 		public var itemType:int;
@@ -331,10 +331,10 @@ package artur.display
 				parts[i].gotoAndStop(int(obj[i] + 1));
 				this.addChild(parts[i]);
 			}
-	  	     guns1[heroType].gotoAndStop(int(obj[5] + 1));
-			 guns2[heroType].gotoAndStop(int(obj[6] + 1));
-			 this.addChild(guns1[heroType]);
-			 this.addChild(guns2[heroType]);
+			guns1[heroType].gotoAndStop(int(obj[5] + 1));
+			guns2[heroType].gotoAndStop(int(obj[6] + 1));
+			this.addChild(guns1[heroType]);
+			this.addChild(guns2[heroType]);
 			
 			
 			var chars:Object = [0, UserStaticData.hero.skills.energy , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
