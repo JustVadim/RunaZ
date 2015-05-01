@@ -33,8 +33,8 @@ package artur.display
 		
 		private var currGun:MovieClip;
 		
-		public var guns1:Array =  [new I_WarGun() ,new I_PallGun1() ,new I_Bows(), new I_WarGun()];
-		public var guns2:Array = [new MovieClip() ,new I_PallGun2(),new I_PallGun2(), new MovieClip()];
+		public var guns1:Array =  [new I_WarGun() ,new I_PallGun1() ,new I_Bows(), new I_MagGun()];
+		public var guns2:Array = [new MovieClip() ,new I_PallGun2(),new MovieClip(), new MovieClip()];
 		
 		public var heroType:int;
 		public var itemType:int;
