@@ -23,7 +23,7 @@ package artur.display
 		private var boots:RasterMovie =  new RasterMovie(new Cell_Boots())
 		private var hends_top:RasterMovie =new RasterMovie(new Cell_TopHands())
 		private var hends_down:RasterMovie =new RasterMovie(new Cell_DownHands())
-		private var guns1:Array = [new RasterMovie(new Cell_Guns()), new RasterMovie(new Cell_Swords()),new RasterMovie(new Cell_Bows())];
+		private var guns1:Array = [new RasterMovie(new Cell_Guns()), new RasterMovie(new Cell_Swords()),new RasterMovie(new Cell_Bows()), new RasterMovie(new Cell_Totem())];
 		private var guns2:Array = [new RasterMovie(new Cell_Guns()), new RasterMovie(new Cell_Shilds())];
 		private var parts_of_parts:Array = [heads, bodys, boots, hends_top, hends_down];
 		private var currItem:RasterMovie; 
