@@ -2,6 +2,7 @@ package artur.win
 {
 	import artur.App;
 	import artur.display.BaseButton;
+	import artur.display.battle.eff.EffManajer;
 	import artur.display.MyBitMap;
 	import artur.PrepareGr;
 	import artur.units.U_Warwar;
@@ -41,6 +42,7 @@ package artur.win
 				btns.push(btn);
 				btn.addEventListener(MouseEvent.CLICK, clickOnBtn);
 			}
+			
 		}
 		
 		private function clickOnBtn(e:MouseEvent):void 
@@ -88,6 +90,8 @@ package artur.win
 			{
 				App.spr.addChild(btns[i]);
 			}
+			
+			EffManajer.showLgs(1000, App.spr, 0xFF00FF, 0, 0, 500, 500);
 		}
 		private function updateBar():void
 		{

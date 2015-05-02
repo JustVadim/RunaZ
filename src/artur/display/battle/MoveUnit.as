@@ -1,5 +1,6 @@
 package artur.display.battle 
 {
+	import artur.App;
 	import artur.display.battle.eff.BaseEff;
 	import artur.display.battle.eff.EffManajer;
 	import artur.display.battle.eff.TextEff;

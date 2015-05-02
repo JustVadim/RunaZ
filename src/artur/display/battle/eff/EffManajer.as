@@ -77,6 +77,7 @@ package artur.display.battle.eff
 			lgsDell = dell;
 			//App.btnOverFilter.alpha = 1; 
 			lgs.filters = [App.btnOverFilter];
+			parr.addChild(lgs);
 		}
 	
 	}
