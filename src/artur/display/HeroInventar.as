@@ -60,6 +60,8 @@ package artur.display
 				WinBattle.inv_bg.y = -10;
 				this.progresEXP.x = 5;
 				this.progresEXP.y = 295
+				this.mouseChildren = false;
+				this.mouseEnabled = false;
 			}
 			else
 			{
@@ -334,59 +336,7 @@ package artur.display
 			}
 		}
 		
-		/*public function init(obj:Object, heroType:int , anim:Boolean = true):void
-		{
-			frees();
-			if (anim)
-			{
-				this.alpha = 0;
-				this.scaleX = 0.2;
-				this.scaleY = 0.2;
-				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 } );	
-			}
-			for (var i:int = 0; i < parts.length; i++)
-			{
-				parts[i].gotoAndStop(int(obj[i] + 1));
-				this.addChild(parts[i]);
-			}
-			guns1[heroType].gotoAndStop(int(obj[5] + 1));
-			guns2[heroType].gotoAndStop(int(obj[6] + 1));
-			this.addChild(guns1[heroType]);
-			this.addChild(guns2[heroType]);
-			var chars:Object = [0, UserStaticData.hero.skills.energy , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
-			var un:Object = UserStaticData.hero.units[int(WinCastle.currSlotClick)]
-			for (var key:Object in un.it)
-			{
-				for (var key2:Object in un.it[key].c )
-				{
-					chars[int(key2)] += un.it[key].c[key2];
-				}
-			}
-			mcText.txtLife.text = String(un.hp );
-			mcText.txtLife2.text = String(chars[0]);
-			mcText.txtMana.text = String(un.mp );
-			mcText.txtMana2.text = String(chars[1]);
-			mcText.txtDmg.text = String(un.min_d +' - ' + un.max_d  );
-			mcText.txtDmg2.text =  String(chars[2]);
-			mcText.txtFizDeff.text = String(un.f_d);
-			mcText.txtFizDeff2.text = String(chars[3]);
-			mcText.txtMagDeff.text = String(un.m_d);
-			mcText.txtMagDeff2.text = String(chars[4]);
-			mcText.txtInic.text = String(un["in"]);
-			mcText.txtInic2.text = "0";
-			mcText.txtSpeed.text = String(un.sp);
-			mcText.txtSpeed2.text = "0";
-			mcText.txtKilled.text = String(" Убил: " + un.k);
-			mcText.txtDied.text = String(" Умер: " + un.l);
-			this.heroType = heroType;
-			bin = true;
-			this.addChild(progresEXP); progresEXP.x = 10;  progresEXP.y = 283; this.progresEXP.txt.text = un.exp + "/" + un.nle; this.progresEXP.gotoAndStop(int(100 * un.exp / un.nle));
-			this.progresEXP.txt2.text = un.lvl;
-			App.spr.addChild(this);
-			this.updateSkills();
-		}*/
-		
-		public function init1(unit:Object, anim:Boolean = true):void
+		public function init1(unit:Object, anim:Boolean = true, xx:int = 10, yy:int = 50):void
 		{
 			frees();
 			this.heroType = unit.t;
@@ -417,7 +367,12 @@ package artur.display
 			}
 			
 			var chars:Object;
-			if (this.battle_init) chars = [0, 0, 0, 0, 0];
+			if (this.battle_init) 
+			{
+				chars = [0, 0, 0, 0, 0];
+				this.x = xx;
+				this.y = yy;
+			}
 			else chars = [0, UserStaticData.hero.skills.energy , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
 			for (var key:Object in unit.it)
 				for (var key2:Object in unit.it[key].c )

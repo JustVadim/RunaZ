@@ -90,7 +90,7 @@ package artur.display.battle
 				else
 					mouseClip.gotoAndStop(8);
 			}
-			
+			currNode.onOver1();
 			
 		}
 	    private function click(e:MouseEvent):void 
@@ -111,6 +111,7 @@ package artur.display.battle
 			Mouse.show();
 			if (App.spr.contains(mouseClip)) 
 				App.spr.removeChild(mouseClip)
+			this.currNode.onOut1();
 		}
 		public function init(currNode:Node):void
 		{
