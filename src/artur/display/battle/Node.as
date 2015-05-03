@@ -28,6 +28,7 @@ package artur.display.battle
 		 
 		public function Node() 
 		{
+			this.mouseChildren = false;
 		   	txt.width = mc.width;
 			txt.height = 40;
 			//this.addChild(txt);
@@ -53,11 +54,51 @@ package artur.display.battle
 				st.x = this.x; st.y = this.y;
 				WinBattle.sortArr.push(st);
 			}
+			this.addEventListener(MouseEvent.MOUSE_OVER, this.onOver1);
+			this.addEventListener(MouseEvent.MOUSE_OUT, this.onOut1);
+		}
+		
+		private function onOut1(e:MouseEvent):void 
+		{
+			WinBattle.hero_inv.frees();
+		}
+		
+		private function onOver1(e:MouseEvent):void 
+		{
+				var key:Object;
+				var unit:Object;
+				for (key in WinBattle.bat.t1_locs)
+				{
+					if (WinBattle.bat.t1_locs[key].x == this.xp && WinBattle.bat.t1_locs[key].y == this.yp)
+					{
+						unit = WinBattle.bat.t1_u[key];
+						break;
+					}
+				}
+				if (unit == null && String(WinBattle.bat.t2_id).substr(0,3)!="bot")
+				{
+					for (key in WinBattle.bat.t2_locs)
+					{
+						if (WinBattle.bat.t2_locs[key].x == this.xp && WinBattle.bat.t2_locs[key].y == this.yp)
+						{
+							unit = WinBattle.bat.t2_u[key];
+							break;
+						}
+					}
+				}
+				if (unit != null)
+				{
+					Report.addMassage(unit);
+					WinBattle.hero_inv.init1(unit);
+				}
 		}
 		
 		public function frees():void
 		{
 			WinBattle.spr.removeChild(this);
+			this.removeEventListener(MouseEvent.CLICK, moveNode);
+			this.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
+			this.removeEventListener(MouseEvent.MOUSE_OUT, onOut);
 		}
 		public function setMove():void
 		{

@@ -45,9 +45,11 @@ package artur.display
 		private var mcText:mcTextHeroInventar = new mcTextHeroInventar();
 		private var call:ItemCall;
 		private var progresEXP:progresBar = new progresBar();
+		private var battle_init:Boolean;
 		
-		public function HeroInventar()
+		public function HeroInventar(battle_init:Boolean = false)
 		{
+			this.battle_init = battle_init;
 			bg = new MyBitMap(App.prepare.cach[13]);
 			this.addChild(bg);
 			this.addChild(mcText);
@@ -65,22 +67,28 @@ package artur.display
 			}
 			currInv1.x = 40; 
 			currInv2.x = currInv1.x ; currInv3.x = currInv2.x ; currInv4.x = currInv3.x;
-			this.addEventsToBuffBtn(this.mcText.sk_crit);
-			this.addEventsToBuffBtn(this.mcText.sk_miss);
-			this.addEventsToBuffBtn(this.mcText.sk_double);
-			this.addEventsToBuffBtn(this.mcText.sk_out);
-			this.addEventsToBuffBtn(this.mcText.sk_return);
+			if (!battle_init)
+			{
+				this.addEventsToBuffBtn(this.mcText.sk_crit);
+				this.addEventsToBuffBtn(this.mcText.sk_miss);
+				this.addEventsToBuffBtn(this.mcText.sk_double);
+				this.addEventsToBuffBtn(this.mcText.sk_out);
+				this.addEventsToBuffBtn(this.mcText.sk_return);
+			}
 		}
 		
 		private function setItem(mc:MovieClip, xx:Number, yy:Number, name:int):void 
 		{
 			mc.x = xx;
 			mc.y = yy;
-			mc.addEventListener(MouseEvent.ROLL_OVER, over);
-			mc.addEventListener(MouseEvent.ROLL_OUT, out);
-			mc.addEventListener(MouseEvent.CLICK, onItem);
-			mc.addEventListener(MouseEvent.MOUSE_DOWN, strFrag );
-			mc.buttonMode = true;
+			if (!battle_init)
+			{
+				mc.addEventListener(MouseEvent.ROLL_OVER, over);
+				mc.addEventListener(MouseEvent.ROLL_OUT, out);
+				mc.addEventListener(MouseEvent.CLICK, onItem);
+				mc.addEventListener(MouseEvent.MOUSE_DOWN, strFrag );
+				mc.buttonMode = true;
+			}
 			if (mc.greenRect)
 			{
 				mc.greenRect.visible = false;
@@ -114,7 +122,6 @@ package artur.display
 		
 		private function fo(e:Event):void 
 		{
-			//Report.addMassage('leav')
 			Main.THIS.stage.removeEventListener(Event.MOUSE_LEAVE, fo);
 			call.removeEventListener(MouseEvent.MOUSE_UP, up);
 			call.removeEventListener(MouseEvent.MOUSE_MOVE,move);
@@ -211,7 +218,6 @@ package artur.display
 				else 
 				{
 					 this.putOnOldPlace();
-					
 				}
 			}
 			if (App.spr.contains(WinCastle.mcSell))
@@ -251,7 +257,7 @@ package artur.display
 				WinCastle.chest.frees();
 				WinCastle.chest.init();
 				WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
-				this.init(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]), heroType, false);
+				this.init1(UserStaticData.hero.units[WinCastle.currSlotClick], false);
 				App.lock.frees();
 			}
 			else
@@ -271,7 +277,6 @@ package artur.display
 		
 		private function out(e:MouseEvent):void
 		{
-			//e.currentTarget.nextFrame();
 			App.info.frees();
 			e.currentTarget.mc.scaleX = 1;
 			e.currentTarget.mc.scaleY = 1;
@@ -314,7 +319,7 @@ package artur.display
 			}
 		}
 		
-		public function init(obj:Object, heroType:int , anim:Boolean = true):void
+		/*public function init(obj:Object, heroType:int , anim:Boolean = true):void
 		{
 			frees();
 			if (anim)
@@ -322,10 +327,8 @@ package artur.display
 				this.alpha = 0;
 				this.scaleX = 0.2;
 				this.scaleY = 0.2;
-				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 } );
-				
+				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 } );	
 			}
-			
 			for (var i:int = 0; i < parts.length; i++)
 			{
 				parts[i].gotoAndStop(int(obj[i] + 1));
@@ -335,8 +338,6 @@ package artur.display
 			guns2[heroType].gotoAndStop(int(obj[6] + 1));
 			this.addChild(guns1[heroType]);
 			this.addChild(guns2[heroType]);
-			
-			
 			var chars:Object = [0, UserStaticData.hero.skills.energy , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
 			var un:Object = UserStaticData.hero.units[int(WinCastle.currSlotClick)]
 			for (var key:Object in un.it)
@@ -368,6 +369,60 @@ package artur.display
 			this.progresEXP.txt2.text = un.lvl;
 			App.spr.addChild(this);
 			this.updateSkills();
+		}*/
+		
+		public function init1(unit:Object, anim:Boolean = true):void
+		{
+			frees();
+			this.heroType = unit.t;
+			if (anim)
+			{
+				this.alpha = 0;
+				this.scaleX = 0.2;
+				this.scaleY = 0.2;
+				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 } );	
+			}
+			var unit_tems_ids:Object = Slot.getUnitItemsArray(unit);
+			for (var i:int = 0; i < parts.length; i++)
+			{
+				parts[i].gotoAndStop(int(unit_tems_ids[i] + 1));
+				this.addChild(parts[i]);
+			}
+			guns1[heroType].gotoAndStop(int(unit_tems_ids[5] + 1));
+			guns2[heroType].gotoAndStop(int(unit_tems_ids[6] + 1));
+			this.addChild(guns1[heroType]);
+			this.addChild(guns2[heroType]);
+			var chars:Object;
+			if (this.battle_init) chars = [0, 0, 0, 0, 0];
+			else chars = [0, UserStaticData.hero.skills.energy , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
+			for (var key:Object in unit.it)
+				for (var key2:Object in unit.it[key].c )
+					chars[int(key2)] += unit.it[key].c[key2];
+			mcText.txtLife.text = String(unit.hp );
+			mcText.txtLife2.text = String(chars[0]);
+			mcText.txtMana.text = String(unit.mp );
+			mcText.txtMana2.text = String(chars[1]);
+			mcText.txtDmg.text = String(unit.min_d +' - ' + unit.max_d  );
+			mcText.txtDmg2.text =  String(chars[2]);
+			mcText.txtFizDeff.text = String(unit.f_d);
+			mcText.txtFizDeff2.text = String(chars[3]);
+			mcText.txtMagDeff.text = String(unit.m_d);
+			mcText.txtMagDeff2.text = String(chars[4]);
+			mcText.txtInic.text = String(unit["in"]);
+			mcText.txtInic2.text = "0";
+			mcText.txtSpeed.text = String(unit.sp);
+			mcText.txtSpeed2.text = "0";
+			mcText.txtKilled.text = String(" Убил: " + unit.k);
+			mcText.txtDied.text = String(" Умер: " + unit.l);
+			this.heroType = heroType;
+			bin = true;
+			this.addChild(progresEXP); progresEXP.x = 10;  progresEXP.y = 283; this.progresEXP.txt.text = unit.exp + "/" + unit.nle; this.progresEXP.gotoAndStop(int(100 * unit.exp / unit.nle));
+			this.progresEXP.txt2.text = unit.lvl;
+			App.spr.addChild(this);
+			if(this.battle_init)
+				this.updateSkills(unit);
+			else
+				this.updateSkills();
 		}
 		
 		private function addEventsToBuffBtn(mc:MovieClip):void 
@@ -380,20 +435,17 @@ package artur.display
 			mc.tabChildren = false;
 		}
 		
-		private function updateSkills():void 
+		private function updateSkills(unit:Object = null):void 
 		{
-			var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+			if(unit == null)
+				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
 			this.mcText.txt_sk_crit.text = unit.b[0].l;
 			this.mcText.txt_sk_miss.text = unit.b[1].l;
 			this.mcText.txt_sk_double.text = unit.b[2].l;
 			this.mcText.txt_sk_out.text = unit.b[3].l;
 			this.mcText.txt_sk_return.text = unit.b[4].l;
 			this.mcText.mcFreeskils.textf.text = "Доступно: " + unit.fs;
-			
-			
-			
-			
-			if (unit.fs > 0)
+			if (unit.fs > 0 && !battle_init)
 			{
 				this.mcText.mcFreeskils.visible = true;
 				this.addBuffClick(this.mcText.sk_crit);

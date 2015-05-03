@@ -12,7 +12,7 @@ package artur.display.battle.eff
 	{
 		private static var data:Array = [{type: 'base', className: BaseEff}, {type: 'text', className: TextEff}];
 		public static var pool:Array = [];
-		private static var lgs:Lightning = new Lightning();
+		public static var lgs:Lightning = new Lightning();
 		private static var lgsDell:int = 0;
 		
 		public function EffManajer()
@@ -75,9 +75,9 @@ package artur.display.battle.eff
 			lgs._color = color;
 			App.btnOverFilter.color = 0xFFFFFF;
 			lgsDell = dell;
-			//App.btnOverFilter.alpha = 1; 
+			App.btnOverFilter.alpha = 0.4; 
 			lgs.filters = [App.btnOverFilter];
-			parr.addChild(lgs);
+			lgs.update();
 		}
 	
 	}

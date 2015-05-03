@@ -106,8 +106,7 @@ package artur.win
 			{
 				slots[i].frees();
 			}
-			//inventar.frees();
-			//currSlotClick = "";
+			inventar.frees();
 		}
 		
 		public static function getCastle():WinCastle

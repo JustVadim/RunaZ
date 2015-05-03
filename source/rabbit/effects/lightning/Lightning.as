@@ -158,52 +158,52 @@
 		
 		public function update():void
 		{  
-		 if(bin)
-		 {
-			if ( !bAllowUpdate ) return;
-			
-			//_speed1 += 0.0001;
-			//_speed2 += 0.0001;
-			//trace(_speed1, _speed2);
-			
-			if ( bIsChild )
-			{
-				_startX = parentLightning.vSteps[_stepStart].x;
-				_startY = parentLightning.vSteps[_stepStart].y;
-				_endX = parentLightning.vSteps[_stepEnd].x;
-				_endY = parentLightning.vSteps[_stepEnd].y;
-				angle = parentLightning.angle;
-			}
-			else
-			{
-				angle = Math.atan2(_endY - _startY, _endX - _startX);
-			}
-			
-			//trace(angle);
-			
-			dx = _endX - _startX;
-			dy = _endY - _startY;
-			len = Math.sqrt(dx * dx + dy * dy);
-			
-			aOffsetsBd1[0].x -= _steps * _speed1;
-			aOffsetsBd1[0].y += _steps * _speed1;
-			
-			aOffsetsBd2[0].x -= _steps * _speed2;
-			aOffsetsBd2[0].y += _steps * _speed2;
-			
-			bd1.perlinNoise(_steps * _wavelength1, 0, 2, seed1, false, true, 0, true, aOffsetsBd1);
-			bd2.perlinNoise(_steps * _wavelength2, 0, 2, seed2, false, true, 0, true, aOffsetsBd2);
-			
-			render();
-			
-			var i:int = 0;
-			var n:int = vChildren.length;
-			
-			for (i = 0; i < n; i++) 
-			{
-				vChildren[i].update();
-			}
-		 }
+			 if(bin)
+			 {
+				if ( !bAllowUpdate ) return;
+				
+				//_speed1 += 0.0001;
+				//_speed2 += 0.0001;
+				//trace(_speed1, _speed2);
+				
+				if ( bIsChild )
+				{
+					_startX = parentLightning.vSteps[_stepStart].x;
+					_startY = parentLightning.vSteps[_stepStart].y;
+					_endX = parentLightning.vSteps[_stepEnd].x;
+					_endY = parentLightning.vSteps[_stepEnd].y;
+					angle = parentLightning.angle;
+				}
+				else
+				{
+					angle = Math.atan2(_endY - _startY, _endX - _startX);
+				}
+				
+				//trace(angle);
+				
+				dx = _endX - _startX;
+				dy = _endY - _startY;
+				len = Math.sqrt(dx * dx + dy * dy);
+				
+				aOffsetsBd1[0].x -= _steps * _speed1;
+				aOffsetsBd1[0].y += _steps * _speed1;
+				
+				aOffsetsBd2[0].x -= _steps * _speed2;
+				aOffsetsBd2[0].y += _steps * _speed2;
+				
+				bd1.perlinNoise(_steps * _wavelength1, 0, 2, seed1, false, true, 0, true, aOffsetsBd1);
+				bd2.perlinNoise(_steps * _wavelength2, 0, 2, seed2, false, true, 0, true, aOffsetsBd2);
+				
+				render();
+				
+				var i:int = 0;
+				var n:int = vChildren.length;
+				
+				for (i = 0; i < n; i++) 
+				{
+					vChildren[i].update();
+				}
+			 }
 		}
 		
 		public function render():void

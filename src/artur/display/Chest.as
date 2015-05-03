@@ -356,7 +356,7 @@ package artur.display
 				/*Slot.getUnitItemsArray(UserStaticData.hero.units[this.name])
 				Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).getUnitItemsArray()*/
 				
-				WinCastle.inventar.init(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]), WinCastle.inventar.heroType, false);
+				WinCastle.inventar.init1(UserStaticData.hero.units[WinCastle.currSlotClick], false);
 			}
 			else
 			{

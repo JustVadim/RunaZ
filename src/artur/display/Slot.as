@@ -116,13 +116,13 @@ package artur.display
 					WinCastle.currSlotClick = this.name;
 					this.addChild(WinCastle.getCastle().mcCurr);
 					WinCastle.getCastle().mcCurr.x = -7;
-					WinCastle.inventar.init(Slot.getUnitItemsArray(UserStaticData.hero.units[this.name]),int(UserStaticData.hero.units[int(this.name)].t));
+					WinCastle.inventar.init1(UserStaticData.hero.units[this.name]);
 				}
 				else
 				{
 					if (WinCastle.getCastle().mcCurr.parent == this)
 					{
-						WinCastle.inventar.init(Slot.getUnitItemsArray(UserStaticData.hero.units[this.name]), int(UserStaticData.hero.units[int(this.name)].t),false);
+						WinCastle.inventar.init1(UserStaticData.hero.units[this.name],false);
 					}
 				}
 				if (this.contains(this.btnByeUnit))
@@ -183,15 +183,16 @@ package artur.display
 		private function clickUnit():void 
 		{
 			App.info.frees();
-			 if (WinCastle.currSlotClick != this.name)
-			 {
-				 App.sound.playSound('inventar', App.sound.onVoice, 1);
-				 this.addChild(WinCastle.getCastle().mcCurr);
-				 WinCastle.currSlotClick = this.name;
-				 this.addChild(MovieClip(unit));
-				 WinCastle.txtCastle.scroll.visible = false;
-				 WinCastle.inventar.init(Slot.getUnitItemsArray(UserStaticData.hero.units[this.name]), int(UserStaticData.hero.units[int(this.name)].t));
-			 }
+			if (WinCastle.currSlotClick != this.name)
+			{
+				App.sound.playSound('inventar', App.sound.onVoice, 1);
+				this.addChild(WinCastle.getCastle().mcCurr);
+				WinCastle.currSlotClick = this.name;
+				this.addChild(MovieClip(unit));
+				WinCastle.txtCastle.scroll.visible = false;
+				//WinCastle.inventar.init(Slot.getUnitItemsArray(UserStaticData.hero.units[this.name]), int(UserStaticData.hero.units[int(this.name)].t));
+				WinCastle.inventar.init1(UserStaticData.hero.units[this.name])
+			}
 		}
 		
 		private function onBtnAddUnit():void 

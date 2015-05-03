@@ -7,6 +7,7 @@ package artur.win
 	import artur.display.battle.LifeManajer;
 	import artur.display.battle.MoveUnit;
 	import artur.display.battle.Node;
+	import artur.display.HeroInventar;
 	import artur.display.Slot;
 	import artur.RasterClip;
 	import artur.units.UnitCache;
@@ -41,9 +42,11 @@ package artur.win
 		private var unitsInWin:Array = [];
 		public static var winAfterBattle:mcAfterBattle = new mcAfterBattle();
 		public static var looseAfterBattle:mcAfterBattleLose = new mcAfterBattleLose();
+		public static var hero_inv:HeroInventar = new HeroInventar(true);
+		
+		
 		public function WinBattle() 
 		{
-			//winAfterBattle.x = 340; winAfterBattle.y = 100;
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			inst = this;
@@ -86,7 +89,7 @@ package artur.win
 		
 		public function init():void
 		{
-			unitsInWin = [];
+			this.unitsInWin = [];
 			this.bin = true;
 			WinBattle.units = [[], []];
 			this.getMyTeam();
@@ -134,18 +137,21 @@ package artur.win
 			{
 				var loc:Object = (obj.m.u.t == 0)?WinBattle.bat.t1_locs[obj.m.u.p]:WinBattle.bat.t2_locs[obj.m.u.p];
 				var is_r:Boolean;
+				var type:int;
 				if (obj.m.u.t == 0)
 				{
 					 loc = WinBattle.bat.t1_locs[obj.m.u.p];
 					 is_r = (WinBattle.bat.t1_u[obj.m.u.p].t_d == 1);
+					 type = WinBattle.bat.t1_u[obj.m.u.p].t
 				}
 				else
 				{
 					 loc = WinBattle.bat.t2_locs[obj.m.u.p];
 					 is_r = (WinBattle.bat.t2_u[obj.m.u.p].t_d == 1);
+					 type = WinBattle.bat.t2_u[obj.m.u.p].t;
 				}
 				var path:Array = WinBattle.inst.grid.findPath(WinBattle.inst.grid.nodes[loc.x][loc.y], WinBattle.inst.grid.nodes[obj.m.x][obj.m.y]);
-				WinBattle.inst.mover.init(path, obj, is_r);
+				WinBattle.inst.mover.init(path, obj, is_r, type);
 				Node(this.grid.nodes[loc.x][loc.y]).walcable = 0;
 				Node(this.grid.nodes[obj.m.x][obj.m.y]).walcable = 1;
 				loc.x = obj.m.x;
@@ -262,11 +268,12 @@ package artur.win
 			}
 			
 		 }
-		 public function update():void
-		 {
+		 
+		public function update():void
+		{
 			mover.update();
 			effManajer.update();
-		 }
+		}
 		
 		public function frees():void
 		{

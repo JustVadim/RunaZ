@@ -26,9 +26,11 @@ package artur.display.battle
 		public var cur_obj:Object;
 		private var arrow:mcAtackArrow = new mcAtackArrow();
 		private var is_range:Boolean = true;
+		private var type:int;
 		private static const arrow_speed:Number = 30.0;
 		private var arrow_anim:int = 0;
 		private var temp_attack:Object;
+		
 		 
 		public function MoveUnit() 
 		{
@@ -39,9 +41,10 @@ package artur.display.battle
 		{
 			WinBattle.inst.makeStep();
 		}
-		public function init(path:Array, obj:Object, is_range:Boolean):void
+		public function init(path:Array, obj:Object, is_range:Boolean, type:int):void
 		{
 			this.is_range = is_range;
+			this.type = type;
 			this.unit = MovieClip(WinBattle.currUnit);
 			this.cur_obj = obj;
 			this.temp_attack = null;
@@ -113,20 +116,29 @@ package artur.display.battle
 			if (this.arrow_anim == 0)
 			{
 				this.unit.nextFrame();
+				this.magEffect();
 				if (this.unit.currentFrame == 1)
 				{
 					unit.rotation = 0;
 					if (this.is_range)
 					{
-						var hurt_unit1:MovieClip  = WinBattle.units[cur_obj.a.u.t][cur_obj.a.u.p];
-						WinBattle.spr.addChild(this.arrow);
-						this.arrow.x = unit.x + (22 * unit.scaleX);
-						this.arrow.y = this.unit.y - 27;
-						var unit_dist:Number = Amath.distance(arrow.x, arrow.y, hurt_unit1.x, hurt_unit1.y - 30);
-						this.arrow.rotation = Amath.getAngleDeg(arrow.x, arrow.y, hurt_unit1.x, hurt_unit1.y - 30,true);
-						this.arrow_anim = int(unit_dist / MoveUnit.arrow_speed);
-						this.speedX = arrow_speed *  Math.cos(Amath.toRadians(arrow.rotation));
-						this.speedY = arrow_speed * Math.sin(Amath.toRadians(arrow.rotation));
+						if (this.type == 2)
+						{
+							var attack_unit:Object = WinBattle.units[cur_obj.m.u.t][cur_obj.m.u.p];
+							var hurt_unit1:MovieClip  = WinBattle.units[cur_obj.a.u.t][cur_obj.a.u.p];
+							WinBattle.spr.addChild(this.arrow);
+							this.arrow.x = unit.x + (22 * unit.scaleX);
+							this.arrow.y = this.unit.y - 27;
+							var unit_dist:Number = Amath.distance(arrow.x, arrow.y, hurt_unit1.x, hurt_unit1.y - 30);
+							this.arrow.rotation = Amath.getAngleDeg(arrow.x, arrow.y, hurt_unit1.x, hurt_unit1.y - 30,true);
+							this.arrow_anim = int(unit_dist / MoveUnit.arrow_speed);
+							this.speedX = arrow_speed *  Math.cos(Amath.toRadians(arrow.rotation));
+							this.speedY = arrow_speed * Math.sin(Amath.toRadians(arrow.rotation));
+						}
+						else if(this.type == 3)
+						{
+							this.arrow_anim = 2;
+						}
 					}
 					else
 					{
@@ -150,27 +162,57 @@ package artur.display.battle
 			}
 			else if (this.arrow_anim > 1)
 			{
-				 arrow.x += speedX;
-				 arrow.y += speedY;
-				 arrow_anim--;
+				if (type == 2)
+				{
+					 arrow.x += speedX;
+					 arrow.y += speedY;
+				}
+				else if (type == 3)
+				{
+					EffManajer.lgs.update();
+				}
+				arrow_anim--;
 			}
 			else
 			{
+				this.arrow_anim = 0;
+				this.unit.dispatchEvent(new Event("ATTACK"));
+				if(type == 2)
 				{
 					WinBattle.spr.removeChild(this.arrow);
-					this.arrow_anim = 0;
-					this.unit.dispatchEvent(new Event("ATTACK"));
-					if (this.cur_obj.a.b[2] != null)
-					{
-						this.cur_obj.a = this.cur_obj.a.b[2];
-						delete(this.cur_obj.a.b[2]);
-					}
-					else
-					{
-						this.frees();
-					}
+				}
+				else if (type == 3)
+				{
+					WinBattle.spr.removeChild(EffManajer.lgs);
+				}
+				
+				if (this.cur_obj.a.b[2] != null)
+				{
+					this.cur_obj.a = this.cur_obj.a.b[2];
+					delete(this.cur_obj.a.b[2]);
+				}
+				else
+				{
+					this.frees();
 				}
 			}
+		}
+		
+		private function magEffect():void 
+		{
+			if (this.type == 3)
+				{
+					if (this.unit.currentFrame == 59)
+					{
+						var hurt_unit2:MovieClip  = WinBattle.units[cur_obj.a.u.t][cur_obj.a.u.p];
+						EffManajer.showLgs(30, WinBattle.spr, 0xFFFFFF, unit.x+20, unit.y - 71, hurt_unit2.x, hurt_unit2.y-40);
+						EffManajer.lgs.update();
+					}
+					else if (this.unit.currentFrame > 59)
+					{
+						EffManajer.lgs.update();
+					}
+				}
 		}
 		
 		private function makeAttack():void 
@@ -194,8 +236,11 @@ package artur.display.battle
 			}
 			else
 			{
-				this.unit.rotation = (hurt_unit.y > this.unit.y) ? 25: -25;
-				this.unit.rotation *= this.unit.scaleX;
+				if (this.type != 3)
+				{
+					this.unit.rotation = (hurt_unit.y > this.unit.y) ? 25: -25;
+					this.unit.rotation *= this.unit.scaleX;
+				}
 				this.unit.shawdow.visible = false;
 			}
 		}
