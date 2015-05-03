@@ -1,6 +1,7 @@
 package artur.display
 {
 	import artur.App;
+	import artur.win.WinBattle;
 	import artur.win.WinCastle;
 	import com.greensock.TweenLite;
 	import datacalsses.Hero;
@@ -50,6 +51,12 @@ package artur.display
 		public function HeroInventar(battle_init:Boolean = false)
 		{
 			this.battle_init = battle_init;
+			if (this.battle_init)
+			{
+				this.addChild(WinBattle.inv_bg);
+				this.scaleX = 0.5;
+				this.scaleY = 0.5;
+			}
 			bg = new MyBitMap(App.prepare.cach[13]);
 			this.addChild(bg);
 			this.addChild(mcText);
@@ -380,7 +387,7 @@ package artur.display
 				this.alpha = 0;
 				this.scaleX = 0.2;
 				this.scaleY = 0.2;
-				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 } );	
+				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 });	
 			}
 			var unit_tems_ids:Object = Slot.getUnitItemsArray(unit);
 			for (var i:int = 0; i < parts.length; i++)
