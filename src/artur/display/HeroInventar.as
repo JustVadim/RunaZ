@@ -31,7 +31,7 @@ package artur.display
 		private var currInv2:MovieClip = new I_Inv();
 		private var currInv3:MovieClip = new I_Inv();
 		private var currInv4:MovieClip = new I_Inv();
-		
+			
 		private var currGun:MovieClip;
 		
 		public var guns1:Array =  [new I_WarGun() ,new I_PallGun1() ,new I_Bows(), new I_MagGun()];
@@ -50,12 +50,20 @@ package artur.display
 		
 		public function HeroInventar(battle_init:Boolean = false)
 		{
+			this.tabEnabled = false;
+			this.tabChildren = false;
 			this.battle_init = battle_init;
 			if (this.battle_init)
 			{
 				this.addChild(WinBattle.inv_bg);
-				this.scaleX = 0.5;
-				this.scaleY = 0.5;
+				WinBattle.inv_bg.x = -10;
+				WinBattle.inv_bg.y = -10;
+				this.progresEXP.x = 5;
+				this.progresEXP.y = 295
+			}
+			else
+			{
+				progresEXP.x = 10;  progresEXP.y = 283;
 			}
 			bg = new MyBitMap(App.prepare.cach[13]);
 			this.addChild(bg);
@@ -431,7 +439,7 @@ package artur.display
 			mcText.txtKilled.text = String(" Убил: " + unit.k);
 			mcText.txtDied.text = String(" Умер: " + unit.l);
 			this.bin = true;
-			this.addChild(progresEXP); progresEXP.x = 10;  progresEXP.y = 283; this.progresEXP.txt.text = unit.exp + "/" + unit.nle; this.progresEXP.gotoAndStop(int(100 * unit.exp / unit.nle));
+			this.addChild(progresEXP); this.progresEXP.txt.text = unit.exp + "/" + unit.nle; this.progresEXP.gotoAndStop(int(100 * unit.exp / unit.nle));
 			this.progresEXP.txt2.text = unit.lvl;
 			App.spr.addChild(this);
 			if(this.battle_init)
