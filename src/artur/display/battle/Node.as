@@ -58,12 +58,12 @@ package artur.display.battle
 			this.addEventListener(MouseEvent.MOUSE_OUT, this.onOut1);
 		}
 		
-		private function onOut1(e:MouseEvent):void 
+		public function onOut1(e:MouseEvent = null):void 
 		{
 			WinBattle.hero_inv.frees();
 		}
 		
-		private function onOver1(e:MouseEvent):void 
+		public function onOver1(e:MouseEvent = null):void 
 		{
 				var key:Object;
 				var unit:Object;
@@ -88,8 +88,9 @@ package artur.display.battle
 				}
 				if (unit != null)
 				{
-					Report.addMassage(unit);
-					WinBattle.hero_inv.init1(unit);
+					var x_:int = (this.x < 410)?this.x + 30:this.x - WinBattle.hero_inv.width + this.width / 2;
+					var y_:int = (this.y < 200)? this.y - 50:120;
+					WinBattle.hero_inv.init1(unit, false, x_, y_);
 				}
 		}
 		
