@@ -134,18 +134,21 @@ package artur.win
 			{
 				var loc:Object = (obj.m.u.t == 0)?WinBattle.bat.t1_locs[obj.m.u.p]:WinBattle.bat.t2_locs[obj.m.u.p];
 				var is_r:Boolean;
+				var type:int;
 				if (obj.m.u.t == 0)
 				{
 					 loc = WinBattle.bat.t1_locs[obj.m.u.p];
 					 is_r = (WinBattle.bat.t1_u[obj.m.u.p].t_d == 1);
+					 type = WinBattle.bat.t1_u[obj.m.u.p].t
 				}
 				else
 				{
 					 loc = WinBattle.bat.t2_locs[obj.m.u.p];
 					 is_r = (WinBattle.bat.t2_u[obj.m.u.p].t_d == 1);
+					 type = WinBattle.bat.t2_u[obj.m.u.p].t;
 				}
 				var path:Array = WinBattle.inst.grid.findPath(WinBattle.inst.grid.nodes[loc.x][loc.y], WinBattle.inst.grid.nodes[obj.m.x][obj.m.y]);
-				WinBattle.inst.mover.init(path, obj, is_r);
+				WinBattle.inst.mover.init(path, obj, is_r, type);
 				Node(this.grid.nodes[loc.x][loc.y]).walcable = 0;
 				Node(this.grid.nodes[obj.m.x][obj.m.y]).walcable = 1;
 				loc.x = obj.m.x;

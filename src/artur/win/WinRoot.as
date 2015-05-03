@@ -90,8 +90,6 @@ package artur.win
 			{
 				App.spr.addChild(btns[i]);
 			}
-			
-			EffManajer.showLgs(1000, App.spr, 0xFF00FF, 0, 0, 500, 500);
 		}
 		private function updateBar():void
 		{

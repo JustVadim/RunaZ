@@ -34,8 +34,8 @@ package artur.units
 		private var parts:Array ;
 		private var parts_of_parts:Array;
 		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
-		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 }, { id:'pall_hurt', frame:78 },{id:'blade1',frame:75}];
-		public static var andAtackFrame:int = 72;
+		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 },{id:'shok',frame:59}];
+		//public static var andAtackFrame:int = 72;
 		
 		public function U_Mag() 
 		{
