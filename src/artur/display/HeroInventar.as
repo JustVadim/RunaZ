@@ -388,10 +388,19 @@ package artur.display
 				parts[i].gotoAndStop(int(unit_tems_ids[i] + 1));
 				this.addChild(parts[i]);
 			}
-			guns1[heroType].gotoAndStop(int(unit_tems_ids[5] + 1));
-			guns2[heroType].gotoAndStop(int(unit_tems_ids[6] + 1));
-			this.addChild(guns1[heroType]);
-			this.addChild(guns2[heroType]);
+			if (guns1[heroType] == null)
+			{
+				guns1[0].gotoAndStop(1);
+				this.addChild(guns1[0]);
+			}
+			else
+			{
+				guns1[heroType].gotoAndStop(int(unit_tems_ids[5] + 1));
+				guns2[heroType].gotoAndStop(int(unit_tems_ids[6] + 1));
+				this.addChild(guns1[heroType]);
+				this.addChild(guns2[heroType]);
+			}
+			
 			var chars:Object;
 			if (this.battle_init) chars = [0, 0, 0, 0, 0];
 			else chars = [0, UserStaticData.hero.skills.energy , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
@@ -414,8 +423,7 @@ package artur.display
 			mcText.txtSpeed2.text = "0";
 			mcText.txtKilled.text = String(" Убил: " + unit.k);
 			mcText.txtDied.text = String(" Умер: " + unit.l);
-			this.heroType = heroType;
-			bin = true;
+			this.bin = true;
 			this.addChild(progresEXP); progresEXP.x = 10;  progresEXP.y = 283; this.progresEXP.txt.text = unit.exp + "/" + unit.nle; this.progresEXP.gotoAndStop(int(100 * unit.exp / unit.nle));
 			this.progresEXP.txt2.text = unit.lvl;
 			App.spr.addChild(this);
@@ -565,8 +573,15 @@ package artur.display
 				{
 					this.removeChild(parts[i]);
 				}
-				this.removeChild(guns1[heroType]);
-				this.removeChild(guns2[heroType]);
+				if (guns1[heroType] == null)
+				{
+					this.removeChild(guns1[0]);
+				}
+				else
+				{
+					this.removeChild(guns1[heroType]);
+					this.removeChild(guns2[heroType]);
+				}
 				if(App.spr.contains(this))
 				     App.spr.removeChild(this);
 			}

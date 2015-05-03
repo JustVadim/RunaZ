@@ -75,7 +75,7 @@ package artur.display.battle
 						break;
 					}
 				}
-				if (unit == null && String(WinBattle.bat.t2_id).substr(0,3)!="bot")
+				if (unit == null)
 				{
 					for (key in WinBattle.bat.t2_locs)
 					{
