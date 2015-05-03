@@ -1,6 +1,7 @@
 package artur.display
 {
 	import artur.App;
+	import artur.win.WinBattle;
 	import artur.win.WinCastle;
 	import com.greensock.TweenLite;
 	import datacalsses.Hero;
@@ -30,7 +31,7 @@ package artur.display
 		private var currInv2:MovieClip = new I_Inv();
 		private var currInv3:MovieClip = new I_Inv();
 		private var currInv4:MovieClip = new I_Inv();
-		
+			
 		private var currGun:MovieClip;
 		
 		public var guns1:Array =  [new I_WarGun() ,new I_PallGun1() ,new I_Bows(), new I_MagGun()];
@@ -49,7 +50,21 @@ package artur.display
 		
 		public function HeroInventar(battle_init:Boolean = false)
 		{
+			this.tabEnabled = false;
+			this.tabChildren = false;
 			this.battle_init = battle_init;
+			if (this.battle_init)
+			{
+				this.addChild(WinBattle.inv_bg);
+				WinBattle.inv_bg.x = -10;
+				WinBattle.inv_bg.y = -10;
+				this.progresEXP.x = 5;
+				this.progresEXP.y = 295
+			}
+			else
+			{
+				progresEXP.x = 10;  progresEXP.y = 283;
+			}
 			bg = new MyBitMap(App.prepare.cach[13]);
 			this.addChild(bg);
 			this.addChild(mcText);
@@ -380,7 +395,7 @@ package artur.display
 				this.alpha = 0;
 				this.scaleX = 0.2;
 				this.scaleY = 0.2;
-				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 } );	
+				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 });	
 			}
 			var unit_tems_ids:Object = Slot.getUnitItemsArray(unit);
 			for (var i:int = 0; i < parts.length; i++)
@@ -388,10 +403,19 @@ package artur.display
 				parts[i].gotoAndStop(int(unit_tems_ids[i] + 1));
 				this.addChild(parts[i]);
 			}
-			guns1[heroType].gotoAndStop(int(unit_tems_ids[5] + 1));
-			guns2[heroType].gotoAndStop(int(unit_tems_ids[6] + 1));
-			this.addChild(guns1[heroType]);
-			this.addChild(guns2[heroType]);
+			if (guns1[heroType] == null)
+			{
+				guns1[0].gotoAndStop(1);
+				this.addChild(guns1[0]);
+			}
+			else
+			{
+				guns1[heroType].gotoAndStop(int(unit_tems_ids[5] + 1));
+				guns2[heroType].gotoAndStop(int(unit_tems_ids[6] + 1));
+				this.addChild(guns1[heroType]);
+				this.addChild(guns2[heroType]);
+			}
+			
 			var chars:Object;
 			if (this.battle_init) chars = [0, 0, 0, 0, 0];
 			else chars = [0, UserStaticData.hero.skills.energy , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
@@ -414,9 +438,8 @@ package artur.display
 			mcText.txtSpeed2.text = "0";
 			mcText.txtKilled.text = String(" Убил: " + unit.k);
 			mcText.txtDied.text = String(" Умер: " + unit.l);
-			this.heroType = heroType;
-			bin = true;
-			this.addChild(progresEXP); progresEXP.x = 10;  progresEXP.y = 283; this.progresEXP.txt.text = unit.exp + "/" + unit.nle; this.progresEXP.gotoAndStop(int(100 * unit.exp / unit.nle));
+			this.bin = true;
+			this.addChild(progresEXP); this.progresEXP.txt.text = unit.exp + "/" + unit.nle; this.progresEXP.gotoAndStop(int(100 * unit.exp / unit.nle));
 			this.progresEXP.txt2.text = unit.lvl;
 			App.spr.addChild(this);
 			if(this.battle_init)
@@ -565,8 +588,15 @@ package artur.display
 				{
 					this.removeChild(parts[i]);
 				}
-				this.removeChild(guns1[heroType]);
-				this.removeChild(guns2[heroType]);
+				if (guns1[heroType] == null)
+				{
+					this.removeChild(guns1[0]);
+				}
+				else
+				{
+					this.removeChild(guns1[heroType]);
+					this.removeChild(guns2[heroType]);
+				}
 				if(App.spr.contains(this))
 				     App.spr.removeChild(this);
 			}

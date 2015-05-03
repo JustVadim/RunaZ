@@ -42,13 +42,16 @@ package artur.win
 		private var unitsInWin:Array = [];
 		public static var winAfterBattle:mcAfterBattle = new mcAfterBattle();
 		public static var looseAfterBattle:mcAfterBattleLose = new mcAfterBattleLose();
-		public static var hero_inv:HeroInventar = new HeroInventar(true);
+		public static var inv_bg:mcBgBatleInventar = new mcBgBatleInventar();
+		public static var hero_inv:HeroInventar;
+		
 		
 		
 		public function WinBattle() 
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
+			WinBattle.hero_inv = new HeroInventar(true);
 			inst = this;
 			arrow.gotoAndStop(1);
 			atackNode = new AttackNode();
