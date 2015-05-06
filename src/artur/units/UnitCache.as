@@ -4,7 +4,7 @@ package artur.units
 	
 	public class UnitCache 
 	{
-		 private static var typeUnits:Array = [ { className:U_Warwar, type:'Barbarian' },{ className:U_Paladin, type:'Paladin' },{ className:U_Lyk, type:'Lyk' },{ className:Bot1, type:'Bot1' },{className:U_Mag,type:'Mag'},{className:Bot2,type:'Bot2'} ];
+		 private static var typeUnits:Array = [ { className:U_Warwar, type:'Barbarian' }, { className:U_Paladin, type:'Paladin' }, { className:U_Lyk, type:'Lyk' }, { className:Bot1, type:'Bot1' }, { className:U_Mag, type:'Mag' }, { className:Bot2, type:'Bot2' }, { className:BotGolem,type:'BotGolem' } ];
 		 public static var unitCache:Array = [];
 		
 		public static function getUnit(str:String):Object
