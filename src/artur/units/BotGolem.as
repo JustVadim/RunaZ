@@ -21,7 +21,6 @@ package artur.units
 	
 		 private var hends1L    :Array;
 		 private var hends2L    :Array;
-		 
 		
 		 private var legs1R       :Array;
 		 private var legs2R       :Array;
@@ -37,6 +36,7 @@ package artur.units
 		 
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
 		 private static var sounds:Array = [  ];
+		 private var isOver:Boolean;
 		 
 		public function BotGolem() 
 		{
@@ -79,7 +79,7 @@ package artur.units
 		}
 			public function out(e:MouseEvent=null):void 
 		 {
-			isOver = false;
+			//isOver = false;
 		 }
 		 public function onWalk():void
 		 {

@@ -8,10 +8,7 @@ package artur.display
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class Slot extends Sprite
 	{
 		 public var btnByeUnit:BaseButton;
@@ -25,6 +22,7 @@ package artur.display
 		 namesUnit[3] = 'Mag'
 		 namesUnit[100] = 'Bot1';
 		 namesUnit[101] = 'Bot2';
+		 namesUnit[103] = 'BotGolem';
 		 
 		 
 		 
