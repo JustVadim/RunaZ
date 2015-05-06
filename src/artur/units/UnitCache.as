@@ -1,10 +1,7 @@
 package artur.units 
 {
 	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class UnitCache 
 	{
 		 private static var typeUnits:Array = [ { className:U_Warwar, type:'Barbarian' },{ className:U_Paladin, type:'Paladin' },{ className:U_Lyk, type:'Lyk' },{ className:Bot1, type:'Bot1' },{className:U_Mag,type:'Mag'},{className:Bot2,type:'Bot2'} ];
@@ -16,7 +13,6 @@ package artur.units
 			{
 				if (unitCache[i].type == str && unitCache[i].free) 
 				{
-					//Report.addMassage(unitCache.length);
 					return unitCache[i]; 
 				}
 			}
@@ -27,7 +23,6 @@ package artur.units
 				{
 					var obj:Object = new typeUnits[j].className;
 					unitCache.push(obj);
-				//	Report.addMassage(unitCache.length+' new');
 					return obj;
 				}
 			} 
