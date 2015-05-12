@@ -6,10 +6,7 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class BotGolem extends GolemDoll
 	{
 		 private var heads        :Array ;
@@ -17,7 +14,6 @@ package artur.units
 		
 		 private var hends1R    :Array;
 		 private var hends2R    :Array;
-	
 	
 		 private var hends1L    :Array;
 		 private var hends2L    :Array;
