@@ -54,6 +54,10 @@ package artur.display
 			this.addSkillListener(this.mcText.sk_double);
 			this.addSkillListener(this.mcText.sk_out);
 			this.addSkillListener(this.mcText.sk_miss);
+			//Report.addMassage(this.index + 1);
+			this.mcText.sk_ult.gotoAndStop(this.index + 1);
+			this.mcText.sk_ult.txt.text = String(this.index + 1);
+			
 		}
 		
 		private function addSkillListener(skill:MovieClip):void 
