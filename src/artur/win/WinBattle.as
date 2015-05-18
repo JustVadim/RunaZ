@@ -277,8 +277,13 @@ package artur.win
 						Node(this.grid.nodes[0][0]).sendStep();
 					}
 				}
-				WinBattle.ult_btn.gotoAndStop(2);
-				//if()
+				WinBattle.ult_btn.gotoAndStop(cur_unit.t+2);
+				if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && cur_unit.mp >= cur_unit.ult.mc)
+				{
+					WinBattle.ult_btn.mc.visible = false;
+				}
+				else
+				{WinBattle.ult_btn.mc.visible = true };
 			}
 			else
 			{
