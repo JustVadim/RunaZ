@@ -407,8 +407,9 @@ package artur.display
 		private function addEventsToBuffBtn(mc:MovieClip):void 
 		{
 			mc.mouseChildren = false;
-			mc.addEventListener(MouseEvent.MOUSE_OVER, this.onBuffOver);
-			mc.addEventListener(MouseEvent.MOUSE_OUT, this.onBuffOut);
+			mc.addEventListener(MouseEvent.ROLL_OVER, this.onBuffOver);
+			mc.addEventListener(MouseEvent.ROLL_OUT, this.onBuffOut);
+			mc.mouseChildren = false;
 			mc.buttonMode = true;
 			mc.tabEnabled = false;
 			mc.tabChildren = false;

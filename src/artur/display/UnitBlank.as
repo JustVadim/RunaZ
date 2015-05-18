@@ -56,9 +56,10 @@ package artur.display
 			this.addSkillListener(this.mcText.sk_out);
 			this.addSkillListener(this.mcText.sk_miss);
 			this.addSkillListener(this.mcText.sk_return);
+			this.addSkillListener(MovieClip(this.mcText.sk_ult));
 			
 			this.mcText.sk_ult.gotoAndStop(this.index + 1);
-			this.mcText.sk_ult.txt.text = String(chars.ult.lvl);
+			this.mcText.sk_ult.txt.text = String(1);
 		}
 		
 		private function addSkillListener(skill:MovieClip):void 
@@ -90,6 +91,23 @@ package artur.display
 					break;
 				case(this.mcText.sk_return == mc):
 					descr = "<font color=\"#00FF00\">Ответный удар</font>\n<font color=\"#FFFFFF\">"+ "шанс нанести ответный удар";
+					break;
+				case (this.mcText.sk_ult == mc):
+					switch(this.index)
+					{
+						case 0:
+							descr = "<font color=\"#00FF00\">Ярость</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 1:
+							descr = "<font color=\"#00FF00\">Лечение</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 2:
+							descr = "<font color=\"#00FF00\">Огненная стрела</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 3:
+							descr = "<font color=\"#00FF00\">Молния</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+					}
 					break;
 			}
 			App.info.init(p.x + 35, p.y + 35, { type:0, title:"Навык", txtInfo_w:300, txtInfo_h:48, txtInfo_t:descr} );
