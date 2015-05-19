@@ -91,6 +91,7 @@ package artur.display
 				this.addEventsToBuffBtn(this.mcText.sk_double);
 				this.addEventsToBuffBtn(this.mcText.sk_out);
 				this.addEventsToBuffBtn(this.mcText.sk_return);
+				this.addEventsToBuffBtn(this.mcText.sk_ult);
 			}
 		}
 		
@@ -406,8 +407,9 @@ package artur.display
 		private function addEventsToBuffBtn(mc:MovieClip):void 
 		{
 			mc.mouseChildren = false;
-			mc.addEventListener(MouseEvent.MOUSE_OVER, this.onBuffOver);
-			mc.addEventListener(MouseEvent.MOUSE_OUT, this.onBuffOut);
+			mc.addEventListener(MouseEvent.ROLL_OVER, this.onBuffOver);
+			mc.addEventListener(MouseEvent.ROLL_OUT, this.onBuffOut);
+			mc.mouseChildren = false;
 			mc.buttonMode = true;
 			mc.tabEnabled = false;
 			mc.tabChildren = false;
@@ -422,7 +424,9 @@ package artur.display
 			this.mcText.txt_sk_double.text = unit.b[2].l;
 			this.mcText.txt_sk_out.text = unit.b[3].l;
 			this.mcText.txt_sk_return.text = unit.b[4].l;
+			this.mcText.sk_ult.gotoAndStop(this.heroType+1);
 			this.mcText.mcFreeskils.textf.text = "Доступно: " + unit.fs;
+			
 			if (unit.fs > 0 && !battle_init)
 			{
 				this.mcText.mcFreeskils.visible = true;
@@ -430,7 +434,8 @@ package artur.display
 				this.addBuffClick(this.mcText.sk_miss);
 				this.addBuffClick(this.mcText.sk_double);
 				this.addBuffClick(this.mcText.sk_out);
-				this.addBuffClick(this.mcText.sk_return);	
+				this.addBuffClick(this.mcText.sk_return);
+				this.addBuffClick(this.mcText.sk_ult);
 			}
 			else
 			{
@@ -451,7 +456,6 @@ package artur.display
 		private function addBuffClick(mc:MovieClip):void 
 		{
 			mc.addEventListener(MouseEvent.CLICK, this.onBuffClick);
-			
 		}
 		
 		private function onBuffClick(e:MouseEvent):void 
@@ -508,16 +512,33 @@ package artur.display
 					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[0][ub[0].l]+"% шанс нанести двойной урон</font>\n Следующий уровень - " + UserStaticData.buffs_chances[0][ub[0].l+1] + "%";
 					break;
 				case(this.mcText.sk_miss == mc):
-					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[1][ub[1].l]+"% шанс уклониться от удара</font>\n Следующий уровень - " + UserStaticData.buffs_chances[1][ub[1].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Уворот</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[1][ub[1].l]+"% шанс уклониться от удара</font>\n Следующий уровень - " + UserStaticData.buffs_chances[1][ub[1].l+1] + "%";
 					break;
 				case(this.mcText.sk_double == mc):
-					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[2][ub[2].l]+"% шанс атаковать два раза</font>\n Следующий уровень - " + UserStaticData.buffs_chances[2][ub[2].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Двойная атака</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[2][ub[2].l]+"% шанс атаковать два раза</font>\n Следующий уровень - " + UserStaticData.buffs_chances[2][ub[2].l+1] + "%";
 					break;
 				case(this.mcText.sk_out == mc):
-					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[3][ub[3].l]+"% шанс атаковать сквозь защиту</font>\n Следующий уровень - " + UserStaticData.buffs_chances[3][ub[3].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Бешенсво</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[3][ub[3].l]+"% шанс атаковать сквозь защиту</font>\n Следующий уровень - " + UserStaticData.buffs_chances[3][ub[3].l+1] + "%";
 					break;
 				case(this.mcText.sk_return == mc):
-					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[4][ub[4].l]+"% шанс нанести ответный удар</font>\n Следующий уровень - " + UserStaticData.buffs_chances[4][ub[4].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Ответный удар</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[4][ub[4].l]+"% шанс нанести ответный удар</font>\n Следующий уровень - " + UserStaticData.buffs_chances[4][ub[4].l+1] + "%";
+					break;
+				case (this.mcText.sk_ult == mc):
+					switch(UserStaticData.hero.units[WinCastle.currSlotClick].t)
+					{
+						case 0:
+							descr = "<font color=\"#00FF00\">Ярость</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 1:
+							descr = "<font color=\"#00FF00\">Лечение</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 2:
+							descr = "<font color=\"#00FF00\">Огненная стрела</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 3:
+							descr = "<font color=\"#00FF00\">Молния</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+					}
 					break;
 			}
 			if (this.mcText.mcFreeskils.visible)

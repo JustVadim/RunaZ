@@ -48,12 +48,18 @@ package artur.display
 			this.mcText.txt_sk_miss.text = String(chars.b[BuffsVars.miss].l);
 			this.mcText.txt_sk_double.text = String(chars.b[BuffsVars.combo].l);
 			this.mcText.txt_sk_out.text = String(chars.b[BuffsVars.armorness].l);
+			this.mcText.txt_sk_return.text = String(chars.b[BuffsVars.feedback].l);
 			this.mcText.txtName.text = names[index];
 			
 			this.addSkillListener(this.mcText.sk_crit);
 			this.addSkillListener(this.mcText.sk_double);
 			this.addSkillListener(this.mcText.sk_out);
 			this.addSkillListener(this.mcText.sk_miss);
+			this.addSkillListener(this.mcText.sk_return);
+			this.addSkillListener(MovieClip(this.mcText.sk_ult));
+			
+			this.mcText.sk_ult.gotoAndStop(this.index + 1);
+			this.mcText.sk_ult.txt.text = String(1);
 		}
 		
 		private function addSkillListener(skill:MovieClip):void 
@@ -78,10 +84,30 @@ package artur.display
 					descr = "<font color=\"#00FF00\">Двойная атака</font>\nбьет указанную цель 2 раза";
 					break;
 				case(mc == this.mcText.sk_out):
-					descr = "<font color=\"#00FF00\">Ярость</font>\nнаносит урон врагу игнорируя его броню";
+					descr = "<font color=\"#00FF00\">Бешенсво</font>\nнаносит урон врагу игнорируя его броню";
 					break;
 				case(mc == this.mcText.sk_miss):
 					descr = "<font color=\"#00FF00\">Уворот</font>\nшанс уклониться от удара врага";
+					break;
+				case(this.mcText.sk_return == mc):
+					descr = "<font color=\"#00FF00\">Ответный удар</font>\n<font color=\"#FFFFFF\">"+ "шанс нанести ответный удар";
+					break;
+				case (this.mcText.sk_ult == mc):
+					switch(this.index)
+					{
+						case 0:
+							descr = "<font color=\"#00FF00\">Ярость</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 1:
+							descr = "<font color=\"#00FF00\">Лечение</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 2:
+							descr = "<font color=\"#00FF00\">Огненная стрела</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+						case 3:
+							descr = "<font color=\"#00FF00\">Молния</font>\n<font color=\"#FFFFFF\">"+ "";
+							break;
+					}
 					break;
 			}
 			App.info.init(p.x + 35, p.y + 35, { type:0, title:"Навык", txtInfo_w:300, txtInfo_h:48, txtInfo_t:descr} );

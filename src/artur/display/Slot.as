@@ -8,22 +8,21 @@ package artur.display
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class Slot extends Sprite
 	{
 		 public var btnByeUnit:BaseButton;
 		 public var unit:Object;
 		 public var bg:slotBg = new slotBg();
 		 public var lvl_star:mcStar = new mcStar();
-		 public static var namesUnit:Object = new Object();//{0:'Barbarian', 1:'Paladin', 2:'Lyk',100:'Bot_1'};
+		 public static var namesUnit:Object = new Object();
 		 namesUnit[0] = 'Barbarian';
 		 namesUnit[1] = 'Paladin';
 		 namesUnit[2] = 'Lyk';
 		 namesUnit[3] = 'Mag'
 		 namesUnit[100] = 'Bot1';
+		 namesUnit[101] = 'Bot2';
+		 namesUnit[103] = 'BotGolem';
 		 
 		 
 		 

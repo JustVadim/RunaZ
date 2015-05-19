@@ -7,7 +7,9 @@ package artur.display.battle
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.text.TextField;
+	import flash.utils.Timer;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -16,36 +18,51 @@ package artur.display.battle
 	
 	public class Node extends Sprite
 	{
-		 public var xp:uint;
-		 public var yp:uint;
-		 public var walcable:int;
-		 public var mc:mcNode = new mcNode();
-		 private var txt:TextField = new TextField();
-		 private var cur_fr:int;
-		 
-		 public var rad:int;
-		 public var checked:Boolean;
-		 
+		public var xp:uint;
+		public var yp:uint;
+		public var walcable:int;
+		public var mc:mcNode = new mcNode();
+		private var txt:TextField = new TextField();
+		private var cur_fr:int;
+		public var rad:int;
+		public var checked:Boolean;
+		private static var unit_info_timer:Timer = null;
+		private static var unit:Object;
+		private static var x_:int = 0;
+		private static var y_:int = 0;
+		
 		public function Node() 
 		{
 			this.mouseChildren = false;
 		   	txt.width = mc.width;
 			txt.height = 40;
-			//this.addChild(txt);
 			txt.x = - txt.width / 2;
 			txt.y = - txt.height / 2;
 			txt.alpha = 0.5;
+			this.addEventListener(MouseEvent.MOUSE_OVER, this.onOver1);
+			this.addEventListener(MouseEvent.MOUSE_OUT, this.onOut1);
+			if (unit_info_timer == null)
+			{
+				Node.unit_info_timer = new Timer(1000);
+				Node.unit_info_timer.addEventListener(TimerEvent.TIMER, Node.onInfoTimer);
+			}
+		}
+		
+		private static function onInfoTimer(e:TimerEvent):void 
+		{
+			Node.unit_info_timer.stop();
+			WinBattle.hero_inv.init1(unit, false, Node.x_, Node.y_);
 		}
 		public function init(xp:int,yp:int,walcable:int):void
 		{
-			this.addChild(mc); mc.gotoAndStop(1);
+			this.addChild(mc); 
+			this.mc.gotoAndStop(1);
 			this.xp = xp; this.yp = yp;
 			this.x = xp*this.width + 44 +(yp%2)*int(this.width/2);
 			this.y = yp*49 + 80;
 			this.walcable = walcable;
-			mc.visible = (walcable == 0||walcable ==1)
+			this.mc.visible = (walcable == 0||walcable ==1)
 			WinBattle.spr.addChild(this);
-			txt.text = String('xp:' + xp + '\n yp:' + yp)
 			if (!mc.visible) 
 			{
 				var st:RasterMovie = BattleGrid.getStone();
@@ -54,43 +71,46 @@ package artur.display.battle
 				st.x = this.x; st.y = this.y;
 				WinBattle.sortArr.push(st);
 			}
-			this.addEventListener(MouseEvent.MOUSE_OVER, this.onOver1);
-			this.addEventListener(MouseEvent.MOUSE_OUT, this.onOut1);
 		}
 		
 		public function onOut1(e:MouseEvent = null):void 
 		{
 			WinBattle.hero_inv.frees();
+			if (Node.unit_info_timer.running)
+			{
+				Node.unit_info_timer.stop();
+			}
 		}
 		
 		public function onOver1(e:MouseEvent = null):void 
 		{
 				var key:Object;
-				var unit:Object;
+				var unit_local:Object;
 				for (key in WinBattle.bat.t1_locs)
 				{
 					if (WinBattle.bat.t1_locs[key].x == this.xp && WinBattle.bat.t1_locs[key].y == this.yp)
 					{
-						unit = WinBattle.bat.t1_u[key];
+						unit_local = WinBattle.bat.t1_u[key];
 						break;
 					}
 				}
-				if (unit == null)
+				if (unit_local == null)
 				{
 					for (key in WinBattle.bat.t2_locs)
 					{
 						if (WinBattle.bat.t2_locs[key].x == this.xp && WinBattle.bat.t2_locs[key].y == this.yp)
 						{
-							unit = WinBattle.bat.t2_u[key];
+							unit_local = WinBattle.bat.t2_u[key];
 							break;
 						}
 					}
 				}
-				if (unit != null)
+				if (unit_local != null)
 				{
-					var x_:int = (this.x < 410)?this.x + 30:this.x - WinBattle.hero_inv.width + this.width / 2;
-					var y_:int = (this.y < 200)? this.y - 50:120;
-					WinBattle.hero_inv.init1(unit, false, x_, y_);
+					Node.unit = unit_local;
+					Node.unit_info_timer.start();
+					Node.x_ = (this.x < 410)?this.x + 30:this.x - WinBattle.hero_inv.width + this.width / 2;
+					Node.y_ = (this.y < 200)? this.y - 50:120;
 				}
 		}
 		
@@ -188,9 +208,8 @@ package artur.display.battle
 				this.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
 				this.mc.gotoAndStop(1);
 			}
+			this.onOut1();
 		}
-		
-		
 		
 		public function resetFP():void
 		{

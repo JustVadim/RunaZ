@@ -9,8 +9,10 @@ package artur.win
 	import artur.display.battle.Node;
 	import artur.display.HeroInventar;
 	import artur.display.Slot;
+	import artur.PrepareGr;
 	import artur.RasterClip;
 	import artur.units.UnitCache;
+	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -44,7 +46,8 @@ package artur.win
 		public static var looseAfterBattle:mcAfterBattleLose = new mcAfterBattleLose();
 		public static var inv_bg:mcBgBatleInventar = new mcBgBatleInventar();
 		public static var hero_inv:HeroInventar;
-		
+		private static var skill_pannel:Bitmap = PrepareGr.creatBms(new mcPanelBattle())[0];
+		private static var ult_btn:UltSkillPanel = new UltSkillPanel();
 		
 		
 		public function WinBattle() 
@@ -57,6 +60,9 @@ package artur.win
 			atackNode = new AttackNode();
 			chekAvtoboi.y = 14;
 			this.chekAvtoboi.buttonMode = this.chekLifeBar.buttonMode = true;
+			WinBattle.skill_pannel.x = 581; WinBattle.skill_pannel.y = 360;
+			WinBattle.ult_btn.x = 741; WinBattle.ult_btn.y = 365;
+			WinBattle.ult_btn.stop();
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -98,6 +104,8 @@ package artur.win
 			this.getMyTeam();
 			App.spr.addChild(bgs[0]);
 			App.spr.addChild(spr);
+			App.spr.addChild(WinBattle.ult_btn);
+			App.spr.addChild(WinBattle.skill_pannel);
 			this.addListenersToChekboks(this.chekAvtoboi, 1);
 			this.addListenersToChekboks(this.chekLifeBar, 2);
 			this.grid.init();
@@ -245,18 +253,19 @@ package artur.win
 				var loc:Object;
 				var r:int;
 				var is_arr:int;
+				var cur_unit:Object;
 				if (myTeam == 0)
 				{
+					cur_unit = WinBattle.bat.t1_u[cus.p]
 					loc = WinBattle.bat.t1_locs[cus.p];
-					r = WinBattle.bat.t1_u[cus.p].sp;
-					is_arr = WinBattle.bat.t1_u[cus.p].t_d;
 				}
 				else
 				{
+					cur_unit = WinBattle.bat.t2_u[cus.p]
 					loc = WinBattle.bat.t2_locs[cus.p];
-					r = WinBattle.bat.t2_u[cus.p].sp;
-					is_arr = WinBattle.bat.t2_u[cus.p].t_d;
 				}
+				r = cur_unit.sp;
+				is_arr = cur_unit.t_d;
 				if (WinBattle.anim.length == 0)
 				{
 					if (this.chekAvtoboi.currentFrame == 1)
@@ -268,6 +277,18 @@ package artur.win
 						Node(this.grid.nodes[0][0]).sendStep();
 					}
 				}
+				WinBattle.ult_btn.gotoAndStop(cur_unit.t+2);
+				if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && cur_unit.mp >= cur_unit.ult.mc)
+				{
+					WinBattle.ult_btn.mc.visible = false;
+				}
+				else
+				{WinBattle.ult_btn.mc.visible = true };
+			}
+			else
+			{
+				WinBattle.ult_btn.gotoAndStop(1);
+				WinBattle.ult_btn.mc.visible = false;
 			}
 			
 		 }
