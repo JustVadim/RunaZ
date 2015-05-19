@@ -326,6 +326,25 @@ package artur.display.battle
 			return stone;
 		}
 		
+		public function highLightUltCells(unit_type:int):void 
+		{
+			switch(unit_type)
+			{
+				case 0:
+					
+					break;
+				case 1:
+					
+					break;
+				case 2:
+					
+					break;
+				case 3:
+					
+					break;
+			}
+		}
+		
 		
 	}
 

@@ -17,6 +17,7 @@ package artur.win
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import report.Report;
+	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
@@ -48,6 +49,7 @@ package artur.win
 		public static var hero_inv:HeroInventar;
 		private static var skill_pannel:Bitmap = PrepareGr.creatBms(new mcPanelBattle())[0];
 		private static var ult_btn:UltSkillPanel = new UltSkillPanel();
+		private var ult_clicked:Boolean = false;
 		
 		
 		public function WinBattle() 
@@ -63,6 +65,7 @@ package artur.win
 			WinBattle.skill_pannel.x = 581; WinBattle.skill_pannel.y = 360;
 			WinBattle.ult_btn.x = 741; WinBattle.ult_btn.y = 365;
 			WinBattle.ult_btn.stop();
+			WinBattle.ult_btn.buttonMode = true;
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -281,17 +284,58 @@ package artur.win
 				if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && cur_unit.mp >= cur_unit.ult.mc)
 				{
 					WinBattle.ult_btn.mc.visible = false;
+					WinBattle.ult_btn.buttonMode = true;
+					WinBattle.ult_btn.addEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
+					WinBattle.ult_btn.addEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
+					WinBattle.ult_btn.addEventListener(MouseEvent.CLICK, this.onUltClick);
 				}
 				else
-				{WinBattle.ult_btn.mc.visible = true };
+				{
+					WinBattle.ult_btn.mc.visible = true;
+					WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
+					WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
+					WinBattle.ult_btn.removeEventListener(MouseEvent.CLICK, this.onUltClick);
+				}
 			}
 			else
 			{
 				WinBattle.ult_btn.gotoAndStop(1);
 				WinBattle.ult_btn.mc.visible = false;
+				WinBattle.ult_btn.buttonMode = false;
+				WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
+				WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
+				WinBattle.ult_btn.removeEventListener(MouseEvent.CLICK, this.onUltClick);
 			}
 			
-		 }
+		}
+		 
+		private function onUltClick(e:MouseEvent):void 
+		{
+			if (!this.ult_clicked)
+			{
+				this.ult_clicked = true;
+				this.grid.clearNodesControl();
+				var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
+				var unit_type:int = (WinBattle.myTeam == 0)? WinBattle.bat.t1_u[cus.p].t:WinBattle.bat.t2_u[cus.p].t;
+				this.grid.highLightUltCells(unit_type);
+			}
+			else
+			{
+				this.ult_clicked = false;
+				this.grid.lightUnits(bat.t1_locs, bat.t1_hp, 0);
+				this.grid.lightUnits(bat.t2_locs, bat.t2_hp, 1);
+			}
+		}
+		 
+		private function onUltOut(e:MouseEvent):void 
+		{
+			
+		}
+		 
+		private function onUltOver(e:MouseEvent):void 
+		{
+			
+		}
 		 
 		public function update():void
 		{
@@ -369,6 +413,19 @@ package artur.win
 			for (var j:int = 0; j < newArr.length; j++) 
 				spr.addChild(newArr[j]); 
 		}
+		
+		static public function makeUltimate(whom:int):void 
+		{
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, WinBattle.onUltimateResult);
+			data.sendData(COMMANDS.ULTIMATE, whom.toString(), true);
+		}
+		
+		private function onUltimateResult(e:DataExchangeEvent):void 
+		{
+			Report.addMassage("ultimate has come");
+		}
+		
 		
 	}
 
