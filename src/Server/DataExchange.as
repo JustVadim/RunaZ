@@ -186,7 +186,6 @@ package Server
 								socket.dispatchEvent(data_evnt);
 								break;
 							case int(COMMANDS.FIND_BATTLE):
-								Report.addMassage(temp_obj.m);
 								UserStaticData.hero.mbat = JSON2.decode(temp_obj.m);
 								UserStaticData.hero.bat = UserStaticData.hero.mbat.id;
 								App.lock.frees();

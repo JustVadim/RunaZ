@@ -172,6 +172,15 @@ package artur.win
 				loc.y = obj.m.y;
 				bat.cus = obj.n;
 			}
+			else if (obj.whm != null)
+			{
+				switch(obj.t)
+				{
+					case 0:
+						App.sound.playSound("blade1", 1, 1);
+						break;
+				}
+			}
 			else if(obj.is_w != null)
 			{
 				this.endBattle(obj)
@@ -421,9 +430,33 @@ package artur.win
 			data.sendData(COMMANDS.ULTIMATE, whom.toString(), true);
 		}
 		
-		private function onUltimateResult(e:DataExchangeEvent):void 
+		private static function onUltimateResult(e:DataExchangeEvent):void 
 		{
-			Report.addMassage("ultimate has come");
+			var obj:Object = JSON2.decode(e.result);
+			if (obj.res != null)
+			{
+				WinBattle.inst.grid.lightUnits(bat.t1_locs, bat.t1_hp, 0);
+				WinBattle.inst.grid.lightUnits(bat.t2_locs, bat.t2_hp, 1);
+				var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
+				var loc:Object;
+				var r:int;
+				var is_arr:int;
+				var cur_unit:Object;
+				if (myTeam == 0)
+				{
+					cur_unit = WinBattle.bat.t1_u[cus.p]
+					loc = WinBattle.bat.t1_locs[cus.p];
+				}
+				else
+				{
+					cur_unit = WinBattle.bat.t2_u[cus.p]
+					loc = WinBattle.bat.t2_locs[cus.p];
+				}
+				r = cur_unit.sp;
+				is_arr = cur_unit.t_d;
+				WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+				WinBattle.ult_btn.mc.visible = true;
+			}
 		}
 		
 		

@@ -331,7 +331,7 @@ package artur.display.battle
 			switch(unit_type)
 			{
 				case 0:
-					
+					WinBattle.makeUltimate(0);
 					break;
 				case 1:
 					
