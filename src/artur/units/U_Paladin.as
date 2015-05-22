@@ -93,7 +93,7 @@ package artur.units
 			this.filters = [App.btnOverFilter];
 		}
 		
-		public function init(parr:DisplayObjectContainer=null):void
+		public function init(parr:DisplayObjectContainer = null):void
 		{
 			scaleX = 1;
 			scaleY = 1;
@@ -124,10 +124,10 @@ package artur.units
 		public function frees():void
 		{
 			free = true;
-			Report.addMassage('Pall fr')
 			gotoAndStop(1);
 			if (parent) 
 			{
+				Report.addMassage("u_pal removed");
 				parent.removeChild(this);
 			}
 			

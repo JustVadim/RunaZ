@@ -127,6 +127,7 @@ package artur.units
 			gotoAndStop(1);
 			if (parent) 
 			{
+				Report.addMassage("bot2 removed");
 				parent.removeChild(this);
 			}
 			

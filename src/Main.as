@@ -29,11 +29,28 @@ package
 		private function init(e:Event = null):void 
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
+			UserStaticData.flash_vars = stage.loaderInfo.parameters as Object;
+			if (UserStaticData.flash_vars['api_id'])
+			{
+				this.vkPrepare();
+			}
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Main.THIS = this;
 			stage.addChild(rep = new Report());
+			Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
+		}
+		
+		private function vkPrepare():void 
+		{
+			var api_res:Object = JSON2.decode(UserStaticData.flash_vars.api_result);
+			UserStaticData.from = "v";
+			UserStaticData.fname = api_res.response[0].first_name;
+			UserStaticData.sname = api_res.response[0].last_name;
+			UserStaticData.plink = api_res.response[0].photo_100;
+			UserStaticData.id = api_res.response[0].uid;
+			UserStaticData.friend_invited = UserStaticData.flash_vars.user_id;
 		}
 		
 		

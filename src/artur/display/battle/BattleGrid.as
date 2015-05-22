@@ -17,7 +17,7 @@ package artur.display.battle
 		public var nodes:Array = new Array();
 		public static var wd:int = 13;
 		public static var hg:int = 7;
-		private static var stones:Array = [];
+		public static var stones:Array = [];
 		
 		public function BattleGrid() 
 		{
@@ -334,17 +334,39 @@ package artur.display.battle
 					WinBattle.makeUltimate(0);
 					break;
 				case 1:
-					
+					this.UltCells(true);
 					break;
 				case 2:
-					
+					this.UltCells(false);
 					break;
 				case 3:
-					
+					this.UltCells(false);
 					break;
 			}
 		}
 		
+		private function UltCells(is_fr:Boolean):void 
+		{
+			var locs:Object;
+			var hps:Object;
+			if (is_fr)
+			{
+				locs = (WinBattle.myTeam == 0) ? WinBattle.bat.t1_locs:WinBattle.bat.t2_locs;
+				hps = (WinBattle.myTeam == 0) ? WinBattle.bat.t1_hp:WinBattle.bat.t2_hp;
+			}
+			else 
+			{
+				locs = (WinBattle.myTeam == 0) ? WinBattle.bat.t2_locs:WinBattle.bat.t1_locs;
+				hps = (WinBattle.myTeam == 0) ? WinBattle.bat.t2_hp:WinBattle.bat.t1_hp;
+			}
+			for (var key:Object in locs)
+			{
+				if (hps[key] > 0)
+				{
+					Node(nodes[locs[key].x][locs[key].y]).makeUlt();
+				}
+			}
+		}
 		
 	}
 

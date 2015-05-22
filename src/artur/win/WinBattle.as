@@ -12,6 +12,7 @@ package artur.win
 	import artur.PrepareGr;
 	import artur.RasterClip;
 	import artur.units.UnitCache;
+	import com.greensock.events.LoaderEvent;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -101,6 +102,10 @@ package artur.win
 		
 		public function init():void
 		{
+			Report.addMassage(WinBattle.spr.numChildren + " childrens has winbattle.spr");
+			Report.addMassage("sort array: " + sortArr.length);
+			Report.addMassage("sort array: " + BattleGrid.stones.length);
+			
 			this.unitsInWin = [];
 			this.bin = true;
 			WinBattle.units = [[], []];
@@ -140,7 +145,6 @@ package artur.win
 		 public function onBattleMassage(e:DataExchangeEvent):void 
 		 {
 			var obj:Object = JSON2.decode(e.result);
-			Report.addMassage(e.result);
 			WinBattle.anim.push(obj);
 		 }
 		 
@@ -174,12 +178,7 @@ package artur.win
 			}
 			else if (obj.whm != null)
 			{
-				switch(obj.t)
-				{
-					case 0:
-						App.sound.playSound("blade1", 1, 1);
-						break;
-				}
+				this.onUltimateData(obj)
 			}
 			else if(obj.is_w != null)
 			{
@@ -187,9 +186,48 @@ package artur.win
 			}
 		}
 		
+		private function onUltimateData(obj:Object):void 
+		{
+			switch(obj.t)
+			{
+				case 0:
+					App.sound.playSound("blade1", 1, 1);
+					break;
+			}
+			//whom unit
+			var t_obj:Object = (obj.wh.t == 0) ? bat.t1_mp:bat.t2_mp;
+			t_obj[obj.wh.p] = obj.mcl;
+			LifeManajer.un_Data[obj.wh.t][obj.wh.p].currMana = obj.mcl;
+			LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
+			//whom unit
+			t_obj = (obj.whm.t == 0) ? bat.t1_hp:bat.t2_hp;
+			t_obj[obj.wh.p] = obj.hpl;
+			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
+			LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
+			if (obj.hpl == 0)
+			{
+				var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
+				var coord:Object = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
+				hurt_unit.gotoAndPlay("die");
+				hurt_unit.addEventListener("DIE", this.mover.onUnitDie);
+				for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
+				{
+					if (WinBattle.sortArr[i] == hurt_unit)
+					{
+						WinBattle.sortArr.splice(i, 1);
+						break;
+					}
+				}
+				WinBattle.bat.map.grid[coord.x][coord.y].id = 0;
+				Node(WinBattle.inst.grid.nodes[coord.x][coord.y]).walcable = 0;
+				WinBattle.units[obj.whm.t][obj.whm.p] = null;
+			}
+		}
+		
 		private function endBattle(obj:Object):void 
 		{
 			Report.addMassage(JSON2.encode(obj));
+			this.grid.clearNodesControl();
 			var mc:MovieClip;
 			if (obj.is_w)
 			{
@@ -226,7 +264,7 @@ package artur.win
 					{
 						blank.txt2.textColor = 0xF52323 ; 
 						blank.txt2.text = "Умер";
-						unit_data.l+=obj.st[i].d;
+						unit_data.l += obj.st[i].d;
 					}
 					unit_data.k += obj.st[i].k;
 				}
@@ -250,6 +288,7 @@ package artur.win
 		 
 		public function setCurrStep():void 
 		{
+			this.ult_clicked = false;
 			WinBattle.sortSpr();
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
 			if (currUnit) {currUnit.filters = []; currUnit.shawdow.alpha = 1;} 
@@ -283,6 +322,18 @@ package artur.win
 					if (this.chekAvtoboi.currentFrame == 1)
 					{
 						grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+						var t_mp:Object = (myTeam == 0)? bat.t1_mp:bat.t2_mp
+						if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && t_mp[cus.p] >= cur_unit.ult.mc && !bat.is_ult)
+						{
+							WinBattle.ult_btn.mc.visible = false;
+							WinBattle.ult_btn.buttonMode = true;
+							this.addUltEvents();
+						}
+						else
+						{
+							WinBattle.ult_btn.mc.visible = true;
+							this.removeUltEvents();
+						}
 					}
 					else
 					{
@@ -290,38 +341,42 @@ package artur.win
 					}
 				}
 				WinBattle.ult_btn.gotoAndStop(cur_unit.t+2);
-				if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && cur_unit.mp >= cur_unit.ult.mc)
-				{
-					WinBattle.ult_btn.mc.visible = false;
-					WinBattle.ult_btn.buttonMode = true;
-					WinBattle.ult_btn.addEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
-					WinBattle.ult_btn.addEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
-					WinBattle.ult_btn.addEventListener(MouseEvent.CLICK, this.onUltClick);
-				}
-				else
-				{
-					WinBattle.ult_btn.mc.visible = true;
-					WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
-					WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
-					WinBattle.ult_btn.removeEventListener(MouseEvent.CLICK, this.onUltClick);
-				}
 			}
 			else
 			{
 				WinBattle.ult_btn.gotoAndStop(1);
 				WinBattle.ult_btn.mc.visible = false;
 				WinBattle.ult_btn.buttonMode = false;
-				WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
-				WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
-				WinBattle.ult_btn.removeEventListener(MouseEvent.CLICK, this.onUltClick);
+				this.removeUltEvents();
 			}
 			
+		}
+		
+		public function removeUltEvents():void
+		{
+			WinBattle.ult_btn.buttonMode = false;
+			WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
+			WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
+			WinBattle.ult_btn.removeEventListener(MouseEvent.CLICK, this.onUltClick);
+		}
+		
+		private function addUltEvents():void
+		{
+			WinBattle.ult_btn.addEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
+			WinBattle.ult_btn.addEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
+			WinBattle.ult_btn.addEventListener(MouseEvent.CLICK, this.onUltClick);
+			WinBattle.ult_btn.buttonMode = true;
 		}
 		 
 		private function onUltClick(e:MouseEvent):void 
 		{
 			if (!this.ult_clicked)
 			{
+				if (WinBattle.atackNode.parent)
+				{
+					WinBattle.atackNode.parent.removeChild(WinBattle.atackNode);
+					WinBattle.atackNode.currNode = null;
+				}
 				this.ult_clicked = true;
 				this.grid.clearNodesControl();
 				var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
@@ -331,8 +386,8 @@ package artur.win
 			else
 			{
 				this.ult_clicked = false;
-				this.grid.lightUnits(bat.t1_locs, bat.t1_hp, 0);
-				this.grid.lightUnits(bat.t2_locs, bat.t2_hp, 1);
+				this.addUltEvents();
+				this.getControlAfterUlt(true);
 			}
 		}
 		 
@@ -354,29 +409,29 @@ package artur.win
 		
 		public function frees():void
 		{
-			    DataExchange.socket.removeEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
-				this.grid.clearNodesControl();
-				this.freeUnits(units[0]);
-				this.freeUnits(units[1]);
-				
-				WinBattle.units = null;
-				this.lifeManajer.frees();
-				WinBattle.atackNode.frees();
-				this.grid.frees();
-				this.addListenersToChekboks(this.chekAvtoboi, 1, false);
-				this.addListenersToChekboks(this.chekLifeBar, 2, false);
+			DataExchange.socket.removeEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
+			this.freeUnits(units[0]);
+			this.freeUnits(units[1]);
 			
-			    this.mover.unit = null;
-				this.mover.cur_obj = null;
-				WinBattle.currUnit = null;
-				UserStaticData.hero.bat = -1;
-				UserStaticData.hero.mbat = null;
-				effManajer.frees();
-				for (var i:int = 0; i < unitsInWin.length; i++) 
-				{
-					unitsInWin[i].frees();
-				}
-				
+			WinBattle.units = null;
+			this.lifeManajer.frees();
+			WinBattle.atackNode.frees();
+			this.grid.frees();
+			this.addListenersToChekboks(this.chekAvtoboi, 1, false);
+			this.addListenersToChekboks(this.chekLifeBar, 2, false);
+		
+			this.mover.unit = null;
+			this.mover.cur_obj = null;
+			WinBattle.currUnit = null;
+			UserStaticData.hero.bat = -1;
+			UserStaticData.hero.mbat = null;
+			effManajer.frees();
+			for (var i:int = 0; i < unitsInWin.length; i++) 
+			{
+				unitsInWin[i].frees();
+			}
+			
+			sortArr.splice(0, sortArr.length);				
 		}
 		
 		private function freeUnits(unit:Object):void 
@@ -386,8 +441,8 @@ package artur.win
 				if (unit[key] != null)
 				{
 					unit[key].frees();
-					delete(unit[key]);
 				}
+				delete(unit[key]);
 			}
 		}
 		 
@@ -435,28 +490,33 @@ package artur.win
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.res != null)
 			{
-				WinBattle.inst.grid.lightUnits(bat.t1_locs, bat.t1_hp, 0);
-				WinBattle.inst.grid.lightUnits(bat.t2_locs, bat.t2_hp, 1);
-				var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
-				var loc:Object;
-				var r:int;
-				var is_arr:int;
-				var cur_unit:Object;
-				if (myTeam == 0)
-				{
-					cur_unit = WinBattle.bat.t1_u[cus.p]
-					loc = WinBattle.bat.t1_locs[cus.p];
-				}
-				else
-				{
-					cur_unit = WinBattle.bat.t2_u[cus.p]
-					loc = WinBattle.bat.t2_locs[cus.p];
-				}
-				r = cur_unit.sp;
-				is_arr = cur_unit.t_d;
-				WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
-				WinBattle.ult_btn.mc.visible = true;
+				WinBattle.inst.getControlAfterUlt(false);
 			}
+		}
+		
+		private function getControlAfterUlt(is_ult_btn:Boolean):void
+		{
+			WinBattle.inst.grid.lightUnits(bat.t1_locs, bat.t1_hp, 0);
+			WinBattle.inst.grid.lightUnits(bat.t2_locs, bat.t2_hp, 1);
+			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
+			var loc:Object;
+			var r:int;
+			var is_arr:int;
+			var cur_unit:Object;
+			if (myTeam == 0)
+			{
+				cur_unit = WinBattle.bat.t1_u[cus.p]
+				loc = WinBattle.bat.t1_locs[cus.p];
+			}
+			else
+			{
+				cur_unit = WinBattle.bat.t2_u[cus.p]
+				loc = WinBattle.bat.t2_locs[cus.p];
+			}
+			r = cur_unit.sp;
+			is_arr = cur_unit.t_d;
+			WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+			WinBattle.ult_btn.mc.visible = !is_ult_btn;
 		}
 		
 		

@@ -139,8 +139,11 @@ package artur.units
 		{
 			free = true;
 			gotoAndStop(1);
-			if (parent) 
-			     parent.removeChild(this);
+			if (this.stage) 
+			{
+				Report.addMassage("bot1 removed");
+				parent.removeChild(this);
+			}
 			
 			 this.removeEventListener(MouseEvent.MOUSE_OVER, over);
 		     this.removeEventListener(MouseEvent.MOUSE_OUT, out);
@@ -174,7 +177,6 @@ package artur.units
 						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[2])]);
 						break;
 			   }
-			   //Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[i])]);
 			}
 			
 		}
