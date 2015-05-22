@@ -6,6 +6,7 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import report.Report;
 	
 	public class BotGolem extends GolemDoll
 	{
@@ -120,10 +121,12 @@ package artur.units
 			free = true;
 			gotoAndStop(1);
 			if (parent) 
-			     parent.removeChild(this);
-			
-			 this.removeEventListener(MouseEvent.MOUSE_OVER, over);
-		     this.removeEventListener(MouseEvent.MOUSE_OUT, out);
+			{
+				parent.removeChild(this);
+				Report.addMassage("bot_golem removed");
+			}
+			this.removeEventListener(MouseEvent.MOUSE_OVER, over);
+			this.removeEventListener(MouseEvent.MOUSE_OUT, out);
 		}
 		public function itemUpdate(obj:Object):void
 		{

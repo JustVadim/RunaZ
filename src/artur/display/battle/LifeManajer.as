@@ -90,7 +90,9 @@ package artur.display.battle
 		{
 			var unit:Object = LifeManajer.un_Data[t][p];
 			if (unit.currLife != 0)
-				{LifeManajer.goToBar(LifeManajer.un_Data[t][p]);}
+			{
+				LifeManajer.goToBar(LifeManajer.un_Data[t][p]);
+			}
 			else
 			{
 				LifeManajer.un_Data[t][p] = null;
@@ -99,6 +101,11 @@ package artur.display.battle
 				bar.parent.removeChild(bar);
 				bar.alpha = 0;
 			}
+			
+		}
+		
+		public static function updateCurrMannaPoing():void
+		{
 			
 		}
 		
@@ -135,9 +142,12 @@ package artur.display.battle
 		
 		public function frees():void
 		{
-			this.freeUnData(LifeManajer.un_Data[0]);
-			this.freeUnData(LifeManajer.un_Data[1]);
-			LifeManajer.un_Data = [[],[]];
+			if (LifeManajer.bin)
+			{
+				this.freeUnData(LifeManajer.un_Data[0]);
+				this.freeUnData(LifeManajer.un_Data[1]);
+				LifeManajer.un_Data = [[], []];
+			}
 		}
 		
 		private function freeUnData(un:Object):void 
@@ -150,8 +160,8 @@ package artur.display.battle
 					var bar:mcBar = un[key].bar;
 					delete(un[key].bar);
 					bar.alpha = 0;
-					delete(un[key]);
 				}
+				delete(un[key]);
 			}
 		}
 		
@@ -179,6 +189,7 @@ package artur.display.battle
 			{
 				var percent:int = 1 + unit.currLife / unit.maxLife * 100;
 				bar.life.gotoAndStop(percent);
+				Report.addMassage(unit.currMana + " " + unit.maxMana);
 				percent = 1 + unit.currMana / unit.maxMana * 100;
 				bar.mana.gotoAndStop(percent);
 			}

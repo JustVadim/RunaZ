@@ -157,8 +157,8 @@ package artur.units
 			if (parent) 
 			{
 				parent.removeChild(this);
+				Report.addMassage('barb removed')
 			}
-			Report.addMassage('War fr')
 		}
 		
 		public function itemUpdate(obj:Object):void

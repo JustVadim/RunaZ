@@ -43,6 +43,7 @@ package artur.display.battle
 		}
 		public function init(path:Array, obj:Object, is_range:Boolean, type:int):void
 		{
+			WinBattle.bat.is_ult = false;
 			this.is_range = is_range;
 			this.type = type;
 			this.unit = MovieClip(WinBattle.currUnit);
@@ -53,6 +54,7 @@ package artur.display.battle
 			bin = true;
 			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
 			WinBattle.inst.grid.clearNodesControl();
+			WinBattle.inst.removeUltEvents();
 			this.path = path;
 			unit.onWalk();
 			if (this.path.length >= 2)
@@ -290,13 +292,7 @@ package artur.display.battle
 			}
 			else
 			{
-				
-				var hps:Object;
-				if(t == 0)
-					hps = WinBattle.bat.t1_hp;
-				else
-					hps = WinBattle.bat.t2_hp;
-					
+				var hps:Object = (t == 0) ? WinBattle.bat.t1_hp:WinBattle.bat.t2_hp;	
 				hps[pos] = cur_obj.a.ll;
 				LifeManajer.un_Data[t][pos].currLife = hps[pos];
 				if (LifeManajer.bin)		
@@ -342,7 +338,7 @@ package artur.display.battle
 			}
 		}
 		
-		private function onUnitDie(e:Event):void 
+		public function onUnitDie(e:Event):void 
 		{
 			var mc:MovieClip = MovieClip(e.target);
 			mc.removeEventListener(e.type, onUnitDie);
@@ -350,7 +346,7 @@ package artur.display.battle
 			for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
 			{
 				if (mc == WinBattle.sortArr[i])
-				 WinBattle.sortArr.splice(i, 1);
+					WinBattle.sortArr.splice(i, 1);
 			}
 		}
 		public function frees():void

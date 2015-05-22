@@ -127,10 +127,10 @@ package artur.units
 		public function frees():void
 		{
 			free = true;
-			Report.addMassage('Pall fr')
 			gotoAndStop(1);
 			if (parent) 
 			{
+				Report.addMassage("u_mag removed");
 				parent.removeChild(this);
 			}
 			

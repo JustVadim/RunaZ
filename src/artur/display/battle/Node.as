@@ -4,6 +4,7 @@ package artur.display.battle
 	import artur.App;
 	import artur.display.RasterMovie;
 	import artur.win.WinBattle;
+	import flash.display.IBitmapDrawable;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -223,6 +224,49 @@ package artur.display.battle
 			{
 				this.rad = radius;
 			}
+		}
+		
+		public function makeUlt():void 
+		{
+			this.buttonMode = true;
+			this.mc.gotoAndStop(2);
+			this.addEventListener(MouseEvent.CLICK, onUltClick);
+		}
+		
+		public function dismakeUlt():void 
+		{
+			this.buttonMode = false;
+			this.mc.gotoAndStop(1);
+			this.removeEventListener(MouseEvent.CLICK, onUltClick);
+		}
+		
+		private function onUltClick(e:MouseEvent):void 
+		{
+			var key:int;
+			var bat:Object = WinBattle.bat;
+			for (var i:int = 0; i < 4; i ++ )
+			{
+				if (bat.t1_locs[i] != null)
+				{
+					Node(WinBattle.inst.grid.nodes[bat.t1_locs[i].x][bat.t1_locs[i].y]).dismakeUlt()
+					if (bat.t1_locs[i].x == this.xp && bat.t1_locs[i].y == this.yp)
+					{
+						key = i;
+					}
+				}
+				
+				if (bat.t2_locs[i] != null)
+				{
+					Node(WinBattle.inst.grid.nodes[bat.t2_locs[i].x][bat.t2_locs[i].y]).dismakeUlt()
+					if (bat.t2_locs[i].x == this.xp && bat.t2_locs[i].y == this.yp)
+					{
+						key = i;
+					}
+					
+				}
+			}
+			Report.addMassage(key);
+			WinBattle.makeUltimate(key);
 		}
 		
 	}
