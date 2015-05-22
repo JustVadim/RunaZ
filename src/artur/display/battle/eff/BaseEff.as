@@ -7,7 +7,7 @@ package artur.display.battle.eff
 	
 	public class BaseEff extends Sprite
 	{
-		private var movs:Array = [new RasterMovie(new mcDamage1(), true), new RasterMovie(new effHill(),true )];
+		private var movs:Array = [new RasterMovie(new mcDamage1(), true), new RasterMovie(new effHill(), true), new RasterMovie(new effBAttleCry(), true)];
 		public var free:Boolean = true;
 		public var type:String = 'base';
 		private var currMovie:RasterMovie = null
@@ -16,7 +16,7 @@ package artur.display.battle.eff
 		{
 			
 		}
-		public function init(parr:Sprite,xp:int=0, yp:int=0,index:int=0):void
+		public function init(parr:Sprite, xp:int=0, yp:int=0,index:int=0):void
 		{
 			this.x = xp;
 			this.y = yp;
@@ -24,8 +24,6 @@ package artur.display.battle.eff
 			currMovie = movs[index];
 			currFrame = 1;
 			currMovie.gotoAndStop(currFrame);
-			
-			
 			parr.addChild(this);
 			this.addChild(currMovie);
 		}

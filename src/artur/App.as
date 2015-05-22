@@ -29,7 +29,8 @@ package artur
 		[Embed(source = "../../bin/sounds/Pall_Hurt.mp3")] private var s_pall_hurt:Class;
 		[Embed(source = "../../bin/sounds/War_hurt.mp3")] private var s_war_hurt:Class;
 		[Embed(source = "../../bin/sounds/Win.mp3")] private var s_win:Class;
-		[Embed(source="../../bin/sounds/shock.mp3")] private var s_shok:Class;
+		[Embed(source = "../../bin/sounds/shock.mp3")] private var s_shok:Class;
+		
 		
 		public static var sound:SoundManager = SoundManager.getInstance();
 		public static var winManajer:WinManajer;
@@ -70,6 +71,8 @@ package artur
 			sound.addSound('war_hurt', new s_war_hurt());
 			sound.addSound('win', new s_win());
 			sound.addSound('shok', new s_shok());
+			sound.addSound('battle_cry', new BattleCry());
+			sound.addSound('eff_heal', new s_effHill());
 			spr = Sprite(this);
 			winManajer = new WinManajer();
 			this.addEventListener(Event.ENTER_FRAME, update);

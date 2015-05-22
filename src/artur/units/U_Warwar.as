@@ -4,15 +4,14 @@ package artur.units
 	import artur.PrepareGr;
 	import artur.win.WinBattle;
 	import com.greensock.easing.Back;
+	import com.greensock.events.LoaderEvent;
 	import com.greensock.TweenLite;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
+	
 	public class U_Warwar extends BarbDoll
 	{
 		
@@ -52,6 +51,9 @@ package artur.units
 	     private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
 		 private static var sounds:Array = [{id:'war_hurt',frame:85},{id:'blade2',frame:82}, {id:'fow2',frame:67}, { id:'bot1_fs1', frame:47 }, { id:'bot1_fs2', frame:56 } ];
 		 public static var andAtackFrame:int = 72;
+		 public var buffs:Array = PrepareGr.creatBms(new mcBaff, true);
+		 
+		 
 		public function U_Warwar() 
 		{
 		   this.mouseEnabled = false;
@@ -63,7 +65,6 @@ package artur.units
 			hends1R  = PrepareGr.creatBms(new itemHend1R());
 			hends2R  = PrepareGr.creatBms(new itemHend2R());
 			hends3R  = PrepareGr.creatBms(new itemHend3R());
-			
 			appArmsL = PrepareGr.creatBms(new itemAppArm2());
 			hends1L  = PrepareGr.creatBms(new itemHend1L());
 			hends2L  = PrepareGr.creatBms(new itemHend2L());
@@ -76,7 +77,6 @@ package artur.units
 			legs3L =  PrepareGr.creatBms(new itemLeg3L());
 			parts = [this._head, this._body, this._sikira, this._appArmR, this._hend1R, this._hend2R, this._hend3R, this._appArmL, this._hend1L, this._hend2L, this._hend3L, this._leg1R, this._leg2R, this._leg3R, this._leg1L, this._leg2L, this._leg3L];
 			parts_of_parts = [heads, bodys, sikirs, appArmsR, hends1R, hends2R, hends3R, appArmsL, hends1L, hends2L, hends3L, legs1R, legs2R, legs3R, legs1L, legs2L, legs3L];
-			//parts = [heads,bodys,sikirs,appArmsR,hends1R,hends2R,hends3R,appArmsL,hends1L,hends2L,hends3L];
 			this.shawdow.addChild(sh)
 			this._head.addChild(heads[0]);
 			this._body.addChild(bodys[0]);
@@ -95,18 +95,26 @@ package artur.units
 			this._leg1L.addChild(legs1L[0]);
 			this._leg2L.addChild(legs2L[0]);
 			this._leg3L.addChild(legs3L[0]);
-			//this.shawdow.addChild(shawdow);
-			//addChild(shawdow);
-		     //this.addChildAt(shawdow, 0);
-		//	this.addEventListener(MouseEvent.MOUSE_OVER, over);
-		//	this.addEventListener(MouseEvent.MOUSE_OUT, out);
 			itemUpdate([0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
-			//this.gotoAndPlay('run');
 		}
-		 public function onWalk():void
-		 {
+		
+		public function showBuff(num:int):void
+		{
+			_
+			switch(num)
+			{
+				
+			}
+		}
+		public function hideBuff():void
+		{
+			
+		}
+		
+		public function onWalk():void
+		{
 			// App.sound.playSound('bot1_init', App.sound.onVoice, 1);
-		 }
+		}
 		public function out(e:MouseEvent=null):void 
 		 {
 			isOver = false;
@@ -157,13 +165,11 @@ package artur.units
 			if (parent) 
 			{
 				parent.removeChild(this);
-				Report.addMassage('barb removed')
 			}
 		}
 		
 		public function itemUpdate(obj:Object):void
 		{
-			
 			for (var i:int = 0; i < parts.length; i++) 
 			{
 			   Sprite(parts[i]).removeChildAt(1);
@@ -191,10 +197,7 @@ package artur.units
 						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[2])]);
 						break;
 			   }
-			   //Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[i])]);
-			   
 			}
-			
 		}
 	}
 
