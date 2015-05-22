@@ -7,11 +7,7 @@ package artur.display.battle.eff
 	
 	public class BaseEff extends Sprite
 	{
-<<<<<<< HEAD
-		private var movs:Array = [new RasterMovie(new mcDamage1(),true), new RasterMovie(new effHill(), true), new RasterMovie(new effBAttleCry(),true)];
-=======
-		private var movs:Array = [new RasterMovie(new mcDamage1(), true), new RasterMovie(new effHill(),true )];
->>>>>>> 8292b75c4ca9cc705d9893df33e5539d1d99553b
+		private var movs:Array = [new RasterMovie(new mcDamage1(), true), new RasterMovie(new effHill(), true), new RasterMovie(new effBAttleCry(), true)];
 		public var free:Boolean = true;
 		public var type:String = 'base';
 		private var currMovie:RasterMovie = null
