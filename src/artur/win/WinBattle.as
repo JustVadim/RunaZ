@@ -3,6 +3,7 @@ package artur.win
 	import artur.App;
 	import artur.display.battle.AttackNode;
 	import artur.display.battle.BattleGrid;
+	import artur.display.battle.eff.BaseEff;
 	import artur.display.battle.eff.EffManajer;
 	import artur.display.battle.LifeManajer;
 	import artur.display.battle.MoveUnit;
@@ -192,6 +193,12 @@ package artur.win
 			{
 				case 0:
 					App.sound.playSound("blade1", 1, 1);
+					break;
+				case 1:
+					App.sound.playSound("blade1", 1, 1);
+					var ef_coord:Object = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
+					var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 					break;
 			}
 			//whom unit
