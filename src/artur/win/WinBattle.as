@@ -192,10 +192,10 @@ package artur.win
 			switch(obj.t)
 			{
 				case 0:
-					App.sound.playSound("blade1", 1, 1);
+					App.sound.playSound("battle_cry", App.sound.onVoice, 1);
 					break;
 				case 1:
-					App.sound.playSound("blade1", 1, 1);
+					App.sound.playSound("eff_heal", App.sound.onVoice, 1);
 					var ef_coord:Object = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
 					var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
