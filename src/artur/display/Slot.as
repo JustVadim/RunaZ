@@ -81,7 +81,7 @@ package artur.display
 			chars[7] = obj.max_d;
 			chars[8] = obj.t_d;
 			chars[200] = 0;
-			chars[201] = UserStaticData.hero.skills.energy;
+			chars[201] = UserStaticData.hero.skills.energy;1
 			chars[202] = UserStaticData.hero.skills.attack;
 			chars[203] = UserStaticData.hero.skills.defence;
 			chars[204] = UserStaticData.hero.skills.defence;
@@ -93,8 +93,10 @@ package artur.display
 					chars[int(key2)+200] += obj.it[key].c[key2];
 				}
 			}
-			 if(WinCastle.currSlotClick != this.name)
-			     App.info.init(this.x + this.btnByeUnit.width / 2 + 15 , this.y - (115 / 2), { title:"Варвар", type:1, chars:chars } );
+			if (WinCastle.currSlotClick != this.name)
+			{
+				App.info.init(this.x + this.btnByeUnit.width / 2 + 15 , this.y - (115 / 2), { title:UnitBlank.names[obj.t], type:1, chars:chars } );
+			}
 		}
 		public function init():void
 		{

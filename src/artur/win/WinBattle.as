@@ -12,12 +12,15 @@ package artur.win
 	import artur.display.Slot;
 	import artur.PrepareGr;
 	import artur.RasterClip;
+	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
 	import com.greensock.events.LoaderEvent;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -157,17 +160,25 @@ package artur.win
 				var loc:Object = (obj.m.u.t == 0)?WinBattle.bat.t1_locs[obj.m.u.p]:WinBattle.bat.t2_locs[obj.m.u.p];
 				var is_r:Boolean;
 				var type:int;
+				var unit:Object;
 				if (obj.m.u.t == 0)
 				{
-					 loc = WinBattle.bat.t1_locs[obj.m.u.p];
-					 is_r = (WinBattle.bat.t1_u[obj.m.u.p].t_d == 1);
-					 type = WinBattle.bat.t1_u[obj.m.u.p].t
+					loc = WinBattle.bat.t1_locs[obj.m.u.p];
+					unit = bat.t1_u[obj.m.u.p];
+					is_r = (unit.t_d == 1);
+					type = unit.t
 				}
 				else
 				{
-					 loc = WinBattle.bat.t2_locs[obj.m.u.p];
-					 is_r = (WinBattle.bat.t2_u[obj.m.u.p].t_d == 1);
-					 type = WinBattle.bat.t2_u[obj.m.u.p].t;
+					loc = WinBattle.bat.t2_locs[obj.m.u.p];
+					unit = bat.t2_u[obj.m.u.p];
+					is_r = (unit.t_d == 1);
+					type = unit.t
+				}
+				if (unit.b[5] != null)
+				{
+					delete(unit.b[5]);
+					WinBattle.currUnit.hideBuff();
 				}
 				var path:Array = WinBattle.inst.grid.findPath(WinBattle.inst.grid.nodes[loc.x][loc.y], WinBattle.inst.grid.nodes[obj.m.x][obj.m.y]);
 				WinBattle.inst.mover.init(path, obj, is_r, type);
@@ -189,16 +200,36 @@ package artur.win
 		
 		private function onUltimateData(obj:Object):void 
 		{
+			var ef_coord:Object;
+			var node:Node;
 			switch(obj.t)
 			{
 				case 0:
 					App.sound.playSound("battle_cry", App.sound.onVoice, 1);
+					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
+					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+					U_Warwar(WinBattle.units[obj.whm.t][obj.whm.p]).showBuff(1);
+					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 2);
+					if (obj.wh.t == 0) bat.t1_u[obj.wh.p].b[5] = new Object(); else bat.t2_u[obj.wh.p].b[5] = new Object();
 					break;
 				case 1:
 					App.sound.playSound("eff_heal", App.sound.onVoice, 1);
-					var ef_coord:Object = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
-					var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
+					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
+					break;
+				case 2:
+					
+					break;
+				case 3:
+					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
+					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+					EffManajer.showLgs(30, WinBattle.spr, 0xFFFFFF, node.x, node.y - 1000, node.x, node.y-40);
+					EffManajer.lgs.update();
+					var tim:Timer = new Timer(15, 15);
+					tim.addEventListener(TimerEvent.TIMER, this.onLgsTimer);
+					tim.addEventListener(TimerEvent.TIMER_COMPLETE, this.onLgsTimerCplt);
+					tim.start();
 					break;
 			}
 			//whom unit
@@ -211,9 +242,9 @@ package artur.win
 			t_obj[obj.wh.p] = obj.hpl;
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
+			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			if (obj.hpl == 0)
 			{
-				var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 				var coord:Object = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
 				hurt_unit.gotoAndPlay("die");
 				hurt_unit.addEventListener("DIE", this.mover.onUnitDie);
@@ -229,6 +260,23 @@ package artur.win
 				Node(WinBattle.inst.grid.nodes[coord.x][coord.y]).walcable = 0;
 				WinBattle.units[obj.whm.t][obj.whm.p] = null;
 			}
+			else
+			{
+				if (obj.t == 2 || obj.t == 3)
+					hurt_unit.gotoAndPlay("hurt");
+			}
+		}
+		
+		private function onLgsTimerCplt(e:TimerEvent):void 
+		{
+			Timer(e.currentTarget).removeEventListener(TimerEvent.TIMER, this.onLgsTimer);
+			Timer(e.currentTarget).removeEventListener(TimerEvent.TIMER_COMPLETE, this.onLgsTimerCplt);
+			WinBattle.spr.removeChild(EffManajer.lgs);
+		}
+		
+		private function onLgsTimer(e:TimerEvent):void 
+		{
+			EffManajer.lgs.update();
 		}
 		
 		private function endBattle(obj:Object):void 

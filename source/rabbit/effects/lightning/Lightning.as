@@ -161,11 +161,6 @@
 			 if(bin)
 			 {
 				if ( !bAllowUpdate ) return;
-				
-				//_speed1 += 0.0001;
-				//_speed2 += 0.0001;
-				//trace(_speed1, _speed2);
-				
 				if ( bIsChild )
 				{
 					_startX = parentLightning.vSteps[_stepStart].x;
@@ -178,8 +173,6 @@
 				{
 					angle = Math.atan2(_endY - _startY, _endX - _startX);
 				}
-				
-				//trace(angle);
 				
 				dx = _endX - _startX;
 				dy = _endY - _startY;

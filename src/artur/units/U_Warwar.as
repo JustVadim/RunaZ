@@ -95,26 +95,29 @@ package artur.units
 			this._leg1L.addChild(legs1L[0]);
 			this._leg2L.addChild(legs2L[0]);
 			this._leg3L.addChild(legs3L[0]);
-			itemUpdate([0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+			itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+			buffs[1].y -= 15;
+			buffs[1].x += 22;
 		}
 		
 		public function showBuff(num:int):void
 		{
-			_
-			switch(num)
-			{
-				
-			}
+			while (this._baff.numChildren != 1)
+				this._baff.removeChildAt(1);
+			this._baff.addChild(buffs[num]);
 		}
+		
 		public function hideBuff():void
 		{
-			
+			while (this._baff.numChildren != 1)
+				this._baff.removeChildAt(1);
 		}
 		
 		public function onWalk():void
 		{
 			// App.sound.playSound('bot1_init', App.sound.onVoice, 1);
 		}
+		
 		public function out(e:MouseEvent=null):void 
 		 {
 			isOver = false;
