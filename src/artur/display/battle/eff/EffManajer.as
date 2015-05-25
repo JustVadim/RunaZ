@@ -4,10 +4,6 @@ package artur.display.battle.eff
 	import flash.display.Sprite;
 	import rabbit.effects.lightning.Lightning;
 	
-	/**
-	 * ...
-	 * @author art
-	 */
 	public class EffManajer
 	{
 		private static var data:Array = [{type: 'base', className: BaseEff}, {type: 'text', className: TextEff}];
@@ -49,11 +45,10 @@ package artur.display.battle.eff
 				{
 					return pool[i];
 				}
-			}
-			
+			} 
 			for (var j:int = 0; j < data.length; j++)
 			{
-				if (data[j].type == type)
+				if (data[j].type == type)                                          
 				{
 					var eff:Object = new data[j].className();
 					pool.push(eff);
@@ -79,7 +74,6 @@ package artur.display.battle.eff
 			lgs.filters = [App.btnOverFilter];
 			lgs.update();
 		}
-	
 	}
 
 }

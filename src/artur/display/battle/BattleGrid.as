@@ -211,15 +211,19 @@ package artur.display.battle
 			{
 				if (hps[key] > 0)
 				{
+					var unit:MovieClip = WinBattle.units[team][key];
+					var unit_data:Object = (team == 0) ? WinBattle.bat.t1_u[key]:WinBattle.bat.t2_u[key];
+					if (unit_data.b[5] != null)
+						unit.showBuff(1);
 					if (team == WinBattle.myTeam)
 						{Node(this.nodes[locs[key].x][locs[key].y]).mc.gotoAndStop(4);}
 					else
 						{Node(this.nodes[locs[key].x][locs[key].y]).mc.gotoAndStop(5);}
-					if(MovieClip(WinBattle.units[team][key]).currentLabel == "idle"|| MovieClip(WinBattle.units[team][key]).currentLabel =="hurt")
+					if(unit.currentLabel == "idle"|| unit.currentLabel =="hurt")
 					{
-						MovieClip(WinBattle.units[team][key]).scaleX = (team == 0)? 1: -1;
-						MovieClip(WinBattle.units[team][key]).rotation = 0;
-						MovieClip(WinBattle.units[team][key]).shawdow.visible = true;
+						unit.scaleX = (team == 0)? 1: -1;
+						unit.rotation = 0;
+						unit.shawdow.visible = true;
 					}
 				}
 				
