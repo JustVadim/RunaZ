@@ -36,11 +36,16 @@ package artur.win
 			var names:Array = ['bank','top','castle','arena','shop','map'];
 			for (var i:int = 0; i < indxBtn.length; i++) 
 			{
-				var btn:SimpleButton= new indxBtn[i]();
+				var btn:MovieClip= new indxBtn[i]();
 				btn.x = xps[i] ; btn.y = yps[i];
 				btn.name = names[i];
 				btns.push(btn);
 				btn.addEventListener(MouseEvent.CLICK, clickOnBtn);
+				btn.mouseChildren = false;
+				btn.tabChildren = false;
+				btn.tabEnabled = false;
+				btn.gotoAndStop(1);
+				btn.buttonMode = true;
 			}
 			
 		}

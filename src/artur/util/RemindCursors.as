@@ -167,17 +167,7 @@ package artur.util
 		
 		private function mouseOver(e:MouseEvent):void 
 		{
-			/*if (e.target is btnCursorClass || e.target is BaseButton ) {
-				changeCursor(btnCursor);
-			} else {
-				if (mainCursor != "") {
-					changeCursor(mainCursor);
-				} else {
-					Mouse.cursor = "arrow";
-				}
-			}*/
-			var mc:Object = e.target;
-			
+			var mc:Object = e.target;	
 			if (('buttonMode' in mc) && mc.buttonMode==true || mc is BaseButton)
 			{
 				if (mc is SimpleButton)
@@ -200,10 +190,6 @@ package artur.util
 			
 		}
 		
-		
-		/**
-		 *  SET & GET
-		 */
 		
 		public function get currentCursorName():String { return Mouse.cursor; }
 		public function get numCursors():int { return cursors.length; }
