@@ -73,6 +73,7 @@ package artur
 			sound.addSound('shok', new s_shok());
 			sound.addSound('battle_cry', new BattleCry());
 			sound.addSound('eff_heal', new s_effHill());
+			sound.addSound('eff_arrow', new SoundEffArrow());
 			spr = Sprite(this);
 			winManajer = new WinManajer();
 			this.addEventListener(Event.ENTER_FRAME, update);
