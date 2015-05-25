@@ -4,6 +4,7 @@ package artur.display.battle
 	import artur.display.battle.eff.BaseEff;
 	import artur.display.battle.eff.EffManajer;
 	import artur.display.battle.eff.TextEff;
+	import artur.units.BotGolem;
 	import artur.util.Amath;
 	import artur.win.WinBattle;
 	import flash.display.MovieClip;
@@ -263,10 +264,16 @@ package artur.display.battle
 		private function onStepMake(is_run:Boolean):void 
 		{
 			var st:Node = path.shift();
+			if (WinBattle.currUnit is BotGolem)
+			{
+				this.step = 14;
+			}
+			else
+				this.step = 9
 			if (is_run)
 			{
-				this.speedX = (path[0].x - st.x) / 10;
-				this.speedY = (path[0].y - st.y) / 10;
+				this.speedX = (path[0].x - st.x) / (this.step + 1);
+				this.speedY = (path[0].y - st.y) / (this.step + 1);
 				if (this.speedX < 0)
 					this.unit.scaleX = -1;
 				else
@@ -276,7 +283,7 @@ package artur.display.battle
 				if(LifeManajer.bin)
 					LifeManajer.unpateCurrMove(cur_obj.m.u.t, cur_obj.m.u.p);
 			}
-			this.step = 9;
+			
 		}
 		
 		private function onAttack(e:Event):void 

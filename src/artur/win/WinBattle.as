@@ -265,18 +265,14 @@ package artur.win
 			}
 			else
 			{
-				var tim1:Timer;;
-				if (obj.t == 2)
+				if (obj.t == 2 || obj.t == 3)
 				{
-					tim1 = new Timer(470, 1);
-					
+					var tim1:Timer;;
+					if (obj.t == 2) tim1 = new Timer(470, 1);
+					else if (obj.t == 3) tim1 = new Timer(100, 1);
+					tim1.addEventListener(TimerEvent.TIMER_COMPLETE, function onTimCompl(e:TimerEvent):void { tim1.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimCompl); hurt_unit.gotoAndPlay("hurt") } );
+					tim1.start();
 				}
-				else if (obj.t == 3)
-				{
-					tim1 = new Timer(100, 1);
-				}
-				tim1.addEventListener(TimerEvent.TIMER_COMPLETE, function onTimCompl(e:TimerEvent):void { tim1.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimCompl); hurt_unit.gotoAndPlay("hurt") } );
-				tim1.start();
 			}
 		}
 		
@@ -548,6 +544,7 @@ package artur.win
 		
 		static public function makeUltimate(whom:int):void 
 		{
+			WinBattle.inst.removeUltEvents();
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, WinBattle.onUltimateResult);
 			data.sendData(COMMANDS.ULTIMATE, whom.toString(), true);
@@ -558,6 +555,7 @@ package artur.win
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.res != null)
 			{
+				
 				WinBattle.inst.getControlAfterUlt(false);
 			}
 		}
