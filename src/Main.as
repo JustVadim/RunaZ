@@ -18,7 +18,7 @@ package
 		public var app:App;
 		private var mcOff:mcOffSide = new mcOffSide();
 		public var chat:ChatBasic;
-		
+	
 		
 		public function Main():void 
 		{
@@ -28,6 +28,7 @@ package
 		
 		private function init(e:Event = null):void 
 		{
+			
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			UserStaticData.flash_vars = stage.loaderInfo.parameters as Object;
 			if (UserStaticData.flash_vars['api_id'])
@@ -59,7 +60,7 @@ package
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			stage.addChild(this.chat = new ChatBasic());
-			this.addChild(this.app = new App());
+			this.addChild(this.app = new App(this.stage));
 			this.addChild(this.mcOff);
 			stage.addChild(new movieMonitor());
 		}

@@ -7,9 +7,11 @@ package artur
 	import artur.display.LockSpr;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
+	import artur.util.RemindCursors;
 	import artur.util.SoundManager;
 	import artur.win.WinManajer;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
@@ -43,8 +45,8 @@ package artur
 		public static var btnRoot:BaseButton ;
 		public static var info:InfoWin = new InfoWin();
 		public static var lock:LockSpr = new LockSpr();
-		
-		public function App() 
+		public static var cursor:RemindCursors = new RemindCursors();
+		public function App(stg:Stage) 
 		{
 			sound.addSound('cnock', new s_Cnock());
 			sound.addSound('move', new s_Move());
@@ -82,6 +84,10 @@ package artur
 			closedDialog = new CloseDialog();
 			btnRoot = new BaseButton(14); btnRoot.x = 400; btnRoot.y = 10;
 			btnRoot.addEventListener(MouseEvent.CLICK, onRoot);
+			cursor.addCursor(mcCursorArrow, 'arr');
+			cursor.addCursor(mcCursorHand, 'hand');
+			cursor.changeCursor('arr');
+			cursor.setButtonCursor('arr', 'hand', stg);		
 		}
 		
 		private function onRoot(e:MouseEvent):void 
@@ -103,6 +109,7 @@ package artur
 			info.update();
 			winManajer.update();
 			UnitCache.update();
+			spr.addChild(cursor);
 		}
 		public static function clear():void
 		{
