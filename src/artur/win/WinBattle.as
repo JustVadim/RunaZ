@@ -219,7 +219,9 @@ package artur.win
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 					break;
 				case 2:
-					
+					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
+					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y + 25, 3);
 					break;
 				case 3:
 					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
@@ -262,8 +264,18 @@ package artur.win
 			}
 			else
 			{
-				if (obj.t == 2 || obj.t == 3)
-					hurt_unit.gotoAndPlay("hurt");
+				var tim1:Timer;;
+				if (obj.t == 2)
+				{
+					tim1 = new Timer(470, 1);
+					
+				}
+				else if (obj.t == 3)
+				{
+					tim1 = new Timer(100, 1);
+				}
+				tim1.addEventListener(TimerEvent.TIMER_COMPLETE, function onTimCompl(e:TimerEvent):void { tim1.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimCompl); hurt_unit.gotoAndPlay("hurt") } );
+				tim1.start();
 			}
 		}
 		
