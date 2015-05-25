@@ -219,6 +219,7 @@ package artur.win
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 					break;
 				case 2:
+					App.sound.playSound("eff_arrow", App.sound.onVoice, 1);
 					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y + 25, 3);
