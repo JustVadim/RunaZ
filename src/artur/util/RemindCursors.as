@@ -1,6 +1,7 @@
 package artur.util 
 {
 	import artur.display.BaseButton;
+	import fl.text.TLFTextField;
 	import flash.display.*;
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -165,6 +166,8 @@ package artur.util
 		
 		private function mouseOver(e:MouseEvent):void 
 		{
+			if (e.target is  TLFTextField)
+			return;
 			if (e.target is btnCursorClass || e.target is BaseButton ) {
 				changeCursor(btnCursor);
 			} else {
