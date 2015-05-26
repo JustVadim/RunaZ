@@ -40,14 +40,38 @@ package artur.win
 				btn.x = xps[i] ; btn.y = yps[i];
 				btn.name = names[i];
 				btns.push(btn);
-				btn.addEventListener(MouseEvent.CLICK, clickOnBtn);
 				btn.mouseChildren = false;
 				btn.tabChildren = false;
 				btn.tabEnabled = false;
 				btn.gotoAndStop(1);
 				btn.buttonMode = true;
+				btn.addEventListener(MouseEvent.CLICK, clickOnBtn);
+				btn.addEventListener(MouseEvent.MOUSE_OVER, onOverBtn);
+				btn.addEventListener(MouseEvent.MOUSE_OUT, onOutBtn);
+				btn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtn);
+				btn.addEventListener(MouseEvent.MOUSE_UP, onUpBtn);
 			}
 			
+		}
+		
+		private function onUpBtn(e:MouseEvent):void 
+		{
+			MovieClip(e.target).gotoAndStop(2);
+		}
+		
+		private function onDownBtn(e:MouseEvent):void 
+		{
+			MovieClip(e.target).gotoAndStop(3);
+		}
+		
+		private function onOutBtn(e:MouseEvent):void 
+		{
+			MovieClip(e.target).gotoAndStop(1);
+		}
+		
+		private function onOverBtn(e:MouseEvent):void 
+		{
+			MovieClip(e.target).gotoAndStop(2);
 		}
 		
 		private function clickOnBtn(e:MouseEvent):void 

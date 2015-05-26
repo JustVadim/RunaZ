@@ -4,7 +4,7 @@
 	
 	public class UserStaticData 
 	{
-		public static const server_ip:String = "192.168.0.198";
+		public static const server_ip:String = "192.168.1.198";
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
 		public static var id:String = "5";
