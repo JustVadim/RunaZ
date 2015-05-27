@@ -57,7 +57,6 @@ package artur.display
 			this.addSkillListener(this.mcText.sk_miss);
 			this.addSkillListener(this.mcText.sk_return);
 			this.addSkillListener(MovieClip(this.mcText.sk_ult));
-			
 			this.mcText.sk_ult.gotoAndStop(this.index + 1);
 			this.mcText.sk_ult.txt.text = String(1);
 		}
@@ -129,7 +128,6 @@ package artur.display
 			}
 			else
 			{
-				
 				//dialog pokupki deneg
 			}
 		}
@@ -152,13 +150,16 @@ package artur.display
 		
 		public function init():void
 		{
-			 unit = UnitCache.getUnit(unitType);
-			 unit.init(this);
-			 this.addChild(MovieClip(unit));
-			 unit.x = 50; unit.y = 95;
-			 this.addEventListener(MouseEvent.ROLL_OVER, over);
-			 this.addEventListener(MouseEvent.ROLL_OUT, out);
-			 
+			unit = UnitCache.getUnit(unitType);
+			unit.init(this);
+			this.addChild(MovieClip(unit));
+			unit.x = 50; unit.y = 95;
+			this.addEventListener(MouseEvent.MOUSE_OVER, over);
+			this.addEventListener(MouseEvent.MOUSE_OUT, out);
+			this.addEventListener(MouseEvent.CLICK, this.onBtn);
+			this.buttonMode = true;
+			
+			Report.addMassage(this.buttonMode + " " + this.mouseEnabled)
 		}
 		
 		public function update():void

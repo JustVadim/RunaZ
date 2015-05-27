@@ -163,7 +163,7 @@ package artur.util
 		private function mouseOver(e:MouseEvent):void 
 		{
 			var mc:Object = e.target;	
-			if (('buttonMode' in mc) && mc.buttonMode==true || mc is BaseButton)
+			if (('buttonMode' in mc) && mc.buttonMode == true || mc is BaseButton)
 			{
 				changeCursor(btnCursor);
 			}

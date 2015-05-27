@@ -61,6 +61,7 @@ package artur.win
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
+			
 			WinBattle.hero_inv = new HeroInventar(true);
 			inst = this;
 			arrow.gotoAndStop(1);

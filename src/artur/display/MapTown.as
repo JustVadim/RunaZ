@@ -2,7 +2,7 @@ package artur.display
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
+
 	public class MapTown extends Sprite
 	{
 		  public static var HOLD_TOWN:int = 1;
