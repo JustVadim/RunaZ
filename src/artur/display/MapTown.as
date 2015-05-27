@@ -1,9 +1,8 @@
 package artur.display 
 {
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.events.MouseEvent;
-	import report.Report;
+.
+
+
 	/**
 	 * ...
 	 * @author art

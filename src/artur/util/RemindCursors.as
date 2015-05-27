@@ -166,8 +166,7 @@ package artur.util
 		
 		private function mouseOver(e:MouseEvent):void 
 		{
-			if (e.target is  TLFTextField)
-			return;
+			
 			if (e.target is btnCursorClass || e.target is BaseButton ) {
 				changeCursor(btnCursor);
 			} else {
