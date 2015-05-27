@@ -79,6 +79,8 @@ package artur
 			sound.addSound('skillUp', new upSkill());
 			sound.addSound('over2', new Over2);
 			sound.addSound('click2', new CLick2);
+			sound.addSound('golemAtack', new GolemAtack);
+			sound.addSound('golemHurt', new GolemHurt );
 			spr = Sprite(this);
 			winManajer = new WinManajer();
 			this.addEventListener(Event.ENTER_FRAME, update);

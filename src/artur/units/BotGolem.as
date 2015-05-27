@@ -32,7 +32,7 @@ package artur.units
 		 private var parts_of_parts:Array;
 		 
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
-		 private static var sounds:Array = [  ];
+		 private static var sounds:Array = [{id:'fow2',frame:93},{id:'golemHurt',frame:160},{id:'golemAtack',frame:83}, { id:'bot1_fs1', frame:55 }, { id:'bot1_fs2', frame:76 },{id:'golemHurt',frame:105}];
 		 private var isOver:Boolean;
 		 
 		public function BotGolem() 
