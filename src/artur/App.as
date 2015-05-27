@@ -90,7 +90,7 @@ package artur
 			btnRoot = new BaseButton(14); btnRoot.x = 400; btnRoot.y = 10;
 			btnRoot.addEventListener(MouseEvent.CLICK, onRoot);
 			cursor.addCursor(mcCursorArrow, 'arr');
-			cursor.addCursor(mcCursorHand, 'hand');
+			cursor.addCursor(mcCursorHand, 'hand');		
 			cursor.changeCursor('arr');
 			cursor.setButtonCursor('arr', 'hand', stg);	
 			

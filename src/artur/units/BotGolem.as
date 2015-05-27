@@ -10,8 +10,8 @@ package artur.units
 	
 	public class BotGolem extends GolemDoll
 	{
-		 private var heads        :Array ;
-		 private var bodys        :Array ;
+		 private var heads        :Array;
+		 private var bodys        :Array;
 		
 		 private var hends1R    :Array;
 		 private var hends2R    :Array;
