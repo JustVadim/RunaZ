@@ -170,10 +170,6 @@ package artur.util
 			var mc:Object = e.target;	
 			if (('buttonMode' in mc) && mc.buttonMode==true || mc is BaseButton)
 			{
-				if (mc is SimpleButton)
-				{
-					Report.addMassage(mc.name);
-				}
 				changeCursor(btnCursor);
 			}
 			else

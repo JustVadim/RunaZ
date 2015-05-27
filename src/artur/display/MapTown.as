@@ -1,13 +1,8 @@
 package artur.display 
 {
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class MapTown extends Sprite
 	{
 		  public static var HOLD_TOWN:int = 1;
