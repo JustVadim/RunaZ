@@ -76,6 +76,9 @@ package artur
 			sound.addSound('battle_cry', new BattleCry());
 			sound.addSound('eff_heal', new s_effHill());
 			sound.addSound('eff_arrow', new SoundEffArrow());
+			sound.addSound('skillUp', new upSkill());
+			sound.addSound('over2', new Over2);
+			sound.addSound('click2', new CLick2);
 			spr = Sprite(this);
 			winManajer = new WinManajer();
 			this.addEventListener(Event.ENTER_FRAME, update);
@@ -87,7 +90,8 @@ package artur
 			cursor.addCursor(mcCursorArrow, 'arr');
 			cursor.addCursor(mcCursorHand, 'hand');
 			cursor.changeCursor('arr');
-			cursor.setButtonCursor('arr', 'hand', stg);		
+			cursor.setButtonCursor('arr', 'hand', stg);	
+			
 		}
 		
 		private function onRoot(e:MouseEvent):void 

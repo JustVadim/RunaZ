@@ -76,6 +76,7 @@ package artur.win
 		
 		private function clickOnBtn(e:MouseEvent):void 
 		{
+			App.sound.playSound('click2', App.sound.onVoice, 1);
 			switch(e.currentTarget.name)
 			{
 				case 'map':

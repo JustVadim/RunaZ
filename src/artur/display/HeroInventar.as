@@ -460,8 +460,9 @@ package artur.display
 		
 		private function onBuffClick(e:MouseEvent):void 
 		{
-			var mc:MovieClip = MovieClip(e.currentTarget);
-			UserStaticData.hero.units[WinCastle.currSlotClick].fs--;
+			 var mc:MovieClip = MovieClip(e.currentTarget);
+			 UserStaticData.hero.units[WinCastle.currSlotClick].fs--;
+		 	 App.sound.playSound('skillUp', App.sound.onVoice, 1);
 			switch(true)
 			{
 				case(mc == this.mcText.sk_crit):
@@ -497,10 +498,12 @@ package artur.display
 		private function onBuffOver(e:MouseEvent):void 
 		{
 			var mc:MovieClip = MovieClip(e.currentTarget);
+			App.sound.playSound('over2', App.sound.onVoice, 1);
 			if (this.mcText.mcFreeskils.visible)
 			{
 				App.btnOverFilter.color = 0xFFFFFF;
 				mc.filters = [App.btnOverFilter];
+				
 			}
 			var p:Point = mc.localToGlobal(new Point(0, 0));
 			var descr:String = "";
@@ -594,6 +597,7 @@ package artur.display
 			{
 				UserStaticData.hero.silver = obj.s;
 				WinCastle.txtCastle.txtSilver.text = String(obj.s);
+				
 				delete(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType]);
 				App.sound.playSound('gold', App.sound.onVoice, 1);
 				WinCastle.getCastle().slots[WinCastle.currSlotClick].unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
