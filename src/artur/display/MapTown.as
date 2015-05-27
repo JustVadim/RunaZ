@@ -1,6 +1,8 @@
 package artur.display 
 {
-.
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+
 
 
 	/**
