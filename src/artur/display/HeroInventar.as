@@ -40,7 +40,7 @@ package artur.display
 		public var heroType:int;
 		public var itemType:int;
 		public var itemID:int;
-		public var parts:Array = [currHead, currBody, currBoot, currHendTop, currHendDown,currInv1,currInv2,currInv3,currInv4];
+		public var parts:Array = [currHead, currBody, currBoot, currHendTop, currHendDown, currInv1, currInv2, currInv3, currInv4];
 		
 		public var bin:Boolean = false;
 		private var mcText:mcTextHeroInventar = new mcTextHeroInventar();
@@ -53,6 +53,7 @@ package artur.display
 			this.tabEnabled = false;
 			this.tabChildren = false;
 			this.battle_init = battle_init;
+			
 			if (this.battle_init)
 			{
 				this.addChild(WinBattle.inv_bg);
