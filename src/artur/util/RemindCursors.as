@@ -154,11 +154,6 @@ package artur.util
 			cursors = [];
 		}
 		
-		// PRIVATE 
-		
-		/**
-		 * Создает обработчик события для кнопкок
-		 */
 		private function createButtonListeners():void 
 		{
 			_stage.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
