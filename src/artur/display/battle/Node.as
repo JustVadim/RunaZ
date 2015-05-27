@@ -265,7 +265,6 @@ package artur.display.battle
 					
 				}
 			}
-			Report.addMassage(key);
 			WinBattle.makeUltimate(key);
 		}
 		

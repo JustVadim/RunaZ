@@ -36,13 +36,42 @@ package artur.win
 			var names:Array = ['bank','top','castle','arena','shop','map'];
 			for (var i:int = 0; i < indxBtn.length; i++) 
 			{
-				var btn:SimpleButton= new indxBtn[i]();
+				var btn:MovieClip= new indxBtn[i]();
 				btn.x = xps[i] ; btn.y = yps[i];
 				btn.name = names[i];
 				btns.push(btn);
+				btn.mouseChildren = false;
+				btn.tabChildren = false;
+				btn.tabEnabled = false;
+				btn.gotoAndStop(1);
+				btn.buttonMode = true;
 				btn.addEventListener(MouseEvent.CLICK, clickOnBtn);
+				btn.addEventListener(MouseEvent.MOUSE_OVER, onOverBtn);
+				btn.addEventListener(MouseEvent.MOUSE_OUT, onOutBtn);
+				btn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtn);
+				btn.addEventListener(MouseEvent.MOUSE_UP, onUpBtn);11111
 			}
 			
+		}
+		
+		private function onUpBtn(e:MouseEvent):void 
+		{
+			MovieClip(e.target).gotoAndStop(2);
+		}
+		
+		private function onDownBtn(e:MouseEvent):void 
+		{
+			MovieClip(e.target).gotoAndStop(3);
+		}
+		
+		private function onOutBtn(e:MouseEvent):void 
+		{
+			MovieClip(e.target).gotoAndStop(1);
+		}
+		
+		private function onOverBtn(e:MouseEvent):void 
+		{
+			MovieClip(e.target).gotoAndStop(2);
 		}
 		
 		private function clickOnBtn(e:MouseEvent):void 
@@ -72,7 +101,6 @@ package artur.win
 		private function onRes(e:DataExchangeEvent):void 
 		{
 			DataExchange(e.target).removeEventListener(e.type, onRes);
-			Report.addMassage(e.result);
 			App.lock.init(e.result);
 		}
 		public function init():void
@@ -93,15 +121,15 @@ package artur.win
 		}
 		private function updateBar():void
 		{
-			var maxEn:int = UserStaticData.hero.skills.vitality;
-			var currEn:int = UserStaticData.hero.cur_vitality;
-			var maxExp:int = UserStaticData.levels[UserStaticData.hero.level]; // <--
-			var currExp:int = UserStaticData.hero.exp;//UserStaticData.hero.exp;
+			var hero:Object = UserStaticData.hero;
+			var maxEn:int = hero.skills.vitality;
+			var currEn:int = hero.cur_vitality;
+			var maxExp:int = UserStaticData.levels[hero.level]; // <--
+			var currExp:int = hero.exp;//UserStaticData.hero.exp;
 			mcText.txtExp.text = String(currExp + '/' + maxExp);
 			mcText.txtVit.text = String(currEn + '/' + maxEn);
 			mcText.expBar.gotoAndStop(int(currExp /maxExp* 100) + 1);
 			mcText.vitBar.gotoAndStop(int(maxEn / currEn * 100) + 1);
-			//mcText.txtLevel = String(UserStaticData.hero.level);
 		}
 		public function update():void
 		{

@@ -10,6 +10,7 @@ package artur.util
 	import flash.geom.Point;
 	import flash.ui.*;
 	import flash.display.SimpleButton;
+	import report.Report;
 	
 	/**
 	 * ...
@@ -166,22 +167,25 @@ package artur.util
 		
 		private function mouseOver(e:MouseEvent):void 
 		{
-			
-			if (e.target is btnCursorClass || e.target is BaseButton ) {
+			var mc:Object = e.target;	
+			if (('buttonMode' in mc) && mc.buttonMode==true || mc is BaseButton)
+			{
 				changeCursor(btnCursor);
-			} else {
-				if (mainCursor != "") {
+			}
+			else
+			{
+				if (mainCursor != "") 
+				{
 					changeCursor(mainCursor);
-				} else {
+				} 
+				else 
+				{
 					Mouse.cursor = "arrow";
 				}
 			}
+			
 		}
 		
-		
-		/**
-		 *  SET & GET
-		 */
 		
 		public function get currentCursorName():String { return Mouse.cursor; }
 		public function get numCursors():int { return cursors.length; }
