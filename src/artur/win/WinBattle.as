@@ -291,7 +291,6 @@ package artur.win
 		
 		private function endBattle(obj:Object):void 
 		{
-			Report.addMassage(JSON2.encode(obj));
 			this.grid.clearNodesControl();
 			var mc:MovieClip;
 			if (obj.is_w)
@@ -315,6 +314,7 @@ package artur.win
 					var unit_data:Object = UserStaticData.hero.units[i];
 					var unit:Object = UnitCache.getUnit(Slot.namesUnit[unit_data.t]);
 					var living:Boolean = (obj.st[i].d == 0);
+					unit.itemUpdate(Slot.getUnitItemsArray(unit_data))
 					unit.init(blank);
 					unit.x = 25; unit.y = 50;
 					this.unitsInWin.push(unit);

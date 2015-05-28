@@ -67,8 +67,6 @@ package artur.display
 						item_call.init(UserStaticData.hero.chest[obj].c[102], UserStaticData.hero.chest[obj].c[103], UserStaticData.hero.chest[obj].id);
 						item_call.x = mcCall(grid[obj]).x;
 						item_call.y = mcCall(grid[obj]).y;
-						//item_call.x += item_call.width / 2;
-						//item_call.y += item_call.height / 2;
 						item_call.buttonMode = true;
 						item_call.mouseChildren = false;
 						item_call.name = String(obj);
@@ -295,11 +293,10 @@ package artur.display
 		public function sellItem():void
 		{
 			App.lock.init();
-			 var data1:DataExchange = new DataExchange();
-			 data1.addEventListener(DataExchangeEvent.ON_RESULT, this.chestSell);
-			 var send_obj1:Object = {cn:upped_item_num};
+			var data1:DataExchange = new DataExchange();
+			data1.addEventListener(DataExchangeEvent.ON_RESULT, this.chestSell);
+			var send_obj1:Object = {cn:upped_item_num};
 			data1.sendData(COMMANDS.SELL_ITEM_CHEST, upped_item_num.toString(), true);
-			
 		}
 		
 		private function chestSell(e:DataExchangeEvent):void 
@@ -335,6 +332,7 @@ package artur.display
 				this.putItemOnOldPlace(upped_item_call);
 			}
 		}
+		
 		private function fromChestToUnitRes(e:DataExchangeEvent):void 
 		{
 			DataExchange(e.currentTarget).removeEventListener(e.type, fromChestToUnitRes);
@@ -351,11 +349,6 @@ package artur.display
 				this.frees();
 				this.init();
 				WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(  Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
-				
-				
-				/*Slot.getUnitItemsArray(UserStaticData.hero.units[this.name])
-				Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).getUnitItemsArray()*/
-				
 				WinCastle.inventar.init1(UserStaticData.hero.units[WinCastle.currSlotClick], false);
 			}
 			else
@@ -384,8 +377,8 @@ package artur.display
 							MovieClip(WinCastle.inventar.guns1[WinCastle.inventar.heroType]).yRect.visible = false;
 							break;
 						case 6:
-								MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]).greenRect.visible = false;
-								MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]).yRect.visible = false;
+							MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]).greenRect.visible = false;
+							MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]).yRect.visible = false;
 							break;
 					}
 				}
@@ -412,14 +405,12 @@ package artur.display
 			else
 			{
 				App.lock.init('Error: ' + obj.error);
-				Report.addMassage("error: " + obj.error);
 				this.putItemOnOldPlace(ItemCall(this.grid[this.upped_item_num]));
 			}
 		}
 		
 		public function putItemOnOldPlace(ic:ItemCall):void
 		{
-			
 			App.sound.playSound(ItemCall.sounds[UserStaticData.hero.chest[this.upped_item_num].c[103]][this.upped_item_id-1],App.sound.onVoice,1 );
 			var cell_y:int = upped_item_num / this.wd;
 			var cell_x:int = upped_item_num - cell_y * this.wd;
@@ -478,33 +469,22 @@ package artur.display
 				var cell_y:int = indexTopCall / this.wd;
 				var cell_x:int = indexTopCall - cell_y * this.wd;
 				var item:Object;
-				if (is_hero)
-				{
-					item = UserStaticData.hero.units[WinCastle.currSlotClick].it[WinCastle.inventar.itemType];
-				}
-				else
-				{
-					item = UserStaticData.hero.chest[this.upped_item_num];
-				}
+				if (is_hero) {item = UserStaticData.hero.units[WinCastle.currSlotClick].it[WinCastle.inventar.itemType];}
+				else {item = UserStaticData.hero.chest[this.upped_item_num];}
 				if (this.isFreeCells(cell_x, cell_y, item.c[104], item.c[105]))
+				{
+					mcCall(grid[indexTopCall]).gotoAndStop(2);
+					for (var i:int = 0; i < item.c[105]; i++) 
 					{
-						mcCall(grid[indexTopCall]).gotoAndStop(2);
-						
-						for (var i:int = 0; i < item.c[105]; i++) 
+						for (var j:int = 0; j < item.c[104]; j++)
 						{
-							for (var j:int = 0; j < item.c[104]; j++)
-							{
-								var num:int = cell_x + j + ((cell_y + i) * this.wd);
-								mcCall(grid[num]).gotoAndStop(2);
-							}
+							var num:int = cell_x + j + ((cell_y + i) * this.wd);
+							mcCall(grid[num]).gotoAndStop(2);
 						}
 					}
-					else
-					{
-						mcCall(grid[indexTopCall]).gotoAndStop(3);
-					}
+				}
+				else {mcCall(grid[indexTopCall]).gotoAndStop(3);}
 			}
-			
 			this.cleared = false;
 		}
 		
@@ -523,15 +503,8 @@ package artur.display
 				}
 				return true;
 			}
-			else
-			{
-				return false;	
-			}
+			else {return false;}
 		}
-
-		
-		
 		
 	}
-
 }

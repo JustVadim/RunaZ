@@ -54,6 +54,11 @@ package artur.display
 			this.tabChildren = false;
 			this.battle_init = battle_init;
 			
+			for (var k:int = 0; k < parts.length; k++) 
+			{
+				MovieClip(parts[k]).buttonMode = true;
+				MovieClip(parts[k]).mouseChildren = false;
+			}
 			if (this.battle_init)
 			{
 				this.addChild(WinBattle.inv_bg);
@@ -83,8 +88,9 @@ package artur.display
 				this.setItem(guns1[i], 192, 165.7, 5)
 				this.setItem(guns2[i], 192, 165.7, 6)
 			}
-			currInv1.x = 40; 
-			currInv2.x = currInv1.x ; currInv3.x = currInv2.x ; currInv4.x = currInv3.x;
+			
+			currInv1.x = currInv2.x = currInv3.x = currInv4.x = 40; 
+			
 			if (!battle_init)
 			{
 				this.addEventsToBuffBtn(this.mcText.sk_crit);
@@ -123,14 +129,12 @@ package artur.display
 			{
 				Mouse.hide();
 				App.spr.addChild(WinCastle.mcSell); WinCastle.mcSell.gotoAndPlay(1);
-				
 				this.itemType = int(e.currentTarget.name);
 				this.itemID = int(e.currentTarget.currentFrame);
-				
 				call= ItemCall.getCall();
 				call.init(heroType, int(e.currentTarget.name), e.currentTarget.currentFrame - 1);
-				call.x = App.spr.mouseX  - call.width/2 +8;
-				call.y = App.spr.mouseY - call.height / 2 +8;
+				call.x = App.spr.mouseX  - call.width / 2 + 8;
+				call.y = App.spr.mouseY - call.height / 2 + 8;
 				call.startDrag();
 				call.addEventListener(MouseEvent.MOUSE_UP, up);
 				call.addEventListener(MouseEvent.MOUSE_MOVE, move);
@@ -147,19 +151,18 @@ package artur.display
 			call.frees();
 			Mouse.show();
 			call.stopDrag();
-			if (this.itemType != 5)
+			if (this.itemType != 5 && this.itemType != 6) { MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);}
+			else 
 			{
-				 MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);
-			}
-			else
-			{
-				  MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
+				if(this.itemType == 5)
+					MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
+				else
+					MovieClip(guns2[heroType]).gotoAndStop(this.itemID);
 			}
 		}
 		
 		private function move(e:MouseEvent):void 
 		{
-	
 			e.updateAfterEvent();
 			if (e.currentTarget.dropTarget!=null && e.currentTarget.dropTarget.parent != null)
 			{
