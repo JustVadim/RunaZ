@@ -9,10 +9,7 @@ package artur.display
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class ShopInventar extends mcShopInventar
 	{
 		 private var heads:Array           = PrepareGr.creatBms(new Shop_Head(),true)
@@ -32,7 +29,6 @@ package artur.display
 		public function ShopInventar() 
 		{
 			btnClosed.addEventListener(MouseEvent.CLICK, closClick);
-			
 		}
 		
 		private function closClick(e:MouseEvent):void 
@@ -41,7 +37,8 @@ package artur.display
 		}
 		public function init(itemType:int=0,unitType:int=0 ):void
 		{
-			this.itemType = itemType;
+			App.spr.addChild(this);
+			/*this.itemType = itemType;
 			this.unitType = unitType;
 			
 			if (itemType < 5)
@@ -89,20 +86,20 @@ package artur.display
 				 img.buttonMode = true;
 			 }
 			 this.addChild(btnClosed);
-             App.spr.addChild(this);
+             */
 		}
 		
 		private function onOut(e:MouseEvent):void 
 		{
-			e.currentTarget.scaleX = 1;
+			/*e.currentTarget.scaleX = 1;
 			e.currentTarget.scaleY = 1;
 			e.currentTarget.filters  = [];
-			App.info.frees();
+			App.info.frees();*/
 		}
 		
 		private function onOver(e:MouseEvent):void 
 		{
-			e.currentTarget.scaleX  = 1.1;
+			/*e.currentTarget.scaleX  = 1.1;
 			e.currentTarget.scaleY  = 1.1;
 			App.btnOverFilter.color = 0xFBFBFB;
 			e.currentTarget.filters   = [App.btnOverFilter];
@@ -110,12 +107,12 @@ package artur.display
 			if (int(e.currentTarget.name) < 4)
 				App.info.init(e.currentTarget.x + e.currentTarget.width, e.currentTarget.y +e.currentTarget.height , {title:"Шмотка", type:2, chars:obj.c, bye:true});//236, 115, "SomeItem", true, true, obj.c)
 			else
-				App.info.init(e.currentTarget.x  - 236 , e.currentTarget.y +e.currentTarget.height ,{title:"Шмотка", type:2, chars:obj.c, bye:true});
+				App.info.init(e.currentTarget.x  - 236 , e.currentTarget.y +e.currentTarget.height ,{title:"Шмотка", type:2, chars:obj.c, bye:true});*/
 		} 
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			var _gold:int = UserStaticData.hero.gold;
+			/*var _gold:int = UserStaticData.hero.gold;
 			var _silver:int = UserStaticData.hero.silver;
 			var gold:int = UserStaticData.magazin_items [unitType] [itemType] [int(e.currentTarget.name)].c[101];
 			var silver:int =  UserStaticData.magazin_items [unitType] [itemType] [int(e.currentTarget.name)].c[100];
@@ -128,7 +125,7 @@ package artur.display
 				 App.byeWin.init("Желаю купить", "hren", gold, silver, int(e.currentTarget.name), 1, itemType);
 			 }
 			 
-			 
+			 */
 			
 		}
 		public function update():void
@@ -137,7 +134,7 @@ package artur.display
 		}
 		public function frees():void
 		{
-			for (var i:int = 0; i < currPart.length; i++) 
+			/*for (var i:int = 0; i < currPart.length; i++) 
 			{
 				var img:Sprite = currPart[i];
 				 this.removeChild(img);
@@ -145,7 +142,7 @@ package artur.display
 				 img.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
 				 img.removeEventListener(MouseEvent.MOUSE_OUT, onOut);
 			}
-			App.spr.removeChild(this);
+			App.spr.removeChild(this);*/
 		}
 		
 	}

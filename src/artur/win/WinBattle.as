@@ -14,6 +14,7 @@ package artur.win
 	import artur.RasterClip;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
+	import artur.util.RemindCursors;
 	import com.greensock.events.LoaderEvent;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
@@ -71,7 +72,7 @@ package artur.win
 			WinBattle.skill_pannel.x = 581; WinBattle.skill_pannel.y = 360;
 			WinBattle.ult_btn.x = 741; WinBattle.ult_btn.y = 365;
 			WinBattle.ult_btn.stop();
-			WinBattle.ult_btn.buttonMode = true;
+			WinBattle.ult_btn.buttonMode = WinBattle.ult_btn.mouseChildren = WinBattle.ult_btn.tabEnabled = WinBattle.ult_btn.tabChildren = this.chekAvtoboi.tabChildren = this.chekAvtoboi.tabEnabled = this.chekLifeBar.tabEnabled = this.chekLifeBar.tabChildren = false;
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -435,14 +436,15 @@ package artur.win
 		 
 		private function onUltClick(e:MouseEvent):void 
 		{
-			if (!this.ult_clicked)
+			if (!RemindCursors.is_ult)
 			{
 				if (WinBattle.atackNode.parent)
 				{
 					WinBattle.atackNode.parent.removeChild(WinBattle.atackNode);
 					WinBattle.atackNode.currNode = null;
 				}
-				this.ult_clicked = true;
+				RemindCursors.is_ult = true;
+				App.cursor.changeCursor("ult");
 				this.grid.clearNodesControl();
 				var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
 				var unit_type:int = (WinBattle.myTeam == 0)? WinBattle.bat.t1_u[cus.p].t:WinBattle.bat.t2_u[cus.p].t;
@@ -450,7 +452,8 @@ package artur.win
 			}
 			else
 			{
-				this.ult_clicked = false;
+				RemindCursors.is_ult = false;
+				App.cursor.changeCursor(App.cursor.mainCursor);
 				this.addUltEvents();
 				this.getControlAfterUlt(true);
 			}
@@ -553,10 +556,11 @@ package artur.win
 		
 		private static function onUltimateResult(e:DataExchangeEvent):void 
 		{
+			RemindCursors.is_ult = false;
+			App.cursor.changeCursor(App.cursor.mainCursor);
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.res != null)
 			{
-				
 				WinBattle.inst.getControlAfterUlt(false);
 			}
 		}

@@ -125,7 +125,7 @@ package artur.display.battle
 					unit.rotation = 0;
 					if (this.is_range)
 					{
-						if (this.type == 2)
+						if (this.type == 2||this.type == 103)
 						{
 							var attack_unit:Object = WinBattle.units[cur_obj.m.u.t][cur_obj.m.u.p];
 							var hurt_unit1:MovieClip  = WinBattle.units[cur_obj.a.u.t][cur_obj.a.u.p];
@@ -165,7 +165,7 @@ package artur.display.battle
 			}
 			else if (this.arrow_anim > 1)
 			{
-				if (type == 2)
+				if (type == 2 || type == 103)
 				{
 					 arrow.x += speedX;
 					 arrow.y += speedY;
@@ -180,7 +180,7 @@ package artur.display.battle
 			{
 				this.arrow_anim = 0;
 				this.unit.dispatchEvent(new Event("ATTACK"));
-				if(type == 2)
+				if(type == 2 || type == 103)
 				{
 					WinBattle.spr.removeChild(this.arrow);
 				}
