@@ -108,10 +108,6 @@ package artur.win
 		
 		public function init():void
 		{
-			Report.addMassage(WinBattle.spr.numChildren + " childrens has winbattle.spr");
-			Report.addMassage("sort array: " + sortArr.length);
-			Report.addMassage("sort array: " + BattleGrid.stones.length);
-			
 			this.unitsInWin = [];
 			this.bin = true;
 			WinBattle.units = [[], []];
@@ -126,7 +122,6 @@ package artur.win
 			this.lifeManajer.init();
 			this.setCurrStep();
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
-			
 		 }
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 

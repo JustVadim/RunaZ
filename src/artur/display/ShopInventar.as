@@ -14,20 +14,27 @@ package artur.display
 	{
 		 private var heads:Array           = PrepareGr.creatBms(new Shop_Head(),true)
 		 private var bodys:Array           = PrepareGr.creatBms(new Shop_Bodys(),true) 
-		 private var boots:Array            = PrepareGr.creatBms(new Shop_Boots(),true)
-		 private var hends_top:Array     =PrepareGr.creatBms(new Shop_HendTop(),true)
-		 private var hends_down:Array  =PrepareGr.creatBms(new Shop_HendDown,true) 
-		 private var guns1:Array            =	[	PrepareGr.creatBms(new Shop_Gun, true),	PrepareGr.creatBms(new Shop_Gun1Pall, true)	, PrepareGr.creatBms(new Shop_Lyk(), true)	,	PrepareGr.creatBms(new Shop_Totem(), true)	];
-		 private var guns2:Array            =	[	[]                                   , 	PrepareGr.creatBms(new Shop_Gun2Pall(),true), []										,	[]											];
-		 private var parts_of_parts:Array = [heads, bodys, boots, hends_top, hends_down];
-		 private var btnClosed:BaseButton = new BaseButton(15);
-		 private var currPart:Array;
-		 private var itemType:int;
-		 private var itemIdex:int;
-		 private var unitType:int;
-		 //private var names:Array = [['Nhasd'],['Nhasd'],['Nhasd'],['Nhasd'],['Nhasd'],['Nhasd']];
+		private var boots:Array            = PrepareGr.creatBms(new Shop_Boots(),true)
+		private var hends_top:Array     =PrepareGr.creatBms(new Shop_HendTop(),true)
+		private var hends_down:Array  =PrepareGr.creatBms(new Shop_HendDown,true) 
+		private var guns1:Array            =	[	PrepareGr.creatBms(new Shop_Gun, true),	PrepareGr.creatBms(new Shop_Gun1Pall, true)	, PrepareGr.creatBms(new Shop_Lyk(), true)	,	PrepareGr.creatBms(new Shop_Totem(), true)	];
+		private var guns2:Array            =	[	[]                                   , 	PrepareGr.creatBms(new Shop_Gun2Pall(),true), []										,	[]											];
+		private var parts_of_parts:Array = [heads, bodys, boots, hends_top, hends_down];
+		private var btnClosed:BaseButton = new BaseButton(15);
+		private var currPart:Array;
+		private var itemType:int;
+		private var itemIdex:int;
+		private var unitType:int;
+		private var scroll_sprite:Sprite = new Sprite();
+		private var bgs_array:Array = new Array();
+
 		public function ShopInventar() 
 		{
+			this.tabEnabled = false;
+			this.tabChildren = false;
+			this.scroll_sprite.mouseEnabled = false;
+			this.scroll.source = this.scroll_sprite;
+			//this.cacheAsBitmap = true;
 			btnClosed.addEventListener(MouseEvent.CLICK, closClick);
 		}
 		
@@ -35,11 +42,14 @@ package artur.display
 		{
 			frees();
 		}
+		
 		public function init(itemType:int=0,unitType:int=0 ):void
 		{
+			
 			App.spr.addChild(this);
-			/*this.itemType = itemType;
+			this.itemType = itemType;
 			this.unitType = unitType;
+			var item_obj:Object;
 			
 			if (itemType < 5)
 			{
@@ -53,8 +63,40 @@ package artur.display
 			{
 				currPart = guns2[unitType];
 			}
+			var h:int = 0;
+			for (var i:int = 1; i <= currPart.length; i++) 
+			{
+				var it_obj:Object = UserStaticData.magazin_items[this.unitType][this.itemType][i];
+				
+				
+				
+				if(it_obj!=null)
+				{
+					var mov:ShopItemBG = this.getBg();
+					var img:Sprite = currPart[i-1];
+					mov.init(this.scroll_sprite, img, it_obj);
+					mov.y = h;
+					h += mov.height;
+				}
+				
+				
+				
+				/*
+				var mov:bgBlankItemShop = new bgBlankItemShop();
+				mov.y = h;
+				mov.gotoAndStop(2);
+				mov.cacheAsBitmap = true;
+				mov.buttonMode = true;
+				mov.mouseChildren = false;
+				h += mov.height;
+				this.scroll_sprite.addChild(mov);*/
+			}
+			
+			this.scroll.update();
 			
 			
+			/*
+			 * 
 		    var wd:Number = currPart.length * (currPart[0].width+5);
 		 	var stX:Number = (800 - wd) / 2;
 			var stY:Number = 180;
@@ -89,6 +131,20 @@ package artur.display
              */
 		}
 		
+		private function getBg():ShopItemBG
+		{
+			for (var i:int = 0; i < bgs_array.length; i++) 
+			{
+				if (ShopItemBG(bgs_array[i]).free)
+				{
+					return bgs_array[i];
+				}
+			}
+			var new_bg:ShopItemBG = new ShopItemBG();
+			bgs_array.push(new_bg);
+			return new_bg;
+		}
+		
 		private function onOut(e:MouseEvent):void 
 		{
 			/*e.currentTarget.scaleX = 1;
@@ -108,7 +164,7 @@ package artur.display
 				App.info.init(e.currentTarget.x + e.currentTarget.width, e.currentTarget.y +e.currentTarget.height , {title:"Шмотка", type:2, chars:obj.c, bye:true});//236, 115, "SomeItem", true, true, obj.c)
 			else
 				App.info.init(e.currentTarget.x  - 236 , e.currentTarget.y +e.currentTarget.height ,{title:"Шмотка", type:2, chars:obj.c, bye:true});*/
-		} 
+		}   
 		
 		private function onClick(e:MouseEvent):void 
 		{
