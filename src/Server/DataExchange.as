@@ -181,6 +181,7 @@ package Server
 									}
 									break;
 							case int(COMMANDS.SEND_MISS_STEP):
+								Report.addMassage("battle step");
 								data_evnt = new DataExchangeEvent(DataExchangeEvent.BATTLE_MASSAGE);
 								data_evnt.result = String(temp_obj.m);
 								socket.dispatchEvent(data_evnt);

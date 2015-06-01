@@ -9,55 +9,76 @@ package artur.display
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class ShopInventar extends mcShopInventar
 	{
 		 private var heads:Array           = PrepareGr.creatBms(new Shop_Head(),true)
 		 private var bodys:Array           = PrepareGr.creatBms(new Shop_Bodys(),true) 
-		 private var boots:Array            = PrepareGr.creatBms(new Shop_Boots(),true)
-		 private var hends_top:Array     =PrepareGr.creatBms(new Shop_HendTop(),true)
-		 private var hends_down:Array  =PrepareGr.creatBms(new Shop_HendDown,true) 
-		 private var guns1:Array            =	[	PrepareGr.creatBms(new Shop_Gun, true),	PrepareGr.creatBms(new Shop_Gun1Pall, true)	, PrepareGr.creatBms(new Shop_Lyk(), true)	,	PrepareGr.creatBms(new Shop_Totem(), true)	];
-		 private var guns2:Array            =	[	[]                                   , 	PrepareGr.creatBms(new Shop_Gun2Pall(),true), []										,	[]											];
-		 private var parts_of_parts:Array = [heads, bodys, boots, hends_top, hends_down];
-		 private var btnClosed:BaseButton = new BaseButton(15);
-		 private var currPart:Array;
-		 private var itemType:int;
-		 private var itemIdex:int;
-		 private var unitType:int;
-		 //private var names:Array = [['Nhasd'],['Nhasd'],['Nhasd'],['Nhasd'],['Nhasd'],['Nhasd']];
+		private var boots:Array            = PrepareGr.creatBms(new Shop_Boots(),true)
+		private var hends_top:Array     =PrepareGr.creatBms(new Shop_HendTop(),true)
+		private var hends_down:Array  =PrepareGr.creatBms(new Shop_HendDown,true) 
+		private var guns1:Array            =	[	PrepareGr.creatBms(new Shop_Gun, true),	PrepareGr.creatBms(new Shop_Gun1Pall, true)	, PrepareGr.creatBms(new Shop_Lyk(), true)	,	PrepareGr.creatBms(new Shop_Totem(), true)	];
+		private var guns2:Array            =	[	[]                                   , 	PrepareGr.creatBms(new Shop_Gun2Pall(),true), []										,	[]											];
+		private var parts_of_parts:Array = [heads, bodys, boots, hends_top, hends_down];
+		private var btnClosed:BaseButton = new BaseButton(15);
+		private var currPart:Array;
+		private var itemType:int;
+		private var itemIdex:int;
+		private var unitType:int;
+		private var scroll_sprite:Sprite = new Sprite();
+		private var bgs_array:Array = new Array();
+
 		public function ShopInventar() 
 		{
+			this.tabEnabled = this.tabChildren = this.scroll_sprite.mouseEnabled = false; 
+			this.scroll.source = this.scroll_sprite;
 			btnClosed.addEventListener(MouseEvent.CLICK, closClick);
-			
 		}
 		
 		private function closClick(e:MouseEvent):void 
 		{
 			frees();
 		}
+		
 		public function init(itemType:int=0,unitType:int=0 ):void
 		{
+			App.spr.addChild(this);
 			this.itemType = itemType;
 			this.unitType = unitType;
-			
-			if (itemType < 5)
+			switch(true)
 			{
-			    currPart = parts_of_parts [itemType];
+				case(itemType < 5):
+					currPart = parts_of_parts [itemType];
+				break;
+				case (itemType == 5):
+					currPart = guns1[unitType];
+				break;
+				case (itemType == 6):
+					currPart = guns2[unitType];
+				break;
+				
+				
 			}
-			else if (itemType == 5)
-			{   
-				currPart = guns1[unitType];
-			}
-			else
+			var h:int = 0;
+			var item_obj:Object;
+			for (var i:int = 1; i <= currPart.length; i++) 
 			{
-				currPart = guns2[unitType];
+				var it_obj:Object = UserStaticData.magazin_items[this.unitType][this.itemType][i];	
+				if(it_obj !=null)
+				{
+					var mov:ShopItemBG = this.getBg();
+					mov.init(this.scroll_sprite, Sprite(currPart[i-1]), it_obj);
+					mov.y = h;
+					h += mov.height;
+				}
 			}
 			
+			this.scroll.update();
+			this.addChild(btnClosed);
+			btnClosed.x = btnClosed.y = 200;
 			
+			/*
+			 * 
 		    var wd:Number = currPart.length * (currPart[0].width+5);
 		 	var stX:Number = (800 - wd) / 2;
 			var stY:Number = 180;
@@ -77,48 +98,40 @@ package artur.display
 				 img.addEventListener(MouseEvent.MOUSE_OUT, onOut);
 				 img.buttonMode = true;
 			 }
-			 this.addChild(btnClosed);
-             App.spr.addChild(this);
+			 
+             */
 		}
 		
-		private function onOut(e:MouseEvent):void 
+		private function getBg():ShopItemBG
 		{
-			e.currentTarget.scaleX = 1;
-			e.currentTarget.scaleY = 1;
-			e.currentTarget.filters  = [];
-			App.info.frees();
+			for (var i:int = 0; i < bgs_array.length; i++) 
+			{
+				if (ShopItemBG(bgs_array[i]).free)
+				{
+					return bgs_array[i];
+				}
+			}
+			var new_bg:ShopItemBG = new ShopItemBG();
+			bgs_array.push(new_bg);
+			new_bg.addEventListener(MouseEvent.CLICK, onClick);
+			return new_bg;
 		}
-		
-		private function onOver(e:MouseEvent):void 
-		{
-			e.currentTarget.scaleX  = 1.1;
-			e.currentTarget.scaleY  = 1.1;
-			App.btnOverFilter.color = 0xFBFBFB;
-			e.currentTarget.filters   = [App.btnOverFilter];
-			var obj:Object = UserStaticData.magazin_items[unitType][itemType][int(e.currentTarget.name)];
-			if (int(e.currentTarget.name) < 4)
-				App.info.init(e.currentTarget.x + e.currentTarget.width, e.currentTarget.y +e.currentTarget.height , {title:"Шмотка", type:2, chars:obj.c, bye:true});//236, 115, "SomeItem", true, true, obj.c)
-			else
-				App.info.init(e.currentTarget.x  - 236 , e.currentTarget.y +e.currentTarget.height ,{title:"Шмотка", type:2, chars:obj.c, bye:true});
-		} 
 		
 		private function onClick(e:MouseEvent):void 
 		{
+			var item_id:int = int(e.currentTarget.name);
 			var _gold:int = UserStaticData.hero.gold;
 			var _silver:int = UserStaticData.hero.silver;
-			var gold:int = UserStaticData.magazin_items [unitType] [itemType] [int(e.currentTarget.name)].c[101];
-			var silver:int =  UserStaticData.magazin_items [unitType] [itemType] [int(e.currentTarget.name)].c[100];
-			 if (!WinCastle.isMoney(gold,silver)) 
-			 {
-				 App.byeWin.init("");
-			 }
-			 else
-			 {
-				 App.byeWin.init("Желаю купить", "hren", gold, silver, int(e.currentTarget.name), 1, itemType);
-			 }
-			 
-			 
-			
+			var gold:int = UserStaticData.magazin_items [unitType] [itemType] [item_id].c[101];
+			var silver:int =  UserStaticData.magazin_items [unitType] [itemType] [item_id].c[100];
+			if (!WinCastle.isMoney(gold,silver)) 
+			{
+				App.byeWin.init("");
+			}
+			else
+			{
+				App.byeWin.init("Желаю купить", "hren", gold, silver, item_id, 1, itemType);
+			}
 		}
 		public function update():void
 		{
@@ -126,13 +139,13 @@ package artur.display
 		}
 		public function frees():void
 		{
-			for (var i:int = 0; i < currPart.length; i++) 
+			
+			for (var i:int = 0; i < bgs_array.length; i++) 
 			{
-				var img:Sprite = currPart[i];
-				 this.removeChild(img);
-				 img.removeEventListener(MouseEvent.CLICK, onClick);
-				 img.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
-				 img.removeEventListener(MouseEvent.MOUSE_OUT, onOut);
+				if (!ShopItemBG(bgs_array[i]).free)
+				{
+					ShopItemBG(bgs_array[i]).frees();
+				}
 			}
 			App.spr.removeChild(this);
 		}
