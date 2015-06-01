@@ -85,18 +85,7 @@ package artur.display
 			var dist1:int = 8;
 			var dist2:int = 16;
 			
-			_bg.x = stX-dist1; _bg.y = stY- dist1; _bg.width = wd+dist1 ; _bg.height = currPart[0].height + dist1;
-			
-			_1.x = _bg.x - dist1; _1.y = _bg.y - dist1;
-			_2.x = _bg.x+ _bg.width + dist1 ; _2.y = _1.y;
-			_3.x = _1.x; _3.y = _1.y + _bg.height + dist2;
-			_4.x = _2.x; _4.y = _3.y;
-			
-		    downLine.x = _3.x + dist1 ; downLine.y = _3.y -8; downLine.width = _bg.width;
-			topLine.x =    _1.x + dist1 ; topLine.y = _1.y + 8; topLine.width = _bg.width;
-			leftLine.x = _1.x+4; leftLine.y = _1.y + 8; leftLine.height = _bg.height;
-			rightLine.x = _2.x-4 ; rightLine.y = _2.y + 8; rightLine.height = _bg.height;
-			btnClosed.x = 800 / 2; btnClosed.y = topLine.y - 5 - btnClosed.height ;
+		
 			 for (var i:int = 0; i < currPart.length; i++) 
 			 {
 				 var img:Sprite = currPart[i];
