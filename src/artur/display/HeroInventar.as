@@ -27,20 +27,16 @@ package artur.display
 		private var currBoot:MovieClip  = new I_Boot();
 		private var currHendTop:MovieClip = new I_HendTop();
 		private var currHendDown:MovieClip = new I_HendDown();
-		private var currInv1:MovieClip = new I_Inv();
-		private var currInv2:MovieClip = new I_Inv();
-		private var currInv3:MovieClip = new I_Inv();
-		private var currInv4:MovieClip = new I_Inv();
-			
-		private var currGun:MovieClip;
 		
+		private var currGun:MovieClip;
 		public var guns1:Array =  [new I_WarGun() ,new I_PallGun1() ,new I_Bows(), new I_MagGun()];
 		public var guns2:Array = [new MovieClip() ,new I_PallGun2(),new MovieClip(), new MovieClip()];
 		
 		public var heroType:int;
 		public var itemType:int;
 		public var itemID:int;
-		public var parts:Array = [currHead, currBody, currBoot, currHendTop, currHendDown, currInv1, currInv2, currInv3, currInv4];
+		public var parts:Array = [currHead, currBody, currBoot, currHendTop, currHendDown];
+		public var inv_array:Array = [new I_Inv(),new I_Inv(),new I_Inv(),new I_Inv()];
 		
 		public var bin:Boolean = false;
 		private var mcText:mcTextHeroInventar = new mcTextHeroInventar();
@@ -78,19 +74,21 @@ package artur.display
 			this.addChild(mcText);
 			this.x = 119.75;
 			this.y = 60.5;
-			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6, 137,177,217,257];
+			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6];
 			for (var j:int = 0; j < parts.length; j++) 
 			{
 				this.setItem(MovieClip(parts[j]),192, yps[j], j);
 			}	 
-			for (var i:int = 0; i < guns1.length; i++) 
+			for (j = 0; j < guns1.length; j++) 
 			{
-				this.setItem(guns1[i], 192, 165.7, 5)
-				this.setItem(guns2[i], 192, 165.7, 6)
+				this.setItem(guns1[j], 192, 165.7, 5)
+				this.setItem(guns2[j], 192, 165.7, 6)
 			}
-			
-			currInv1.x = currInv2.x = currInv3.x = currInv4.x = 40; 
-			
+			for (j = 0; j < inv_array.length; j++) 
+			{
+				var inv:I_Inv = inv_array[j];
+				this.setItem(inv, 40, 137+j*40, 7);
+			}
 			if (!battle_init)
 			{
 				this.addEventsToBuffBtn(this.mcText.sk_crit);
@@ -251,18 +249,18 @@ package artur.display
 		
 		public function putOnOldPlace():void 
 		{
-			 App.sound.playSound(ItemCall.sounds[itemType][itemID-2], App.sound.onVoice, 1);
-			if (this.itemType < 5)
+			App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1); 
+			switch(true)
 			{
-				 MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);
-			}
-			else if (this.itemType == 5)
-			{
-				  MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
-			}
-			else if (this.itemType == 6)
-			{
-				 MovieClip(guns2[heroType]).gotoAndStop(this.itemID);
+				case (this.itemType < 5):
+					MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);
+					break;
+				case (this.itemType == 5):
+					MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
+					break;
+				case (this.itemType == 5):
+					MovieClip(guns2[heroType]).gotoAndStop(this.itemID);
+					break;
 			}
 		}
 		
@@ -291,7 +289,7 @@ package artur.display
 		
 		private function onItem(e:MouseEvent):void 
 		{
-			if (MovieClip(e.currentTarget).currentFrame==1) 
+			if (MovieClip(e.currentTarget).currentFrame == 1) 
 			{
 				WinCastle.shopInventar.init(int(e.currentTarget.name),int(UserStaticData.hero.units[WinCastle.currSlotClick].t) );
 			}
@@ -369,6 +367,11 @@ package artur.display
 				guns2[heroType].gotoAndStop(int(unit_tems_ids[6] + 1));
 				this.addChild(guns1[heroType]);
 				this.addChild(guns2[heroType]);
+			}
+			for (i = 0; i < inv_array.length; i++) 
+			{
+				var inv:I_Inv = inv_array[i];
+				this.addChild(inv);
 			}
 			
 			var chars:Object;

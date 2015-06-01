@@ -30,11 +30,8 @@ package artur.display
 
 		public function ShopInventar() 
 		{
-			this.tabEnabled = false;
-			this.tabChildren = false;
-			this.scroll_sprite.mouseEnabled = false;
+			this.tabEnabled = this.tabChildren = this.scroll_sprite.mouseEnabled = false; 
 			this.scroll.source = this.scroll_sprite;
-			//this.cacheAsBitmap = true;
 			btnClosed.addEventListener(MouseEvent.CLICK, closClick);
 		}
 		
@@ -45,55 +42,40 @@ package artur.display
 		
 		public function init(itemType:int=0,unitType:int=0 ):void
 		{
-			
 			App.spr.addChild(this);
 			this.itemType = itemType;
 			this.unitType = unitType;
-			var item_obj:Object;
-			
-			if (itemType < 5)
+			switch(true)
 			{
-			    currPart = parts_of_parts [itemType];
-			}
-			else if (itemType == 5)
-			{   
-				currPart = guns1[unitType];
-			}
-			else
-			{
-				currPart = guns2[unitType];
+				case(itemType < 5):
+					currPart = parts_of_parts [itemType];
+				break;
+				case (itemType == 5):
+					currPart = guns1[unitType];
+				break;
+				case (itemType == 6):
+					currPart = guns2[unitType];
+				break;
+				
+				
 			}
 			var h:int = 0;
+			var item_obj:Object;
 			for (var i:int = 1; i <= currPart.length; i++) 
 			{
-				var it_obj:Object = UserStaticData.magazin_items[this.unitType][this.itemType][i];
-				
-				
-				
-				if(it_obj!=null)
+				var it_obj:Object = UserStaticData.magazin_items[this.unitType][this.itemType][i];	
+				if(it_obj !=null)
 				{
 					var mov:ShopItemBG = this.getBg();
-					var img:Sprite = currPart[i-1];
-					mov.init(this.scroll_sprite, img, it_obj);
+					mov.init(this.scroll_sprite, Sprite(currPart[i-1]), it_obj);
 					mov.y = h;
 					h += mov.height;
 				}
-				
-				
-				
-				/*
-				var mov:bgBlankItemShop = new bgBlankItemShop();
-				mov.y = h;
-				mov.gotoAndStop(2);
-				mov.cacheAsBitmap = true;
-				mov.buttonMode = true;
-				mov.mouseChildren = false;
-				h += mov.height;
-				this.scroll_sprite.addChild(mov);*/
 			}
 			
 			this.scroll.update();
-			
+			this.addChild(btnClosed);
+			btnClosed.x = btnClosed.y = 200;
 			
 			/*
 			 * 
@@ -127,7 +109,7 @@ package artur.display
 				 img.addEventListener(MouseEvent.MOUSE_OUT, onOut);
 				 img.buttonMode = true;
 			 }
-			 this.addChild(btnClosed);
+			 
              */
 		}
 		
@@ -142,47 +124,25 @@ package artur.display
 			}
 			var new_bg:ShopItemBG = new ShopItemBG();
 			bgs_array.push(new_bg);
+			new_bg.addEventListener(MouseEvent.CLICK, onClick);
 			return new_bg;
 		}
 		
-		private function onOut(e:MouseEvent):void 
-		{
-			/*e.currentTarget.scaleX = 1;
-			e.currentTarget.scaleY = 1;
-			e.currentTarget.filters  = [];
-			App.info.frees();*/
-		}
-		
-		private function onOver(e:MouseEvent):void 
-		{
-			/*e.currentTarget.scaleX  = 1.1;
-			e.currentTarget.scaleY  = 1.1;
-			App.btnOverFilter.color = 0xFBFBFB;
-			e.currentTarget.filters   = [App.btnOverFilter];
-			var obj:Object = UserStaticData.magazin_items[unitType][itemType][int(e.currentTarget.name)];
-			if (int(e.currentTarget.name) < 4)
-				App.info.init(e.currentTarget.x + e.currentTarget.width, e.currentTarget.y +e.currentTarget.height , {title:"Шмотка", type:2, chars:obj.c, bye:true});//236, 115, "SomeItem", true, true, obj.c)
-			else
-				App.info.init(e.currentTarget.x  - 236 , e.currentTarget.y +e.currentTarget.height ,{title:"Шмотка", type:2, chars:obj.c, bye:true});*/
-		}   
-		
 		private function onClick(e:MouseEvent):void 
 		{
-			/*var _gold:int = UserStaticData.hero.gold;
+			var item_id:int = int(e.currentTarget.name);
+			var _gold:int = UserStaticData.hero.gold;
 			var _silver:int = UserStaticData.hero.silver;
-			var gold:int = UserStaticData.magazin_items [unitType] [itemType] [int(e.currentTarget.name)].c[101];
-			var silver:int =  UserStaticData.magazin_items [unitType] [itemType] [int(e.currentTarget.name)].c[100];
-			 if (!WinCastle.isMoney(gold,silver)) 
-			 {
-				 App.byeWin.init("");
-			 }
-			 else
-			 {
-				 App.byeWin.init("Желаю купить", "hren", gold, silver, int(e.currentTarget.name), 1, itemType);
-			 }
-			 
-			 */
-			
+			var gold:int = UserStaticData.magazin_items [unitType] [itemType] [item_id].c[101];
+			var silver:int =  UserStaticData.magazin_items [unitType] [itemType] [item_id].c[100];
+			if (!WinCastle.isMoney(gold,silver)) 
+			{
+				App.byeWin.init("");
+			}
+			else
+			{
+				App.byeWin.init("Желаю купить", "hren", gold, silver, item_id, 1, itemType);
+			}
 		}
 		public function update():void
 		{
@@ -190,15 +150,15 @@ package artur.display
 		}
 		public function frees():void
 		{
-			/*for (var i:int = 0; i < currPart.length; i++) 
+			
+			for (var i:int = 0; i < bgs_array.length; i++) 
 			{
-				var img:Sprite = currPart[i];
-				 this.removeChild(img);
-				 img.removeEventListener(MouseEvent.CLICK, onClick);
-				 img.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
-				 img.removeEventListener(MouseEvent.MOUSE_OUT, onOut);
+				if (!ShopItemBG(bgs_array[i]).free)
+				{
+					ShopItemBG(bgs_array[i]).frees();
+				}
 			}
-			App.spr.removeChild(this);*/
+			App.spr.removeChild(this);
 		}
 		
 	}
