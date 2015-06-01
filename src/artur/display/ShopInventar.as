@@ -12,15 +12,16 @@ package artur.display
 	
 	public class ShopInventar extends mcShopInventar
 	{
-		 private var heads:Array           = PrepareGr.creatBms(new Shop_Head(),true)
-		 private var bodys:Array           = PrepareGr.creatBms(new Shop_Bodys(),true) 
-		private var boots:Array            = PrepareGr.creatBms(new Shop_Boots(),true)
-		private var hends_top:Array     =PrepareGr.creatBms(new Shop_HendTop(),true)
-		private var hends_down:Array  =PrepareGr.creatBms(new Shop_HendDown,true) 
-		private var guns1:Array            =	[	PrepareGr.creatBms(new Shop_Gun, true),	PrepareGr.creatBms(new Shop_Gun1Pall, true)	, PrepareGr.creatBms(new Shop_Lyk(), true)	,	PrepareGr.creatBms(new Shop_Totem(), true)	];
-		private var guns2:Array            =	[	[]                                   , 	PrepareGr.creatBms(new Shop_Gun2Pall(),true), []										,	[]											];
-		private var parts_of_parts:Array = [heads, bodys, boots, hends_top, hends_down];
-		private var btnClosed:BaseButton = new BaseButton(15);
+		 private var heads:Array           	= 	PrepareGr.creatBms(new Shop_Head(),true)
+		 private var bodys:Array           	= 	PrepareGr.creatBms(new Shop_Bodys(),true) 
+		private var boots:Array            	= 	PrepareGr.creatBms(new Shop_Boots(),true)
+		private var hends_top:Array 		=	PrepareGr.creatBms(new Shop_HendTop(),true)
+		private var hends_down:Array 		= 	PrepareGr.creatBms(new Shop_HendDown,true) 
+		private var guns1:Array            	=	[	PrepareGr.creatBms(new Shop_Gun, true),	PrepareGr.creatBms(new Shop_Gun1Pall, true)	, PrepareGr.creatBms(new Shop_Lyk(), true)	,	PrepareGr.creatBms(new Shop_Totem(), true)	];
+		private var guns2:Array            	=	[	[]                                   , 	PrepareGr.creatBms(new Shop_Gun2Pall(), true), []										,	[]											];
+		private var invent:Array 			= 	PrepareGr.creatBms(new Shop_Head, true);
+		private var parts_of_parts:Array 	= 	[heads, bodys, boots, hends_top, hends_down];
+		private var btnClosed:BaseButton 	= 	new BaseButton(15);
 		private var currPart:Array;
 		private var itemType:int;
 		private var itemIdex:int;
@@ -48,16 +49,18 @@ package artur.display
 			switch(true)
 			{
 				case(itemType < 5):
-					currPart = parts_of_parts [itemType];
-				break;
+					currPart = this.parts_of_parts[itemType];
+					break;
 				case (itemType == 5):
-					currPart = guns1[unitType];
-				break;
+					currPart = this.guns1[unitType];
+					break;
 				case (itemType == 6):
-					currPart = guns2[unitType];
-				break;
-				
-				
+					currPart = this.guns2[unitType];
+					break;
+				case (itemType == 7):
+					currPart = this.invent;
+					break;
+					
 			}
 			var h:int = 0;
 			var item_obj:Object;
