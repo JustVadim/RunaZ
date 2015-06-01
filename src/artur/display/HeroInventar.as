@@ -311,31 +311,34 @@ package artur.display
 		
 		private function over(e:MouseEvent):void
 		{
-			e.currentTarget.mc.scaleX = 1.3;
-			e.currentTarget.mc.scaleY = 1.3;
+			var bat:MovieClip = MovieClip(e.currentTarget);
+			bat.mc.scaleX = 1.3;
+			bat.mc.scaleY = 1.3;
 			App.btnOverFilter.color = 0xFBFBFB;
-			e.currentTarget.mc.filters = [App.btnOverFilter];
-			if (e.currentTarget.mc2)
+			bat.mc.filters = [App.btnOverFilter];
+			if (bat.mc2)
 			{
-				e.currentTarget.mc2.scaleX = 1.3;
-				e.currentTarget.mc2.scaleY = 1.3;
-				e.currentTarget.mc2.filters = [App.btnOverFilter];
+				bat.mc2.scaleX = 1.3;
+				bat.mc2.scaleY = 1.3;
+				bat.mc2.filters = [App.btnOverFilter];
 			}
 			App.sound.playSound('overItem', App.sound.onVoice, 1);
-			if (MovieClip(e.currentTarget).currentFrame == 1)
+			
+			if (bat.currentFrame == 1)
 			{
-				App.info.init(e.currentTarget.x + this.x - e.currentTarget.width / 2 - 5 , e.currentTarget.y + this.y + e.currentTarget.height / 2 + 5, {txtInfo_w:135,txtInfo_h:37,txtInfo_t:"Нажмите, чтобы\n купить вещь",type:0} )
+				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {txtInfo_w:135,txtInfo_h:37,txtInfo_t:"Нажмите, чтобы\n купить вещь",type:0} )
 			}
 			else
 			{
-				if ((e.currentTarget.name) < 5)
+				switch(true)
 				{
-					App.info.init(e.currentTarget.x + this.x - 236 - e.currentTarget.width / 2 - 5 , e.currentTarget.y + this.y + e.currentTarget.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(e.currentTarget.name)].c, bye:false } )
-				}	
-				else
-				{
-					App.info.init(e.currentTarget.x + this.x - e.currentTarget.width / 2 - 5 , e.currentTarget.y + this.y + e.currentTarget.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(e.currentTarget.name)].c, bye:false} )	
-				}	  
+					case (int(bat.name) < 5):
+						App.info.init(bat.x + this.x - 236 - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false } )
+						break;
+					case (int(bat.name) == 5 || int(bat.name) == 6):
+						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false} )	
+						break;
+				}
 			}
 		}
 		
