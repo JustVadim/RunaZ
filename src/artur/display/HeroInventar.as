@@ -35,6 +35,7 @@ package artur.display
 		public var heroType:int;
 		public var itemType:int;
 		public var itemID:int;
+		public var invPlace:int;
 		public var parts:Array = [currHead, currBody, currBoot, currHendTop, currHendDown];
 		public var inv_array:Array = [new I_Inv(),new I_Inv(),new I_Inv(),new I_Inv()];
 		
@@ -129,8 +130,9 @@ package artur.display
 				App.spr.addChild(WinCastle.mcSell); WinCastle.mcSell.gotoAndPlay(1);
 				this.itemType = int(e.currentTarget.name);
 				this.itemID = int(e.currentTarget.currentFrame);
+				this.invPlace = this.getIsInv(MovieClip(e.currentTarget));
 				call= ItemCall.getCall();
-				call.init(heroType, int(e.currentTarget.name), e.currentTarget.currentFrame - 1);
+				call.init(heroType, this.itemType, this.itemID - 1);
 				call.x = App.spr.mouseX  - call.width / 2 + 8;
 				call.y = App.spr.mouseY - call.height / 2 + 8;
 				call.startDrag();
@@ -231,13 +233,13 @@ package artur.display
 						WinCastle.chest.clearCells();
 					}
 				}
-                 else if (str == 'sellSprite')
-			     {
-				     App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100])/2 ,NaN,3,NaN);
-			     }
+                else if (str == 'sellSprite')
+				{
+					App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100])/2 ,NaN,3,NaN);
+				}
 				else 
 				{
-					 this.putOnOldPlace();
+					this.putOnOldPlace();
 				}
 			}
 			if (App.spr.contains(WinCastle.mcSell))
@@ -249,6 +251,7 @@ package artur.display
 		
 		public function putOnOldPlace():void 
 		{
+			Report.addMassage(this.itemType + " " + this.itemID  + " " + this.invPlace)
 			App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1); 
 			switch(true)
 			{
@@ -258,8 +261,12 @@ package artur.display
 				case (this.itemType == 5):
 					MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
 					break;
-				case (this.itemType == 5):
+				case (this.itemType == 6):
 					MovieClip(guns2[heroType]).gotoAndStop(this.itemID);
+					break;
+				case (this.itemType == 7):
+					var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+					this.updateInv(this.invPlace, unit);
 					break;
 			}
 		}
@@ -291,8 +298,18 @@ package artur.display
 		{
 			if (MovieClip(e.currentTarget).currentFrame == 1) 
 			{
-				WinCastle.shopInventar.init(int(e.currentTarget.name),int(UserStaticData.hero.units[WinCastle.currSlotClick].t) );
+				WinCastle.shopInventar.init(int(e.currentTarget.name),int(UserStaticData.hero.units[WinCastle.currSlotClick].t),this.getIsInv(MovieClip(e.currentTarget)));
 			}
+		}
+		
+		private function getIsInv(mc:MovieClip):int 
+		{
+			for (var i:int = 0; i < inv_array.length; i++) 
+			{
+				if (inv_array[i] == mc)
+					return i;
+			}
+			return -1;
 		}
 		
 		private function out(e:MouseEvent):void
@@ -323,7 +340,6 @@ package artur.display
 				bat.mc2.filters = [App.btnOverFilter];
 			}
 			App.sound.playSound('overItem', App.sound.onVoice, 1);
-			
 			if (bat.currentFrame == 1)
 			{
 				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {txtInfo_w:135,txtInfo_h:37,txtInfo_t:"Нажмите, чтобы\n купить вещь",type:0} )
@@ -375,6 +391,7 @@ package artur.display
 			{
 				var inv:I_Inv = inv_array[i];
 				this.addChild(inv);
+				this.updateInv(i, unit);
 			}
 			
 			var chars:Object;
@@ -597,6 +614,13 @@ package artur.display
 			var data1:DataExchange = new DataExchange();
 			data1.addEventListener(DataExchangeEvent.ON_RESULT, this.unitSell);
 			data1.sendData(COMMANDS.SELL_ITEM_UNIT, JSON2.encode({un:int(WinCastle.currSlotClick), it:itemType}), true);
+		}
+		
+		public function updateInv(invPlace:int, unit:Object):void 
+		{
+			if (unit.inv[invPlace] != null)
+					MovieClip(this.inv_array[invPlace]).gotoAndStop(unit.inv[invPlace].id + 1);
+			else MovieClip(this.inv_array[invPlace]).gotoAndStop(1);
 		}
 		
 		private function unitSell(e:DataExchangeEvent):void 
