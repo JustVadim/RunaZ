@@ -171,7 +171,7 @@ package artur.display
 				{
 					WinCastle.chest.clearCells();
 					var obj:Object = JSON2.decode(str.substr(5, str.length - 1));	
-					WinCastle.chest.selectToPut(obj.n, true);
+					WinCastle.chest.selectToPut(obj.n, true, this.invPlace);
 				}
 				else
 				{
@@ -353,6 +353,8 @@ package artur.display
 						break;
 					case (int(bat.name) == 5 || int(bat.name) == 6):
 						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false} )	
+						break;
+					case (int(bat.name) == 7):
 						break;
 				}
 			}

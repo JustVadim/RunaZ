@@ -158,7 +158,7 @@ package artur.display
 			{
 				var obj:Object = JSON2.decode(str.substr(5, str.length - 1));
 				clearCells();
-				this.selectToPut(obj.n, false);
+				this.selectToPut(obj.n, false, -1);
 			}
 			else
 			{
@@ -461,7 +461,7 @@ package artur.display
 			}
 		}
 		
-		public function selectToPut(indexTopCall:int, is_hero:Boolean):void
+		public function selectToPut(indexTopCall:int, is_hero:Boolean, invPlace:int):void
 		{
 			var cell_id:int = UserStaticData.hero.chest[indexTopCall].id;
 			if ( cell_id == 0)
@@ -469,7 +469,13 @@ package artur.display
 				var cell_y:int = indexTopCall / this.wd;
 				var cell_x:int = indexTopCall - cell_y * this.wd;
 				var item:Object;
-				if (is_hero) {item = UserStaticData.hero.units[WinCastle.currSlotClick].it[WinCastle.inventar.itemType];}
+				if (is_hero) 
+				{
+					if(invPlace == -1)
+						item = UserStaticData.hero.units[WinCastle.currSlotClick].it[WinCastle.inventar.itemType];
+					else
+						item = UserStaticData.hero.units[WinCastle.currSlotClick].inv[invPlace];
+				}
 				else {item = UserStaticData.hero.chest[this.upped_item_num];}
 				if (this.isFreeCells(cell_x, cell_y, item.c[104], item.c[105]))
 				{
