@@ -27,11 +27,13 @@ package artur.win
 		public static var inventar:HeroInventar
 		public static var shopInventar:ShopInventar
 		public static var chest:Chest = new Chest();
-
 		public static var mcSell:WinSell = new WinSell();
+		
+		
 		public function WinCastle()
 		{
-			mcSell.gotoAndStop(1); mcSell.name = 'sell';
+			mcSell.gotoAndStop(1); 
+			mcSell.name = 'sell';
 			inst = this;
 			bg = new MyBitMap(App.prepare.cach[7]);
 			inventar = new HeroInventar();

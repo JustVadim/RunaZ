@@ -1,5 +1,6 @@
 package artur.display 
 {
+	import adobe.utils.CustomActions;
 	import artur.App;
 	import artur.RasterClip;
 	import artur.win.WinCastle;
@@ -26,17 +27,20 @@ package artur.display
 		private var guns1:Array = [new RasterMovie(new Cell_Guns()), new RasterMovie(new Cell_Swords()),new RasterMovie(new Cell_Bows()), new RasterMovie(new Cell_Totem())];
 		private var guns2:Array = [new RasterMovie(new Cell_Guns()), new RasterMovie(new Cell_Shilds())];
 		private var parts_of_parts:Array = [heads, bodys, boots, hends_top, hends_down];
+		private var inv:RasterMovie = new RasterMovie(new Cell_Inv());
+		
 		private var currItem:RasterMovie; 
 		
 		public static var sounds:Array =
 		[
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1']
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1']
 		]
 		
 		public function ItemCall() 
@@ -46,29 +50,24 @@ package artur.display
 		public function init(unitType:int,itemType:int,index:int):void
 		{
 			free = false;
-			
-			
-			if (itemType < 5)
+			switch(true)
 			{
-			    currItem = parts_of_parts[itemType];
+				case (itemType < 5):
+					currItem = parts_of_parts[itemType];
+					break;
+				case (itemType == 5):
+					currItem = guns1[unitType];
+					break;
+				case (itemType == 6):
+					currItem = guns2[unitType];
+					break;
+				case (itemType == 7):
+					currItem = this.inv;
+					break;
 			}
-			else if (itemType == 5)
-			{   
-				currItem = guns1[unitType];
-			}
-			else if(itemType==6) 
-			{
-				currItem = guns2[unitType];
-			}
-			
-			
-			     
-				 
 			currItem.gotoAndStop(index);
 			while (this.numChildren > 0)
-			{
 				this.removeChildAt(0);
-			}
 			this.addChild(currItem);
 			Main.THIS.stage.addChild(this);
 		}
