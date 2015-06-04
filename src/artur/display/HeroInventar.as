@@ -657,7 +657,7 @@ package artur.display
 				{
 					if(mc.yRect.visible == false)
 						mc.yRect.visible = true;
-					if(mc.greenRect.visible == true);
+					if(mc.greenRect.visible == true)
 						mc.greenRect.visible = false;
 				}
 			}
@@ -672,7 +672,7 @@ package artur.display
 				{
 					if(mc.yRect.visible == true)
 						mc.yRect.visible = false;
-					if(mc.greenRect.visible == true);
+					if(mc.greenRect.visible == true)
 						mc.greenRect.visible = false;
 				}
 			}

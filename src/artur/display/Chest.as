@@ -382,8 +382,11 @@ package artur.display
 							MovieClip(WinCastle.inventar.guns1[WinCastle.inventar.heroType]).yRect.visible = false;
 							break;
 						case 6:
-							MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]).greenRect.visible = false;
-							MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]).yRect.visible = false;
+							if ((WinCastle.inventar.guns2[WinCastle.inventar.heroType].greenRect!=null))
+							{
+								MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]).greenRect.visible = false;
+								MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]).yRect.visible = false;
+							}
 							break;
 					}
 				}
