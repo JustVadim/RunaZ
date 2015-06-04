@@ -23,6 +23,7 @@ package artur.display
 		public var upped_item_num:int;
 		public var upped_item_id:int;
 		public var upped_item_call:ItemCall;
+		private var invP:int = -1;
 		
 		public function Chest() 
 		{
@@ -105,17 +106,12 @@ package artur.display
 			}
 			upped_item_call.x = Main.THIS.stage.mouseX - upped_item_call.width/2 +8;
 			upped_item_call.y = Main.THIS.stage.mouseY - upped_item_call.height/2 +8;
-			
-			
 			upped_item_call.startDrag();
 			upped_item_call.addEventListener(MouseEvent.MOUSE_UP, this.onUppedItemUp);
 			upped_item_call.addEventListener(MouseEvent.MOUSE_MOVE, this.onUppedItemMove);
 			Main.THIS.stage.addEventListener(Event.MOUSE_LEAVE, onUppedItemMouseLeave);
 			Main.THIS.stage.addChild(upped_item_call);
-			Report.addMassage("upp")
 			this.onUppedItemMove(null);
-			
-
 		}
 		
 		private function onUppedItemOut(e:MouseEvent):void 
@@ -140,6 +136,7 @@ package artur.display
 			this.upped_item_call.out();
 			this.clearCells();
 			this.clearGreenRect();
+			WinCastle.inventar.takeAwayGreenYellowRect();
 			Mouse.show();
 		}
 		
@@ -149,7 +146,7 @@ package artur.display
 			if (e != null)
 			{
 				e.updateAfterEvent();
-				if (e.currentTarget!=null && e.currentTarget.dropTarget != null && e.currentTarget.parent!=null)
+				if (e.currentTarget!=null && e.currentTarget.dropTarget != null && e.currentTarget.dropTarget.parent!=null)
 				{
 					str = (e.currentTarget.dropTarget.parent.name);
 				}
@@ -176,60 +173,55 @@ package artur.display
 			}
 			
 			var item_tt:int = UserStaticData.hero.chest[this.upped_item_num].c[103];
-			if (UserStaticData.hero.units[WinCastle.currSlotClick] != null && UserStaticData.hero.units[WinCastle.currSlotClick].it[item_tt] == null)
+			var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+			if (unit != null)
 			{
-				var mc:MovieClip = null;
-				if (str == "yRect"||str == "greenRect")
+				if (unit.it[item_tt] == null)
 				{
-					if (str == "yRect")
+					var mc:MovieClip = null;
+					if (str == "yRect" || str == "greenRect")
 					{
-						if (item_tt < 5)
+						if (str == "yRect")
 						{
-							mc = MovieClip(WinCastle.inventar.parts[item_tt]);
+							mc = MovieClip(e.currentTarget.dropTarget.parent.parent);
+							if (mc != null)
+							{
+								mc.yRect.visible = false;
+								mc.greenRect.visible = true;
+							}
 						}
-						else if(item_tt==5)
+					}
+					else
+					{
+						switch(true)
 						{
-							if(UserStaticData.hero.units[WinCastle.currSlotClick].t == UserStaticData.hero.chest[this.upped_item_num].c[102])
-								mc = MovieClip(WinCastle.inventar.guns1[WinCastle.inventar.heroType]);
-						}
-						else if (item_tt == 6)
-						{
-							if(UserStaticData.hero.units[WinCastle.currSlotClick].t == UserStaticData.hero.chest[this.upped_item_num].c[102])
+							case (item_tt < 5):
+								mc = MovieClip(WinCastle.inventar.parts[item_tt]);
+								break;
+							case (item_tt == 5):
+								if(UserStaticData.hero.units[WinCastle.currSlotClick].t == UserStaticData.hero.chest[this.upped_item_num].c[102])
+									mc = MovieClip(WinCastle.inventar.guns1[WinCastle.inventar.heroType]);
+								break;
+							case (item_tt == 6):
+								if(UserStaticData.hero.units[WinCastle.currSlotClick].t == UserStaticData.hero.chest[this.upped_item_num].c[102])
 								mc = MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]);
-						}						
-						mc.yRect.visible = false;
-						mc.greenRect.visible = true;
-					}
-				}
-				else
-				{
-					if (item_tt < 5)
-					{
-						mc = MovieClip(WinCastle.inventar.parts[item_tt]);
-					}
-					else if(item_tt==5)
-					{
-						if(UserStaticData.hero.units[WinCastle.currSlotClick].t == UserStaticData.hero.chest[this.upped_item_num].c[102])
-							mc = MovieClip(WinCastle.inventar.guns1[WinCastle.inventar.heroType]);
-					}
-					else if (item_tt == 6)
-					{
-						if(UserStaticData.hero.units[WinCastle.currSlotClick].t == UserStaticData.hero.chest[this.upped_item_num].c[102])
-							mc = MovieClip(WinCastle.inventar.guns2[WinCastle.inventar.heroType]);
-					}
-					
-					if (mc != null && !mc.yRect.visible)
-					{
-						mc.yRect.visible = true;
-						mc.greenRect.visible = false;
-					}
+								break;
+							case (item_tt == 7):
+								WinCastle.inventar.lightYellowRectInt();
+								break;
+						}
+						if (mc != null && !mc.yRect.visible)
+						{
+							mc.yRect.visible = true;
+							mc.greenRect.visible = false;
+						}
+					}	
 				}
 			}
 		}
 		
 		private function onUppedItemUp(e:MouseEvent):void 
 		{
-			
 			upped_item_call.stopDrag();
 			upped_item_call.out();
 			upped_item_call.removeEventListener(MouseEvent.MOUSE_UP, this.onUppedItemUp);
@@ -269,9 +261,10 @@ package artur.display
 			else if(str == "greenRect")
 			{
 				App.lock.init();
+				this.invP = WinCastle.inventar.getIsInv(MovieClip(e.currentTarget.dropTarget.parent.parent));
 				var data1:DataExchange = new DataExchange();
 				data1.addEventListener(DataExchangeEvent.ON_RESULT, this.fromChestToUnitRes);
-				var send_obj1:Object = {cn:upped_item_num, un:int(WinCastle.currSlotClick), it:0};
+				var send_obj1:Object = {cn:upped_item_num, un:int(WinCastle.currSlotClick), it:0, invP:this.invP};
 				data1.sendData(COMMANDS.FROM_CHEST_TO_UNIT, JSON2.encode(send_obj1), true);
 			}
 			else if (str == 'sellSprite')
@@ -284,6 +277,7 @@ package artur.display
 			}
 			this.clearCells();
 			this.clearGreenRect();
+			WinCastle.inventar.takeAwayGreenYellowRect();
 			if (App.spr.contains(WinCastle.mcSell))
 			{
 				App.spr.removeChild(WinCastle.mcSell)
@@ -324,7 +318,7 @@ package artur.display
 				WinCastle.chest.frees();
 				WinCastle.chest.init();
 				App.lock.frees();
-				 App.sound.playSound('gold', App.sound.onVoice, 1);
+				App.sound.playSound('gold', App.sound.onVoice, 1);
 			}
 			else
 			{
@@ -339,17 +333,28 @@ package artur.display
 			var obj:Object = JSON2.decode(e.result);
 			if (!obj.error)
 			{
-				App.lock.frees();
 				App.sound.playSound(ItemCall.sounds[UserStaticData.hero.chest[this.upped_item_num].c[103]][this.upped_item_id-1],App.sound.onVoice,1 );
 				var item:Object = UserStaticData.hero.chest[upped_item_num];
-				Report.addMassage(JSON2.encode(item));
 				item.id = upped_item_id;
 				UserStaticData.hero.chest[upped_item_num] = { id:0 };
-				UserStaticData.hero.units[WinCastle.currSlotClick].it[item.c[103]] = item;
+				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+				if (this.invP == -1)
+				{
+					unit.it[item.c[103]] = item;
+					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(  Slot.getUnitItemsArray(unit));
+					WinCastle.inventar.init1(unit, false);
+				}
+				else
+				{	
+					unit.inv[this.invP] = item;
+					WinCastle.inventar.updateInv(0, unit);
+					WinCastle.inventar.updateInv(1, unit);
+					WinCastle.inventar.updateInv(2, unit);
+					WinCastle.inventar.updateInv(3, unit);
+				}
 				this.frees();
 				this.init();
-				WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(  Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
-				WinCastle.inventar.init1(UserStaticData.hero.units[WinCastle.currSlotClick], false);
+				App.lock.frees();
 			}
 			else
 			{
@@ -428,6 +433,7 @@ package artur.display
 			this.addChild(ic);
 			ic.x = grid[upped_item_num].x;
 			ic.y = grid[upped_item_num].y;
+			
 		}
 		
 		public function frees():void

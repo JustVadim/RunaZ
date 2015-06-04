@@ -151,13 +151,21 @@ package artur.display
 			call.frees();
 			Mouse.show();
 			call.stopDrag();
-			if (this.itemType != 5 && this.itemType != 6) { MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);}
-			else 
+			
+			switch(true)
 			{
-				if(this.itemType == 5)
+				case (this.itemType < 5):
+					MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);
+					break;
+				case (this.itemType == 5):
 					MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
-				else
+					break;
+				case (this.itemType == 6):
 					MovieClip(guns2[heroType]).gotoAndStop(this.itemID);
+					break;
+				case (this.itemType == 7):
+					MovieClip(this.inv_array[this.invPlace]).gotoAndStop(this.itemID);
+					break;
 			}
 		}
 		
@@ -217,13 +225,13 @@ package artur.display
 						var cell_y:int = obj.n / WinCastle.chest.wd;
 						var cell_x:int = obj.n - cell_y * WinCastle.chest.wd;
 						var item:Object;
-						item = UserStaticData.hero.units[WinCastle.currSlotClick].it[this.itemType];
+						item = (this.invPlace == -1) ? UserStaticData.hero.units[WinCastle.currSlotClick].it[this.itemType]:UserStaticData.hero.units[WinCastle.currSlotClick].inv[this.invPlace];
 						if (WinCastle.chest.isFreeCells(cell_x, cell_y, item.c[104], item.c[105]))
 						{
 							App.lock.init();
 							var data:DataExchange = new DataExchange();
 							data.addEventListener(DataExchangeEvent.ON_RESULT, this.onPutItemToChest);
-							var send_obj:Object = {cn:obj.n,un:int(WinCastle.currSlotClick),it:itemType};
+							var send_obj:Object = {cn:obj.n,un:int(WinCastle.currSlotClick),it:itemType, invP:this.invPlace};
 							data.sendData(COMMANDS.FROM_UNIT_TO_CHEST, JSON2.encode(send_obj), true);
 						}
 						else
@@ -235,7 +243,14 @@ package artur.display
 				}
                 else if (str == 'sellSprite')
 				{
-					App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100])/2 ,NaN,3,NaN);
+					if (this.invPlace == -1)
+					{
+						App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
+					}
+					else
+					{
+						App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
+					}
 				}
 				else 
 				{
@@ -277,14 +292,22 @@ package artur.display
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.error == null)
 			{
-				 App.sound.playSound(ItemCall.sounds[itemType][itemID-2], App.sound.onVoice, 1);
-				delete(UserStaticData.hero.units[WinCastle.currSlotClick].it[this.itemType]);
+				App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1);
+				if (this.invPlace == -1)
+				{
+					delete(UserStaticData.hero.units[WinCastle.currSlotClick].it[this.itemType]);
+					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
+					this.init1(UserStaticData.hero.units[WinCastle.currSlotClick], false);
+				}
+				else
+				{
+					delete(UserStaticData.hero.units[WinCastle.currSlotClick].inv[this.invPlace]);
+					this.updateInv(this.invPlace, UserStaticData.hero.units[WinCastle.currSlotClick]);
+				}
 				UserStaticData.hero.chest = obj.ch;
 				delete(obj.ch);
 				WinCastle.chest.frees();
 				WinCastle.chest.init();
-				WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
-				this.init1(UserStaticData.hero.units[WinCastle.currSlotClick], false);
 				App.lock.frees();
 			}
 			else
@@ -302,7 +325,7 @@ package artur.display
 			}
 		}
 		
-		private function getIsInv(mc:MovieClip):int 
+		public function getIsInv(mc:MovieClip):int 
 		{
 			for (var i:int = 0; i < inv_array.length; i++) 
 			{
@@ -613,9 +636,9 @@ package artur.display
 		public function sellItem():void 
 		{
 			App.lock.init();
-			var data1:DataExchange = new DataExchange();
-			data1.addEventListener(DataExchangeEvent.ON_RESULT, this.unitSell);
-			data1.sendData(COMMANDS.SELL_ITEM_UNIT, JSON2.encode({un:int(WinCastle.currSlotClick), it:itemType}), true);
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.unitSell);
+			data.sendData(COMMANDS.SELL_ITEM_UNIT, JSON2.encode({un:int(WinCastle.currSlotClick), it:itemType, invP:this.invPlace}), true);
 		}
 		
 		public function updateInv(invPlace:int, unit:Object):void 
@@ -623,6 +646,36 @@ package artur.display
 			if (unit.inv[invPlace] != null)
 					MovieClip(this.inv_array[invPlace]).gotoAndStop(unit.inv[invPlace].id + 1);
 			else MovieClip(this.inv_array[invPlace]).gotoAndStop(1);
+		}
+		
+		public function lightYellowRectInt():void 
+		{
+			for (var i:int = 0; i < this.inv_array.length; i++) 
+			{
+				var mc:MovieClip = MovieClip(this.inv_array[i]);
+				if (mc.currentFrame == 1)
+				{
+					if(mc.yRect.visible == false)
+						mc.yRect.visible = true;
+					if(mc.greenRect.visible == true);
+						mc.greenRect.visible = false;
+				}
+			}
+		}
+		
+		public function takeAwayGreenYellowRect():void 
+		{
+			for (var i:int = 0; i < this.inv_array.length; i++) 
+			{
+				var mc:MovieClip = MovieClip(this.inv_array[i]);
+				if (mc.currentFrame == 1)
+				{
+					if(mc.yRect.visible == true)
+						mc.yRect.visible = false;
+					if(mc.greenRect.visible == true);
+						mc.greenRect.visible = false;
+				}
+			}
 		}
 		
 		private function unitSell(e:DataExchangeEvent):void 
@@ -634,7 +687,10 @@ package artur.display
 				UserStaticData.hero.silver = obj.s;
 				WinCastle.txtCastle.txtSilver.text = String(obj.s);
 				
-				delete(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType]);
+				if(this.invPlace == -1)
+					delete(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType]);
+				else
+					delete(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace]);
 				App.sound.playSound('gold', App.sound.onVoice, 1);
 				WinCastle.getCastle().slots[WinCastle.currSlotClick].unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
 				App.lock.frees();

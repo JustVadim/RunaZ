@@ -35,6 +35,8 @@ package artur.display
 			this.tabEnabled = this.tabChildren = this.scroll_sprite.mouseEnabled = false; 
 			this.scroll.source = this.scroll_sprite;
 			btnClosed.addEventListener(MouseEvent.CLICK, closClick);
+			btnClosed.x = 430
+			btnClosed.y = this.y + this.height - 15;
 		}
 		
 		private function closClick(e:MouseEvent):void 
@@ -78,10 +80,8 @@ package artur.display
 					h += mov.height;
 				}
 			}
-			
 			this.scroll.update();
 			this.addChild(btnClosed);
-			btnClosed.x = btnClosed.y = 200;
 		}
 		
 		private function getBg():ShopItemBG

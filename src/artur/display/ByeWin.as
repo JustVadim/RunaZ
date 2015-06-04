@@ -94,8 +94,8 @@ package artur.display
 				    }
 				 break;
 			 case 1:
-				 switch (e.currentTarget.name)
-				 {
+				switch (e.currentTarget.name)
+				{
 					case 'gold':
 						byeItem(1);
 						break;
@@ -105,35 +105,34 @@ package artur.display
 					case 'exit':
 						frees();
 						break;
-				 }
-				 break;
-				 case 2:
-							 switch (e.currentTarget.name)
-							 {
-								case 'silver':
-									frees();
-									WinCastle.chest.sellItem();
-									break;
-								case 'exit':
-									WinCastle.chest.putItemOnOldPlace(WinCastle.chest.upped_item_call);
-									frees();
-									break;
-							 }
-				 break;
-				 
-				  case 3:
-							 switch (e.currentTarget.name)
-							 {
-								case 'silver':
-										 frees();
-										 WinCastle.inventar.sellItem();
-									break;
-								case 'exit':
-										 WinCastle.inventar.putOnOldPlace()
-										 frees();
-									break;
-							 }
-				 break;
+				}
+				break;
+			case 2:
+				switch (e.currentTarget.name)
+				{
+					case 'silver':
+						frees();
+						WinCastle.chest.sellItem();
+						break;
+					case 'exit':
+						WinCastle.chest.putItemOnOldPlace(WinCastle.chest.upped_item_call);
+						frees();
+						break;
+				}
+				break; 
+			case 3:
+				switch (e.currentTarget.name)
+				{
+					case 'silver':
+						frees();
+						WinCastle.inventar.sellItem();
+						break;
+					case 'exit':
+						WinCastle.inventar.putOnOldPlace()
+						frees();
+						break;
+				}
+				break;
 			}
 			
 		}
