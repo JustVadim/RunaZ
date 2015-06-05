@@ -78,11 +78,12 @@ package artur.win
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
-				mc.x = 592 + 37*i;
-				mc.y = 387;
-				mc.gotoAndStop(1);
+				mc.x = 707 - 33*i;
+				mc.y = 395;
+				mc.gotoAndStop(2);
+				mc.name = i.toString();
 				mc.mouseChildren = mc.tabEnabled = mc.tabChildren = false;
-				mc.buttonMode = true;11
+				mc.buttonMode = true;
 			}
 		}
 		
@@ -125,15 +126,16 @@ package artur.win
 			this.getMyTeam();
 			App.spr.addChild(bgs[0]);
 			App.spr.addChild(spr);
-			App.spr.addChild(WinBattle.ult_btn);
+			
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
-				var mc:Cell_Inv = WinBattle.inv_btns[i];
+				var mc:Panel_Inv = WinBattle.inv_btns[i];
 				App.spr.addChild(mc);
 			}
-			App.spr.addChild(WinBattle.skill_pannel);
+			App.spr.addChild(WinBattle.ult_btn);
 			this.addListenersToChekboks(this.chekAvtoboi, 1);
 			this.addListenersToChekboks(this.chekLifeBar, 2);
+			App.spr.addChild(WinBattle.skill_pannel);
 			this.grid.init();
 			this.lifeManajer.init();
 			this.setCurrStep();
@@ -420,13 +422,13 @@ package artur.win
 		
 		private function makeBanochki(cur_unit:Object, cus:Object):void 
 		{
-			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
+			/*for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
 				if (cur_unit.inv[i] != null)
 				{
 					App.spr.addChild(WinBattle.inv_btns[i]);
 				}
-			}
+			}*/
 		}
 		
 		private function makeUltimate(cur_unit:Object, cus:Object):void 

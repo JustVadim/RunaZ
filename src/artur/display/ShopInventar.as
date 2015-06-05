@@ -18,7 +18,7 @@ package artur.display
 		private var hends_top:Array 		=	PrepareGr.creatBms(new Shop_HendTop(),true)
 		private var hends_down:Array 		= 	PrepareGr.creatBms(new Shop_HendDown,true) 
 		private var guns1:Array            	=	[	PrepareGr.creatBms(new Shop_Gun, true),	PrepareGr.creatBms(new Shop_Gun1Pall, true)	, PrepareGr.creatBms(new Shop_Lyk(), true)	,	PrepareGr.creatBms(new Shop_Totem(), true)	];
-		private var guns2:Array            	=	[	[]                                   , 	PrepareGr.creatBms(new Shop_Gun2Pall(), true), []										,	[]											];
+		private var guns2:Array            	=	[	[]                                    , 	PrepareGr.creatBms(new Shop_Gun2Pall(), true), []										,	[]											];
 		private var invent:Array 			= 	PrepareGr.creatBms(new Shop_Inv, true);
 		private var parts_of_parts:Array 	= 	[heads, bodys, boots, hends_top, hends_down];
 		private var btnClosed:BaseButton 	= 	new BaseButton(15);
