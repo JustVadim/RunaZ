@@ -55,7 +55,7 @@ package artur.win
 		public static var hero_inv:HeroInventar;
 		private static var skill_pannel:Bitmap = PrepareGr.creatBms(new mcPanelBattle())[0];
 		private static var ult_btn:UltSkillPanel = new UltSkillPanel();
-		private static var inv_btns:Array = [new Cell_Inv, new Cell_Inv, new Cell_Inv, new Cell_Inv];
+		private static var inv_btns:Array = [new Panel_Inv, new Panel_Inv, new Panel_Inv, new Panel_Inv];
 		private var ult_clicked:Boolean = false;
 		
 		
@@ -77,12 +77,12 @@ package artur.win
 			WinBattle.ult_btn.buttonMode = WinBattle.ult_btn.mouseChildren = WinBattle.ult_btn.tabEnabled = WinBattle.ult_btn.tabChildren = this.chekAvtoboi.tabChildren = this.chekAvtoboi.tabEnabled = this.chekLifeBar.tabEnabled = this.chekLifeBar.tabChildren = false;
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
-				var mc:Cell_Inv = WinBattle.inv_btns[i];
+				var mc:Panel_Inv = WinBattle.inv_btns[i];
 				mc.x = 592 + 37*i;
 				mc.y = 387;
 				mc.gotoAndStop(1);
 				mc.mouseChildren = mc.tabEnabled = mc.tabChildren = false;
-				mc.buttonMode = true;
+				mc.buttonMode = true;11
 			}
 		}
 		
