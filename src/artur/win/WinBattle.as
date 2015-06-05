@@ -55,7 +55,9 @@ package artur.win
 		public static var hero_inv:HeroInventar;
 		private static var skill_pannel:Bitmap = PrepareGr.creatBms(new mcPanelBattle())[0];
 		private static var ult_btn:UltSkillPanel = new UltSkillPanel();
+		private static var inv_btns:Array = [new Cell_Inv, new Cell_Inv, new Cell_Inv, new Cell_Inv];
 		private var ult_clicked:Boolean = false;
+		
 		
 		
 		public function WinBattle() 
@@ -73,6 +75,15 @@ package artur.win
 			WinBattle.ult_btn.x = 741; WinBattle.ult_btn.y = 365;
 			WinBattle.ult_btn.stop();
 			WinBattle.ult_btn.buttonMode = WinBattle.ult_btn.mouseChildren = WinBattle.ult_btn.tabEnabled = WinBattle.ult_btn.tabChildren = this.chekAvtoboi.tabChildren = this.chekAvtoboi.tabEnabled = this.chekLifeBar.tabEnabled = this.chekLifeBar.tabChildren = false;
+			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
+			{
+				var mc:Cell_Inv = WinBattle.inv_btns[i];
+				mc.x = 592 + 37*i;
+				mc.y = 387;
+				mc.gotoAndStop(1);
+				mc.mouseChildren = mc.tabEnabled = mc.tabChildren = false;
+				mc.buttonMode = true;
+			}
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -115,6 +126,11 @@ package artur.win
 			App.spr.addChild(bgs[0]);
 			App.spr.addChild(spr);
 			App.spr.addChild(WinBattle.ult_btn);
+			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
+			{
+				var mc:Cell_Inv = WinBattle.inv_btns[i];
+				App.spr.addChild(mc);
+			}
 			App.spr.addChild(WinBattle.skill_pannel);
 			this.addListenersToChekboks(this.chekAvtoboi, 1);
 			this.addListenersToChekboks(this.chekLifeBar, 2);
@@ -138,8 +154,7 @@ package artur.win
 			{
 				mc.removeEventListener(MouseEvent.MOUSE_OVER, overCheck);
 				mc.removeEventListener(MouseEvent.MOUSE_OUT, outCheck);
-				mc.removeEventListener(MouseEvent.CLICK, checkCLick);
-				
+				mc.removeEventListener(MouseEvent.CLICK, checkCLick);	
 			}
 		 }
 		 
@@ -383,18 +398,8 @@ package artur.win
 					if (this.chekAvtoboi.currentFrame == 1)
 					{
 						grid.showAvailableCells(loc.x, loc.y, r, is_arr);
-						var t_mp:Object = (myTeam == 0)? bat.t1_mp:bat.t2_mp
-						if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && t_mp[cus.p] >= cur_unit.ult.mc && !bat.is_ult)
-						{
-							WinBattle.ult_btn.mc.visible = false;
-							WinBattle.ult_btn.buttonMode = true;
-							this.addUltEvents();
-						}
-						else
-						{
-							WinBattle.ult_btn.mc.visible = true;
-							this.removeUltEvents();
-						}
+						this.makeUltimate(cur_unit, cus);
+						this.makeBanochki(cur_unit, cus);
 					}
 					else
 					{
@@ -411,6 +416,33 @@ package artur.win
 				this.removeUltEvents();
 			}
 			
+		}
+		
+		private function makeBanochki(cur_unit:Object, cus:Object):void 
+		{
+			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
+			{
+				if (cur_unit.inv[i] != null)
+				{
+					App.spr.addChild(WinBattle.inv_btns[i]);
+				}
+			}
+		}
+		
+		private function makeUltimate(cur_unit:Object, cus:Object):void 
+		{
+			var t_mp:Object = (myTeam == 0)? bat.t1_mp:bat.t2_mp
+			if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && t_mp[cus.p] >= cur_unit.ult.mc && !bat.is_ult)
+			{
+				WinBattle.ult_btn.mc.visible = false;
+				WinBattle.ult_btn.buttonMode = true;
+				this.addUltEvents();
+			}
+			else
+			{
+				WinBattle.ult_btn.mc.visible = true;
+				this.removeUltEvents();
+			}
 		}
 		
 		public function removeUltEvents():void
@@ -493,7 +525,6 @@ package artur.win
 			{
 				unitsInWin[i].frees();
 			}
-			
 			sortArr.splice(0, sortArr.length);				
 		}
 		
