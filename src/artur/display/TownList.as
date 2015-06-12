@@ -54,7 +54,7 @@ package artur.display
 				{
 					blank.gotoAndStop(3);
 					btn.visible = true;
-					blank.starBar.gotoAndStop(obj[i].st + 1);
+					//blank.starBar.gotoAndStop(obj[i].st + 1);
 					lastMision = i;
 				}
 				else
@@ -63,10 +63,10 @@ package artur.display
 					btn.visible = false;
 				}
 			}
-			if ( lastMision < blanks.length -2 ) 
+			if ( lastMision < blanks.length-1) 
 			{
-				 blanks[lastMision + 1].blank.gotoAndStop(2);
-				 blanks[lastMision + 1].btn.visible = true;
+				blanks[lastMision + 1].blank.gotoAndStop(2);
+				blanks[lastMision + 1].btn.visible = true;
 			}
 			
 		}

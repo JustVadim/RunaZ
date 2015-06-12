@@ -11,27 +11,23 @@ package artur.display
 	
 	public class Slot extends Sprite
 	{
-		 public var btnByeUnit:BaseButton;
-		 public var unit:Object;
-		 public var bg:slotBg = new slotBg();
-		 public var lvl_star:mcStar = new mcStar();
-		 public static var namesUnit:Object = new Object();
-		 namesUnit[0] = 'Barbarian';
-		 namesUnit[1] = 'Paladin';
-		 namesUnit[2] = 'Lyk';
-		 namesUnit[3] = 'Mag'
-		 namesUnit[100] = 'Bot1';
-		 namesUnit[101] = 'Bot2';
-		 namesUnit[103] = 'LykBot';
-		 
-		 
-		 
-		 
+		public var btnByeUnit:BaseButton;
+		public var unit:Object;
+		public var bg:slotBg = new slotBg();
+		public var lvl_star:mcStar = new mcStar();
+		public static var namesUnit:Object = new Object();
+		namesUnit[0] = 'Barbarian';
+		namesUnit[1] = 'Paladin';
+		namesUnit[2] = 'Lyk';
+		namesUnit[3] = 'Mag'
+		namesUnit[100] = 'Bot1';
+		namesUnit[101] = 'Bot2';
+		namesUnit[102] = 'BotGolem';
+		namesUnit[103] = 'LykBot'; 
+		
 		public function Slot() 
 		{
-			this.tabEnabled = false;
-			this.tabChildren = false;
-			this.mouseChildren = false;
+			this.tabEnabled = this.tabChildren = this.mouseChildren = false;
 			btnByeUnit = new BaseButton(8, 0.9, 5, 'click1', 'over1', 0x000000);
 			this.addEventListener(MouseEvent.CLICK, onSlotClick);
 			this.addEventListener(MouseEvent.ROLL_OVER, over);

@@ -17,6 +17,8 @@ package Server
 		static public const BATTLE_STEP:String = "14";
 		static public const UNIT_LEVEL_UP:String = "15";
 		static public const ULTIMATE:String = "16";
+		static public const USE_BANOCHKA:String = "17";
+		static public const UPDATE_SKILL:String = "18";
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;
 		static public var new_user_comes:int = 101;

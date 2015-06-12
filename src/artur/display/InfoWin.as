@@ -55,7 +55,7 @@ package artur.display
 					this.txtInfo.visible = true;
 					this.txtInfo.width = data.txtInfo_w;
 					this.txtInfo.htmlText = data.txtInfo_t;
-					this.txtInfo.height = txtInfo.numLines * 20;
+					this.txtInfo.height = txtInfo.numLines * 18;
 					this.txtInfo.x = this.bg.x;
 					this.txtInfo.y = cur_Y;
 					this.bg.width = data.txtInfo_w;

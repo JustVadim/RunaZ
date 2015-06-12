@@ -1,10 +1,6 @@
 package artur.util 
 {
 	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
 	public class GetServerData 
 	{
 		
@@ -18,9 +14,9 @@ package artur.util
 				i++;
 			}
 			while (true);
-			//Report.addMassage("last town is : " + i-1);
 			return i-1;
 		}
+		
 		public static function getUserButle():Boolean
 		{
 			var units:Object = UserStaticData.hero.units;

@@ -14,7 +14,7 @@ package artur.win
 	import flash.events.MouseEvent;
 	
 	
-	public class WinCastle //  index 1 
+	public class WinCastle
 	{
 		private var bg:MyBitMap
 		public var bin:Boolean = false;

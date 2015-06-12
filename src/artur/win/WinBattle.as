@@ -80,10 +80,9 @@ package artur.win
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
 				mc.x = 707 - 33*i;
 				mc.y = 395;
-				mc.gotoAndStop(2);
+				mc.gotoAndStop(1);
 				mc.name = i.toString();
 				mc.mouseChildren = mc.tabEnabled = mc.tabChildren = false;
-				mc.buttonMode = true;
 			}
 		}
 		
@@ -206,10 +205,55 @@ package artur.win
 			{
 				this.onUltimateData(obj)
 			}
+			else if (obj.ban != null)
+			{
+				this.useBanochka(obj);
+			}
 			else if(obj.is_w != null)
 			{
 				this.endBattle(obj)
 			}
+		}
+		
+		private function useBanochka(obj:Object):void 
+		{
+			var hps:Object = (obj.tu.t == 0)? WinBattle.bat.t1_hp:WinBattle.bat.t2_hp;
+			var mps:Object = (obj.tu.t == 0)? WinBattle.bat.t1_mp:WinBattle.bat.t2_mp;
+			var unit:Object = (obj.tu.t == 0)? WinBattle.bat.t1_u[obj.tu.p]:WinBattle.bat.t2_u[obj.tu.p];
+			var hp:int = 0;
+			var mp:int = 0
+			switch(obj.ban)
+			{
+				case 1:
+					hp = hps[obj.tu.p] + 5;
+					break;
+				case 2:
+					hp = hps[obj.tu.p] + 10;
+					break;
+				case 3:
+					hp = hps[obj.tu.p] + 15;
+					break;
+				case 4:
+					mp = mps[obj.tu.p] + 5;
+					break;
+				case 5:
+					mp = mps[obj.tu.p] + 10;
+					break;
+				case 6:
+					mp = mps[obj.tu.p] + 15;
+					break;
+			}
+			if (hp != 0)
+				hps[obj.tu.p] = Math.min(hp, unit.hp);
+			else
+				mps[obj.tu.p] = Math.min(mp, unit.mp);
+			LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
+			LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
+			LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
+			App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+			var ef_coord:Object = (obj.tu.t == 0) ? bat.t1_locs[obj.tu.p]:bat.t2_locs[obj.tu.p];
+			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+			BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 		}
 		
 		private function onUltimateData(obj:Object):void 
@@ -220,7 +264,7 @@ package artur.win
 			{
 				case 0:
 					App.sound.playSound("battle_cry", App.sound.onVoice, 1);
-					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
+					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					U_Warwar(WinBattle.units[obj.whm.t][obj.whm.p]).showBuff(1);
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 2);
@@ -228,7 +272,7 @@ package artur.win
 					break;
 				case 1:
 					App.sound.playSound("eff_heal", App.sound.onVoice, 1);
-					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
+					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 					break;
@@ -262,7 +306,7 @@ package artur.win
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			if (obj.hpl == 0)
 			{
-				var coord:Object = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t1_locs[obj.whm.p];
+				var coord:Object = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
 				hurt_unit.gotoAndPlay("die");
 				hurt_unit.addEventListener("DIE", this.mover.onUnitDie);
 				for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
@@ -310,6 +354,20 @@ package artur.win
 			{
 				mc = WinBattle.winAfterBattle;
 				App.sound.playSound('win', App.sound.onVoice, 1);
+				if (obj.mcd != null)
+				{
+					if (UserStaticData.hero.miss[obj.mcd.mapn].mn[obj.mcd.misn] == null)
+					{
+						UserStaticData.hero.miss[obj.mcd.mapn].mn[obj.mcd.misn] = new Object;
+						if (obj.mcd.misn == 10)
+						{
+							UserStaticData.hero.miss[obj.mcd.mapn + 1] = { mn:new Object };
+						}
+					}
+					UserStaticData.hero.miss[obj.mcd.mapn].mn[obj.mcd.misn].st = obj.mcd.sa;
+					UserStaticData.hero.gold += obj.mcd.g;
+					UserStaticData.hero.silver += obj.mcd.s;
+				}
 			}
 			else
 			{
@@ -317,11 +375,15 @@ package artur.win
 			}
 			mc.gotoAndPlay(1);
 			App.spr.addChild(mc);
+			var all_units:Object = (WinBattle.myTeam == 0)? bat.t1_u:bat.t2_u;
 			for (var i:int = 0; i < 4; i++) 
 			{
 				var blank:mcBlankWinn = mc[String("k" + i)];
+
 				if (UserStaticData.hero.units[i] != null)
 				{
+					UserStaticData.hero.units[i].inv = all_units[i].inv;
+					delete(all_units[i].inv);
 					blank.txt1.visible = true;
 					blank.txt2.visible = true;
 					var unit_data:Object = UserStaticData.hero.units[i];
@@ -420,15 +482,71 @@ package artur.win
 			
 		}
 		
-		private function makeBanochki(cur_unit:Object, cus:Object):void 
+		private function makeBanochki(cur_unit:Object, cus:Object = null):void 
 		{
-			/*for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
+			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
-				if (cur_unit.inv[i] != null)
+				this.updateBanochka(cur_unit, i);
+			}
+		}
+		
+		private function onBankaClick(e:MouseEvent):void 
+		{
+			App.lock.init();
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onBanochkaRes);
+			data.sendData(COMMANDS.USE_BANOCHKA, e.currentTarget.name, true);
+		}
+		
+		private function onBanochkaRes(e:DataExchangeEvent):void 
+		{
+			DataExchange(e.currentTarget).removeEventListener(DataExchangeEvent.ON_RESULT, onBanochkaRes);
+			var obj:Object = JSON2.decode(e.result);
+			if (obj.error == null) 
+			{
+				App.lock.frees();
+				var unit:Object
+				var cur_pos:int = WinBattle.bat['set'][WinBattle.bat.cus].p;
+				var inv_place:int = int(obj.res);
+				unit = (WinBattle.myTeam == 0)? bat.t1_u[cur_pos]:bat.t2_u[cur_pos];
+				delete(unit.inv[inv_place]);
+				this.updateBanochka(unit, inv_place);
+			}
+			else App.lock.init(obj.error);
+		}
+		
+		private function updateBanochka(unit:Object, inv_pace:int):void 
+		{
+			var mc:Panel_Inv = WinBattle.inv_btns[inv_pace];
+			if (unit.inv[inv_pace] != null)
+			{
+				mc.gotoAndStop(unit.inv[inv_pace].id+1);
+				mc.buttonMode = true;
+				mc.addEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);
+				mc.addEventListener(MouseEvent.ROLL_OUT, this.onBankaOut);
+				mc.addEventListener(MouseEvent.CLICK, this.onBankaClick);
+			}
+			else
+			{
+				if (mc.currentFrame != 1)
 				{
-					App.spr.addChild(WinBattle.inv_btns[i]);
+					mc.gotoAndStop(1);
+					mc.buttonMode = false;
+					mc.removeEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);
+					mc.removeEventListener(MouseEvent.ROLL_OUT, this.onBankaOut);
+					mc.removeEventListener(MouseEvent.CLICK, this.onBankaClick);
 				}
-			}*/
+			}
+		}
+		
+		private function onBankaOut(e:MouseEvent):void 
+		{
+			
+		}
+		
+		private function onBankaOver(e:MouseEvent):void 
+		{
+			
 		}
 		
 		private function makeUltimate(cur_unit:Object, cus:Object):void 

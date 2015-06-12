@@ -104,6 +104,7 @@ package artur.display.battle
 				this.currNode.onOut1();
 				currNode.sendStep(obj);
 				this.frees();
+				Report.addMassage(JSON.stringify(obj));
 			}
 		}
 	    private function out(e:MouseEvent):void 
