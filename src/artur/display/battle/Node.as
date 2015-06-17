@@ -11,7 +11,6 @@ package artur.display.battle
 	import flash.events.TimerEvent;
 	import flash.text.TextField;
 	import flash.utils.Timer;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -246,7 +245,7 @@ package artur.display.battle
 			var bat:Object = WinBattle.bat;
 			for (var i:int = 0; i < 4; i ++ )
 			{
-				if (bat.t1_locs[i] != null)
+				if (bat.t1_locs[i] != null && bat.t1_hp[i] > 0)
 				{
 					Node(WinBattle.inst.grid.nodes[bat.t1_locs[i].x][bat.t1_locs[i].y]).dismakeUlt()
 					if (bat.t1_locs[i].x == this.xp && bat.t1_locs[i].y == this.yp)
@@ -255,14 +254,13 @@ package artur.display.battle
 					}
 				}
 				
-				if (bat.t2_locs[i] != null)
+				if (bat.t2_locs[i] != null && bat.t2_hp[i] > 0)
 				{
 					Node(WinBattle.inst.grid.nodes[bat.t2_locs[i].x][bat.t2_locs[i].y]).dismakeUlt()
 					if (bat.t2_locs[i].x == this.xp && bat.t2_locs[i].y == this.yp)
 					{
 						key = i;
 					}
-					
 				}
 			}
 			WinBattle.makeUltimate(key);

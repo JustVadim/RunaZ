@@ -17,7 +17,7 @@ package artur.util
 			return i-1;
 		}
 		
-		public static function getUserButle():Boolean
+		public static function getUserIsReadyToBattle():Boolean
 		{
 			var units:Object = UserStaticData.hero.units;
 			for (var key:Object in units)

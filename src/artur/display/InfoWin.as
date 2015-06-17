@@ -3,13 +3,11 @@ package artur.display
 	import artur.App;
 	import flash.display.MovieClip;
 	import flash.filters.GlowFilter;
-	import report.Report;
 	
 	public class InfoWin extends mcInfo
 	{
 		private var wds:Array = [70, 100, 243];
 		private var delay:int = 0;
-		
 		private var infos:Array 
 		
 		public function InfoWin() 
@@ -103,7 +101,6 @@ package artur.display
 							mov1.txt1.text = "+" + data.chars[j];
 							this.infos[j].visible = true;
 							cur_Y += 18;
-							this.infos
 						}
 					}
 					this.bg.width = 236;

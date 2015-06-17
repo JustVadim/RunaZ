@@ -181,7 +181,6 @@ package Server
 									}
 									break;
 							case int(COMMANDS.SEND_MISS_STEP):
-								Report.addMassage("battle step");
 								data_evnt = new DataExchangeEvent(DataExchangeEvent.BATTLE_MASSAGE);
 								data_evnt.result = String(temp_obj.m);
 								socket.dispatchEvent(data_evnt);
@@ -211,7 +210,6 @@ package Server
 							var obj:Object = JSON2.decode(temp_obj.m);
 							if (obj.error == null)
 							{
-								Report.addMassage(JSON2.encode(obj.bat));
 								UserStaticData.hero.setHero(obj.h);
 								UserStaticData.hero.mbat = obj.bat;
 								UserStaticData.my_info = obj.ui;

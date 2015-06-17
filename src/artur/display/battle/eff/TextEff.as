@@ -4,10 +4,7 @@ package artur.display.battle.eff
 	import artur.util.Maker;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class TextEff 
 	{
 		public var type:String = 'text';

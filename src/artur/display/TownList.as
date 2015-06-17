@@ -40,9 +40,10 @@ package artur.display
 		{
 			App.spr.removeChild(this);
 		}
-		public function init(currMap:int,currTwon:int,title:String):void
+		public function init(currMap:int, currTwon:int, title:String):void
 		{
-			this.title.txt.text = title
+			MapTown.currTownClick = currTwon;
+			this.title.txt.text = title;
 			App.spr.addChild(this);
 			var obj:Object = UserStaticData.hero.miss[currTwon].mn;
 			var lastMision:int = -1
@@ -54,13 +55,23 @@ package artur.display
 				{
 					blank.gotoAndStop(3);
 					btn.visible = true;
-					//blank.starBar.gotoAndStop(obj[i].st + 1);
 					lastMision = i;
+					for (var j:int = 0; j < 4; j++) 
+					{
+						if (obj[i].st[j] == 1)
+							blank.starBar['st'+j].visible = true;
+						else
+							blank.starBar['st' + j].visible = false;
+					}
 				}
 				else
 				{
 					blank.gotoAndStop(1);
 					btn.visible = false;
+					blank.starBar.st0.visible = false;
+					blank.starBar.st1.visible = false;
+					blank.starBar.st2.visible = false;
+					blank.starBar.st3.visible = false;
 				}
 			}
 			if ( lastMision < blanks.length-1) 
@@ -68,12 +79,11 @@ package artur.display
 				blanks[lastMision + 1].blank.gotoAndStop(2);
 				blanks[lastMision + 1].btn.visible = true;
 			}
-			
 		}
 		private function onBatle(e:MouseEvent):void 
 		{
-			Report.addMassage("sdf");
-			if (GetServerData.getUserButle()) 
+			Report.addMassage(MapTown.currTownClick * 11 + "  " + int(e.currentTarget.name));
+			if (GetServerData.getUserIsReadyToBattle()) 
 			{
 				App.lock.init();	
 				var data:DataExchange = new DataExchange();

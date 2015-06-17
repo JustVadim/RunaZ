@@ -6,11 +6,7 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class Bot1 extends BarbDoll
 	{
 		 private var heads        :Array ;
@@ -141,7 +137,6 @@ package artur.units
 			gotoAndStop(1);
 			if (this.stage) 
 			{
-				Report.addMassage("bot1 removed");
 				parent.removeChild(this);
 			}
 			

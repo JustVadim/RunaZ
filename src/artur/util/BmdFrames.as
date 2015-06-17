@@ -7,11 +7,6 @@ package util {
         import flash.geom.Point;
         import flash.geom.Rectangle;
         
-        
-        /**
-         * ...
-         * @author Alexander Porechnov
-         */
         public class BmdFrames {
 			
                 public var frames : Array;

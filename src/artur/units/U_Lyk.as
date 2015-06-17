@@ -6,11 +6,7 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class U_Lyk extends LykDoll
 	{
 		 private var heads         :Array ;
@@ -142,7 +138,6 @@ package artur.units
 			gotoAndStop(1);
 			if (parent) 
 			{
-				Report.addMassage("U_Lyk removed");
 				parent.removeChild(this);
 			}
 			 

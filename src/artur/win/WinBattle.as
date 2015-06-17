@@ -22,7 +22,6 @@ package artur.win
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -293,14 +292,14 @@ package artur.win
 					tim.start();
 					break;
 			}
-			//whom unit
+			//who unit
 			var t_obj:Object = (obj.wh.t == 0) ? bat.t1_mp:bat.t2_mp;
 			t_obj[obj.wh.p] = obj.mcl;
 			LifeManajer.un_Data[obj.wh.t][obj.wh.p].currMana = obj.mcl;
 			LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
 			//whom unit
 			t_obj = (obj.whm.t == 0) ? bat.t1_hp:bat.t2_hp;
-			t_obj[obj.wh.p] = obj.hpl;
+			t_obj[obj.whm.p] = obj.hpl;
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];

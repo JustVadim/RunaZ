@@ -14,7 +14,6 @@ package artur.display
 	import flash.geom.Point;
 	import flash.ui.Mouse;
 	import mx.core.FlexMovieClip;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -268,7 +267,6 @@ package artur.display
 		
 		public function putOnOldPlace():void 
 		{
-			Report.addMassage(this.itemType + " " + this.itemID  + " " + this.invPlace)
 			App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1); 
 			switch(true)
 			{

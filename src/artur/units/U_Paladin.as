@@ -6,7 +6,6 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
 	
 	public class U_Paladin extends PallDoll
 	{
@@ -127,7 +126,6 @@ package artur.units
 			gotoAndStop(1);
 			if (parent) 
 			{
-				Report.addMassage("u_pal removed");
 				parent.removeChild(this);
 			}
 			

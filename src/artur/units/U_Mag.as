@@ -6,28 +6,24 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class U_Mag extends MagDoll
 	{
-		private var heads         :Array ;
-		private var bodys         :Array ;
+		private var heads			:Array;
+		private var bodys         	:Array;
 		private var sikirs          :Array;
-		private var appArmsR   :Array;
-		private var hends1R     :Array;
-		private var hends2R     :Array;
-		private var hends1L     :Array;
-		private var hends2L     :Array;
-		private var legs1R       :Array;
-		private var legs2R       :Array;
-		private var legs3R       :Array;
-		private var legs1L       :Array;
-		private var legs2L       :Array;
-		private var legs3L       :Array;
-		private var sikirs2       :Array;
+		private var appArmsR   		:Array;
+		private var hends1R     	:Array;
+		private var hends2R     	:Array;
+		private var hends1L     	:Array;
+		private var hends2L     	:Array;
+		private var legs1R       	:Array;
+		private var legs2R       	:Array;
+		private var legs3R       	:Array;
+		private var legs1L       	:Array;
+		private var legs2L       	:Array;
+		private var legs3L       	:Array;
+		private var sikirs2       	:Array;
 		public var type:String = 'Mag';
 		public var free:Boolean = true;
 		private var isOver:Boolean = false;
@@ -130,7 +126,6 @@ package artur.units
 			gotoAndStop(1);
 			if (parent) 
 			{
-				Report.addMassage("u_mag removed");
 				parent.removeChild(this);
 			}
 			

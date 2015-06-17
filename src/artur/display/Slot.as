@@ -7,7 +7,6 @@ package artur.display
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
-	import report.Report;
 	
 	public class Slot extends Sprite
 	{

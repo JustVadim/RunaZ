@@ -12,7 +12,6 @@ package artur.display.battle
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	import report.Report;
 	
 	public class MoveUnit 
 	{
@@ -220,7 +219,6 @@ package artur.display.battle
 		
 		private function makeAttack():void 
 		{
-			Report.addMassage(JSON.stringify(cur_obj));
 			var hurt_unit:MovieClip  = WinBattle.units[cur_obj.a.u.t][cur_obj.a.u.p];
 			if (cur_obj.a.b[2] != null)
 			{

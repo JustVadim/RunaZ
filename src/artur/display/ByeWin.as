@@ -4,15 +4,11 @@ package artur.display
 	import artur.util.Maker;
 	import artur.win.WinCastle;
 	import flash.events.MouseEvent;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class ByeWin extends dialogBye
 	{
 		private var btnGold:BaseButton;
@@ -181,14 +177,12 @@ package artur.display
 			else
 			{
 				App.lock.init('Error: '+obj.error)
-				Report.addMassage('bye unit error: error num ' + obj.error);
 			}
 			//unlock crab
 		}
 		private function getRess2(e:DataExchangeEvent):void
 		{
 			DataExchange(e.target).removeEventListener(e.type, getRess);
-			Report.addMassage(e.result);
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.error == null)
 			{
@@ -223,7 +217,6 @@ package artur.display
 			else
 			{
 				App.lock.init('Error: '+obj.error)
-				Report.addMassage('bye unit error: error num ' + obj.error);
 			}
 			// unlock crab
 		}

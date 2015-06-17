@@ -38,7 +38,7 @@ package
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Main.THIS = this;
 			stage.addChild(rep = new Report());
-			Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
+			//Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
 		}

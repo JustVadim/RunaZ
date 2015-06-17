@@ -3,11 +3,8 @@ package artur.display
 	import artur.PrepareGr;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
+	
 	public class RasterMovie extends Sprite
 	{
 		public var frames:Array = [];
@@ -23,8 +20,8 @@ package artur.display
 		public function gotoAndStop(frm:int):void
 		{
 			frm--;
-			if (frm < 0) frm =0;
-			//Report.addMassage( frm +'  AAA')
+			if (frm < 0) 
+				frm =0;
 			this.removeChild(frames[currFrame]);
 			currFrame = frm
 			this.addChild(frames[currFrame]);
