@@ -366,6 +366,22 @@ package artur.win
 					UserStaticData.hero.miss[obj.mcd.mapn].mn[obj.mcd.misn].st = obj.mcd.sa;
 					UserStaticData.hero.gold += obj.mcd.g;
 					UserStaticData.hero.silver += obj.mcd.s;
+					mc.starBar.visible = true;
+					mc.ress.visible = true;
+					mc.ress.txtGold.text = obj.mcd.g;
+					mc.ress.txtSilver.text = obj.mcd.s;
+					for (var j:int = 0; j < 4; j++) 
+					{
+						if (obj.mcd.sa[j] == 1)
+							mc.starBar["st" + j].visible = true;
+						else
+							mc.starBar["st" + j].visible = false;
+					}
+				}
+				else
+				{
+					mc.starBar.visible = false;
+					mc.ress.visible = false;
 				}
 			}
 			else
