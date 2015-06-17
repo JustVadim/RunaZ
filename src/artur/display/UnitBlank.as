@@ -64,8 +64,8 @@ package artur.display
 		
 		private function addSkillListener(skill:MovieClip):void 
 		{
-			skill.addEventListener(MouseEvent.MOUSE_OVER, onSkillOver);
-			skill.addEventListener(MouseEvent.MOUSE_OUT, onSkillOut);
+			skill.addEventListener(MouseEvent.ROLL_OVER, onSkillOver);
+			skill.addEventListener(MouseEvent.ROLL_OUT, onSkillOut);
 		}
 		
 		private function onSkillOver(e:MouseEvent):void 
@@ -155,8 +155,8 @@ package artur.display
 			unit.init(this);
 			this.addChild(MovieClip(unit));
 			unit.x = 50; unit.y = 95;
-			this.addEventListener(MouseEvent.MOUSE_OVER, over);
-			this.addEventListener(MouseEvent.MOUSE_OUT, out);
+			this.addEventListener(MouseEvent.ROLL_OVER, over);
+			this.addEventListener(MouseEvent.ROLL_OUT, out);
 			this.addEventListener(MouseEvent.CLICK, this.onBtn);
 			this.buttonMode = true;
 		}

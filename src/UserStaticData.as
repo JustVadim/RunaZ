@@ -21,5 +21,6 @@
 		static public var magazin_items:Object = new Object();
 		static public var buffs_chances:Array = new Array();
 		static public var flash_vars:Object;
+		static public var lang:int = 0;
 	}
 }
