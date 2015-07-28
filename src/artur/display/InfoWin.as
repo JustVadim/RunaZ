@@ -12,12 +12,13 @@ package artur.display
 		
 		public function InfoWin() 
 		{
-			this.mouseChildren  = false;
-			this.mouseEnabled   = false;
+			this.mouseChildren = false;
+			this.mouseEnabled = false;
 			this.title.y = -5;
 			infos = [this.hp, this.mp, this.dmg,this.f_fiz, this.f_mag, this.speed, this.inc];
 			this.hideAll();
-			this.filters = [new GlowFilter(0x000000,1,3,3)]
+			this.filters = [new GlowFilter(0x000000, 1, 3, 3)]
+			this.dmg.iconRange.visible = false;
 		}
 		
 		private function hideAll():void 

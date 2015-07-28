@@ -11,6 +11,7 @@ package artur.display.battle
 	import flash.events.TimerEvent;
 	import flash.text.TextField;
 	import flash.utils.Timer;
+	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -30,6 +31,7 @@ package artur.display.battle
 		private static var unit:Object;
 		private static var x_:int = 0;
 		private static var y_:int = 0;
+		private var is_mouse_over:Boolean = false;
 		
 		public function Node() 
 		{
@@ -39,8 +41,8 @@ package artur.display.battle
 			txt.x = - txt.width / 2;
 			txt.y = - txt.height / 2;
 			txt.alpha = 0.5;
-			this.addEventListener(MouseEvent.MOUSE_OVER, this.onOver1);
-			this.addEventListener(MouseEvent.MOUSE_OUT, this.onOut1);
+			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver1);
+			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut1);
 			if (unit_info_timer == null)
 			{
 				Node.unit_info_timer = new Timer(1000);
@@ -61,7 +63,9 @@ package artur.display.battle
 			this.x = xp*this.width + 44 +(yp%2)*int(this.width/2);
 			this.y = yp*49 + 80;
 			this.walcable = walcable;
-			this.mc.visible = (walcable == 0||walcable ==1)
+			this.mc.visible = (walcable == 0 || walcable == 1)
+			this.txt.text = xp.toString() + ":" + yp.toString();
+			this.addChild(this.txt);
 			WinBattle.spr.addChild(this);
 			if (!mc.visible) 
 			{
@@ -84,6 +88,8 @@ package artur.display.battle
 		
 		public function onOver1(e:MouseEvent = null):void 
 		{
+			if (this.walcable == 1)
+			{
 				var key:Object;
 				var unit_local:Object;
 				for (key in WinBattle.bat.t1_locs)
@@ -112,6 +118,7 @@ package artur.display.battle
 					Node.x_ = (this.x < 410)?this.x + 30:this.x - WinBattle.hero_inv.width + this.width / 2;
 					Node.y_ = (this.y < 200)? this.y - 50:120;
 				}
+			}
 		}
 		
 		public function frees():void
@@ -121,20 +128,26 @@ package artur.display.battle
 			this.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
 			this.removeEventListener(MouseEvent.MOUSE_OUT, onOut);
 		}
+		
 		public function setMove():void
 		{
 			this.buttonMode = true;
 			this.cur_fr = int(2);
 			this.mc.gotoAndStop(cur_fr);
 			this.addEventListener(MouseEvent.CLICK, moveNode);
-			this.addEventListener(MouseEvent.MOUSE_OVER, onOver);
-			this.addEventListener(MouseEvent.MOUSE_OUT, onOut);
+			this.addEventListener(MouseEvent.ROLL_OVER, onOver);
+			this.addEventListener(MouseEvent.ROLL_OUT, onOut);
 		}
 		
 		public function setAttack():void
 		{
-			this.mc.gotoAndStop(this.cur_fr = 6);
-			this.addEventListener(MouseEvent.MOUSE_OVER, onOver);
+			this.cur_fr = 6;
+			this.mc.gotoAndStop(this.cur_fr);
+			this.addEventListener(MouseEvent.ROLL_OVER, onOver);
+			if (this.is_mouse_over)
+			{
+					this.onOver();
+			}
 		}
 		
 		private function moveNode(e:MouseEvent):void 
@@ -148,12 +161,13 @@ package artur.display.battle
 			this.sendStep(obj);
 		}
 		
-		private function onOut(e:MouseEvent):void 
+		public function onOut(e:MouseEvent = null):void 
 		{
 			this.mc.gotoAndStop(cur_fr);
+			this.is_mouse_over = false;
 		}
 		
-		private function onOver(e:MouseEvent):void 
+		private function onOver(e:MouseEvent = null):void 
 		{
 			if (cur_fr == 6)
 			{
@@ -161,6 +175,7 @@ package artur.display.battle
 					WinBattle.atackNode.init(this);
 			}
 			this.mc.gotoAndStop(3);
+			this.is_mouse_over = true;
 		}
 		
 		public function sendStep(obj:Object = null):void 
@@ -197,17 +212,14 @@ package artur.display.battle
 		}
 		public function clearControl():void
 		{
-			if (this.walcable == 0 || this.walcable ==1) 
+			if (this.hasEventListener(MouseEvent.ROLL_OVER))
 			{
-				if (this.hasEventListener(MouseEvent.CLICK))
-				{
-					this.removeEventListener(MouseEvent.CLICK, moveNode);
-					this.removeEventListener(MouseEvent.MOUSE_OUT, onOut);
-					this.buttonMode = false;
-				}
-				this.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
-				this.mc.gotoAndStop(1);
+				this.removeEventListener(MouseEvent.CLICK, moveNode);
+				this.removeEventListener(MouseEvent.ROLL_OUT, onOut);
+				this.removeEventListener(MouseEvent.ROLL_OVER, onOver);
+				this.buttonMode = false;
 			}
+			this.mc.gotoAndStop(1);
 			this.onOut1();
 		}
 		

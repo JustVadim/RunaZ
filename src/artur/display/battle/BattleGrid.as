@@ -9,6 +9,7 @@ package artur.display.battle
 	import flash.display.IBitmapDrawable;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.ui.Mouse;
 	
 	
 	public class BattleGrid 
@@ -93,7 +94,6 @@ package artur.display.battle
 					dist = BattleGrid.getDistance(i, j, s_x, s_y);
 					if (dist <= range)
 					{
-						
 						arr = this.findPath(nodes[s_x][s_y], nodes[i][j]);
 						if (arr != null && arr.length <= range + 1)
 						{
@@ -146,6 +146,7 @@ package artur.display.battle
 							node.setAttack();
 					}
 				}
+				
 		}
 		public function clearNodesControl():void
 		{

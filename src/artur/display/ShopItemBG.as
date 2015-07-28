@@ -24,6 +24,7 @@ package artur.display
 			this.hp.txt1.text = "1";
 			this.buttonMode = true;
 			this.cacheAsBitmap = true;
+			this.dmg.iconRange.visible = false;
 		}	
 		
 		private function makeInvisiblePlussAndNumber(hp:MovieClip):void 

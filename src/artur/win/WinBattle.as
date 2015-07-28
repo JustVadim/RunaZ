@@ -22,6 +22,7 @@ package artur.win
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -63,7 +64,6 @@ package artur.win
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
-			
 			WinBattle.hero_inv = new HeroInventar(true);
 			inst = this;
 			arrow.gotoAndStop(1);
@@ -443,6 +443,7 @@ package artur.win
 		 
 		public function setCurrStep():void 
 		{
+			
 			this.ult_clicked = false;
 			WinBattle.sortSpr();
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];

@@ -4,6 +4,7 @@ package artur.display.battle
 	import artur.win.WinBattle;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
+	import report.Report;
 	
 	public class AttackNode extends AtackNode
 	{
@@ -22,9 +23,10 @@ package artur.display.battle
 			var objs:Array = [null, b1, b2, b3, b4, b5, b6];
 			for (var i:int = 1; i < objs.length; i++) 
 			{
-				objs[i].addEventListener(MouseEvent.MOUSE_OVER, over);
+				objs[i].addEventListener(MouseEvent.ROLL_OVER, over);
 				objs[i].addEventListener(MouseEvent.CLICK, click);
-				objs[i].addEventListener(MouseEvent.MOUSE_OUT, out);
+				objs[i].addEventListener(MouseEvent.ROLL_OUT, out);
+				objs[i].buttonMode = true;
 			}
 			this.mouseClip.gotoAndStop(1);
 			this.mouseClip.mouseChildren = false;
@@ -88,6 +90,7 @@ package artur.display.battle
 					mouseClip.gotoAndStop(8);
 			}
 			this.currNode.onOver1();
+			this.currNode.mc.gotoAndStop(3);
 			
 		}
 	    private function click(e:MouseEvent):void 
@@ -104,13 +107,17 @@ package artur.display.battle
 				this.frees();
 			}
 		}
-	    private function out(e:MouseEvent):void 
+	    
+		private function out(e:MouseEvent):void 
 		{
 			Mouse.show();
 			if (App.spr.contains(mouseClip)) 
 				App.spr.removeChild(mouseClip)
 			if (this.currNode != null)
+			{
 				this.currNode.onOut1();
+				this.currNode.onOut();
+			}	
 		}
 		public function init(currNode:Node):void
 		{
