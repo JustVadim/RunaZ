@@ -1,6 +1,7 @@
 package artur.display 
 {
 	import artur.App;
+	import artur.display.battle.MissionBlank;
 	import artur.util.GetServerData;
 	import artur.win.WinMap;
 	import flash.events.MouseEvent;
@@ -8,6 +9,7 @@ package artur.display
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Server.Lang;
 	import Utils.json.JSON2;
 	
 	public class TownList extends mcTownList
@@ -20,15 +22,8 @@ package artur.display
 		{
 			for (var i:int = 0; i < 11; i++) 
 			{
-				var blank:mcBlankMap = new mcBlankMap();
-				blank.x = 235;
-				blank.y = 106 + 21 * i;
-				blank.gotoAndStop(1); blank.starBar.gotoAndStop(1);
-				var btn:BaseButton = new BaseButton(30);
-				btn.name = String(i);
-				btn.addEventListener(MouseEvent.CLICK, onBatle);
-				blank.addChild(btn); btn.x = 260 + btn.width/2; btn.y = -9.7 + btn.height/2;
-				blanks.push( { blank:blank, btn:btn } );
+				var blank:MissionBlank = new MissionBlank(i, 235, 106 + 21 * i, this.onBatle);
+				blanks.push(blank);
 				this.addChild(blank);
 			}
 			btnClose.x = 563 + btnClose.width / 2 ; btnClose.y = 65 + btnClose.height / 2;
@@ -40,40 +35,35 @@ package artur.display
 		{
 			App.spr.removeChild(this);
 		}
-		public function init(currMap:int,currTwon:int,title:String):void
+		public function init(currMap:int, currTwon:int, title:String):void
 		{
-			this.title.txt.text = title
+			MapTown.currTownClick = currTwon;
+			this.title.txt.text = title;
 			App.spr.addChild(this);
 			var obj:Object = UserStaticData.hero.miss[currTwon].mn;
 			var lastMision:int = -1
 			for (var i:int = 0; i < blanks.length; i++) 
 			{
-				var blank:mcBlankMap = blanks[i].blank;
-				var btn:BaseButton = blanks[i].btn;
+				var blank:MissionBlank = MissionBlank(blanks[i]);
+				blank.setName(Lang.getTitle(0,MapTown.currTownClick * 11 + i));
 				if (obj[i] != null) 
 				{
-					blank.gotoAndStop(3);
-					btn.visible = true;
-					blank.starBar.gotoAndStop(obj[i].st + 1);
+					blank.hasComplete(obj[i]);
 					lastMision = i;
 				}
 				else
 				{
-					blank.gotoAndStop(1);
-					btn.visible = false;
+					blank.hideMission();
 				}
 			}
-			if ( lastMision < blanks.length -2 ) 
+			if ( lastMision < blanks.length-1) 
 			{
-				 blanks[lastMision + 1].blank.gotoAndStop(2);
-				 blanks[lastMision + 1].btn.visible = true;
+				MissionBlank(blanks[lastMision + 1]).enableMission();
 			}
-			
 		}
 		private function onBatle(e:MouseEvent):void 
 		{
-			Report.addMassage("sdf");
-			if (GetServerData.getUserButle()) 
+			if (GetServerData.getUserIsReadyToBattle()) 
 			{
 				App.lock.init();	
 				var data:DataExchange = new DataExchange();

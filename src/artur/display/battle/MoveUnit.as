@@ -12,7 +12,6 @@ package artur.display.battle
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	import report.Report;
 	
 	public class MoveUnit 
 	{

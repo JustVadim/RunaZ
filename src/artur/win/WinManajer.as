@@ -3,7 +3,7 @@ package artur.win
 	import artur.App;
 	import artur.display.MyBitMap;
 	import flash.display.Bitmap;
-	import report.Report;
+	
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -76,7 +76,6 @@ package artur.win
 				var unit:Object = UserStaticData.hero.units[key];
 				if (unit.exp >= unit.nle)
 				{
-					Report.addMassage(unit.exp + "  " + unit.nle);
 					var data:DataExchange = new DataExchange();
 					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onLevelUpRes);
 					data.sendData(COMMANDS.UNIT_LEVEL_UP, key.toString(), true);

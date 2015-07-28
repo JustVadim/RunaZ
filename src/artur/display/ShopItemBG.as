@@ -4,7 +4,6 @@ package artur.display
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
 	
 	public class ShopItemBG extends bgBlankItemShop
 	{
@@ -25,6 +24,7 @@ package artur.display
 			this.hp.txt1.text = "1";
 			this.buttonMode = true;
 			this.cacheAsBitmap = true;
+			this.dmg.iconRange.visible = false;
 		}	
 		
 		private function makeInvisiblePlussAndNumber(hp:MovieClip):void 
@@ -65,11 +65,11 @@ package artur.display
 		
 		private function showChars(char:int, i:int, obj:Object, mc:MovieClip):Boolean 
 		{
-			if (obj[char] != null)
+			if (obj.c[char] != null)
 			{
 				mc.visible = true;
 				mc.y = 5 + i * 16;
-				mc.txt1.text = obj[char];
+				mc.txt1.text = obj.c[char];
 			}
 			else
 			{

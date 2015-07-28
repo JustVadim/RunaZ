@@ -9,6 +9,7 @@ package
 	import report.Report;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Server.Lang;
 	import Utils.json.JSON2;
 	
 	public class Main extends Sprite 
@@ -29,6 +30,8 @@ package
 		private function init(e:Event = null):void 
 		{
 			
+			Lang.init();
+			
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			UserStaticData.flash_vars = stage.loaderInfo.parameters as Object;
 			if (UserStaticData.flash_vars['api_id'])
@@ -38,7 +41,6 @@ package
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Main.THIS = this;
 			stage.addChild(rep = new Report());
-			Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
 		}

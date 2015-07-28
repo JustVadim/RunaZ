@@ -11,7 +11,6 @@ package artur.win
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
 	
 	public class WinMap 
 	{
@@ -23,9 +22,10 @@ package artur.win
 		private var bg:Bitmap;
 	    private var names:Array =
 		[
-		     ['Арагон','Бригас','Наом','Тамкар','Травинкал','Апром','Мигор','Квонг','Сагос','Неаро','Валк','Валес']
+			['Арагон','Бригас','Наом','Тамкар','Травинкал','Апром','Мигор','Квонг','Сагос','Неаро','Валк','Валес']
 		]
 		public var townList:TownList 
+		
 		public function WinMap() 
 		{
 			////
@@ -55,15 +55,13 @@ package artur.win
 		}
 		public function init():void
 		{
-			
 			bg = bgs[currMap];
 			App.spr.addChild(bg);
 			var lastTown:int = GetServerData.getLastTown();
-			currMap = int( lastTown / 12 );
+			WinMap.currMap = int(lastTown/12);
 			for (var i:int = 0; i < maps[currMap].length; i++) 
 			{
 				var town:MapTown = maps[currMap][i];
-				///town.name = String(i);
 				App.spr.addChild(town);
 				switch(true)
 				{
@@ -85,7 +83,8 @@ package artur.win
 		
 		private function onTown(e:MouseEvent):void 
 		{
-			townList.init(currMap, int(e.currentTarget.name),names[currMap][int(e.currentTarget.name)]);
+			var num:int = int(e.currentTarget.name);
+			townList.init(currMap, num , names[currMap][num]);
 		}
 		public function update():void
 		{

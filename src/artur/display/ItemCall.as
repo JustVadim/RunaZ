@@ -8,11 +8,7 @@ package artur.display
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
-	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class ItemCall extends Sprite
 	{
 		public static var cache:Array = [];

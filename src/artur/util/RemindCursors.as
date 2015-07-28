@@ -10,7 +10,6 @@ package artur.util
 	import flash.geom.Point;
 	import flash.ui.*;
 	import flash.display.SimpleButton;
-	import report.Report;
 	
 	public class RemindCursors extends Sprite 
 	{ 

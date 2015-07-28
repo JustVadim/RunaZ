@@ -42,7 +42,7 @@ package artur.util
 			if ($cursorHotSpot != null) {
 				this.hotSpot = $cursorHotSpot;
 			}
-			if ($cursorFPS != NaN) {
+			if (!isNaN($cursorFPS)) {
 				this.fps = $cursorFPS;
 			}
 			// Запускаем процесс растеризации
@@ -120,11 +120,13 @@ package artur.util
 			mcd.data = this.data;
 			
 			// Точка нажатия курсора. Если параметр не задан - будет по умолчанию в xy(0,0)
-			if (hotSpot != null) { 
+			if (hotSpot != null) 
+			{ 
 				mcd.hotSpot = this.hotSpot; 
 			}
 			// Кол-во кадров в секунду текущего курсора. Если не задано - будет параметр по умолчанию.
-			if (fps != NaN) {
+			if (!isNaN(fps)) 
+			{
 				mcd.frameRate = this.fps; 
 			}
 			// Регистрируем наш курсор

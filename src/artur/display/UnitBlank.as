@@ -8,7 +8,6 @@ package artur.display
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -44,6 +43,8 @@ package artur.display
 			this.mcText.txtMagDef.text = String(chars.m_d);
 			this.mcText.txtGold.text = String(chars.pg);
 			this.mcText.txtSilver.text = String(chars.ps);
+			this.mcText.txtSpeed.text = String(chars.sp)
+			this.mcText.txtInc.text = String(chars['in']);
 			this.mcText.txt_sk_crit.text = String(chars.b[BuffsVars.crit].l);
 			this.mcText.txt_sk_miss.text = String(chars.b[BuffsVars.miss].l);
 			this.mcText.txt_sk_double.text = String(chars.b[BuffsVars.combo].l);
@@ -63,8 +64,8 @@ package artur.display
 		
 		private function addSkillListener(skill:MovieClip):void 
 		{
-			skill.addEventListener(MouseEvent.MOUSE_OVER, onSkillOver);
-			skill.addEventListener(MouseEvent.MOUSE_OUT, onSkillOut);
+			skill.addEventListener(MouseEvent.ROLL_OVER, onSkillOver);
+			skill.addEventListener(MouseEvent.ROLL_OUT, onSkillOut);
 		}
 		
 		private function onSkillOver(e:MouseEvent):void 
@@ -154,12 +155,10 @@ package artur.display
 			unit.init(this);
 			this.addChild(MovieClip(unit));
 			unit.x = 50; unit.y = 95;
-			this.addEventListener(MouseEvent.MOUSE_OVER, over);
-			this.addEventListener(MouseEvent.MOUSE_OUT, out);
+			this.addEventListener(MouseEvent.ROLL_OVER, over);
+			this.addEventListener(MouseEvent.ROLL_OUT, out);
 			this.addEventListener(MouseEvent.CLICK, this.onBtn);
 			this.buttonMode = true;
-			
-			Report.addMassage(this.buttonMode + " " + this.mouseEnabled)
 		}
 		
 		public function update():void

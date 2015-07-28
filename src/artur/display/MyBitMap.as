@@ -5,10 +5,6 @@ package artur.display
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	
-	/**
-	 * ...
-	 * @author art
-	 */
 	public class MyBitMap extends Bitmap
 	{
 

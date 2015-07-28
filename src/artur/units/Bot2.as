@@ -6,30 +6,29 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
 	
 	public class Bot2 extends PallDoll
 	{
-		private var heads         :Array ;
-		private var bodys         :Array ;
-		private var sikirs          :Array;
-		private var appArmsR   :Array;
-		private var hends1R     :Array;
-		private var hends2R     :Array;
-		private var hends1L     :Array;
-		private var hends2L     :Array;
-		private var legs1R       :Array;
-		private var legs2R       :Array;
-		private var legs3R       :Array;
-		private var legs1L       :Array;
-		private var legs2L       :Array;
-		private var legs3L       :Array;
-		private var sikirs2       :Array;
+		private var heads         	:Array ;
+		private var bodys         	:Array ;
+		private var sikirs        	:Array;
+		private var appArmsR   		:Array;
+		private var hends1R     	:Array;
+		private var hends2R     	:Array;
+		private var hends1L     	:Array;
+		private var hends2L     	:Array;
+		private var legs1R       	:Array;
+		private var legs2R       	:Array;
+		private var legs3R       	:Array;
+		private var legs1L       	:Array;
+		private var legs2L       	:Array;
+		private var legs3L       	:Array;
+		private var sikirs2       	:Array;
+		private var parts			:Array;
+		private var parts_of_parts	:Array;
 		public var type:String = 'Bot2';
 		public var free:Boolean = true;
 		private var isOver:Boolean = false;
-		private var parts:Array ;
-		private var parts_of_parts:Array;
 		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
 		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 }, { id:'pall_hurt', frame:78 },{id:'blade1',frame:75}];
 		
@@ -127,7 +126,6 @@ package artur.units
 			gotoAndStop(1);
 			if (parent) 
 			{
-				Report.addMassage("bot2 removed");
 				parent.removeChild(this);
 			}
 			

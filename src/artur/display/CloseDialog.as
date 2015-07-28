@@ -2,10 +2,7 @@ package artur.display
 {
 	import artur.App;
 	import flash.events.MouseEvent;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class CloseDialog extends dialogBye
 	{
 		private var btnEx:BaseButton;
@@ -20,15 +17,18 @@ package artur.display
 			 this.txt.y+=20
 			 this.txt.height += 20;
 		}
+		
 		private function onBtn(e:MouseEvent):void 
 		{
 			frees();
 		}
+		
 		public function init(text:String):void
 		{
 		     App.spr.addChild(this);
 			 this.txt.text = text;
 		}
+		
 		private function frees():void 
 		{
 			if (parent) 

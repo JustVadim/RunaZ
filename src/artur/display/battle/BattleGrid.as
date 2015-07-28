@@ -9,7 +9,7 @@ package artur.display.battle
 	import flash.display.IBitmapDrawable;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	import report.Report;
+	import flash.ui.Mouse;
 	
 	
 	public class BattleGrid 
@@ -38,8 +38,6 @@ package artur.display.battle
 			}
 			this.setUnitsOnScreen(mbat.t1_locs, mbat.t1_u, WinBattle.units[0],LifeManajer.un_Data[0], mbat.t1_hp, mbat.t1_mp);
 			this.setUnitsOnScreen(mbat.t2_locs, mbat.t2_u, WinBattle.units[1], LifeManajer.un_Data[1], mbat.t2_hp, mbat.t2_mp, -1);
-			Report.addMassage(UnitCache.unitCache.length + ' units');
-			Report.addMassage(EffManajer.pool.length + ' eff');
 		}
 		
 		public function frees():void
@@ -96,7 +94,6 @@ package artur.display.battle
 					dist = BattleGrid.getDistance(i, j, s_x, s_y);
 					if (dist <= range)
 					{
-						
 						arr = this.findPath(nodes[s_x][s_y], nodes[i][j]);
 						if (arr != null && arr.length <= range + 1)
 						{
@@ -149,6 +146,7 @@ package artur.display.battle
 							node.setAttack();
 					}
 				}
+				
 		}
 		public function clearNodesControl():void
 		{

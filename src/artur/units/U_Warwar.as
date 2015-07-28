@@ -9,8 +9,6 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
-	
 	
 	public class U_Warwar extends BarbDoll
 	{

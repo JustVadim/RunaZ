@@ -6,11 +6,7 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class U_LykBot extends  LykDoll
 	{
 		 private var heads         	:Array ;
@@ -140,7 +136,6 @@ package artur.units
 			if (parent) 
 			{
 				parent.removeChild(this);
-				Report.addMassage("Bot luk_ remvoed")
 			}
 			 
 		}

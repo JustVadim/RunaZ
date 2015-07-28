@@ -4,15 +4,11 @@ package artur.display
 	import artur.util.Maker;
 	import artur.win.WinCastle;
 	import flash.events.MouseEvent;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class ByeWin extends dialogBye
 	{
 		private var btnGold:BaseButton;
@@ -33,13 +29,34 @@ package artur.display
 			btnGold.addEventListener(MouseEvent.CLICK, onBtn);
 			btnSilver.addEventListener(MouseEvent.CLICK, onBtn);
 			btnEx.addEventListener(MouseEvent.CLICK, onBtn);
+			this.tabChildren = false;
+			this.tabEnabled = false;
+			this.iconGold.mouseEnabled = false;
+			this.iconGold.mouseChildren = false;
+			this.txtSilver.mouseChildren = false;
+			this.txtSilver.mouseEnabled = false;
+			this.txtGold.mouseEnabled = false;
+			this.txtGold.mouseChildren = false;
+			this.iconSilver.mouseChildren = false;
+			this.iconSilver.mouseEnabled = false;
+			this.iconGold.mouseEnabled = false;
+			this.iconGold.mouseChildren = false;
+			this.addChild(btnEx);
 		}
 		public function init(text1:String = "", text2:String = "", priceGold:int = 0, priceSilver:int = 0, index:int = NaN, byeType:int = 0, itemType:int = NaN, invPlace:int = NaN):void
 		{
 			 
 			if (text1 == "") 
 			{
-				txt.text = "У вас не достаточно ресурсов";
+				txt.text = "У вас не достаточно ресурсов, для этой покупки!";
+				//if (!this.contains(this.btnEx)) 	this.addChild(btnEx);
+				if (this.contains(this.iconGold)) 	this.removeChild(this.iconGold);
+				if (this.contains(this.btnGold)) 	this.removeChild(this.btnGold);
+				if (this.contains(this.iconSilver)) this.removeChild(this.iconSilver);
+				if (this.contains(this.btnSilver)) 	this.removeChild(this.btnSilver);
+				if (this.contains(this.txtGold)) 	this.removeChild(this.txtGold);
+				if (this.contains(this.txtSilver)) 	this.removeChild(this.txtSilver);
+				//txt.y = (this.height - txt.height) / 2;
 			}
 			else
 			{
@@ -48,28 +65,31 @@ package artur.display
 				this.byeType = byeType;
 				this.itemType = itemType;
 				this.invPlace = invPlace;
-				this.addChild(btnEx);
-				this.addChild(btnSilver);
-				if (priceGold)
+				if (priceGold && WinCastle.isGold(priceGold))
 				{
-				     this.addChild(btnGold);
-				     this.addChild(iconGold); iconGold.mouseEnabled = false; iconGold.mouseChildren = false;
-				     this.addChild(txtGold);  txtGold.mouseEnabled = false; txtGold.mouseChildren = false;
-				   	 txtGold.text = String(priceGold);
+					this.txtGold.text = String(priceGold);
+					this.addChild(this.btnGold);
+					this.addChild(this.iconGold);
+					this.addChild(this.txtGold); 
 				}
 				else
 				{
-					if (this.contains(btnGold)) this.removeChild(btnGold);
-					if (this.contains(iconGold)) this.removeChild(iconGold);
-					if (this.contains(txtGold)) this.removeChild(txtGold);
+					if (this.contains(this.btnGold)) 	this.removeChild(this.btnGold);
+					if (this.contains(this.iconGold)) 	this.removeChild(this.iconGold);
+					if (this.contains(this.txtGold)) 	this.removeChild(this.txtGold);
 				}
-				this.addChild(iconSilver); iconSilver.mouseEnabled = false; iconSilver.mouseChildren = false;
-				this.addChild(txtSilver); txtSilver.mouseEnabled = false;  txtSilver.mouseChildren = false;
-				txtSilver.text = String(priceSilver);
-				if (byeType < 2)
+				if (WinCastle.isSilver(priceSilver))
 				{
-				     btnGold.setActive(WinCastle.isGold(priceGold));
-				     btnSilver.setActive(WinCastle.isSilver(priceSilver));
+					this.txtSilver.text = String(priceSilver);
+					this.addChild(this.btnSilver);
+					this.addChild(this.txtSilver);
+					this.addChild(this.iconSilver);
+				}
+				else
+				{
+					if (this.contains(this.btnSilver))		this.removeChild(this.btnSilver);
+					if (this.contains(this.txtSilver)) 		this.removeChild(this.txtSilver);
+					if (this.contains(this.iconSilver))		this.removeChild(this.iconSilver);
 				}
 			}
 			App.spr.addChild(this);
@@ -136,6 +156,7 @@ package artur.display
 			}
 			
 		}
+		
 		public function bye(indexPrice:int):void
 		{
 			 frees();
@@ -145,6 +166,7 @@ package artur.display
 			 data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);
 			 data.sendData(COMMANDS.BYE_UNIT, JSON2.encode(obj),true);
 		}
+		
 		public function byeItem(indexPrice:int):void
 		{
 			 frees();
@@ -155,6 +177,7 @@ package artur.display
 			 data.addEventListener(DataExchangeEvent.ON_RESULT, getRess2);
 			 data.sendData(COMMANDS.BYE_ITEM, JSON2.encode(obj),true);
 		}
+		
 		private function getRess(e:DataExchangeEvent):void
 		{
 	        DataExchange(e.target).removeEventListener(e.type, getRess);
@@ -181,14 +204,13 @@ package artur.display
 			else
 			{
 				App.lock.init('Error: '+obj.error)
-				Report.addMassage('bye unit error: error num ' + obj.error);
 			}
 			//unlock crab
 		}
+		
 		private function getRess2(e:DataExchangeEvent):void
 		{
 			DataExchange(e.target).removeEventListener(e.type, getRess);
-			Report.addMassage(e.result);
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.error == null)
 			{
@@ -223,10 +245,10 @@ package artur.display
 			else
 			{
 				App.lock.init('Error: '+obj.error)
-				Report.addMassage('bye unit error: error num ' + obj.error);
 			}
 			// unlock crab
 		}
+		
 		public function frees():void
 		{
 			App.spr.removeChild(this);

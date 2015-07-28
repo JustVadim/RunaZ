@@ -5,7 +5,6 @@ package artur.display.battle
 	import flash.display.MovieClip;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	import report.Report;
 	
 	public class LifeManajer 
 	{
@@ -189,7 +188,6 @@ package artur.display.battle
 			{
 				var percent:int = 1 + unit.currLife / unit.maxLife * 100;
 				bar.life.gotoAndStop(percent);
-				Report.addMassage(unit.currMana + " " + unit.maxMana);
 				percent = 1 + unit.currMana / unit.maxMana * 100;
 				bar.mana.gotoAndStop(percent);
 			}

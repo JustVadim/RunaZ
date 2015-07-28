@@ -3,23 +3,22 @@ package artur.display
 	import artur.App;
 	import flash.display.MovieClip;
 	import flash.filters.GlowFilter;
-	import report.Report;
 	
 	public class InfoWin extends mcInfo
 	{
 		private var wds:Array = [70, 100, 243];
 		private var delay:int = 0;
-		
 		private var infos:Array 
 		
 		public function InfoWin() 
 		{
-			this.mouseChildren  = false;
-			this.mouseEnabled   = false;
+			this.mouseChildren = false;
+			this.mouseEnabled = false;
 			this.title.y = -5;
 			infos = [this.hp, this.mp, this.dmg,this.f_fiz, this.f_mag, this.speed, this.inc];
 			this.hideAll();
-			this.filters = [new GlowFilter(0x000000,1,3,3)]
+			this.filters = [new GlowFilter(0x000000, 1, 3, 3)]
+			this.dmg.iconRange.visible = false;
 		}
 		
 		private function hideAll():void 
@@ -55,7 +54,7 @@ package artur.display
 					this.txtInfo.visible = true;
 					this.txtInfo.width = data.txtInfo_w;
 					this.txtInfo.htmlText = data.txtInfo_t;
-					this.txtInfo.height = txtInfo.numLines * 20;
+					this.txtInfo.height = txtInfo.numLines * 18;
 					this.txtInfo.x = this.bg.x;
 					this.txtInfo.y = cur_Y;
 					this.bg.width = data.txtInfo_w;
@@ -103,7 +102,6 @@ package artur.display
 							mov1.txt1.text = "+" + data.chars[j];
 							this.infos[j].visible = true;
 							cur_Y += 18;
-							this.infos
 						}
 					}
 					this.bg.width = 236;

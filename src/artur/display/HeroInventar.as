@@ -3,6 +3,7 @@ package artur.display
 	import artur.App;
 	import artur.win.WinBattle;
 	import artur.win.WinCastle;
+	import com.greensock.events.LoaderEvent;
 	import com.greensock.TweenLite;
 	import datacalsses.Hero;
 	import flash.display.MovieClip;
@@ -13,7 +14,6 @@ package artur.display
 	import flash.geom.Point;
 	import flash.ui.Mouse;
 	import mx.core.FlexMovieClip;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -37,7 +37,8 @@ package artur.display
 		public var itemID:int;
 		public var invPlace:int;
 		public var parts:Array = [currHead, currBody, currBoot, currHendTop, currHendDown];
-		public var inv_array:Array = [new I_Inv(),new I_Inv(),new I_Inv(),new I_Inv()];
+		public var inv_array:Array = [new I_Inv(), new I_Inv(), new I_Inv(), new I_Inv()];
+		
 		
 		public var bin:Boolean = false;
 		private var mcText:mcTextHeroInventar = new mcTextHeroInventar();
@@ -266,7 +267,6 @@ package artur.display
 		
 		public function putOnOldPlace():void 
 		{
-			Report.addMassage(this.itemType + " " + this.itemID  + " " + this.invPlace)
 			App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1); 
 			switch(true)
 			{
@@ -470,15 +470,15 @@ package artur.display
 		private function updateSkills(unit:Object = null):void 
 		{
 			if(unit == null)
-				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+				unit = UserStaticData.hero.units[WinCastle.currSlotClick];
 			this.mcText.txt_sk_crit.text = unit.b[0].l;
 			this.mcText.txt_sk_miss.text = unit.b[1].l;
 			this.mcText.txt_sk_double.text = unit.b[2].l;
 			this.mcText.txt_sk_out.text = unit.b[3].l;
 			this.mcText.txt_sk_return.text = unit.b[4].l;
 			this.mcText.sk_ult.gotoAndStop(this.heroType+1);
+			this.mcText.sk_ult.txt.text = unit.ult.lvl;
 			this.mcText.mcFreeskils.textf.text = "Доступно: " + unit.fs;
-			
 			if (unit.fs > 0 && !battle_init)
 			{
 				this.mcText.mcFreeskils.visible = true;
@@ -512,95 +512,136 @@ package artur.display
 		
 		private function onBuffClick(e:MouseEvent):void 
 		{
-			 var mc:MovieClip = MovieClip(e.currentTarget);
-			 UserStaticData.hero.units[WinCastle.currSlotClick].fs--;
-		 	 App.sound.playSound('skillUp', App.sound.onVoice, 1);
+			App.lock.init();
+			var skill_num:int = -1;
+			var mc:MovieClip = MovieClip(e.currentTarget);
 			switch(true)
 			{
 				case(mc == this.mcText.sk_crit):
-					UserStaticData.hero.units[WinCastle.currSlotClick].b[0].l++;
+					skill_num = 0;
 					break;
 				case(this.mcText.sk_miss == mc):
-					UserStaticData.hero.units[WinCastle.currSlotClick].b[1].l++;
+					skill_num = 1;
 					break;
 				case(this.mcText.sk_double == mc):
-					UserStaticData.hero.units[WinCastle.currSlotClick].b[2].l++;
+					skill_num = 2;
 					break;
 				case(this.mcText.sk_out == mc):
-					UserStaticData.hero.units[WinCastle.currSlotClick].b[3].l++;
+					skill_num = 3;
 					break;
 				case(this.mcText.sk_return == mc):
-					UserStaticData.hero.units[WinCastle.currSlotClick].b[4].l++;
+					skill_num = 4;
+					break;
+				default:
+					skill_num = 5
 					break;
 			}
-			Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).higlightLvlStar();
-			this.updateSkills();
-			this.onBuffOut(e);
-			this.onBuffOver(e);
+			var obj:Object = new Object();
+			obj.un = WinCastle.currSlotClick;
+			obj.sn = skill_num;
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, onBuffUpdateRes);
+			data.sendData(COMMANDS.UPDATE_SKILL, JSON2.encode(obj), true);			
+			function onBuffUpdateRes(evn:DataExchangeEvent = null):void
+			{
+				data.removeEventListener(evn.type, onBuffUpdateRes);
+				obj = JSON2.decode(evn.result);
+				if (obj.res != null)
+				{
+					App.sound.playSound('skillUp', App.sound.onVoice, 1);
+					UserStaticData.hero.units[WinCastle.currSlotClick].fs--;
+					var res:int = int(obj.res);
+					if (res < 5)
+					{
+						UserStaticData.hero.units[WinCastle.currSlotClick].b[res].l++;
+					}
+					else
+					{
+						UserStaticData.hero.units[WinCastle.currSlotClick].ult.lvl++;
+					}
+					Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).higlightLvlStar();
+					updateSkills();
+					onBuffOut(e);
+					onBuffOver(e);
+					App.lock.frees();
+				}
+				else
+				{
+					App.lock.init(obj.error);
+				}
+			}
 		}
 		
 		
 		private function onBuffOut(e:MouseEvent):void 
 		{
-			var mc:MovieClip = MovieClip(e.currentTarget);
+			var mc:MovieClip = MovieClip(e.target);
 			mc.filters = [];
 			App.info.frees();
 		}
 		
 		private function onBuffOver(e:MouseEvent):void 
 		{
-			var mc:MovieClip = MovieClip(e.currentTarget);
+			var mc:MovieClip = MovieClip(e.target);
 			App.sound.playSound('over2', App.sound.onVoice, 1);
 			if (this.mcText.mcFreeskils.visible)
 			{
 				App.btnOverFilter.color = 0xFFFFFF;
 				mc.filters = [App.btnOverFilter];
-				
 			}
 			var p:Point = mc.localToGlobal(new Point(0, 0));
 			var descr:String = "";
 			var ub:Object = UserStaticData.hero.units[WinCastle.currSlotClick].b;
-			
+			var bc:Object = UserStaticData.buffs_chances;
+			var uult:Object = UserStaticData.hero.units[WinCastle.currSlotClick].ult;
 			switch(true)
 			{
 				case(mc == this.mcText.sk_crit):
-					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[0][ub[0].l]+"% шанс нанести двойной урон</font>\n Следующий уровень - " + UserStaticData.buffs_chances[0][ub[0].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">" + bc[0][ub[0].l] + "% шанс нанести двойной урон</font>\n Следующий уровень - " + bc[0][ub[0].l + 1] + "%";
 					break;
 				case(this.mcText.sk_miss == mc):
-					descr = "<font color=\"#00FF00\">Уворот</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[1][ub[1].l]+"% шанс уклониться от удара</font>\n Следующий уровень - " + UserStaticData.buffs_chances[1][ub[1].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Уворот</font>\n<font color=\"#FFFFFF\">" + bc[1][ub[1].l] + "% шанс уклониться от удара</font>\n Следующий уровень - " + bc[1][ub[1].l + 1] + "%";
 					break;
 				case(this.mcText.sk_double == mc):
-					descr = "<font color=\"#00FF00\">Двойная атака</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[2][ub[2].l]+"% шанс атаковать два раза</font>\n Следующий уровень - " + UserStaticData.buffs_chances[2][ub[2].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Двойная атака</font>\n<font color=\"#FFFFFF\">" + bc[2][ub[2].l] + "% шанс атаковать два раза</font>\n Следующий уровень - " + bc[2][ub[2].l + 1] + "%";
 					break;
 				case(this.mcText.sk_out == mc):
-					descr = "<font color=\"#00FF00\">Бешенсво</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[3][ub[3].l]+"% шанс атаковать сквозь защиту</font>\n Следующий уровень - " + UserStaticData.buffs_chances[3][ub[3].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Бешенсво</font>\n<font color=\"#FFFFFF\">" + bc[3][ub[3].l] + "% шанс атаковать сквозь защиту</font>\n Следующий уровень - " + bc[3][ub[3].l + 1] + "%";
 					break;
 				case(this.mcText.sk_return == mc):
-					descr = "<font color=\"#00FF00\">Ответный удар</font>\n<font color=\"#FFFFFF\">"+ UserStaticData.buffs_chances[4][ub[4].l]+"% шанс нанести ответный удар</font>\n Следующий уровень - " + UserStaticData.buffs_chances[4][ub[4].l+1] + "%";
+					descr = "<font color=\"#00FF00\">Ответный удар</font>\n<font color=\"#FFFFFF\">" + bc[4][ub[4].l] + "% шанс нанести ответный удар</font>\n Следующий уровень - " + bc[4][ub[4].l + 1] + "%";
 					break;
 				case (this.mcText.sk_ult == mc):
 					switch(UserStaticData.hero.units[WinCastle.currSlotClick].t)
 					{
 						case 0:
-							descr = "<font color=\"#00FF00\">Ярость</font>\n<font color=\"#FFFFFF\">"+ "";
+							descr = "<font color=\"#00FF00\">Ярость</font>\n";
+							descr += "<font color=\"#FFFFFF\">увеличивает урон юнита на " + bc[5][uult.lvl] + "% на текущий ход</font>\n";
+							descr += "Следующий уровень - " + bc[5][uult.lvl + 1] + "%";
 							break;
 						case 1:
-							descr = "<font color=\"#00FF00\">Лечение</font>\n<font color=\"#FFFFFF\">"+ "";
+							descr = "<font color=\"#00FF00\">Лечение</font>\n";
+							descr += "<font color=\"#FFFFFF\"> востанавливает " + bc[6][uult.lvl] + " единиц здоровья любому союзному юниту</font>\n";
+							descr += "Следующий уровень - " + bc[6][uult.lvl + 1] + " единиц";
 							break;
 						case 2:
-							descr = "<font color=\"#00FF00\">Огненная стрела</font>\n<font color=\"#FFFFFF\">"+ "";
+							descr = "<font color=\"#00FF00\">Огненная стрела</font>\n";
+							descr += "<font color=\"#FFFFFF\"> Оглушает вражеского юнита огненной стрелой и наносит " + bc[7][uult.lvl] + " урона</font>\n";
+							descr += "Следующий уровень - " + bc[7][uult.lvl + 1] + " урона"
 							break;
 						case 3:
-							descr = "<font color=\"#00FF00\">Молния</font>\n<font color=\"#FFFFFF\">"+ "";
+							descr = "<font color=\"#00FF00\">Молния</font>\n"
+							descr += "<font color=\"#FFFFFF\"> Поражает вражеского юнита молнией при этом наносит ему + " + bc[8][uult.lvl] + " урона</font>\n";
+							descr += "Следующий уровень - " + bc[8][uult.lvl + 1] + " урона"
 							break;
 					}
+					descr+= "\n<font color=\"#15B4FF\">Стоимость заклинания "+ uult.mc + " манны</font>\n";
 					break;
 			}
 			if (this.mcText.mcFreeskils.visible)
 			{
 				descr += "\n\n<font color=\"#00FF00\" size=\"10\">Нажмите что бы улучшить!</font>"
 			}
-			
 			App.info.init(p.x + 35, p.y + 35, { type:0, title:"Навык", txtInfo_w:290, txtInfo_h:48, txtInfo_t:descr} );
 		}
 		
