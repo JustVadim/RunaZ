@@ -122,6 +122,16 @@ package artur
 			while (spr.numChildren > 0)
 			 spr.removeChildAt(0);
 		}
+		public static function dellFromArr(obj:Object,arr:Array):void
+		{
+			for (var i:int = 0; i < arr.length; i++) 
+			{
+				if (arr[i] == obj)
+				 {
+					 arr.splice(i, 1);
+				 }
+			}
+		}
 		
 	}
 

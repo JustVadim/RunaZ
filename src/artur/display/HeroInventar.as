@@ -44,7 +44,7 @@ package artur.display
 		private var mcText:mcTextHeroInventar = new mcTextHeroInventar();
 		private var call:ItemCall;
 		private var progresEXP:progresBar = new progresBar();
-		private var battle_init:Boolean;
+		private var battle_init:Boolean;z
 		
 		public function HeroInventar(battle_init:Boolean = false)
 		{

@@ -12,7 +12,7 @@
     <movie minorVersion="7" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
-    <movie preferredSDK="Flex 4.6.0, AIR 18.0;4.6.0, 18.0;" />
+    <movie preferredSDK="Flex 4.6.0, AIR 3.7;4.6.0, 3.7;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -26,7 +26,6 @@
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
-    <option inline="False" />
     <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
@@ -93,7 +92,6 @@
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="NewWindow" />
-    <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->
   <storage />

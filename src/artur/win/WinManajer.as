@@ -94,7 +94,7 @@ package artur.win
 				unit.lvl = obj.lvl;
 				unit.nle = obj.nle;
 				unit.fs = obj.fs;
-				App.closedDialog.init("У одного из вашых воинов повысился уровень, зайдите  в замок чтобы улучшить его");
+				App.closedDialog.init("У одного из вашых воинов повысился уровень, зайдите  в замок чтобы улучшить его",true);
 			}
 			else
 			{

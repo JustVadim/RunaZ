@@ -25,6 +25,8 @@ package artur.display
 			this.color = color;
 			this.index = index;
 			bm = new MyBitMap(App.prepare.cach[index]);
+			bm.width += 1;
+			bm.height += 1;
 			bm.x = - bm.width / 2;
 			bm.y = -bm.height / 2;
 			this.addChild(bm);

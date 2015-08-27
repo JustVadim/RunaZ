@@ -31,6 +31,7 @@ package artur.display.battle.eff
 			free = false;
 			Main.THIS.stage.addChild(txt);
 			txt.textColor = txtColor;
+			
 		}
 		public function update():void
 		{

@@ -47,7 +47,8 @@ package artur
 		new t12(),//28
 		new btnMap(),//29
 		new btnToBatle(),//30
-		new btnCloseList()//31
+		new btnCloseList(),//31
+		new imgBtnCastle()//32
 		];
 		 public static var scaleFactor:Number = 2;
 		
@@ -90,6 +91,12 @@ package artur
 			{
 				 clip.gotoAndStop(i + 1);
 				 drawSpr.addChild(clip);
+				  for (var j:int = 0; j < clip.numChildren; j++) 
+				 {
+					 if(clip.getChildAt(j) is MovieClip)
+					     MovieClip(clip.getChildAt(j)).gotoAndStop(i+1)
+				 }
+				 
 				 rect = drawSpr.getBounds(drawSpr);
 				 mtx = new Matrix();
 				 mtx.tx = -rect.x;

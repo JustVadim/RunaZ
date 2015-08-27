@@ -220,7 +220,7 @@ package artur.win
 			var mps:Object = (obj.tu.t == 0)? WinBattle.bat.t1_mp:WinBattle.bat.t2_mp;
 			var unit:Object = (obj.tu.t == 0)? WinBattle.bat.t1_u[obj.tu.p]:WinBattle.bat.t2_u[obj.tu.p];
 			var hp:int = 0;
-			var mp:int = 0
+			var mp:int = 0;
 			switch(obj.ban)
 			{
 				case 1:
@@ -252,7 +252,8 @@ package artur.win
 			App.sound.playSound("eff_heal", App.sound.onVoice, 1);
 			var ef_coord:Object = (obj.tu.t == 0) ? bat.t1_locs[obj.tu.p]:bat.t2_locs[obj.tu.p];
 			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
-			BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
+			//BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
+			EffManajer.effBotleHill.init(node.x, node.y);
 		}
 		
 		private function onUltimateData(obj:Object):void 

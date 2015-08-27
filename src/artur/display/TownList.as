@@ -70,6 +70,10 @@ package artur.display
 				data.addEventListener(DataExchangeEvent.ON_RESULT, getRessBattle);
 				data.sendData(COMMANDS.CREAT_BATTLE, String(MapTown.currTownClick * 11 + int(e.currentTarget.name)) , true);
 			}
+			else
+			{
+				App.closedDialog.init("Вы не сможете победить! \n Наймите воина. Если у вас уже есть воин - купите ему оружие",true)
+			}
 		}
 		
 		private function getRessBattle(e:DataExchangeEvent):void 

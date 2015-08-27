@@ -10,7 +10,7 @@ package artur.display.battle.eff
 		public static var pool:Array = [];
 		public static var lgs:Lightning = new Lightning();
 		private static var lgsDell:int = 0;
-		
+        public static var effBotleHill:BotleHillEff = new BotleHillEff();		
 		public function EffManajer()
 		{
 		

@@ -27,6 +27,7 @@ package artur
 			 clip.scaleX = scaleFactor;
 			 clip.scaleY = scaleFactor;
 			 clip.gotoAndStop(1);
+			
 			 drawSpr.addChild(clip);
 			 bmd = new BitmapData(wd*scaleFactor, hg*scaleFactor, true, 0);
 			 bmd.draw(drawSpr);

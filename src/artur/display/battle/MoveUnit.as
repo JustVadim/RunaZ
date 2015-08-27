@@ -118,6 +118,7 @@ package artur.display.battle
 			if (this.arrow_anim == 0)
 			{
 				this.unit.nextFrame();
+				
 				this.magEffect();
 				if (this.unit.currentFrame == 1)
 				{
