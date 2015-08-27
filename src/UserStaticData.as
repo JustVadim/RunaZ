@@ -7,7 +7,11 @@
 		public static const server_ip:String = "192.168.0.198";
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
+<<<<<<< HEAD
 		public static var id:String = "22233";
+=======
+		public static var id:String = "565";
+>>>>>>> 8d247a14dda26166f711e1bf7717b1a1b568be55
 		public static var sig:String = "11111";
 		public static var fname:String = "Dsdfjl";
 		public static var sname:String = "Gljksf";
@@ -21,6 +25,6 @@
 		static public var magazin_items:Object = new Object();
 		static public var buffs_chances:Array = new Array();
 		static public var flash_vars:Object;
-		static public var lang:int = 0;
+		static public var lang:int = 0;	
 	}
 }
