@@ -42,12 +42,24 @@ package artur.display.battle
 			txt.y = - txt.height / 2;
 			txt.alpha = 0.5;
 			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver1);
+			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver2);
+			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut2);
 			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut1);
 			if (unit_info_timer == null)
 			{
 				Node.unit_info_timer = new Timer(1000);
 				Node.unit_info_timer.addEventListener(TimerEvent.TIMER, Node.onInfoTimer);
 			}
+		}
+		
+		private function onOut2(e:MouseEvent):void 
+		{
+			this.is_mouse_over = false;
+		}
+		
+		private function onOver2(e:MouseEvent):void 
+		{
+			this.is_mouse_over = true;
 		}
 		
 		private static function onInfoTimer(e:TimerEvent):void 
@@ -57,6 +69,7 @@ package artur.display.battle
 		}
 		public function init(xp:int,yp:int,walcable:int):void
 		{
+			this.is_mouse_over = false;
 			this.addChild(mc); 
 			this.mc.gotoAndStop(1);
 			this.xp = xp; this.yp = yp;
