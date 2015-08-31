@@ -32,7 +32,7 @@ package artur
 		[Embed(source = "../../bin/sounds/War_hurt.mp3")] private var s_war_hurt:Class;
 		[Embed(source = "../../bin/sounds/Win.mp3")] private var s_win:Class;
 		[Embed(source = "../../bin/sounds/shock.mp3")] private var s_shok:Class;
-		
+		[Embed(source="../../bin/sounds/bot1_die.mp3")] private var s_bot1_die:Class;
 		
 		public static var sound:SoundManager = SoundManager.getInstance();
 		public static var winManajer:WinManajer;
@@ -63,6 +63,7 @@ package artur
 			sound.addSound('bot1_init', new bot1_Init());
 			sound.addSound('bot1_fs1', new bot1_fs1);
 			sound.addSound('bot1_fs2', new bot1_fs2);
+			sound.addSound('bot1_die', new s_bot1_die());
 			sound.addSound('bow1', new Bow1());
 			sound.addSound('pall_hurt', new s_pall_hurt());
 			sound.addSound('pall_death', new s_pall_death());
