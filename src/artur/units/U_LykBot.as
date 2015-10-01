@@ -46,8 +46,8 @@ package artur.units
 			appArmsR = PrepareGr.creatBms(new ItemUpArmBot3());
 			hends1L  = PrepareGr.creatBms(new ItemHand1LBot3());
 			
-			hends1R  = PrepareGr.creatBms(new ItemHand1RLyk());
-			hends2R  = PrepareGr.creatBms(new ItemHand2RLyk());
+			hends1R  = PrepareGr.creatBms(new ItemHand1RBot3());
+			hends2R  = PrepareGr.creatBms(new ItemHand2RBot3());
 			 
 			hends2L  = PrepareGr.creatBms(new ItemHand2LBot3());
 			legs1R =  PrepareGr.creatBms(new ItemLeg1RBot3());

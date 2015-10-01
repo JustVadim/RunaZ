@@ -82,7 +82,9 @@ package artur.units
 			this._leg3L.addChild(legs3L[0]);
 		//	 this.addEventListener(MouseEvent.MOUSE_OVER, over);
 		//	 this.addEventListener(MouseEvent.MOUSE_OUT, out);
-			 itemUpdate([0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+			 itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+			 this.scaleX = 1.5;
+			 this.scaleY = 1.5;
 			 //this.gotoAndPlay('run');
 			 //this.addFrameScript(125, frees);
 			 
@@ -106,7 +108,7 @@ package artur.units
 	
 		public function init(parr:DisplayObjectContainer=null):void
 		{
-			scaleX = 1;
+			scaleX = 1.5;
 			scaleY = 1;
 			filters = [];
 			free = false;

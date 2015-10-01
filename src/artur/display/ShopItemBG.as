@@ -69,7 +69,7 @@ package artur.display
 			{
 				mc.visible = true;
 				mc.y = 5 + i * 16;
-				mc.txt1.text = obj.c[char];
+				mc.txt1.text = " +" + obj.c[char];
 			}
 			else
 			{

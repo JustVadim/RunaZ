@@ -4,11 +4,11 @@
 	
 	public class UserStaticData 
 	{
-		public static const server_ip:String = "192.168.0.198";
+		public static const server_ip:String = "192.168.1.198";
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
 
-		public static var id:String = "22233"
+		public static var id:String = "2112";
 		public static var sig:String = "11111";
 		public static var fname:String = "Dsdfjl";
 		public static var sname:String = "Gljksf";
