@@ -6,7 +6,7 @@
 	{
 		public static const server_ip:String = "192.168.1.198";
 		public static const server_port:int = 3002;
-		public static var from:String = "c";
+		public static var from:String = "c"
 		public static var id:String = "new_id2212";
 		public static var sig:String = "11111";
 		public static var fname:String = "Dsdfjl";

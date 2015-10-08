@@ -101,7 +101,7 @@ package Server
 		
 		static private function onSecurityError(e:SecurityErrorEvent):void 
 		{
-			Report.addMassage("Security Error");
+			Report.addMassage("Security Error" + e.toString);
 			recconect_timer.start();
 		}
 		

@@ -41,6 +41,7 @@ package
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Main.THIS = this;
 			stage.addChild(rep = new Report());
+			Report.addMassage('adad')
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
 		}

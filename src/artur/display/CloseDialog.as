@@ -10,7 +10,7 @@ package artur.display
 		public function CloseDialog() 
 		{
 			 btnEx = new BaseButton(11); btnEx.x = 507.9; btnEx.y = 258.75 - 100;
-			 btnCastl = new BaseButton(32); btnCastl.x = 427.2; btnCastl.y = 317.5;
+			 btnCastl = new BaseButton(32); btnCastl.x = 411.2; btnCastl.y = 320.5;
 			 txtGold.visible = false; iconGold.visible = false
 			 txtSilver.visible = false; iconSilver.visible = false;
 			 btnEx.addEventListener(MouseEvent.CLICK, onBtn);
