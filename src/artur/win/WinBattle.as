@@ -2,6 +2,7 @@ package artur.win
 {
 	import artur.App;
 	import artur.display.battle.AttackNode;
+	import artur.display.battle.BattleChat;
 	import artur.display.battle.BattleGrid;
 	import artur.display.battle.eff.BaseEff;
 	import artur.display.battle.eff.EffManajer;
@@ -15,6 +16,7 @@ package artur.win
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
 	import artur.util.RemindCursors;
+	import Chat.ChatBasic;
 	import com.greensock.events.LoaderEvent;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
@@ -57,6 +59,7 @@ package artur.win
 		private static var ult_btn:UltSkillPanel = new UltSkillPanel();
 		private static var inv_btns:Array = [new Panel_Inv, new Panel_Inv, new Panel_Inv, new Panel_Inv];
 		private var ult_clicked:Boolean = false;
+		public static var battleChat:BattleChat = new BattleChat();
 		
 		
 		
@@ -83,6 +86,7 @@ package artur.win
 				mc.name = i.toString();
 				mc.mouseChildren = mc.tabEnabled = mc.tabChildren = false;
 			}
+			
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -96,7 +100,7 @@ package artur.win
 			{
 				e.currentTarget.gotoAndStop(2);
 				if (e.currentTarget is CheckLife) {this.lifeManajer.showLB(true);}
-				else if(bat.set[bat.cus].t == myTeam) {Node(this.grid.nodes[0][0]).sendStep();}
+				else if(bat["set"][bat.cus].t == myTeam) {Node(this.grid.nodes[0][0]).sendStep();}
 				
 			}
 			else
@@ -124,7 +128,6 @@ package artur.win
 			this.getMyTeam();
 			App.spr.addChild(bgs[0]);
 			App.spr.addChild(spr);
-			
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
@@ -137,8 +140,10 @@ package artur.win
 			this.grid.init();
 			this.lifeManajer.init();
 			this.setCurrStep();
+			Main.THIS.chat.visible = false;
+			Main.THIS.stage.addChild(WinBattle.battleChat);
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
-		 }
+		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 
 		 {

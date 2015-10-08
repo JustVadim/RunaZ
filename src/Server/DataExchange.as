@@ -1,6 +1,7 @@
 package Server 
 {
 	import artur.App;
+	import artur.win.WinBattle;
 	import datacalsses.Hero;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -190,6 +191,12 @@ package Server
 								UserStaticData.hero.bat = UserStaticData.hero.mbat.id;
 								App.lock.frees();
 								App.winManajer.swapWin(3);
+								break;
+							case int(COMMANDS.SEND_BATTLE_MASSEGE):
+								if (WinBattle.battleChat.stage)
+								{
+									WinBattle.battleChat.addMassage(JSON2.decode(temp_obj.m));
+								}
 								break;
 							}
 						}
