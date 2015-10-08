@@ -13,7 +13,7 @@ package artur.display.battle
 	import Server.DataExchange;
 	import Utils.json.JSON2;
 	
-	public class BattleChat extends chatBg2
+	public class BattleChat extends mcButtleChat
 	{
 		private var input_text:TextField = new TextField();
 		private var send_btn:Sprite = new Sprite();
@@ -22,14 +22,11 @@ package artur.display.battle
 		
 		public function BattleChat() 
 		{
-			this.scaleX = 
+			//this.scaleX = 
 			this.tabEnabled = false;
 			this.mouseEnabled = false;
 			this.x = 0;
 			this.y = 0;
-			this.graphics.beginFill(0x0);
-			this.graphics.drawRect(0, 0, 800, 30);
-			this.graphics.endFill();
 			this.input_text.tabEnabled = true;
 			this.input_text.y = 571;
 			this.input_text.x = 178.5;
@@ -37,8 +34,7 @@ package artur.display.battle
 			this.input_text.height = 18.5;
 			this.input_text.textColor = 0xFFFFFF;
 			this.input_text.type = "input";
-			this.input_text.border = true;
-			this.input_text.borderColor = 0xFFFFFF;
+			
 			this.addChild(input_text);
 			
 			
