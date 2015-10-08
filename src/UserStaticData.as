@@ -8,7 +8,7 @@
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
 
-		public static var id:String = "2112";
+		public static var id:String = "212212";
 		public static var sig:String = "11111";
 		public static var fname:String = "Dsdfjl";
 		public static var sname:String = "Gljksf";
