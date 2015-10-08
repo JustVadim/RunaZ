@@ -55,7 +55,6 @@ package artur.win
 		public static var looseAfterBattle:mcAfterBattleLose = new mcAfterBattleLose();
 		public static var inv_bg:mcBgBatleInventar = new mcBgBatleInventar();
 		public static var hero_inv:HeroInventar;
-		private static var skill_pannel:Bitmap = PrepareGr.creatBms(new mcPanelBattle())[0];
 		private static var ult_btn:UltSkillPanel = new UltSkillPanel();
 		private static var inv_btns:Array = [new Panel_Inv, new Panel_Inv, new Panel_Inv, new Panel_Inv];
 		private var ult_clicked:Boolean = false;
@@ -73,18 +72,19 @@ package artur.win
 			atackNode = new AttackNode();
 			chekAvtoboi.y = 14;
 			this.chekAvtoboi.buttonMode = this.chekLifeBar.buttonMode = true;
-			WinBattle.skill_pannel.x = 719.8; WinBattle.skill_pannel.y = 311.75;
-			WinBattle.ult_btn.x = 741; WinBattle.ult_btn.y = 365;
+			WinBattle.battleChat.addChild(ult_btn);
+			WinBattle.ult_btn.x = 719.8; WinBattle.ult_btn.y = 514.2;
 			WinBattle.ult_btn.stop();
 			WinBattle.ult_btn.buttonMode = WinBattle.ult_btn.mouseChildren = WinBattle.ult_btn.tabEnabled = WinBattle.ult_btn.tabChildren = this.chekAvtoboi.tabChildren = this.chekAvtoboi.tabEnabled = this.chekLifeBar.tabEnabled = this.chekLifeBar.tabChildren = false;
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
-				mc.x = 707 - 33*i;
-				mc.y = 395;
+				mc.x = 456.3 + 66.3*i;
+				mc.y = 546.2;
 				mc.gotoAndStop(1);
 				mc.name = i.toString();
 				mc.mouseChildren = mc.tabEnabled = mc.tabChildren = false;
+				WinBattle.battleChat.addChild(mc);
 			}
 			
 		}
@@ -128,15 +128,9 @@ package artur.win
 			this.getMyTeam();
 			App.spr.addChild(bgs[0]);
 			App.spr.addChild(spr);
-			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
-			{
-				var mc:Panel_Inv = WinBattle.inv_btns[i];
-				App.spr.addChild(mc);
-			}
-			App.spr.addChild(WinBattle.ult_btn);
 			this.addListenersToChekboks(this.chekAvtoboi, 1);
 			this.addListenersToChekboks(this.chekLifeBar, 2);
-			App.spr.addChild(WinBattle.skill_pannel);
+			
 			this.grid.init();
 			this.lifeManajer.init();
 			this.setCurrStep();
@@ -506,6 +500,7 @@ package artur.win
 		
 		private function makeBanochki(cur_unit:Object, cus:Object = null):void 
 		{
+			Report.addMassage("banochkimake");
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
 				this.updateBanochka(cur_unit, i);
@@ -542,6 +537,7 @@ package artur.win
 			var mc:Panel_Inv = WinBattle.inv_btns[inv_pace];
 			if (unit.inv[inv_pace] != null)
 			{
+				Report.addMassage("banochka clikable")
 				mc.gotoAndStop(unit.inv[inv_pace].id+1);
 				mc.buttonMode = true;
 				mc.addEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);
