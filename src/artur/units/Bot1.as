@@ -103,7 +103,6 @@ package artur.units
 			TweenLite.to(this, 0.25, { scaleX:1.3, scaleY:1.3} );
 			App.btnOverFilter.color = 0xFFFFFF;
 			this.filters = [App.btnOverFilter];
-			
 		}
 	
 		public function init(parr:DisplayObjectContainer=null):void
