@@ -16,7 +16,7 @@ package artur.display.battle
 	{
 		public var nodes:Array = new Array();
 		public static var wd:int = 13;
-		public static var hg:int = 7;
+		public static var hg:int = 9;
 		public static var stones:Array = [];
 		
 		public function BattleGrid() 

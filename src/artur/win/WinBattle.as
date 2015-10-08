@@ -32,7 +32,7 @@ package artur.win
 
 	public class WinBattle 
 	{
-		private var bgs:Array = [RasterClip.raster(new Bg_Battle_1(),820,420)];
+		private var bgs:Array = [RasterClip.raster(new Bg_Battle_1(),820,600)];
 		public var grid:BattleGrid = new BattleGrid();
 		public static var units:Array;
 		public static var myTeam:int;
@@ -73,7 +73,7 @@ package artur.win
 			atackNode = new AttackNode();
 			chekAvtoboi.y = 14;
 			this.chekAvtoboi.buttonMode = this.chekLifeBar.buttonMode = true;
-			WinBattle.skill_pannel.x = 581; WinBattle.skill_pannel.y = 360;
+			WinBattle.skill_pannel.x = 719.8; WinBattle.skill_pannel.y = 311.75;
 			WinBattle.ult_btn.x = 741; WinBattle.ult_btn.y = 365;
 			WinBattle.ult_btn.stop();
 			WinBattle.ult_btn.buttonMode = WinBattle.ult_btn.mouseChildren = WinBattle.ult_btn.tabEnabled = WinBattle.ult_btn.tabChildren = this.chekAvtoboi.tabChildren = this.chekAvtoboi.tabEnabled = this.chekLifeBar.tabEnabled = this.chekLifeBar.tabChildren = false;
@@ -100,7 +100,7 @@ package artur.win
 			{
 				e.currentTarget.gotoAndStop(2);
 				if (e.currentTarget is CheckLife) {this.lifeManajer.showLB(true);}
-				else if(bat["set"][bat.cus].t == myTeam) {Node(this.grid.nodes[0][0]).sendStep();}
+				else if(bat['set'][bat.cus].t == myTeam) {Node(this.grid.nodes[0][0]).sendStep();}
 				
 			}
 			else

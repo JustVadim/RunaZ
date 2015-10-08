@@ -73,8 +73,11 @@ package artur.display.battle
 			this.addChild(mc); 
 			this.mc.gotoAndStop(1);
 			this.xp = xp; this.yp = yp;
+			
+			
 			this.x = xp*this.width + 44 +(yp%2)*int(this.width/2);
-			this.y = yp*49 + 80;
+			this.y = yp*49 + 80 + 40;
+			
 			this.walcable = walcable;
 			this.mc.visible = (walcable == 0 || walcable == 1)
 			this.txt.text = xp.toString() + ":" + yp.toString();

@@ -25,8 +25,6 @@ package artur.display.battle
 			//this.scaleX = 
 			this.tabEnabled = false;
 			this.mouseEnabled = false;
-			this.x = 0;
-			this.y = 0;
 			this.input_text.tabEnabled = true;
 			this.input_text.y = 571;
 			this.input_text.x = 178.5;
