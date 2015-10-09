@@ -1,6 +1,7 @@
 package artur.display.battle 
 {
 	import adobe.utils.CustomActions;
+	import artur.display.BaseButton;
 	import artur.win.WinBattle;
 	import com.greensock.TweenLite;
 	import flash.display.Sprite;
@@ -16,7 +17,7 @@ package artur.display.battle
 	public class BattleChat extends mcButtleChat
 	{
 		private var input_text:TextField = new TextField();
-		private var send_btn:Sprite = new Sprite();
+		public var send_btn:BaseButton;
 		
 		private var massages:Array = new Array();
 		
@@ -26,21 +27,19 @@ package artur.display.battle
 			this.tabEnabled = false;
 			this.mouseEnabled = false;
 			this.input_text.tabEnabled = true;
-			this.input_text.y = 571;
-			this.input_text.x = 178.5;
+			this.input_text.y = 573;
+			this.input_text.x = 8;
 			this.input_text.width = 433;
 			this.input_text.height = 18.5;
 			this.input_text.textColor = 0xFFFFFF;
+			this.input_text.border = true;
 			this.input_text.type = "input";
-			
 			this.addChild(input_text);
 			
-			
-			this.send_btn.graphics.beginFill(0xF00FF0F);
-			this.send_btn.graphics.drawRect(605, 3, 50, 24);
-			this.send_btn.graphics.endFill();
-			this.send_btn.buttonMode = true;
-			this.addChild(this.send_btn);
+			this.addChild(this.send_btn = new BaseButton(6));
+			this.send_btn.y = 583;
+			this.send_btn.x = 425;
+			this.send_btn.tabEnabled = false;
 
 			
 			
@@ -68,12 +67,12 @@ package artur.display.battle
 		
 		private function onAddedToStage(e:Event):void 
 		{
-			Main.THIS.stage.focus = this.input_text;
 			this.input_text.addEventListener(FocusEvent.FOCUS_IN, this.onEnterMassFocusIn);
 			this.input_text.addEventListener(FocusEvent.FOCUS_OUT, this.onEnterMassFocusOut);
 			this.send_btn.addEventListener(MouseEvent.MOUSE_OVER, this.onSendOver);
 			this.send_btn.addEventListener(MouseEvent.MOUSE_OVER, this.onSendOut);
 			this.send_btn.addEventListener(MouseEvent.CLICK, this.onClick);
+			Main.THIS.stage.focus = this.input_text;
 		}
 		
 		private function onClick(e:MouseEvent):void 
