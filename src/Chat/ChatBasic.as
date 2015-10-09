@@ -170,7 +170,7 @@ package Chat
 			enter_massage.alpha = 1.0;
 		}
 		
-		private function setFocus(e:MouseEvent = null):void 
+		public function setFocus(e:MouseEvent = null):void 
 		{
 			Main.THIS.stage.focus = this.enter_massage;
 		}

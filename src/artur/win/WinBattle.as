@@ -66,6 +66,7 @@ package artur.win
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
+			WinBattle.winAfterBattle.tabChildren = WinBattle.winAfterBattle.tabEnabled = WinBattle.looseAfterBattle.tabChildren = WinBattle.looseAfterBattle.tabEnabled = false;
 			WinBattle.hero_inv = new HeroInventar(true);
 			inst = this;
 			arrow.gotoAndStop(1);
@@ -429,6 +430,9 @@ package artur.win
 					blank.txt2.visible = false;
 				}
 			}
+			Main.THIS.chat.visible = true;
+			Main.THIS.stage.removeChild(WinBattle.battleChat);
+			Main.THIS.chat.setFocus();
 		}
 		
 		private function isAlive(ul:Object, user_pos:int):Boolean 
@@ -500,7 +504,6 @@ package artur.win
 		
 		private function makeBanochki(cur_unit:Object, cus:Object = null):void 
 		{
-			Report.addMassage("banochkimake");
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
 				this.updateBanochka(cur_unit, i);
@@ -537,7 +540,6 @@ package artur.win
 			var mc:Panel_Inv = WinBattle.inv_btns[inv_pace];
 			if (unit.inv[inv_pace] != null)
 			{
-				Report.addMassage("banochka clikable")
 				mc.gotoAndStop(unit.inv[inv_pace].id+1);
 				mc.buttonMode = true;
 				mc.addEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);
@@ -663,7 +665,8 @@ package artur.win
 			{
 				unitsInWin[i].frees();
 			}
-			sortArr.splice(0, sortArr.length);				
+			sortArr.splice(0, sortArr.length);
+			
 		}
 		
 		private function freeUnits(unit:Object):void 
