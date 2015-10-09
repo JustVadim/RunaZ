@@ -12,6 +12,7 @@ package artur.units
 	 */
 	public class BotGhost extends GhostDoll
 	{
+		public  var normScale:Number = 1;
 		 private var bodys       :Array;
 		 private var hendsL     :Array;
 		 private var hendsR     :Array;
@@ -61,8 +62,8 @@ package artur.units
 		}
 		public function init(parr:DisplayObjectContainer=null):void
 		{
-			scaleX = 1.5;
-			scaleY = 1;
+			scaleX = normScale;
+			scaleY = normScale;
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');

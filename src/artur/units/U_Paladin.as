@@ -9,6 +9,7 @@ package artur.units
 	
 	public class U_Paladin extends PallDoll
 	{
+		public  var normScale:Number = 1;
 		private var heads         :Array ;
 		private var bodys         :Array ;
 		private var sikirs          :Array;
@@ -94,8 +95,8 @@ package artur.units
 		
 		public function init(parr:DisplayObjectContainer = null):void
 		{
-			scaleX = 1;
-			scaleY = 1;
+			scaleX = normScale;
+			scaleY = normScale;
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
