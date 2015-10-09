@@ -228,10 +228,12 @@ package artur.display.battle
 			this.unit.gotoAndStop("atack1");
 			this.unit.addEventListener("ATTACK", this.onAttack);
 			if (this.unit.x > hurt_unit.x)
-				{this.unit.scaleX = -1;}
+				{this.unit.scaleX = -this.unit.normScale;}
 			else
-				{this.unit.scaleX = 1;}
+				{this.unit.scaleX = this.unit.normScale; }
+			 	
 			hurt_unit.scaleX =  this.unit.scaleX * ( -1);
+			if (hurt_unit.scaleX < 0) hurt_unit.scaleX = -hurt_unit.normScale; else hurt_unit.scaleX = hurt_unit.normScale;
 			if (this.unit.y == hurt_unit.y)
 			{
 				if (WinBattle.spr.getChildIndex(unit) < WinBattle.spr.getChildIndex(hurt_unit))
@@ -275,9 +277,9 @@ package artur.display.battle
 				this.speedX = (path[0].x - st.x) / (this.step + 1);
 				this.speedY = (path[0].y - st.y) / (this.step + 1);
 				if (this.speedX < 0)
-					this.unit.scaleX = -1;
+					this.unit.scaleX = -this.unit.normScale;
 				else
-					this.unit.scaleX = 1;
+					this.unit.scaleX = this.unit.normScale;;
 				this.unit.x += this.speedX;
 				this.unit.y += this.speedY;
 				if(LifeManajer.bin)

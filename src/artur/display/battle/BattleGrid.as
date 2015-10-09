@@ -68,7 +68,10 @@ package artur.display.battle
 					unit.y = node.y + 10;
 					unit.init(WinBattle.spr);
 					WinBattle.sortArr.push(unit);
-					unit.scaleX = scalse;
+					if(scalse)
+					unit.scaleX = unit.normScale;
+					else
+					unit.scaleX = -unit.normScale;
 					unit.itemUpdate(Slot.getUnitItemsArray(units[loc.pos]));
 					sc_array[loc.pos] = unit
 					var life_data:Object = {unit:unit,maxLife:units[loc.pos].hp, currLife:hp[loc.pos], maxMana:units[loc.pos].mp,currMana:mp[loc.pos]}
@@ -220,6 +223,7 @@ package artur.display.battle
 					if(unit.currentLabel == "idle"|| unit.currentLabel =="hurt")
 					{
 						unit.scaleX = (team == 0)? 1: -1;
+						if(unit.scaleX<0) unit.scaleX = -unit.normScale else unit.scaleX = unit.normScale  
 						unit.rotation = 0;
 						unit.shawdow.visible = true;
 					}

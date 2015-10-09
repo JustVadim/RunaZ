@@ -3,13 +3,15 @@ package artur.units
 	import artur.App;
 	import artur.PrepareGr;
 	import com.greensock.TweenLite;
+	import com.greensock.TweenMax;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.ColorMatrixFilter;
 	
 	public class Bot1 extends BarbDoll
 	{
-		 public  var normScale:Number = 1;
+		 public  var normScale:Number = 1.6;
 		 private var heads        :Array ;
 		 private var bodys        :Array ;
 		 private var sikirs         :Array;
@@ -36,7 +38,7 @@ package artur.units
 		 private var parts_of_parts:Array;
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
 		 private static var sounds:Array = [{id:'fow2',frame:67},{id:'bot1_hurt',frame:85},{id:'blade1',frame:70},{ id:'bot1_attack', frame:64 }, { id:'bot1_fs1', frame:47 }, { id:'bot1_fs2', frame:56 },{id:'bot1_die',frame:95} ];
-		 
+		 public var my_filter:ColorMatrixFilter
 		public function Bot1() 
 		{
 			this.mouseEnabled = false;
@@ -81,6 +83,22 @@ package artur.units
 			this._leg1L.addChild(legs1L[0]);
 			this._leg2L.addChild(legs2L[0]);
 			this._leg3L.addChild(legs3L[0]);
+			
+			var matrix:Array = new Array();
+			matrix=matrix.concat([0,1,0,0,0]);// red
+			matrix=matrix.concat([0,0,1,0,0]);// green
+			matrix=matrix.concat([1,0,0,0,0]);// blue
+			matrix=matrix.concat([0,0,0,1,0]);// alpha
+			my_filter = new ColorMatrixFilter(matrix);
+			//this.filters
+	           for (var i:int = 0; i < parts_of_parts.length; i++) 
+			   {
+				   for (var j:int = 0; j < parts_of_parts[i].length; j++) 
+				   {
+					  // parts_of_parts[i][j].filters = [my_filter];
+				   }
+			   }
+			
 		//	 this.addEventListener(MouseEvent.MOUSE_OVER, over);
 		//	 this.addEventListener(MouseEvent.MOUSE_OUT, out);
 			 itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -96,6 +114,7 @@ package artur.units
 		 }
 		 public function onWalk():void
 		 {
+			 
 			 //App.sound.playSound('bot1_init', App.sound.onVoice, 1);
 		 }
 		public function over(e:MouseEvent=null):void 
@@ -108,6 +127,7 @@ package artur.units
 	
 		public function init(parr:DisplayObjectContainer=null):void
 		{
+			
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
@@ -123,7 +143,7 @@ package artur.units
 			if (!isOver && this.scaleX == 1.3)
 			{
 				TweenLite.to(this, 0.25, { scaleX:1, scaleY:1 } );
-				this.filters = [];
+				this.filters = [my_filter];
 			}
 			for (var i:int = 0; i < sounds.length; i++) 
 			{
@@ -132,6 +152,7 @@ package artur.units
 					App.sound.playSound(sounds[i].id, App.sound.onVoice, 1);
 				}
 			}
+			//filters = [my_filter];
 		}
 		public function frees():void
 		{

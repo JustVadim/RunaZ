@@ -7,7 +7,7 @@ package artur.units
 		{ className:U_Warwar, type:'Barbarian' }, 
 		{ className:U_Paladin, type:'Paladin' }, 
 		{ className:U_Lyk, type:'Lyk' }, 
-		{ className:BotGhost, type:'Bot1' }, //{ className:Bot1, type:'Bot1' }, 
+		{ className:Bot1, type:'Bot1' }, 
 		{ className:U_Mag, type:'Mag' }, 
 		{ className:Bot2, type:'Bot2' }, 
 		{ className:BotGolem, type:'BotGolem' },

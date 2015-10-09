@@ -12,7 +12,7 @@ package artur.units
 	 */
 	public class BotGhost extends GhostDoll
 	{
-		public  var normScale:Number = 1;
+		public  var normScale:Number = 1.5;
 		 private var bodys       :Array;
 		 private var hendsL     :Array;
 		 private var hendsR     :Array;
