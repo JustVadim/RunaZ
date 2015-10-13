@@ -11,7 +11,7 @@ package artur.units
 	
 	public class Bot1 extends BarbDoll
 	{
-		 public  var normScale:Number = 1.6;
+		 public  var normScale:Number = 1;
 		 private var heads        :Array ;
 		 private var bodys        :Array ;
 		 private var sikirs         :Array;
@@ -102,8 +102,8 @@ package artur.units
 		//	 this.addEventListener(MouseEvent.MOUSE_OVER, over);
 		//	 this.addEventListener(MouseEvent.MOUSE_OUT, out);
 			 itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-			 this.scaleX = 1.5;
-			 this.scaleY = 1.5;
+			// this.scaleX = 1.5;
+			// this.scaleY = 1.5;
 			 //this.gotoAndPlay('run');
 			 //this.addFrameScript(125, frees);
 			 

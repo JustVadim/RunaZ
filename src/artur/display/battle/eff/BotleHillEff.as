@@ -15,18 +15,21 @@ package artur.display.battle.eff
 		private var frm:Array = [];
 		private var currFrame:int;
 		private var maxFrame:int;
-		private var currImg:Bitmap
+		private var currImg:Bitmap;
+		public var free:Boolean = true;
 		public function BotleHillEff() 
 		{
-			frm = PrepareGr.creatBms(new AnimBlud3(), false);
+			frm = PrepareGr.creatBms(new EffHillBotl(), false);
 			maxFrame = frm.length-2;
 		}
 		public function init(xp:int,yp:int):void
 		{
+			free = false;
 			this.x = xp;
-			this.y = yp;
+			this.y = yp + 20;
 			currFrame = -1;
 			WinBattle.spr.addChild(this);
+			WinBattle.sortArr.push(this);
 			WinBattle.sortSpr();
 			EffManajer.pool.push(this);
 			currImg = frm[0]
@@ -46,7 +49,7 @@ package artur.display.battle.eff
 		}
 		public function frees():void
 		{
-			
+			free = true;
 			if (parent) parent.removeChild(this);
 		}
 		
