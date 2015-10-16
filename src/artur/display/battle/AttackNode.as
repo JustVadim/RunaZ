@@ -129,10 +129,7 @@ package artur.display.battle
 			mouseClip.y = this.y;
 			var bat:Object = WinBattle.bat;
 			var pos:int = bat["set"][bat.cus].p;
-			if (WinBattle.myTeam == 0)
-				this.initHeroVars(bat.t1_u[pos], bat.t1_locs[pos]);
-			else
-				this.initHeroVars(bat.t2_u[pos], bat.t2_locs[pos]);
+			this.initHeroVars(bat.u[WinBattle.myTeam][pos], bat.locs[WinBattle.myTeam][pos]);
 			if (is_arrow == 0)
 			{
 				this.neib_nodes = new Array();

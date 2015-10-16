@@ -12,7 +12,7 @@ package artur.units
 	
 	public class U_Warwar extends BarbDoll
 	{
-		
+		 public  var normScale:Number = 1;
 		 private var heads       :Array ;
 		 private var bodys       :Array ;
 		 private var sikirs         :Array;
@@ -94,8 +94,8 @@ package artur.units
 			this._leg2L.addChild(legs2L[0]);
 			this._leg3L.addChild(legs3L[0]);
 			itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-			buffs[1].y -= 15;
-			buffs[1].x += 22;
+		//	buffs[1].y -= 15;
+			//buffs[1].x += 22;
 		}
 		
 		public function showBuff(num:int):void
@@ -132,8 +132,8 @@ package artur.units
 	
 		public function init(parr:DisplayObjectContainer=null):void
 		{
-			scaleX = 1;
-			scaleY = 1;
+			scaleX = normScale;
+			scaleY = normScale;
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');

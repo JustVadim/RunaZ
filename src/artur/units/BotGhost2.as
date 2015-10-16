@@ -1,45 +1,61 @@
-package artur.units {
+package artur.units 
+{
 	import artur.App;
 	import artur.PrepareGr;
 	import com.greensock.TweenLite;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
-	public class BotGhost extends GhostDoll {
-		public  var normScale:Number = 1.5;
-		private var bodys		:Array;
-		private var hendsL		:Array;
-		private var hendsR		:Array;
-		public var type:String = 'BotGhost';
-		public var free:Boolean = true;
+	/**
+	 * ...
+	 * @author Som911
+	 */
+	public class BotGhost2 extends Ghost2Doll
+	{
+		 public  var normScale:Number = 1.1;
+
+		 private var bodys1       :Array;
+		 private var bodys2       :Array;
+		 private var hendsL       :Array;
+		 private var hendsR       :Array;
+		 private var heads         :Array;
+		 private var centers       :Array;
+		 private var blades       :Array;
+		 public var type:String = 'BotGhost2';
+		 public var free:Boolean = true;
 		 
-		private var isOver:Boolean = false;
-		private var parts:Array ;
-		private var parts_of_parts:Array;
-		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
-		private static var sounds:Array = [];
-		public var _head:Sprite 
-		
-		public function BotGhost() 
+		 private var isOver:Boolean = false;
+		 private var parts:Array ;
+		 private var parts_of_parts:Array;
+		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
+		 private static var sounds:Array = [];
+		 
+		public function BotGhost2() 
 		{
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh);
-			bodys = PrepareGr.creatBms(new Item_BodysGhost());
-			hendsR = PrepareGr.creatBms(new Item_HandsGhost());
-			hendsL = PrepareGr.creatBms(new Item_HandsGhost());
+			bodys1 = PrepareGr.creatBms(new Item_body1G2());
+			bodys2 = PrepareGr.creatBms(new Item_body2G2());
+			hendsR = PrepareGr.creatBms(new Item_handsG2());
+			hendsL =  PrepareGr.creatBms(new Item_handsG2());
+			heads =  PrepareGr.creatBms(new Item_headG2());
+			centers = PrepareGr.creatBms(new Item_centerG2());
+			blades =  PrepareGr.creatBms(new Item_bladeG2());
 			
-			parts = [this.body, this.h1, this.h2];
-			parts_of_parts = [bodys, hendsL , hendsR ];
+			parts =               [this.body1, this.body2, this.handL,this.handR,this._head,this.center, this.blade];
+			parts_of_parts = [bodys1,bodys2, hendsL , hendsR,heads,centers,blades ];
 			
-			this.body.addChild(bodys[0]);
-			this.h1.addChild(hendsL[0]);
-		    this.h2.addChild(hendsR[0]);
+			this.body1.addChild(bodys1[0]);
+			this.body2.addChild(bodys2[0]);
+			this.handL.addChild(hendsL[0]);
+		    this.handR.addChild(hendsR[0]);
+			this._head.addChild(heads[0]);
+			this.center.addChild(centers[0]);
+			this.blade.addChild(blades[0]);
 		//	 itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 			 this.scaleX = 1.5;
 			 this.scaleY = 1.5;
-			 _head = this.body;
 		}
 		public function onWalk():void
 		 {
@@ -100,18 +116,8 @@ package artur.units {
 			for (var i:int = 0; i < parts.length; i++) 
 			{
 			   Sprite(parts[i]).removeChildAt(1);
-			   switch(true)
-			   {
-				   case i == 0:
-					   Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[0])]);
-					   break;
-					case i == 1:
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[1])]);
-						break;
-					case i == 2:
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[5])]);
-						break;
-			   }
+			    Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[0])]);
+			  
 			}
 			
 		}

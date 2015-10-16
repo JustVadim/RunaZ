@@ -1,5 +1,5 @@
-package 
-{
+package  {
+	
 	import artur.App;
 	import Chat.ChatBasic;
 	import flash.display.Sprite;
@@ -12,42 +12,37 @@ package
 	import Server.Lang;
 	import Utils.json.JSON2;
 	
-	public class Main extends Sprite 
-	{
+	public class Main extends Sprite {
+		
 		public static var THIS:Main;
 		public static var rep:Report;
 		public var app:App;
 		private var mcOff:mcOffSide = new mcOffSide();
 		public var chat:ChatBasic;
-	
 		
-		public function Main():void 
-		{
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+		public function Main():void {
+			if (stage) {
+				init();
+			} else {
+				addEventListener(Event.ADDED_TO_STAGE, init);
+			}
 		}
 		
-		private function init(e:Event = null):void 
-		{
-			
-			Lang.init();
-			
+		private function init(e:Event = null):void {
+			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			UserStaticData.flash_vars = stage.loaderInfo.parameters as Object;
-			if (UserStaticData.flash_vars['api_id'])
-			{
+			if (UserStaticData.flash_vars['api_id']) {
 				this.vkPrepare();
 			}
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Main.THIS = this;
 			stage.addChild(rep = new Report());
-			Report.addMassage('adad')
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
 		}
 		
-		private function vkPrepare():void 
-		{
+		private function vkPrepare():void {
 			var api_res:Object = JSON2.decode(UserStaticData.flash_vars.api_result);
 			UserStaticData.from = "v";
 			UserStaticData.fname = api_res.response[0].first_name;
@@ -57,9 +52,7 @@ package
 			UserStaticData.friend_invited = UserStaticData.flash_vars.user_id;
 		}
 		
-		
-		private function onLogin(e:DataExchangeEvent = null):void 
-		{
+		private function onLogin(e:DataExchangeEvent = null):void {
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			stage.addChild(this.chat = new ChatBasic());
@@ -68,14 +61,13 @@ package
 			stage.addChild(new movieMonitor());
 		}
 		
-		private function CloseApp(e:DataExchangeEvent):void 
-		{
+		private function CloseApp(e:DataExchangeEvent):void {
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
-			while (this.numChildren > 0)
+			while (this.numChildren > 0) {
 				this.removeChildAt(0);
+			}
 			this.chat.parent.removeChild(this.chat);
 		}
 		
 	}
-	
 }

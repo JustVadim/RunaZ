@@ -169,24 +169,12 @@ package artur.win
 			var obj:Object = anim.shift();
 			if (obj.m != null)
 			{
-				var loc:Object = (obj.m.u.t == 0)?WinBattle.bat.t1_locs[obj.m.u.p]:WinBattle.bat.t2_locs[obj.m.u.p];
 				var is_r:Boolean;
 				var type:int;
-				var unit:Object;
-				if (obj.m.u.t == 0)
-				{
-					loc = WinBattle.bat.t1_locs[obj.m.u.p];
-					unit = bat.t1_u[obj.m.u.p];
-					is_r = (unit.t_d == 1);
-					type = unit.t
-				}
-				else
-				{
-					loc = WinBattle.bat.t2_locs[obj.m.u.p];
-					unit = bat.t2_u[obj.m.u.p];
-					is_r = (unit.t_d == 1);
-					type = unit.t
-				}
+				var loc:Object = WinBattle.bat.locs[obj.m.u.t][obj.m.u.p];
+				var unit:Object = WinBattle.bat.u[obj.m.u.t][obj.m.u.p];
+				is_r = (unit.t_d == 1);
+				type = unit.t;
 				if (unit.b[5] != null)
 				{
 					delete(unit.b[5]);
@@ -216,9 +204,9 @@ package artur.win
 		
 		private function useBanochka(obj:Object):void 
 		{
-			var hps:Object = (obj.tu.t == 0)? WinBattle.bat.t1_hp:WinBattle.bat.t2_hp;
-			var mps:Object = (obj.tu.t == 0)? WinBattle.bat.t1_mp:WinBattle.bat.t2_mp;
-			var unit:Object = (obj.tu.t == 0)? WinBattle.bat.t1_u[obj.tu.p]:WinBattle.bat.t2_u[obj.tu.p];
+			var hps:Object = WinBattle.bat.hps[obj.tu.t];
+			var mps:Object = WinBattle.bat.mps[obj.tu.t];
+			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
 			var hp:int = 0;
 			var mp:int = 0;
 			switch(obj.ban)
@@ -250,9 +238,8 @@ package artur.win
 			LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
 			LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 			App.sound.playSound("eff_heal", App.sound.onVoice, 1);
-			var ef_coord:Object = (obj.tu.t == 0) ? bat.t1_locs[obj.tu.p]:bat.t2_locs[obj.tu.p];
+			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
 			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
-			//BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 			EffManajer.effBotleHill.init(node.x, node.y);
 		}
 		
@@ -264,26 +251,26 @@ package artur.win
 			{
 				case 0:
 					App.sound.playSound("battle_cry", App.sound.onVoice, 1);
-					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
+					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					U_Warwar(WinBattle.units[obj.whm.t][obj.whm.p]).showBuff(1);
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 2);
-					if (obj.wh.t == 0) bat.t1_u[obj.wh.p].b[5] = new Object(); else bat.t2_u[obj.wh.p].b[5] = new Object();
+					bat.u[obj.wh.t][obj.wh.p].b[5] = new Object();
 					break;
 				case 1:
 					App.sound.playSound("eff_heal", App.sound.onVoice, 1);
-					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
+					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 					break;
 				case 2:
 					App.sound.playSound("eff_arrow", App.sound.onVoice, 1);
-					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
+					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y + 25, 3);
 					break;
 				case 3:
-					ef_coord = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
+					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					EffManajer.showLgs(30, WinBattle.spr, 0xFFFFFF, node.x, node.y - 1000, node.x, node.y-40);
 					EffManajer.lgs.update();
@@ -294,19 +281,19 @@ package artur.win
 					break;
 			}
 			//who unit
-			var t_obj:Object = (obj.wh.t == 0) ? bat.t1_mp:bat.t2_mp;
+			var t_obj:Object = bat.mps[obj.wh.t];
 			t_obj[obj.wh.p] = obj.mcl;
 			LifeManajer.un_Data[obj.wh.t][obj.wh.p].currMana = obj.mcl;
 			LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
 			//whom unit
-			t_obj = (obj.whm.t == 0) ? bat.t1_hp:bat.t2_hp;
+			t_obj = bat.hps[obj.whm.t];
 			t_obj[obj.whm.p] = obj.hpl;
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			if (obj.hpl == 0)
 			{
-				var coord:Object = (obj.whm.t == 0) ? bat.t1_locs[obj.whm.p]:bat.t2_locs[obj.whm.p];
+				var coord:Object = bat.locs[obj.whm.t][obj.whm.p];
 				hurt_unit.gotoAndPlay("die");
 				hurt_unit.addEventListener("DIE", this.mover.onUnitDie);
 				for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
@@ -391,7 +378,7 @@ package artur.win
 			}
 			mc.gotoAndPlay(1);
 			App.spr.addChild(mc);
-			var all_units:Object = (WinBattle.myTeam == 0)? bat.t1_u:bat.t2_u;
+			var all_units:Object = bat.u[WinBattle.myTeam];
 			for (var i:int = 0; i < 4; i++) 
 			{
 				var blank:mcBlankWinn = mc[String("k" + i)];
@@ -457,24 +444,15 @@ package artur.win
 			MovieClip(currUnit).filters = [App.btnOverFilter]; currUnit.shawdow.alpha = 0;
 			WinBattle.showCurrUnit(cus.t);
 			grid.clearNodesControl();
-			grid.lightUnits(bat.t1_locs, bat.t1_hp, 0);
-			grid.lightUnits(bat.t2_locs, bat.t2_hp, 1);
+			grid.lightUnits(bat.locs[0], bat.hps[0], 0);
+			grid.lightUnits(bat.locs[1], bat.hps[1], 1);
 			if (cus.t == myTeam)
 			{
-				var loc:Object;
+				
 				var r:int;
 				var is_arr:int;
-				var cur_unit:Object;
-				if (myTeam == 0)
-				{
-					cur_unit = WinBattle.bat.t1_u[cus.p]
-					loc = WinBattle.bat.t1_locs[cus.p];
-				}
-				else
-				{
-					cur_unit = WinBattle.bat.t2_u[cus.p]
-					loc = WinBattle.bat.t2_locs[cus.p];
-				}
+				var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
+				var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
 				r = cur_unit.sp;
 				is_arr = cur_unit.t_d;
 				if (WinBattle.anim.length == 0)
@@ -528,7 +506,7 @@ package artur.win
 				var unit:Object
 				var cur_pos:int = WinBattle.bat['set'][WinBattle.bat.cus].p;
 				var inv_place:int = int(obj.res);
-				unit = (WinBattle.myTeam == 0)? bat.t1_u[cur_pos]:bat.t2_u[cur_pos];
+				unit = bat.u[WinBattle.myTeam][cur_pos];
 				delete(unit.inv[inv_place]);
 				this.updateBanochka(unit, inv_place);
 			}
@@ -571,7 +549,7 @@ package artur.win
 		
 		private function makeUltimate(cur_unit:Object, cus:Object):void 
 		{
-			var t_mp:Object = (myTeam == 0)? bat.t1_mp:bat.t2_mp
+			var t_mp:Object = bat.mps[myTeam];
 			if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && t_mp[cus.p] >= cur_unit.ult.mc && !bat.is_ult)
 			{
 				WinBattle.ult_btn.mc.visible = false;
@@ -614,7 +592,7 @@ package artur.win
 				App.cursor.changeCursor("ult");
 				this.grid.clearNodesControl();
 				var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
-				var unit_type:int = (WinBattle.myTeam == 0)? WinBattle.bat.t1_u[cus.p].t:WinBattle.bat.t2_u[cus.p].t;
+				var unit_type:int = WinBattle.bat.u[WinBattle.myTeam][cus.p].t;
 				this.grid.highLightUltCells(unit_type);
 			}
 			else
@@ -687,9 +665,9 @@ package artur.win
 			var id:String = UserStaticData.from + UserStaticData.id;
 			if (UserStaticData.hero.bat > -1)
 			{WinBattle.bat= UserStaticData.hero.mbat; }
-			if (WinBattle.bat.t1_id == id)
+			if (WinBattle.bat.ids[0] == id)
 			{myTeam = 0;}
-			else if (WinBattle.bat.t2_id == id)
+			else if (WinBattle.bat.ids[1] == id)
 			{myTeam = 1;}
 		}
 		
@@ -734,27 +712,22 @@ package artur.win
 		
 		private function getControlAfterUlt(is_ult_btn:Boolean):void
 		{
-			WinBattle.inst.grid.lightUnits(bat.t1_locs, bat.t1_hp, 0);
-			WinBattle.inst.grid.lightUnits(bat.t2_locs, bat.t2_hp, 1);
+			WinBattle.inst.grid.lightUnits(bat.locs[0], bat.hps[0], 0);
+			WinBattle.inst.grid.lightUnits(bat.locs[1], bat.hps[1], 1);
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
-			var loc:Object;
 			var r:int;
 			var is_arr:int;
-			var cur_unit:Object;
-			if (myTeam == 0)
-			{
-				cur_unit = WinBattle.bat.t1_u[cus.p]
-				loc = WinBattle.bat.t1_locs[cus.p];
-			}
-			else
-			{
-				cur_unit = WinBattle.bat.t2_u[cus.p]
-				loc = WinBattle.bat.t2_locs[cus.p];
-			}
+			var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
+			var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
 			r = cur_unit.sp;
 			is_arr = cur_unit.t_d;
 			WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
 			WinBattle.ult_btn.mc.visible = !is_ult_btn;
+		}
+		
+		public static function inverseTeam(team:int):int
+		{
+			return (team -1 ) * -1;
 		}
 		
 		

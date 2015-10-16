@@ -1,5 +1,5 @@
-package artur.display.battle 
-{
+package artur.display.battle {
+	
 	import artur.App;
 	import artur.display.battle.eff.BaseEff;
 	import artur.display.battle.eff.EffManajer;
@@ -13,8 +13,7 @@ package artur.display.battle
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	public class MoveUnit 
-	{
+	public class MoveUnit {
 		private var path:Array;
 		private var step:int = 0;
 		private var speedX:Number;
@@ -22,7 +21,7 @@ package artur.display.battle
 		private var move:Boolean = false;
 		public var bin:Boolean = false;
 		public var unit:MovieClip;
-		private var timer:Timer = new Timer(1000, 1);
+		private var timer:Timer = new Timer(750, 1);
 		public var cur_obj:Object;
 		private var arrow:mcAtackArrow = new mcAtackArrow();
 		private var is_range:Boolean = true;
@@ -32,83 +31,72 @@ package artur.display.battle
 		private var temp_attack:Object;
 		
 		 
-		public function MoveUnit() 
-		{
+		public function MoveUnit() {
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, completeTime);
 		}
 		
-		private function completeTime(e:TimerEvent):void 
-		{
+		private function completeTime(e:TimerEvent):void {
 			WinBattle.inst.makeStep();
 		}
-		public function init(path:Array, obj:Object, is_range:Boolean, type:int):void
-		{
+		
+		public function init(path:Array, obj:Object, is_range:Boolean, type:int):void {
 			WinBattle.bat.is_ult = false;
 			this.is_range = is_range;
 			this.type = type;
 			this.unit = MovieClip(WinBattle.currUnit);
 			this.cur_obj = obj;
 			this.temp_attack = null;
-			if (this.cur_obj.a != null && this.cur_obj.a.b[4] != null)
+			if (this.cur_obj.a != null && this.cur_obj.a.b[4] != null) {
 				this.temp_attack = this.cur_obj.a.b[4];
+			}
 			bin = true;
 			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
 			WinBattle.inst.grid.clearNodesControl();
 			WinBattle.inst.removeUltEvents();
 			this.path = path;
 			unit.onWalk();
-			if (this.path.length >= 2)
+			if (this.path.length >= 2) {
 				unit.gotoAndPlay('run');
+			}
 			
 		}
-		public function update():void
-		{
-			if (bin) 
-			{
+		
+		public function update():void {
+			if (bin) {
 				var is_run:Boolean = (this.unit.currentLabel == "run");
-				if (step == 0 && (path.length - 1) > 0)
-				{
+				if (step == 0 && (path.length - 1) > 0) {
 					this.onStepMake(is_run);
-				}
-				else if (step > 0)
-				{
+				} else if (step > 0) {
 					this.onUnitMove(is_run);
-				}
-				else
-				{
-					if (is_run)
-					{
+				} else {
+					if (is_run) {
 						this.unit.x = this.path[0].x;
 						this.unit.y = this.path[0].y + 10;
 						if(LifeManajer.bin)
 							LifeManajer.unpateCurrMove(cur_obj.m.u.t, cur_obj.m.u.p);
 					}
-					if (this.cur_obj.a == null)
-					{
+					if (this.cur_obj.a == null) {
 						this.frees();
-					}
-					else
-					{
-						if (this.unit.currentLabel != "atack1" && this.arrow_anim == 0)
-						{
+					} else {
+						if (this.unit.currentLabel != "atack1" && this.arrow_anim == 0) {
 							this.makeAttack();
-						}
-						else
-						{
+						} else {
 							this.attackAnim();	
 						}
 					}
 				}
-			}
-			else
-			{
-				
-				if (!timer.running && WinBattle.anim.length > 0)
-				{
-					//if (WinBattle.anim[0].m != null && WinBattle.anim[0].m.u.t == WinBattle.myTeam)
+			} else {
+				if (!timer.running && WinBattle.anim.length > 0) {
+					if (WinBattle.anim[0].m != null && WinBattle.anim[0].m.u.t == WinBattle.myTeam) {
 						WinBattle.inst.makeStep();
-					/*else
-						timer.start();*/
+					} else {
+						if (String(WinBattle.bat.ids[1]).substr(0, 3) == "bot") {
+							timer.reset();
+							timer.start();
+						} else {
+							WinBattle.inst.makeStep();
+						}
+					}
 				}
 			}
 		}
@@ -228,10 +216,12 @@ package artur.display.battle
 			this.unit.gotoAndStop("atack1");
 			this.unit.addEventListener("ATTACK", this.onAttack);
 			if (this.unit.x > hurt_unit.x)
-				{this.unit.scaleX = -1;}
+				{this.unit.scaleX = -this.unit.normScale;}
 			else
-				{this.unit.scaleX = 1;}
+				{this.unit.scaleX = this.unit.normScale; }
+			 	
 			hurt_unit.scaleX =  this.unit.scaleX * ( -1);
+			if (hurt_unit.scaleX < 0) hurt_unit.scaleX = -hurt_unit.normScale; else hurt_unit.scaleX = hurt_unit.normScale;
 			if (this.unit.y == hurt_unit.y)
 			{
 				if (WinBattle.spr.getChildIndex(unit) < WinBattle.spr.getChildIndex(hurt_unit))
@@ -261,29 +251,28 @@ package artur.display.battle
 			this.step--;
 		}
 		
-		private function onStepMake(is_run:Boolean):void 
-		{
+		private function onStepMake(is_run:Boolean):void {
 			var st:Node = path.shift();
-			if (WinBattle.currUnit is BotGolem)
-			{
+			if (WinBattle.currUnit is BotGolem) {
 				this.step = 14;
 			}
-			else
+			else {
 				this.step = 9
-			if (is_run)
-			{
+			}
+			if (is_run) {
 				this.speedX = (path[0].x - st.x) / (this.step + 1);
 				this.speedY = (path[0].y - st.y) / (this.step + 1);
-				if (this.speedX < 0)
-					this.unit.scaleX = -1;
-				else
-					this.unit.scaleX = 1;
+				if (this.speedX < 0){
+					this.unit.scaleX = -this.unit.normScale;
+				} else {
+					this.unit.scaleX = this.unit.normScale;;
+				}
 				this.unit.x += this.speedX;
 				this.unit.y += this.speedY;
-				if(LifeManajer.bin)
+				if(LifeManajer.bin) {
 					LifeManajer.unpateCurrMove(cur_obj.m.u.t, cur_obj.m.u.p);
+				}
 			}
-			
 		}
 		
 		private function onAttack(e:Event):void 
@@ -299,7 +288,7 @@ package artur.display.battle
 			}
 			else
 			{
-				var hps:Object = (t == 0) ? WinBattle.bat.t1_hp:WinBattle.bat.t2_hp;	
+				var hps:Object = WinBattle.bat.hps[t];
 				hps[pos] = cur_obj.a.ll;
 				LifeManajer.un_Data[t][pos].currLife = hps[pos];
 				if (LifeManajer.bin)		

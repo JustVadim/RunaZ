@@ -79,7 +79,7 @@ package artur.display.battle
 		{
 			if (this.input_text.text != "Введите текст сообщения" && this.input_text.length > 0)
 			{
-				if (String(WinBattle.bat.t2_id).substr(0,3)!="bot")
+				if (String(WinBattle.bat.ids[2]).substr(0,3)!="bot")
 				{
 					var send_obj:Object = new Object();
 					send_obj.mass = this.input_text.text;

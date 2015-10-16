@@ -79,13 +79,9 @@ package artur.win
 				App.spr.addChildAt(slots[i], 0);
 				slots[i].init();
 			}
-			
-			//App.spr.addChild(Main.THIS.chat);
 			txtCastle.scroll.visible = false;
 			txtCastle.txtGold.text = String(UserStaticData.hero.gold);
 			txtCastle.txtSilver.text = String(UserStaticData.hero.silver);
-			
-		
 		}
 		
 		public function updateSlots():void

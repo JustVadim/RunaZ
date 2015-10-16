@@ -36,8 +36,8 @@ package artur.display.battle
 				for (var j:int = 0; j < hg; j++) 
 					Node(nodes[i][j]).init(i, j, mbat.map.grid[i][j].id);
 			}
-			this.setUnitsOnScreen(mbat.t1_locs, mbat.t1_u, WinBattle.units[0],LifeManajer.un_Data[0], mbat.t1_hp, mbat.t1_mp);
-			this.setUnitsOnScreen(mbat.t2_locs, mbat.t2_u, WinBattle.units[1], LifeManajer.un_Data[1], mbat.t2_hp, mbat.t2_mp, -1);
+			this.setUnitsOnScreen(mbat.locs[0], mbat.u[0], WinBattle.units[0],LifeManajer.un_Data[0], mbat.hps[0], mbat.mps[0]);
+			this.setUnitsOnScreen(mbat.locs[1], mbat.u[1], WinBattle.units[1], LifeManajer.un_Data[1], mbat.hps[1], mbat.mps[1], -1);
 		}
 		
 		public function frees():void
@@ -68,7 +68,10 @@ package artur.display.battle
 					unit.y = node.y + 10;
 					unit.init(WinBattle.spr);
 					WinBattle.sortArr.push(unit);
-					unit.scaleX = scalse;
+					if(scalse)
+						unit.scaleX = unit.normScale;
+					else
+						unit.scaleX = -unit.normScale;
 					unit.itemUpdate(Slot.getUnitItemsArray(units[loc.pos]));
 					sc_array[loc.pos] = unit
 					var life_data:Object = {unit:unit,maxLife:units[loc.pos].hp, currLife:hp[loc.pos], maxMana:units[loc.pos].mp,currMana:mp[loc.pos]}
@@ -103,18 +106,11 @@ package artur.display.battle
 						}
 					}
 				}
-			var enemy_locs:Object;
-			var enemy_hp:Object;
-			if (WinBattle.myTeam == 0)
-			{
-				enemy_locs = WinBattle.bat.t2_locs;
-				enemy_hp = WinBattle.bat.t2_hp;
-			}
-			else
-			{
-				enemy_locs = WinBattle.bat.t1_locs;
-				enemy_hp = WinBattle.bat.t1_hp;
-			}
+			;
+			
+			var team:int = WinBattle.inverseTeam(WinBattle.myTeam);
+			var enemy_locs:Object = WinBattle.bat.locs[team];
+			var enemy_hp:Object = WinBattle.bat.hps[team];
 			if (is_arr == 1)
 			{
 				for (var key1:Object in enemy_locs)
@@ -210,7 +206,7 @@ package artur.display.battle
 				if (hps[key] > 0)
 				{
 					var unit:MovieClip = WinBattle.units[team][key];
-					var unit_data:Object = (team == 0) ? WinBattle.bat.t1_u[key]:WinBattle.bat.t2_u[key];
+					var unit_data:Object = WinBattle.bat.u[team][key];
 					if (unit_data.b[5] != null)
 						unit.showBuff(1);
 					if (team == WinBattle.myTeam)
@@ -220,6 +216,7 @@ package artur.display.battle
 					if(unit.currentLabel == "idle"|| unit.currentLabel =="hurt")
 					{
 						unit.scaleX = (team == 0)? 1: -1;
+						if(unit.scaleX<0) unit.scaleX = -unit.normScale else unit.scaleX = unit.normScale  
 						unit.rotation = 0;
 						unit.shawdow.visible = true;
 					}
@@ -349,18 +346,9 @@ package artur.display.battle
 		
 		private function UltCells(is_fr:Boolean):void 
 		{
-			var locs:Object;
-			var hps:Object;
-			if (is_fr)
-			{
-				locs = (WinBattle.myTeam == 0) ? WinBattle.bat.t1_locs:WinBattle.bat.t2_locs;
-				hps = (WinBattle.myTeam == 0) ? WinBattle.bat.t1_hp:WinBattle.bat.t2_hp;
-			}
-			else 
-			{
-				locs = (WinBattle.myTeam == 0) ? WinBattle.bat.t2_locs:WinBattle.bat.t1_locs;
-				hps = (WinBattle.myTeam == 0) ? WinBattle.bat.t2_hp:WinBattle.bat.t1_hp;
-			}
+			var team:int = (is_fr)? WinBattle.myTeam:WinBattle.inverseTeam(WinBattle.myTeam);
+			var locs:Object = WinBattle.bat.locs[team];
+			var hps:Object = WinBattle.bat.hps[team];
 			for (var key:Object in locs)
 			{
 				if (hps[key] > 0)

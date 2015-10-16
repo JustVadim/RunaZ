@@ -72,7 +72,7 @@ package artur.display
 			}
 			else
 			{
-				App.closedDialog.init("Вы не сможете победить! \n Наймите воина. Если у вас уже есть воин - купите ему оружие",true)
+				App.closedDialog.init("Вы не сможете победить! \n Наймите воина. Если у вас уже есть воин - купите ему оружие", true);
 			}
 		}
 		
@@ -88,7 +88,12 @@ package artur.display
 			}
 			else
 			{
-				App.lock.init('Error: '+obj.error)
+				if (obj.error == 1) {
+					App.lock.frees();
+					App.closedDialog.init("Миссия еще не доступна, ожидайте ее в скором времени!!", false);
+				} else {
+					App.lock.init('Error: ' + obj.error)
+				}
 			}
 		}
 		

@@ -108,21 +108,21 @@ package artur.display.battle
 			{
 				var key:Object;
 				var unit_local:Object;
-				for (key in WinBattle.bat.t1_locs)
+				for (key in WinBattle.bat.locs[0])
 				{
-					if (WinBattle.bat.t1_locs[key].x == this.xp && WinBattle.bat.t1_locs[key].y == this.yp)
+					if (WinBattle.bat.locs[0][key].x == this.xp && WinBattle.bat.locs[0][key].y == this.yp)
 					{
-						unit_local = WinBattle.bat.t1_u[key];
+						unit_local = WinBattle.bat.u[0][key];
 						break;
 					}
 				}
 				if (unit_local == null)
 				{
-					for (key in WinBattle.bat.t2_locs)
+					for (key in WinBattle.bat.locs[1])
 					{
-						if (WinBattle.bat.t2_locs[key].x == this.xp && WinBattle.bat.t2_locs[key].y == this.yp)
+						if (WinBattle.bat.locs[1][key].x == this.xp && WinBattle.bat.locs[1][key].y == this.yp)
 						{
-							unit_local = WinBattle.bat.t2_u[key];
+							unit_local = WinBattle.bat.u[1][key];
 							break;
 						}
 					}
@@ -273,19 +273,19 @@ package artur.display.battle
 			var bat:Object = WinBattle.bat;
 			for (var i:int = 0; i < 4; i ++ )
 			{
-				if (bat.t1_locs[i] != null && bat.t1_hp[i] > 0)
+				if (bat.locs[0][i] != null && bat.hps[0][i] > 0)
 				{
-					Node(WinBattle.inst.grid.nodes[bat.t1_locs[i].x][bat.t1_locs[i].y]).dismakeUlt()
-					if (bat.t1_locs[i].x == this.xp && bat.t1_locs[i].y == this.yp)
+					Node(WinBattle.inst.grid.nodes[bat.locs[0][i].x][bat.locs[0][i].y]).dismakeUlt()
+					if (bat.locs[0][i].x == this.xp && bat.locs[0][i].y == this.yp)
 					{
 						key = i;
 					}
 				}
 				
-				if (bat.t2_locs[i] != null && bat.t2_hp[i] > 0)
+				if (bat.locs[1][i] != null && bat.hps[1][i] > 0)
 				{
-					Node(WinBattle.inst.grid.nodes[bat.t2_locs[i].x][bat.t2_locs[i].y]).dismakeUlt()
-					if (bat.t2_locs[i].x == this.xp && bat.t2_locs[i].y == this.yp)
+					Node(WinBattle.inst.grid.nodes[bat.locs[1][i].x][bat.locs[1][i].y]).dismakeUlt()
+					if (bat.locs[1][i].x == this.xp && bat.locs[1][i].y == this.yp)
 					{
 						key = i;
 					}

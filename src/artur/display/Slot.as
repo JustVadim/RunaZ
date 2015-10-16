@@ -1,5 +1,4 @@
-package artur.display 
-{
+package artur.display {
 	import artur.App;
 	import artur.units.UnitCache;
 	import artur.win.WinCastle;
@@ -8,8 +7,7 @@ package artur.display
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
-	public class Slot extends Sprite
-	{
+	public class Slot extends Sprite {
 		public var btnByeUnit:BaseButton;
 		public var unit:Object;
 		public var bg:slotBg = new slotBg();
@@ -22,10 +20,11 @@ package artur.display
 		namesUnit[100] = 'Bot1';
 		namesUnit[101] = 'Bot2';
 		namesUnit[102] = 'BotGolem';
-		namesUnit[103] = 'LykBot'; 
+		namesUnit[103] = 'LykBot';
+		namesUnit[104] = 'BotGhost';
+		namesUnit[105] = 'BotGhost2';
 		
-		public function Slot() 
-		{
+		public function Slot() {
 			this.tabEnabled = this.tabChildren = this.mouseChildren = false;
 			btnByeUnit = new BaseButton(8, 0.9, 5, 'click1', 'over1', 0x000000);
 			this.addEventListener(MouseEvent.CLICK, onSlotClick);
@@ -38,23 +37,19 @@ package artur.display
 			this.buttonMode = true;
 		}
 		
-		private function onSlotClick(e:MouseEvent):void 
-		{
-			if (unit == null)
-			{
+		private function onSlotClick(e:MouseEvent):void {
+			if (unit == null) {
 				this.onBtnAddUnit();
-			}
-			else
-			{
+			} else {
 				this.clickUnit();
 			}
 		}
 		
-		private function out(e:MouseEvent):void 
-		{
+		private function out(e:MouseEvent):void {
 			App.info.frees();
-			if (!UserStaticData.hero.units[int(e.currentTarget.name)])
-			return;
+			if (!UserStaticData.hero.units[int(e.currentTarget.name)]) {
+				return;
+			}
 			unit.out();
 		}
 		
@@ -197,8 +192,7 @@ package artur.display
 			WinCastle.txtCastle.scroll.visible = true;
 			WinCastle.currSlotClick = this.name;
 			this.addChild(WinCastle.getCastle().mcCurr);
-			WinCastle.getCastle().mcCurr.x = -7;
-			this.addChild(btnByeUnit);
+ 			this.addChild(btnByeUnit);
 			WinCastle.inventar.frees();
 		}
 		
