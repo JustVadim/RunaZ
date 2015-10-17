@@ -93,7 +93,7 @@ package artur.units
 			this.filters = [App.btnOverFilter];
 		}
 		
-		public function init(parr:DisplayObjectContainer=null):void
+		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
 			scaleX = normScale;
 			scaleY = normScale;

@@ -33,7 +33,7 @@ package artur.units
 		 private var parts_of_parts:Array;
 		 public var vector:String = 'right';
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
-		 private static var sounds:Array = [{id:'bot1_fs1',frame:40},{id:'bot1_fs2',frame:50},{id:'bow1',frame:64},{ id:'pall_hurt', frame:69 },{id:'blade1',frame:66},{id:'bot1_die',frame:74}];
+		 private static var sounds:Array = [{id:'bot1_fs1',frame:40},{id:'bot1_fs2',frame:50},{id:'bow1',frame:64},{ id:'pall_hurt', frame:69 },{id:'blade1',frame:66},{id:'bot1_die',frame:74},{id:'blade2',frame:74},];
 		 
 		public function U_LykBot() 
 		{
@@ -101,7 +101,7 @@ package artur.units
 			App.btnOverFilter.color = 0xFFFFFF;
 			this.filters = [App.btnOverFilter];
 		}
-		public function init(parr:DisplayObjectContainer=null):void
+		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
 			scaleX = normScale;
 			scaleY = normScale;
@@ -109,9 +109,9 @@ package artur.units
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
-			if (parr) 
+			if (parent) 
 			{
-				parr.addChild(this);
+				parent.addChild(this);
 			}
 			
 		}

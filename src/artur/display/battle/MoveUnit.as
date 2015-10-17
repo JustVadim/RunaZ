@@ -21,7 +21,7 @@ package artur.display.battle {
 		private var move:Boolean = false;
 		public var bin:Boolean = false;
 		public var unit:MovieClip;
-		private var timer:Timer = new Timer(750, 1);
+		private var timer:Timer = new Timer(2, 1);
 		public var cur_obj:Object;
 		private var arrow:mcAtackArrow = new mcAtackArrow();
 		private var is_range:Boolean = true;

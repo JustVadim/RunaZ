@@ -8,6 +8,7 @@ package artur.units
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.filters.ColorMatrixFilter;
+	import report.Report;
 	
 	public class Bot1 extends BarbDoll
 	{
@@ -37,8 +38,10 @@ package artur.units
 		 private var parts:Array ;
 		 private var parts_of_parts:Array;
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
-		 private static var sounds:Array = [{id:'fow2',frame:67},{id:'bot1_hurt',frame:85},{id:'blade1',frame:70},{ id:'bot1_attack', frame:64 }, { id:'bot1_fs1', frame:47 }, { id:'bot1_fs2', frame:56 },{id:'bot1_die',frame:95} ];
+		 private static var sounds:Array = [{id:'fow2',frame:67},{id:'bot1_hurt',frame:85},{id:'blade1',frame:83},{id:'blade2',frame:94},{ id:'bot1_attack', frame:64 }, { id:'bot1_fs1', frame:47 }, { id:'bot1_fs2', frame:56 },{id:'bot1_die',frame:95} ];
 		 public var my_filter:ColorMatrixFilter
+		 private static var normalScales:Array = [1, 1.5, 1, 1, 1, 1, 1, 1];
+		 private var lvl:int = 0;
 		public function Bot1() 
 		{
 			this.mouseEnabled = false;
@@ -101,7 +104,7 @@ package artur.units
 			
 		//	 this.addEventListener(MouseEvent.MOUSE_OVER, over);
 		//	 this.addEventListener(MouseEvent.MOUSE_OUT, out);
-			 itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+			// itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 			// this.scaleX = 1.5;
 			// this.scaleY = 1.5;
 			 //this.gotoAndPlay('run');
@@ -125,9 +128,12 @@ package artur.units
 			this.filters = [App.btnOverFilter];
 		}
 	
-		public function init(parr:DisplayObjectContainer=null):void
+		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
-			
+			//itemUpdate(lvl );
+			this.lvl = lvl;
+			//Report.addMassage(lvl+' lvl BOSS')
+			normScale = normalScales[lvl - 1];
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
@@ -158,7 +164,7 @@ package artur.units
 		{
 			free = true;
 			gotoAndStop(1);
-			if (this.stage) 
+			if (this.parent) 
 			{
 				parent.removeChild(this);
 			}
@@ -166,36 +172,15 @@ package artur.units
 			 this.removeEventListener(MouseEvent.MOUSE_OVER, over);
 		     this.removeEventListener(MouseEvent.MOUSE_OUT, out);
 		}
-		public function itemUpdate(obj:Object):void
+		public function itemUpdate(ix:int=0):void
 		{
+			
 			for (var i:int = 0; i < parts.length; i++) 
 			{
 			   Sprite(parts[i]).removeChildAt(1);
-			   switch(true)
-			   {
-				   case i == 0:
-					   Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[0])]);
-					   break;
-					case i == 1:
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[1])]);
-						break;
-					case i == 2:
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[5])]);
-						break;
-					case (i == 3 || i == 7):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[3])]);
-						break;
-					case (i == 14 || i == 4 || i == 11 || i == 8):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][0]);
-						break;
-					case (i == 10 || i == 9 || i == 6 || i == 5):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[4])]);
-						break;
-					case(i == 12 || i == 13 || i == 15 || i == 16):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[2])]);
-						break;
-			   }
+			   Sprite(parts[i]).addChild(this.parts_of_parts[i][lvl-1]);
 			}
+
 			
 		}
 		

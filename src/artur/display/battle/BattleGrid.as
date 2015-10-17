@@ -50,6 +50,7 @@ package artur.display.battle
 			for (var key:Object in BattleGrid.stones)
 			{
 				BattleGrid.stones[key].free = true;
+				if(WinBattle.spr.contains(BattleGrid.stones[key] ))
 				WinBattle.spr.removeChild(BattleGrid.stones[key]);
 			}
 		}
@@ -66,7 +67,7 @@ package artur.display.battle
 					var node:Node = nodes[loc.x][loc.y];
 					unit.x = node.x;
 					unit.y = node.y + 10;
-					unit.init(WinBattle.spr);
+					unit.init(WinBattle.spr,units[loc.pos].lvl);
 					WinBattle.sortArr.push(unit);
 					if(scalse)
 						unit.scaleX = unit.normScale;

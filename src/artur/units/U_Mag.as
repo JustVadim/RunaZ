@@ -93,14 +93,14 @@ package artur.units
 			this.filters = [App.btnOverFilter];
 		}
 		
-		public function init(parr:DisplayObjectContainer=null):void
+		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
-			if (parr) 
+			if (parent) 
 			{
 				parr.addChild(this);
 			}
