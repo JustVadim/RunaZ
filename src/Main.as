@@ -12,6 +12,7 @@ package  {
 	import Server.Lang;
 	import Utils.json.JSON2;
 	
+	[Frame(factoryClass = "Preloader")]
 	public class Main extends Sprite {
 		
 		public static var THIS:Main;
@@ -31,15 +32,23 @@ package  {
 		private function init(e:Event = null):void {
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
-			UserStaticData.flash_vars = stage.loaderInfo.parameters as Object;
-			if (UserStaticData.flash_vars['api_id']) {
-				this.vkPrepare();
-			}
-			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Main.THIS = this;
 			stage.addChild(rep = new Report());
-			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
-			DataExchange.setConnection();
+			try
+			{
+				UserStaticData.flash_vars = stage.loaderInfo.parameters as Object;
+				if (UserStaticData.flash_vars['api_id']) {
+					this.vkPrepare();
+				}
+				Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
+				
+				DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
+				DataExchange.setConnection();
+			} catch (err:Error)
+			{
+				Report.addMassage("error" + err.getStackTrace() + " " + err.message + " "  +err.name);
+				
+			}
 		}
 		
 		private function vkPrepare():void {

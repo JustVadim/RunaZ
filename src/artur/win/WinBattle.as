@@ -245,6 +245,7 @@ package artur.win
 		
 		private function onUltimateData(obj:Object):void 
 		{
+			
 			var ef_coord:Object;
 			var node:Node;
 			switch(obj.t)
