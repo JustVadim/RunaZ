@@ -81,7 +81,7 @@ package artur.display.battle
 			this.walcable = walcable;
 			this.mc.visible = (walcable == 0 || walcable == 1)
 			this.txt.text = xp.toString() + ":" + yp.toString();
-			this.addChild(this.txt);
+			//this.addChild(this.txt);
 			WinBattle.spr.addChild(this);
 			if (!mc.visible) 
 			{
@@ -198,6 +198,7 @@ package artur.display.battle
 		{
 			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
 			WinBattle.inst.grid.clearNodesControl();
+			WinBattle.inst.disableBanochki();
 			App.lock.init();
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);

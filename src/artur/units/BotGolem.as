@@ -89,7 +89,7 @@ package artur.units
 			App.btnOverFilter.color = 0xFFFFFF;
 			this.filters = [App.btnOverFilter];
 		}
-		public function init(parr:DisplayObjectContainer=null):void
+		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
 			scaleX = normScale;
 			scaleY = normScale;

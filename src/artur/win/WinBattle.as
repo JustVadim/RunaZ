@@ -18,6 +18,7 @@ package artur.win
 	import artur.util.RemindCursors;
 	import Chat.ChatBasic;
 	import com.greensock.events.LoaderEvent;
+	import Enums.Items;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -209,37 +210,20 @@ package artur.win
 			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
 			var hp:int = 0;
 			var mp:int = 0;
-			switch(obj.ban)
-			{
-				case 1:
-					hp = hps[obj.tu.p] + 5;
-					break;
-				case 2:
-					hp = hps[obj.tu.p] + 10;
-					break;
-				case 3:
-					hp = hps[obj.tu.p] + 15;
-					break;
-				case 4:
-					mp = mps[obj.tu.p] + 5;
-					break;
-				case 5:
-					mp = mps[obj.tu.p] + 10;
-					break;
-				case 6:
-					mp = mps[obj.tu.p] + 15;
-					break;
+			var banka:Object = UserStaticData.magazin_items[unit.t][Items.BANOCHKATYPE][obj.ban];
+			Report.addMassage(JSON2.encode(banka));
+			if (banka.c[Items.BANOCHKATYPE_TYPE] == Items.BANOCHKATYPE_HP) {
+				Report.addMassage(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY]);
+				hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
+				LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
+			} else if (banka.c[Items.BANOCHKATYPE_TYPE] == Items.BANOCHKATYPE_MP) {
+				mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
+				LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
 			}
-			if (hp != 0)
-				hps[obj.tu.p] = Math.min(hp, unit.hp);
-			else
-				mps[obj.tu.p] = Math.min(mp, unit.mp);
-			LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
-			LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
 			LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
-			App.sound.playSound("eff_heal", App.sound.onVoice, 1);
 			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
 			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+			App.sound.playSound("eff_heal", App.sound.onVoice, 1);
 			EffManajer.effBotleHill.init(node.x, node.y);
 		}
 		
@@ -501,8 +485,7 @@ package artur.win
 		{
 			DataExchange(e.currentTarget).removeEventListener(DataExchangeEvent.ON_RESULT, onBanochkaRes);
 			var obj:Object = JSON2.decode(e.result);
-			if (obj.error == null) 
-			{
+			if (obj.error == null) {
 				App.lock.frees();
 				var unit:Object
 				var cur_pos:int = WinBattle.bat['set'][WinBattle.bat.cus].p;
@@ -510,8 +493,22 @@ package artur.win
 				unit = bat.u[WinBattle.myTeam][cur_pos];
 				delete(unit.inv[inv_place]);
 				this.updateBanochka(unit, inv_place);
+			} else {
+				App.lock.init(obj.error);
 			}
-			else App.lock.init(obj.error);
+		}
+		
+		public function disableBanochki():void
+		{
+			for (var i:int = 0; i < inv_btns.length; i++) 
+			{
+				var mc:Panel_Inv = WinBattle.inv_btns[i];
+				mc.gotoAndStop(1);
+				mc.buttonMode = false;
+				mc.removeEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);
+				mc.removeEventListener(MouseEvent.ROLL_OUT, this.onBankaOut);
+				mc.removeEventListener(MouseEvent.CLICK, this.onBankaClick);
+			}
 		}
 		
 		private function updateBanochka(unit:Object, inv_pace:int):void 

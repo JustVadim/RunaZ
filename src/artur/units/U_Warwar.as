@@ -47,7 +47,7 @@ package artur.units
 		 private var parts:Array ;
 		 private var parts_of_parts:Array;
 	     private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
-		 private static var sounds:Array = [{id:'war_hurt',frame:85},{id:'blade2',frame:70}, {id:'fow2',frame:67}, { id:'bot1_fs1', frame:47 }, { id:'bot1_fs2', frame:56 },{id:'pall_death',frame:93} ];
+		 private static var sounds:Array = [{id:'war_hurt',frame:85},{id:'blade2',frame:83},{id:'blade2',frame:94}, {id:'fow2',frame:67}, { id:'bot1_fs1', frame:47 }, { id:'bot1_fs2', frame:56 },{id:'pall_death',frame:93} ];
 		 public static var andAtackFrame:int = 72;
 		 public var buffs:Array = PrepareGr.creatBms(new mcBaff, true);
 		 
@@ -130,7 +130,7 @@ package artur.units
 			
 		}
 	
-		public function init(parr:DisplayObjectContainer=null):void
+		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
 			scaleX = normScale;
 			scaleY = normScale;
@@ -141,8 +141,6 @@ package artur.units
 			{
 				parr.addChild(this);
 			}
-			
-		
 		}
 		public function update():void
 		{
