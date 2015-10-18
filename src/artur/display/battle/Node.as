@@ -198,6 +198,7 @@ package artur.display.battle
 		{
 			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
 			WinBattle.inst.grid.clearNodesControl();
+			WinBattle.inst.disableBanochki();
 			App.lock.init();
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);

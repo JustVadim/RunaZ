@@ -497,6 +497,7 @@ package artur.display
 				this.removeBuffClick(this.mcText.sk_double);
 				this.removeBuffClick(this.mcText.sk_out);
 				this.removeBuffClick(this.mcText.sk_return);
+				this.removeBuffClick(this.mcText.sk_ult);
 			}
 		}
 		
