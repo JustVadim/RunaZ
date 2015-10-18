@@ -94,6 +94,8 @@ package artur
 			cursor.addCursor(mcCursorHand, 'hand');		
 			cursor.changeCursor('arr');
 			cursor.setButtonCursor('arr', 'hand', stg);	
+			this.tabEnabled = false;
+			this.tabChildren = false;
 			
 		}
 		
