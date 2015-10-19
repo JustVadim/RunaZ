@@ -140,7 +140,7 @@ package artur.win
 			Main.THIS.chat.visible = false;
 			Main.THIS.stage.addChild(WinBattle.battleChat);
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
-			sprGift.init(1);
+			//sprGift.init(1);
 		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 

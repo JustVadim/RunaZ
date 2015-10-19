@@ -7,7 +7,7 @@ package artur.units {
 	import flash.events.MouseEvent;
 	
 	public class BotGhost extends GhostDoll {
-		public  var normScale:Number = 1.5;
+		public  var normScale:Number = 1;
 		private var bodys		:Array;
 		private var hendsL		:Array;
 		private var hendsR		:Array;

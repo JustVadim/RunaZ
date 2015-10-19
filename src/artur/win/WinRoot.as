@@ -4,6 +4,7 @@ package artur.win
 	import artur.display.BaseButton;
 	import artur.display.battle.eff.EffManajer;
 	import artur.display.MyBitMap;
+	import artur.display.SprUserNewLevel;
 	import artur.PrepareGr;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
@@ -25,7 +26,7 @@ package artur.win
 		public var bg:Bitmap ;
 		private var btns:Array = [];
 		private var mcText:mcTextRootWin = new mcTextRootWin();
-		
+		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
 		public function WinRoot() 
 		{
 			bg = new MyBitMap(App.prepare.cach[0]);
@@ -119,6 +120,7 @@ package artur.win
 			{
 				App.spr.addChild(btns[i]);
 			}
+			lvlUp.init('доступно 2')
 		}
 		private function updateBar():void
 		{
