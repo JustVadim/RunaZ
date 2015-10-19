@@ -8,6 +8,7 @@ package artur.win
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
 	import Chat.ChatBasic;
+	import datacalsses.Hero;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
@@ -122,14 +123,13 @@ package artur.win
 		}
 		private function updateBar():void
 		{
-			var hero:Object = UserStaticData.hero;
+			var hero:Hero = UserStaticData.hero;
 			var maxEn:int = hero.skills.vitality;
-			var currEn:int = hero.cur_vitality;
-			var maxExp:int = UserStaticData.levels[hero.level]; // <--
-			var currExp:int = hero.exp;//UserStaticData.hero.exp;
-			mcText.txtExp.text = String(currExp + '/' + maxExp);
+			var currEn:int = hero.cur_vitality*10;
+			var currExp:int = hero.exp;
+			mcText.txtExp.text = String(currExp + '/' + 11);
 			mcText.txtVit.text = String(currEn + '/' + maxEn);
-			mcText.expBar.gotoAndStop(int(currExp /maxExp* 100) + 1);
+			mcText.expBar.gotoAndStop(int(currExp /11* 100) + 1);
 			mcText.vitBar.gotoAndStop(int(maxEn / currEn * 100) + 1);
 		}
 		public function update():void

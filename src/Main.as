@@ -34,8 +34,7 @@ package  {
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			Main.THIS = this;
 			stage.addChild(rep = new Report());
-			try
-			{
+			try {
 				UserStaticData.flash_vars = stage.loaderInfo.parameters as Object;
 				if (UserStaticData.flash_vars['api_id']) {
 					this.vkPrepare();
@@ -44,8 +43,7 @@ package  {
 				
 				DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 				DataExchange.setConnection();
-			} catch (err:Error)
-			{
+			} catch (err:Error) {
 				Report.addMassage("error" + err.getStackTrace() + " " + err.message + " "  +err.name);
 				
 			}
