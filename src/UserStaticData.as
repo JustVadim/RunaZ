@@ -8,7 +8,11 @@
 		public static const server_ip:String = "151.80.10.33";
 		public static const server_port:int = 3002;
 		public static var from:String = "c"
+<<<<<<< HEAD
 		public static var id:String = "artur2";
+=======
+		public static var id:String = "vadim12";
+>>>>>>> 96794aabb9bec9046258ee8302a558c201aea173
 		public static var sig:String = "11111";
 		public static var fname:String = "Vadim";
 		public static var sname:String = "Laukhin";

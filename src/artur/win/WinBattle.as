@@ -16,9 +16,11 @@ package artur.win
 	import artur.RasterClip;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
+	import artur.util.Maker;
 	import artur.util.RemindCursors;
 	import Chat.ChatBasic;
 	import com.greensock.events.LoaderEvent;
+	import datacalsses.Hero;
 	import Enums.Items;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
@@ -31,6 +33,7 @@ package artur.win
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
+	import artur.util.Maker;
 
 	public class WinBattle 
 	{
@@ -61,12 +64,14 @@ package artur.win
 		private static var inv_btns:Array = [new Panel_Inv, new Panel_Inv, new Panel_Inv, new Panel_Inv];
 		private var ult_clicked:Boolean = false;
 		public static var battleChat:BattleChat = new BattleChat();
-		public static var sprGift:GiftDialog = new GiftDialog();
+		public static var sprGift:GiftDialog;
+		private var gift_id:int = 0;
 		
 		
 		public function WinBattle() 
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
+			WinBattle.sprGift = new GiftDialog(this.onCloseWin);
 			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.winAfterBattle.tabChildren = WinBattle.winAfterBattle.tabEnabled = WinBattle.looseAfterBattle.tabChildren = WinBattle.looseAfterBattle.tabEnabled = false;
 			WinBattle.hero_inv = new HeroInventar(true);
@@ -94,7 +99,13 @@ package artur.win
 		
 		private function onCloseWin(e:MouseEvent):void 
 		{
-			App.winManajer.swapWin(2);
+			if (this.gift_id == 0) {
+				App.winManajer.swapWin(2);
+			} else {
+				WinBattle.sprGift.init(this.gift_id);
+				this.gift_id = 0;
+				App.spr.removeChild(e.currentTarget.parent);
+			}
 		}
 		
 		private function checkCLick(e:MouseEvent):void 
@@ -125,6 +136,7 @@ package artur.win
 		
 		public function init():void
 		{
+			this.gift_id = 0;
 			this.unitsInWin = [];
 			this.bin = true;
 			WinBattle.units = [[], []];
@@ -140,7 +152,7 @@ package artur.win
 			Main.THIS.chat.visible = false;
 			Main.THIS.stage.addChild(WinBattle.battleChat);
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
-			//sprGift.init(1);
+			
 		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 
@@ -320,58 +332,57 @@ package artur.win
 			EffManajer.lgs.update();
 		}
 		
-		private function endBattle(obj:Object):void 
-		{
+		private function endBattle(obj:Object):void {
 			this.grid.clearNodesControl();
 			var mc:MovieClip;
-			if (obj.is_w)
-			{
+			if (obj.is_w) {
 				mc = WinBattle.winAfterBattle;
 				App.sound.playSound('win', App.sound.onVoice, 1);
-				if (obj.mcd != null)
-				{
-					if (UserStaticData.hero.miss[obj.mcd.mapn].mn[obj.mcd.misn] == null)
-					{
-						UserStaticData.hero.miss[obj.mcd.mapn].mn[obj.mcd.misn] = new Object;
-						if (obj.mcd.misn == 10)
-						{
-							UserStaticData.hero.miss[obj.mcd.mapn + 1] = { mn:new Object };
+				if (obj.mcd != null) {
+					var mapNum:int = int(obj.mcd.mapn);
+					var missNum:int = int(obj.mcd.misn);
+					var hero:Hero = UserStaticData.hero;
+					if (UserStaticData.hero.miss[mapNum].mn[missNum] == null) {
+						UserStaticData.hero.miss[mapNum].mn[missNum] = new Object; 
+						if ((missNum + 1) % 11 == 0) {
+							hero.miss[mapNum + 1] = { mn:new Object };
+							hero.fs++;
+							hero.exp = 0;
+							hero.level = mapNum + 1;
+						} else {
+							UserStaticData.hero.exp = missNum + 1;
 						}
+						this.gift_id = obj.mcd.gift.k;
+						hero.chest[obj.mcd.gift.d] = Maker.clone(UserStaticData.magazin_items[0][7][this.gift_id]);
+						
 					}
-					UserStaticData.hero.miss[obj.mcd.mapn].mn[obj.mcd.misn].st = obj.mcd.sa;
+					UserStaticData.hero.miss[mapNum].mn[missNum].st = obj.mcd.sa;
 					UserStaticData.hero.gold += obj.mcd.g;
 					UserStaticData.hero.silver += obj.mcd.s;
 					mc.starBar.visible = true;
 					mc.ress.visible = true;
 					mc.ress.txtGold.text = obj.mcd.g;
 					mc.ress.txtSilver.text = obj.mcd.s;
-					for (var j:int = 0; j < 4; j++) 
-					{
-						if (obj.mcd.sa[j] == 1)
+					for (var j:int = 0; j < 4; j++) {
+						if (obj.mcd.sa[j] == 1) {
 							mc.starBar["st" + j].visible = true;
-						else
+						} else {
 							mc.starBar["st" + j].visible = false;
+						}
 					}
-				}
-				else
-				{
+				} else {
 					mc.starBar.visible = false;
 					mc.ress.visible = false;
 				}
-			}
-			else
-			{
+			} else {
 				mc = WinBattle.looseAfterBattle;
 			}
 			mc.gotoAndPlay(1);
 			App.spr.addChild(mc);
 			var all_units:Object = bat.u[WinBattle.myTeam];
-			for (var i:int = 0; i < 4; i++) 
-			{
+			for (var i:int = 0; i < 4; i++)  {
 				var blank:mcBlankWinn = mc[String("k" + i)];
-
-				if (UserStaticData.hero.units[i] != null)
-				{
+				if (UserStaticData.hero.units[i] != null) {
 					UserStaticData.hero.units[i].inv = all_units[i].inv;
 					delete(all_units[i].inv);
 					blank.txt1.visible = true;
@@ -384,22 +395,17 @@ package artur.win
 					unit.x = 25; unit.y = 50;
 					this.unitsInWin.push(unit);
 					blank.txt1.text = "Убито: " + obj.st[i].k;
-					if (living) 
-					{
+					if (living) {
 						blank.txt2.textColor = 0x62F523; 
 						blank.txt2.text = "+" + obj.exp +" опыта";
 						unit_data.exp += obj.exp;
-					}
-					else
-					{
+					} else {
 						blank.txt2.textColor = 0xF52323 ; 
 						blank.txt2.text = "Умер";
 						unit_data.l += obj.st[i].d;
 					}
 					unit_data.k += obj.st[i].k;
-				}
-				else
-				{
+				} else {
 					blank.txt1.visible = false;
 					blank.txt2.visible = false;
 				}

@@ -1,5 +1,4 @@
-package artur.win
-{
+package artur.win {
 	import artur.App;
 	import artur.display.BaseButton;
 	import artur.display.Chest;
@@ -13,9 +12,7 @@ package artur.win
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	
-	public class WinCastle
-	{
+	public class WinCastle {
 		private var bg:MyBitMap
 		public var bin:Boolean = false;
 		public var slots:Array = [];
@@ -30,16 +27,14 @@ package artur.win
 		public static var mcSell:WinSell = new WinSell();
 		
 		
-		public function WinCastle()
-		{
+		public function WinCastle() {
 			mcSell.gotoAndStop(1); 
 			mcSell.name = 'sell';
 			inst = this;
 			bg = new MyBitMap(App.prepare.cach[7]);
 			inventar = new HeroInventar();
 			shopInventar = new ShopInventar();
-			for (var i:int = 0; i < 4; i++)
-			{
+			for (var i:int = 0; i < 4; i++) {
 				var slot:Slot = new Slot();
 				slot.x = 73.1;
 				slot.y = 68.25 + i * 95;
@@ -47,8 +42,7 @@ package artur.win
 				slots.push(slot);
 			}
 			
-			for (var key:Object in UserStaticData.magaz_units)
-			{
+			for (var key:Object in UserStaticData.magaz_units) {
 				var blank:UnitBlank = new UnitBlank(int(key), Slot.namesUnit[key], UserStaticData.magaz_units[key]);
 				blank.y = int(key) * 148;
 				blank.init();
@@ -59,23 +53,19 @@ package artur.win
 			
 		}
 		
-		private function outSell(e:MouseEvent):void 
-		{
+		private function outSell(e:MouseEvent):void {
 			e.currentTarget.gotoAndStop(1);
 		}
 		
-		private function overSell(e:MouseEvent):void 
-		{
+		private function overSell(e:MouseEvent):void {
 			e.currentTarget.gotoAndStop(2);
 		}
 		
-		public function init():void
-		{
+		public function init():void {
 			App.spr.addChild(bg);
 			App.spr.addChild(txtCastle);
 			chest.init();
-			for (var i:int = 0; i < slots.length; i++)
-			{
+			for (var i:int = 0; i < slots.length; i++) {
 				App.spr.addChildAt(slots[i], 0);
 				slots[i].init();
 			}
@@ -84,53 +74,41 @@ package artur.win
 			txtCastle.txtSilver.text = String(UserStaticData.hero.silver);
 		}
 		
-		public function updateSlots():void
-		{
-			for (var i:int = 0; i < slots.length; i++)
-			{
+		public function updateSlots():void {
+			for (var i:int = 0; i < slots.length; i++) {
 				slots[i].init();
 			}
 		
 		}
 		
-		public function update():void
-		{
-		App.spr.addChild(App.btnRoot);
+		public function update():void {
+			App.spr.addChild(App.btnRoot);
 		}
 		
-		public function frees():void
-		{
-			for (var i:int = 0; i < slots.length; i++)
-			{
+		public function frees():void {
+			for (var i:int = 0; i < slots.length; i++) {
 				slots[i].frees();
 			}
 			inventar.frees();
 		}
 		
-		public static function getCastle():WinCastle
-		{
+		public static function getCastle():WinCastle {
 			return inst;
 		}
 		
-		public static function isMoney(gold:int, silver:int):Boolean
-		{
-			if (gold <= UserStaticData.hero.gold || silver <= UserStaticData.hero.silver)
-			{
+		public static function isMoney(gold:int, silver:int):Boolean {
+			if (gold <= UserStaticData.hero.gold || silver <= UserStaticData.hero.silver) {
 				return true;
-			}
-			else
-			{
+			} else {
 				return false;
 			}
 		}
 		
-		public static function isGold(gold:int):Boolean
-		{
+		public static function isGold(gold:int):Boolean {
 			return gold <= UserStaticData.hero.gold;
 		}
 		
-		public static function isSilver(gold:int):Boolean
-		{
+		public static function isSilver(gold:int):Boolean {
 			return gold <= UserStaticData.hero.silver;
 		}
 	}
