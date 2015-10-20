@@ -96,7 +96,7 @@ package artur
 			cursor.setButtonCursor('arr', 'hand', stg);	
 			this.tabEnabled = false;
 			this.tabChildren = false;
-			
+			//App.spr.alpha = 0.5;
 		}
 		
 		private function onRoot(e:MouseEvent):void 
