@@ -9,12 +9,14 @@ package artur.win
 	import artur.display.battle.LifeManajer;
 	import artur.display.battle.MoveUnit;
 	import artur.display.battle.Node;
+	import artur.display.GiftDialog;
 	import artur.display.HeroInventar;
 	import artur.display.Slot;
 	import artur.PrepareGr;
 	import artur.RasterClip;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
+	import artur.util.Maker;
 	import artur.util.RemindCursors;
 	import Chat.ChatBasic;
 	import com.greensock.events.LoaderEvent;
@@ -31,6 +33,7 @@ package artur.win
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
+	import artur.util.Maker;
 
 	public class WinBattle 
 	{
@@ -61,12 +64,14 @@ package artur.win
 		private static var inv_btns:Array = [new Panel_Inv, new Panel_Inv, new Panel_Inv, new Panel_Inv];
 		private var ult_clicked:Boolean = false;
 		public static var battleChat:BattleChat = new BattleChat();
-		
+		public static var sprGift:GiftDialog;
+		private var gift_id:int = 0;
 		
 		
 		public function WinBattle() 
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
+			WinBattle.sprGift = new GiftDialog(this.onCloseWin);
 			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.winAfterBattle.tabChildren = WinBattle.winAfterBattle.tabEnabled = WinBattle.looseAfterBattle.tabChildren = WinBattle.looseAfterBattle.tabEnabled = false;
 			WinBattle.hero_inv = new HeroInventar(true);
@@ -94,7 +99,13 @@ package artur.win
 		
 		private function onCloseWin(e:MouseEvent):void 
 		{
-			App.winManajer.swapWin(2);
+			if (this.gift_id == 0) {
+				App.winManajer.swapWin(2);
+			} else {
+				WinBattle.sprGift.init(this.gift_id);
+				this.gift_id = 0;
+				App.spr.removeChild(e.currentTarget.parent);
+			}
 		}
 		
 		private function checkCLick(e:MouseEvent):void 
@@ -125,6 +136,7 @@ package artur.win
 		
 		public function init():void
 		{
+			this.gift_id = 0;
 			this.unitsInWin = [];
 			this.bin = true;
 			WinBattle.units = [[], []];
@@ -140,6 +152,7 @@ package artur.win
 			Main.THIS.chat.visible = false;
 			Main.THIS.stage.addChild(WinBattle.battleChat);
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
+			
 		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 
@@ -339,6 +352,9 @@ package artur.win
 						} else {
 							UserStaticData.hero.exp = missNum + 1;
 						}
+						this.gift_id = obj.mcd.gift.k;
+						hero.chest[obj.mcd.gift.d] = Maker.clone(UserStaticData.magazin_items[0][7][this.gift_id]);
+						
 					}
 					UserStaticData.hero.miss[mapNum].mn[missNum].st = obj.mcd.sa;
 					UserStaticData.hero.gold += obj.mcd.g;

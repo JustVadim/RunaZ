@@ -48,7 +48,9 @@ package artur
 		new btnMap(),//29
 		new btnToBatle(),//30
 		new btnCloseList(),//31
-		new imgBtnCastle()//32
+		new imgBtnCastle(),//32
+		new btnTakes(),//33
+		new btnPlus()//34
 		];
 		 public static var scaleFactor:Number = 2;
 		

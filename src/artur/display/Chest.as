@@ -502,17 +502,14 @@ package artur.display
 			this.cleared = false;
 		}
 		
-		public function isFreeCells(xx:int, yy:int, ww:int, hh:int):Boolean 
-		{
-			if ((xx + ww <= this.wd) && (yy + hh) <= this.hg)
-			{
-				for (var i:int = 0; i < hh; i++) 
-				{
-					for (var j:int = 0; j < ww; j++)
-					{
+		public function isFreeCells(xx:int, yy:int, ww:int, hh:int):Boolean {
+			if ((xx + ww <= this.wd) && (yy + hh) <= this.hg) {
+				for (var i:int = 0; i < hh; i++) {
+					for (var j:int = 0; j < ww; j++) {
 						var num:int = xx + j + ((yy + i) * this.wd);
-						if (UserStaticData.hero.chest[num].id != 0)
+						if (UserStaticData.hero.chest[num].id != 0) {
 							return false;
+						}
 					}
 				}
 				return true;
