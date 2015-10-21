@@ -89,7 +89,7 @@ package artur.display
 			for (j = 0; j < inv_array.length; j++) 
 			{
 				var inv:I_Inv = inv_array[j];
-				this.setItem(inv, 40, 137+j*40, 7);
+				this.setItem(inv, 360, 137+j*40, 7);
 			}
 			if (!battle_init)
 			{

@@ -100,7 +100,7 @@ package artur.units
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
-			if (parent) 
+			if (parr) 
 			{
 				parr.addChild(this);
 			}
