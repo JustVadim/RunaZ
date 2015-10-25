@@ -261,38 +261,40 @@ package artur.display.battle
 			this.addEventListener(MouseEvent.CLICK, onUltClick);
 		}
 		
-		public function dismakeUlt():void 
-		{
+		public function dismakeUlt():void {
 			this.buttonMode = false;
 			this.mc.gotoAndStop(1);
 			this.removeEventListener(MouseEvent.CLICK, onUltClick);
 		}
 		
-		private function onUltClick(e:MouseEvent):void 
-		{
-			var key:int;
+		private function onUltClick(e:MouseEvent):void {
+			var key:int = -1;
+			var loopKey:Object;
 			var bat:Object = WinBattle.bat;
-			for (var i:int = 0; i < 4; i ++ )
-			{
-				if (bat.locs[0][i] != null && bat.hps[0][i] > 0)
-				{
-					Node(WinBattle.inst.grid.nodes[bat.locs[0][i].x][bat.locs[0][i].y]).dismakeUlt()
-					if (bat.locs[0][i].x == this.xp && bat.locs[0][i].y == this.yp)
-					{
-						key = i;
-					}
-				}
-				
-				if (bat.locs[1][i] != null && bat.hps[1][i] > 0)
-				{
-					Node(WinBattle.inst.grid.nodes[bat.locs[1][i].x][bat.locs[1][i].y]).dismakeUlt()
-					if (bat.locs[1][i].x == this.xp && bat.locs[1][i].y == this.yp)
-					{
-						key = i;
+			for(loopKey in bat.locs[0]) {
+				if(bat.hps[0][loopKey] > 0) {
+					if (bat.locs[0][loopKey].x == this.xp && bat.locs[0][loopKey].y == this.yp) {
+						key = int(loopKey);
+						break;
 					}
 				}
 			}
-			WinBattle.makeUltimate(key);
+			if(key == -1) {
+				for(loopKey in bat.locs[1]) {
+				if(bat.hps[1][loopKey] > 0) {
+						if (bat.locs[1][loopKey].x == this.xp && bat.locs[1][loopKey].y == this.yp) {
+							key = int(loopKey);
+							break;
+						}
+					}
+				}
+				
+			}
+			if(key == -1){
+				throw new Error("Dont find user on ultimate");
+			} else {
+				WinBattle.makeUltimate(key);
+			}
 		}
 		
 	}

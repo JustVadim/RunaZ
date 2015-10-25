@@ -122,7 +122,7 @@ package artur.win
 			this.mcText.txtVit.text = String(currEn + '/' + maxVit);
 			this.mcText.expBar.gotoAndStop(int(currExp /11* 100) + 1);
 			this.mcText.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
-			if(hero.fs>0) {
+			if(hero.fs > 0) {
 				lvlUp.init('Доступно: 2');
 			}
 		}

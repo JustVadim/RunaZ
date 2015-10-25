@@ -10,6 +10,7 @@ package Chat
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Utils.json.JSON2;
@@ -67,123 +68,88 @@ package Chat
 			this.setFocus();
 		}
 		
-		private function onSendBtnClick(e:MouseEvent):void 
-		{
+		private function onSendBtnClick(e:MouseEvent):void {
 			this.sendMassage();
 		}
 		
-		private function onAddedToStage(e:Event):void 
-		{
+		private function onAddedToStage(e:Event):void {
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			this.updateUserList();
 		}
 		
-		private function onKeyDown(e:KeyboardEvent):void 
-		{
-			if (e.keyCode == 13)//&&)
-			{
+		private function onKeyDown(e:KeyboardEvent):void {
+			if (e.keyCode == 13) {
 				this.sendMassage();
 			}
 		}
 		
-		public function updateUserList(str:String = ""):void
-		{
+		public function updateUserList(str:String = ""):void {
 			var temp_array:Array = new Array();
 			var cc:int = 0;
-			
-			for (var key:Object in UserStaticData.users_info)
-			{
-				
-				if (UserStaticData.users_info[key][6] == 1)
-				{
-					if (str == "" || String(UserStaticData.users_info[key]["fn"] + " " + UserStaticData.users_info[key]["sn"]).toLocaleLowerCase().search(str.toLocaleLowerCase())>-1 || String(UserStaticData.users_info[key]["sn"] + " " + UserStaticData.users_info[key]["fn"]).toLocaleLowerCase().search(str.toLocaleLowerCase())>-1)
-					{
+			for (var key:Object in UserStaticData.users_info) {
+				if (UserStaticData.users_info[key][6] == 1) {
+					if (str == "" || String(UserStaticData.users_info[key]["fn"] + " " + UserStaticData.users_info[key]["sn"]).toLocaleLowerCase().search(str.toLocaleLowerCase())>-1 || String(UserStaticData.users_info[key]["sn"] + " " + UserStaticData.users_info[key]["fn"]).toLocaleLowerCase().search(str.toLocaleLowerCase())>-1) {
 						temp_array.push(UserStaticData.users_info[key]);
 					}
-						
 				}
 			}
 			temp_array.sort(this.sortonlevel);
-			
-			if (this.users_array.length < temp_array.length)
-			{
-				while (this.users_array.length != temp_array.length)
-				{
+			if (this.users_array.length < temp_array.length) {
+				while (this.users_array.length != temp_array.length) {
 					this.users_array[this.users_array.length] = new UserInList(this.users_array.length);
 				}
-				for (cc=0; cc < temp_array.length; cc++)
-				{
+				for (cc=0; cc < temp_array.length; cc++) {
 					users_array[cc].update(temp_array[cc]["id"]);
 				}
-			}
-			else
-			{
-				for (cc = 0; cc < temp_array.length; cc++)
-				{
+			} else {
+				for (cc = 0; cc < temp_array.length; cc++) {
 					users_array[cc].update(temp_array[cc]["id"]);
 				}
-				for (cc = temp_array.length; cc < users_array.length; cc++)
-				{
+				for (cc = temp_array.length; cc < users_array.length; cc++) {
 					this.users_array[cc].remove();
 				}
 			}
 			this.users_online_scrollbar.update();
 		}
-		private function sortonlevel(Aobj:Object, Bobj:Object):int
-		{
+		private function sortonlevel(Aobj:Object, Bobj:Object):int {
 			var alvl:int = int(Aobj.lvl);
 			var blvl:int = int(Bobj.lvl);
-			if (alvl < blvl) 
-			{
+			if (alvl < blvl) {
 				return 1;
-			} 
-			else if (alvl > blvl) 
-			{
+			} else if (alvl > blvl)  {
 				return -1;
-			} 
-			else  
-			{
+			}  else {
 				return 0;
 			}	
 		}
 		
-		private function onIsPrivateClick(e:MouseEvent):void 
-		{
+		private function onIsPrivateClick(e:MouseEvent):void  {
 			Main.THIS.stage.focus = this.enter_massage;
 		}
 		
-		private function onEnterMassFocusOut(e:FocusEvent):void 
-		{
-			if (enter_massage.length == 0)
-			{
+		private function onEnterMassFocusOut(e:FocusEvent):void {
+			if (enter_massage.length == 0) {
 				enter_massage.text = "Нажмите что бы набрать сообщение";
 			}
 			enter_massage.alpha = 0.6;
 		}
 		
-		private function onEnterMassFocusIn(e:FocusEvent):void 
-		{
-			if (enter_massage.text == "Нажмите что бы набрать сообщение")
-			{
+		private function onEnterMassFocusIn(e:FocusEvent):void {
+			if (enter_massage.text == "Нажмите что бы набрать сообщение") {
 				enter_massage.text = "";
 			}
 			enter_massage.alpha = 1.0;
 		}
 		
-		public function setFocus(e:MouseEvent = null):void 
-		{
+		public function setFocus(e:MouseEvent = null):void {
 			Main.THIS.stage.focus = this.enter_massage;
 		}
 		
-		private function sendMassage():void
-		{
-			while (enter_massage.text.charAt(0) == " ")
-			{
+		private function sendMassage():void {
+			while (enter_massage.text.charAt(0) == " ") {
 				enter_massage.text = enter_massage.text.substr(1);
 			}
-			
-			if (enter_massage.text != "" && enter_massage.text != "Нажмите что бы набрать сообщение")
-			{	
+			if (enter_massage.text != "" && enter_massage.text != "Нажмите что бы набрать сообщение") {	
 				var mass:Object = new Object();
 				mass.f = UserStaticData.my_info.id;
 				mass.t = find_user.user_id;
@@ -196,44 +162,30 @@ package Chat
 			}
 		}
 		
-		public function addNewMass(str:String):void
-		{
+		public function addNewMass(str:String):void {
 			var temp_obj:Object = JSON2.decode(str);
 			var new_massage:TextField = new TextField();
-			new_massage.selectable = false;
-			new_massage.tabEnabled = false;
-			new_massage.background = false;
-			new_massage.multiline = true;
-			new_massage.wordWrap = true;
+			new_massage.selectable = new_massage.tabEnabled = new_massage.background = false;
+			new_massage.multiline = new_massage.wordWrap = true;
 			new_massage.width = 569;
-			/*var textf:TextFormat = new TextFormat();
+			var textf:TextFormat = new TextFormat();
 			textf.font = new Art().fontName;
-			textf.size = 14;
+			textf.size = 12;
 			textf.color = 0xFFFFFF;
-			textf.letterSpacing = 100;*/
-			//new_massage.embedFonts = true;
-			//new_massage.defaultTextFormat = textf;
+			new_massage.embedFonts = true;
+			new_massage.defaultTextFormat = textf;
 			new_massage.filters = [new GlowFilter(0x0, 1, 3, 3,1)];
-			if (temp_obj.f == UserStaticData.my_info.id)
-			{
-				new_massage.text = temp_obj.d + " " + "<font size = \"14\"><u><a href = 'event:'>"+UserStaticData.my_info.sn+ " "+ UserStaticData.my_info.fn + "";
+			if (temp_obj.f == UserStaticData.my_info.id) {
+				new_massage.text = temp_obj.d + " " + "<font size = \"12\"><u><a href = 'event:'>"+UserStaticData.my_info.sn+ " "+ UserStaticData.my_info.fn + "";
+			} else {
+				new_massage.text = temp_obj.d + " " + "<font size = \"12\"><u><a href = 'event:"+String(temp_obj.f)+"'>"+UserStaticData.users_info[temp_obj.f].sn + " " + UserStaticData.users_info[temp_obj.f].fn + "";
 			}
-			else
-			{
-				new_massage.text = temp_obj.d + " " + "<font size = \"14\"><u><a href = 'event:"+String(temp_obj.f)+"'>"+UserStaticData.users_info[temp_obj.f].sn + " " + UserStaticData.users_info[temp_obj.f].fn + "";
-			}
-			if (temp_obj.t == "0")
-			{
+			if (temp_obj.t == "0") {
 				new_massage.appendText("</a></u><b>:</b> " + temp_obj.m); 
-			}
-			else
-			{
-				if (temp_obj.t == UserStaticData.my_info.id)
-				{
+			} else {
+				if (temp_obj.t == UserStaticData.my_info.id) {
 					new_massage.appendText("</a></u><b> -></b> <u><a href='event:'>" + UserStaticData.my_info.sn+ " "+ UserStaticData.my_info.fn + "</a></u><b>:</b> " + temp_obj.m); 
-				}
-				else
-				{
+				} else {
 					new_massage.appendText("</a></u><b> -></b> <u><a href='event:" + temp_obj.t + "'>" + UserStaticData.users_info[temp_obj.t].sn + " " + UserStaticData.users_info[temp_obj.t].fn + "</a></u><b>:</b> " + temp_obj.m); 
 				}
 			}
@@ -241,30 +193,23 @@ package Chat
 			new_massage.htmlText = new_massage.text;
 			new_massage.height = new_massage.numLines * 19;
 			new_massage.textColor = 0xFFFFFF;
-			//new_massage.alpha = 1;
+			new_massage.alpha = 0.8;
 			new_massage.addEventListener(TextEvent.LINK, this.onTextLink);
-			if (!temp_obj.b)
-			{
+			if (!temp_obj.b) {
 				new_massage.y = last_mass_YY;
 				massages_sprite.addChild(new_massage);
 				this.last_mass_YY += new_massage.height;
 			}
-			
-			
-			if (this.massages_scrollbar.verticalScrollPosition == this.massages_scrollbar.maxVerticalScrollPosition)
-			{
+			if (this.massages_scrollbar.verticalScrollPosition == this.massages_scrollbar.maxVerticalScrollPosition) {
 				this.massages_scrollbar.update();
 				this.massages_scrollbar.verticalScrollPosition = this.massages_scrollbar.maxVerticalScrollPosition;
-			}
-			else
-			{
+			} else {
 				this.massages_scrollbar.update();
 			}
 		}
-		private function onTextLink(e:TextEvent):void 
-		{
-			if (e.text.length > 0)
-			{
+		
+		private function onTextLink(e:TextEvent):void {
+			if (e.text.length > 0){
 				this.addChild(new UserInListDialog(e.text));
 			}
 		}

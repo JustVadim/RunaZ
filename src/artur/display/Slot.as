@@ -53,12 +53,11 @@ package artur.display {
 			unit.out();
 		}
 		
-		private function over(e:MouseEvent):void 
-		{
-			   App.sound.playSound('over1', App.sound.onVoice, 1);
-			if (!UserStaticData.hero.units[int(e.currentTarget.name)])
-			return;
-			
+		private function over(e:MouseEvent):void {
+		   App.sound.playSound('over1', App.sound.onVoice, 1);
+			if (!UserStaticData.hero.units[int(e.currentTarget.name)]) {
+				return;
+			}
 			unit.over();
 			var obj:Object = UserStaticData.hero.units[int(e.currentTarget.name)];
 			var chars:Object = new Object();
@@ -77,18 +76,16 @@ package artur.display {
 			chars[203] = UserStaticData.hero.skills.defence;
 			chars[204] = UserStaticData.hero.skills.defence;
 			chars[205] = 0;
-			for (var key:Object in obj.it)
-			{
-				for (var key2:Object in obj.it[key].c )
-				{
+			for (var key:Object in obj.it) {
+				for (var key2:Object in obj.it[key].c ) {
 					chars[int(key2)+200] += obj.it[key].c[key2];
 				}
 			}
-			if (WinCastle.currSlotClick != this.name)
-			{
+			if (WinCastle.currSlotClick != this.name) {
 				App.info.init(this.x + this.btnByeUnit.width / 2 + 15 , this.y - (115 / 2), { title:UnitBlank.names[obj.t], type:1, chars:chars } );
 			}
 		}
+		
 		public function init():void
 		{
 			
@@ -172,17 +169,14 @@ package artur.display {
 				return int(obj.id);
 		}
 		
-		private function clickUnit():void 
-		{
+		private function clickUnit():void {
 			App.info.frees();
-			if (WinCastle.currSlotClick != this.name)
-			{
+			if (WinCastle.currSlotClick != this.name) {
 				App.sound.playSound('inventar', App.sound.onVoice, 1);
 				this.addChild(WinCastle.getCastle().mcCurr);
 				WinCastle.currSlotClick = this.name;
 				this.addChild(MovieClip(unit));
 				WinCastle.txtCastle.scroll.visible = false;
-				//WinCastle.inventar.init(Slot.getUnitItemsArray(UserStaticData.hero.units[this.name]), int(UserStaticData.hero.units[int(this.name)].t));
 				WinCastle.inventar.init1(UserStaticData.hero.units[this.name])
 			}
 		}

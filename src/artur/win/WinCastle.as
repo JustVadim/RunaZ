@@ -76,7 +76,7 @@ package artur.win {
 		
 		public function updateSlots():void {
 			for (var i:int = 0; i < slots.length; i++) {
-				slots[i].init();
+				Slot(slots[i]).init();
 			}
 		
 		}
