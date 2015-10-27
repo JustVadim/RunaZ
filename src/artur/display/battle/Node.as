@@ -194,8 +194,7 @@ package artur.display.battle
 			this.is_mouse_over = true;
 		}
 		
-		public function sendStep(obj:Object = null):void 
-		{
+		public function sendStep(obj:Object = null):void {
 			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
 			WinBattle.inst.grid.clearNodesControl();
 			WinBattle.inst.disableBanochki();
@@ -205,12 +204,12 @@ package artur.display.battle
 			var str:String;
 			if (obj != null) str = JSON2.encode(obj);
 			else str = "";
-			if (UserStaticData.hero.bat > -1)
-			{
-				if(UserStaticData.hero.bat < 1000)
+			if (UserStaticData.hero.bat > -1) {
+				data.sendData(COMMANDS.BATTLE_STEP, str, true);/*
+				/*if(UserStaticData.hero.bat < 1000)
 					data.sendData(COMMANDS.SEND_MISS_STEP, str, true);
 				else
-					data.sendData(COMMANDS.BATTLE_STEP, str, true);
+					data.sendData(COMMANDS.BATTLE_STEP, str, true);*/
 			}
 		}
 		
@@ -288,7 +287,6 @@ package artur.display.battle
 						}
 					}
 				}
-				
 			}
 			if(key == -1){
 				throw new Error("Dont find user on ultimate");

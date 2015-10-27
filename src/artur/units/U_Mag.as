@@ -102,7 +102,7 @@ package artur.units
 			this.scaleY = normScale;
 			this.filters = [];
 			this.gotoAndPlay('idle');
-			if (parent) 
+			if (parr) 
 			{
 				parr.addChild(this);
 			}

@@ -14,6 +14,7 @@ package artur.win
 	
 	public class WinMap 
 	{
+		public var mcRess:mcResourseText = new mcResourseText();
 		public static var currMap:int = 0;
 		private var bgs:Array = [Maker.raster(new mapBg1(), 800, 420)];
 		private var maps:Array = [];
@@ -79,6 +80,9 @@ package artur.win
 				}
 			}
 			App.spr.addChild(App.btnRoot); 
+			App.spr.addChild(mcRess);
+			mcRess.txtGold.text = String(UserStaticData.hero.gold);
+			mcRess.txtSilver.text = String(UserStaticData.hero.silver);
 		}
 		
 		private function onTown(e:MouseEvent):void 

@@ -112,11 +112,11 @@ package artur.units
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
-			if (parent) 
+			if (parr) 
 			{
-				parent.addChild(this);
+				parr.addChild(this);
 			}
-			
+			this.visible = true;
 		}
 		public function update():void
 		{

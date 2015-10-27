@@ -31,7 +31,7 @@ package artur.display {
 			this.tabEnabled = this.tabChildren = this.scroll_sprite.mouseEnabled = false; 
 			this.scroll.source = this.scroll_sprite;
 			btnClosed.addEventListener(MouseEvent.CLICK, closClick);
-			btnClosed.x = 415
+			btnClosed.x = 415-85
 			btnClosed.y = 407.5
 		}
 		
