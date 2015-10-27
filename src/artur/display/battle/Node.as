@@ -81,7 +81,6 @@ package artur.display.battle
 			this.walcable = walcable;
 			this.mc.visible = (walcable == 0 || walcable == 1)
 			this.txt.text = xp.toString() + ":" + yp.toString();
-			//this.addChild(this.txt);
 			WinBattle.spr.addChild(this);
 			if (!mc.visible) 
 			{
@@ -205,11 +204,7 @@ package artur.display.battle
 			if (obj != null) str = JSON2.encode(obj);
 			else str = "";
 			if (UserStaticData.hero.bat > -1) {
-				data.sendData(COMMANDS.BATTLE_STEP, str, true);/*
-				/*if(UserStaticData.hero.bat < 1000)
-					data.sendData(COMMANDS.SEND_MISS_STEP, str, true);
-				else
-					data.sendData(COMMANDS.BATTLE_STEP, str, true);*/
+				data.sendData(COMMANDS.BATTLE_STEP, str, true);
 			}
 		}
 		
@@ -235,6 +230,7 @@ package artur.display.battle
 				this.removeEventListener(MouseEvent.ROLL_OVER, onOver);
 				this.buttonMode = false;
 			}
+			this.removeEventListener(MouseEvent.CLICK, this.onUltClick);
 			this.mc.gotoAndStop(1);
 			this.onOut1();
 		}
@@ -257,13 +253,13 @@ package artur.display.battle
 		{
 			this.buttonMode = true;
 			this.mc.gotoAndStop(2);
-			this.addEventListener(MouseEvent.CLICK, onUltClick);
+			this.addEventListener(MouseEvent.CLICK, this.onUltClick);
 		}
 		
 		public function dismakeUlt():void {
 			this.buttonMode = false;
 			this.mc.gotoAndStop(1);
-			this.removeEventListener(MouseEvent.CLICK, onUltClick);
+			this.removeEventListener(MouseEvent.CLICK, this.onUltClick);
 		}
 		
 		private function onUltClick(e:MouseEvent):void {

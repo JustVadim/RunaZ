@@ -602,7 +602,9 @@ package artur.win
 				RemindCursors.is_ult = false;
 				App.cursor.changeCursor(App.cursor.mainCursor);
 				this.addUltEvents();
+				this.grid.disLightUltCells(unit_type);
 				this.getControlAfterUlt(true);
+				
 			}
 		}
 		 
@@ -693,9 +695,9 @@ package artur.win
 				spr.addChild(newArr[j]); 
 		}
 		
-		static public function makeUltimate(whom:int):void 
-		{
+		static public function makeUltimate(whom:int):void {
 			WinBattle.inst.removeUltEvents();
+			WinBattle.inst.grid.disLightUltCells(WinBattle.bat.u[WinBattle.myTeam][WinBattle.bat['set'][WinBattle.bat.cus].p].t);
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, WinBattle.onUltimateResult);
 			data.sendData(COMMANDS.ULTIMATE, whom.toString(), true);
