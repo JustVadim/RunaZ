@@ -176,7 +176,7 @@ package Server
 									}
 								break;
 							case COMMANDS.massage_come:
-									if (Main.THIS.contains(Main.THIS.chat))
+									if (Main.THIS.chat != null)
 									{
 										Main.THIS.chat.addNewMass(temp_obj.m);
 									}

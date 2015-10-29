@@ -1,6 +1,7 @@
 package artur 
 {
 	import artur.display.BaseButton;
+	import artur.display.battle.TopPanel;
 	import artur.display.ByeWin;
 	import artur.display.CloseDialog;
 	import artur.display.InfoWin;
@@ -42,10 +43,10 @@ package artur
 		public static var byeWin:ByeWin 
 		public static var closedDialog:CloseDialog
 	    static public var btns:Array = [];
-		public static var btnRoot:BaseButton ;
 		public static var info:InfoWin = new InfoWin();
 		public static var lock:LockSpr = new LockSpr();
 		public static var cursor:RemindCursors = new RemindCursors();
+		public static var topPanel:TopPanel = new TopPanel();
 		public function App(stg:Stage) 
 		{
 			sound.addSound('cnock', new s_Cnock());
@@ -88,8 +89,8 @@ package artur
 			this.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 			byeWin = new ByeWin();
 			closedDialog = new CloseDialog();
-			btnRoot = new BaseButton(14); btnRoot.x = 400; btnRoot.y = 10;
-			btnRoot.addEventListener(MouseEvent.CLICK, onRoot);
+	
+	
 			cursor.addCursor(mcCursorArrow, 'arr');
 			cursor.addCursor(mcCursorHand, 'hand');		
 			cursor.changeCursor('arr');
@@ -99,10 +100,7 @@ package artur
 			//App.spr.alpha = 0.5;
 		}
 		
-		private function onRoot(e:MouseEvent):void 
-		{
-			App.winManajer.swapWin(0);
-		}
+
 		
 		private function mouseUp(e:MouseEvent):void 
 		{

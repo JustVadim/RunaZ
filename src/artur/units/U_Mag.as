@@ -6,6 +6,7 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import report.Report;
 	
 	public class U_Mag extends MagDoll
 	{
@@ -93,12 +94,13 @@ package artur.units
 			this.filters = [App.btnOverFilter];
 		}
 		
-		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
+		public function init(parr:DisplayObjectContainer=null, lvl:int=0):void
 		{
-			scaleX = normScale;
-			scaleY = normScale;
-			filters = [];
-			free = false;
+			Report.addMassage("maginited");
+			this.free = false;
+			this.scaleX = normScale;
+			this.scaleY = normScale;
+			this.filters = [];
 			this.gotoAndPlay('idle');
 			if (parr) 
 			{
@@ -123,6 +125,7 @@ package artur.units
 		}
 		public function frees():void
 		{
+			Report.addMassage("mag free");
 			free = true;
 			gotoAndStop(1);
 			if (parent) 

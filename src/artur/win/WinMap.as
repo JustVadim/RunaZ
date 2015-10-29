@@ -79,10 +79,11 @@ package artur.win
 						break;
 				}
 			}
-			App.spr.addChild(App.btnRoot); 
+			
 			App.spr.addChild(mcRess);
 			mcRess.txtGold.text = String(UserStaticData.hero.gold);
 			mcRess.txtSilver.text = String(UserStaticData.hero.silver);
+			App.topPanel.init(this);
 		}
 		
 		private function onTown(e:MouseEvent):void 

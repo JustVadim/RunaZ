@@ -72,17 +72,19 @@ package artur.win {
 			txtCastle.scroll.visible = false;
 			txtCastle.txtGold.text = String(UserStaticData.hero.gold);
 			txtCastle.txtSilver.text = String(UserStaticData.hero.silver);
+			App.topPanel.init(this);
 		}
 		
 		public function updateSlots():void {
 			for (var i:int = 0; i < slots.length; i++) {
-				slots[i].init();
+				Slot(slots[i]).init();
 			}
 		
 		}
 		
-		public function update():void {
-			App.spr.addChild(App.btnRoot);
+		public function update():void 
+		{
+			
 		}
 		
 		public function frees():void {

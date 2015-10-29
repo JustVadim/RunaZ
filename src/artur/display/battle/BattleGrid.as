@@ -345,16 +345,49 @@ package artur.display.battle
 			}
 		}
 		
-		private function UltCells(is_fr:Boolean):void 
-		{
+		public function disLightUltCells(unit_type:int):void {
+			switch(unit_type) {
+				case 1:
+					this.disUltCells(true);
+					break;
+				case 2:
+					this.disUltCells(false);
+					break;
+				case 3:
+					this.disUltCells(false);
+					break;
+			}
+		}
+		
+		private function disUltCells(is_fr:Boolean):void {
 			var team:int = (is_fr)? WinBattle.myTeam:WinBattle.inverseTeam(WinBattle.myTeam);
 			var locs:Object = WinBattle.bat.locs[team];
 			var hps:Object = WinBattle.bat.hps[team];
-			for (var key:Object in locs)
-			{
-				if (hps[key] > 0)
-				{
+			for (var key:Object in locs) {
+				if (hps[key]) {
+					Node(nodes[locs[key].x][locs[key].y]).dismakeUlt();
+				}
+			}
+		}
+		
+		private function UltCells(is_fr:Boolean):void {
+			var team:int = (is_fr)? WinBattle.myTeam:WinBattle.inverseTeam(WinBattle.myTeam);
+			var locs:Object = WinBattle.bat.locs[team];
+			var hps:Object = WinBattle.bat.hps[team];
+			for (var key:Object in locs) {
+				if (hps[key] > 0) {
 					Node(nodes[locs[key].x][locs[key].y]).makeUlt();
+				}
+			}
+		}
+		
+		private function DisMakeUltCells(is_fr:Boolean):void {
+			var team:int = (is_fr)? WinBattle.myTeam:WinBattle.inverseTeam(WinBattle.myTeam);
+			var locs:Object = WinBattle.bat.locs[team];
+			var hps:Object = WinBattle.bat.hps[team];
+			for (var key:Object in locs) {
+				if (hps[key] > 0) {
+					Node(nodes[locs[key].x][locs[key].y]).dismakeUlt();
 				}
 			}
 		}

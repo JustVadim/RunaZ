@@ -45,11 +45,13 @@ package artur.display
 		private var call:ItemCall;
 		private var progresEXP:progresBar = new progresBar();
 		private var battle_init:Boolean;
+		private var lastDT:String;
 		
 		public function HeroInventar(battle_init:Boolean = false)
 		{
 			this.tabEnabled = false;
 			this.tabChildren = false;
+			this.mouseEnabled = false;
 			this.battle_init = battle_init;
 			
 			for (var k:int = 0; k < parts.length; k++) 
@@ -132,6 +134,10 @@ package artur.display
 				this.itemType = int(e.currentTarget.name);
 				this.itemID = int(e.currentTarget.currentFrame);
 				this.invPlace = this.getIsInv(MovieClip(e.currentTarget));
+				
+				
+				
+				
 				call= ItemCall.getCall();
 				call.init(heroType, this.itemType, this.itemID - 1);
 				call.x = App.spr.mouseX  - call.width / 2 + 8;
@@ -139,8 +145,8 @@ package artur.display
 				call.startDrag();
 				call.addEventListener(MouseEvent.MOUSE_UP, up);
 				call.addEventListener(MouseEvent.MOUSE_MOVE, move);
-				e.currentTarget.gotoAndStop(1);
 				Main.THIS.stage.addEventListener(Event.MOUSE_LEAVE, fo);
+				e.currentTarget.gotoAndStop(1);
 			}
 		}
 		
@@ -170,31 +176,28 @@ package artur.display
 			}
 		}
 		
-		private function move(e:MouseEvent):void 
-		{
+		private function move(e:MouseEvent):void {
 			e.updateAfterEvent();
-			if (e.currentTarget.dropTarget!=null && e.currentTarget.dropTarget.parent != null)
-			{
+			if (e.currentTarget.dropTarget!=null && e.currentTarget.dropTarget.parent != null) {
 				var str:String = e.currentTarget.dropTarget.parent.name;
-				if (str.length >= 5 && str.substr(0, 5) == "celll")
-				{
-					WinCastle.chest.clearCells();
-					var obj:Object = JSON2.decode(str.substr(5, str.length - 1));	
-					WinCastle.chest.selectToPut(obj.n, true, this.invPlace);
-				}
-				else
-				{
-					if (str == "sellSprite")
-					{
-						if (WinCastle.mcSell.sellSprite.currentFrame == 1)
-							WinCastle.mcSell.sellSprite.gotoAndStop(2);
+				if(str != this.lastDT) {
+					this.lastDT = str;
+					if (str.length >= 5 && str.substr(0, 5) == "celll") {
+						WinCastle.chest.clearCells();
+						var obj:Object = JSON2.decode(str.substr(5, str.length - 1));	
+						WinCastle.chest.selectToPut(obj.n, true, this.invPlace);
+					} else {
+						if (str == "sellSprite") {
+							if (WinCastle.mcSell.sellSprite.currentFrame == 1) {
+								WinCastle.mcSell.sellSprite.gotoAndStop(2);
+							}
+						} else {
+							if (WinCastle.mcSell.sellSprite.currentFrame == 2) {
+								WinCastle.mcSell.sellSprite.gotoAndStop(1);
+							}
+						}
+						WinCastle.chest.clearCells();
 					}
-					else
-					{
-						if (WinCastle.mcSell.sellSprite.currentFrame == 2)
-							WinCastle.mcSell.sellSprite.gotoAndStop(1);
-					}
-					WinCastle.chest.clearCells();
 				}
 			}
 		}

@@ -241,13 +241,11 @@ package artur.win
 			EffManajer.effBotleHill.init(node.x, node.y);
 		}
 		
-		private function onUltimateData(obj:Object):void 
-		{
+		private function onUltimateData(obj:Object):void {
 			
 			var ef_coord:Object;
 			var node:Node;
-			switch(obj.t)
-			{
+			switch(obj.t) {
 				case 0:
 					App.sound.playSound("battle_cry", App.sound.onVoice, 1);
 					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
@@ -290,8 +288,8 @@ package artur.win
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
-			if (obj.hpl == 0)
-			{
+			if (obj.hpl == 0) {
+				this.grid.clearNodesControl();
 				var coord:Object = bat.locs[obj.whm.t][obj.whm.p];
 				hurt_unit.gotoAndPlay("die");
 				hurt_unit.addEventListener("DIE", this.mover.onUnitDie);
@@ -306,11 +304,9 @@ package artur.win
 				WinBattle.bat.map.grid[coord.x][coord.y].id = 0;
 				Node(WinBattle.inst.grid.nodes[coord.x][coord.y]).walcable = 0;
 				WinBattle.units[obj.whm.t][obj.whm.p] = null;
-			}
-			else
-			{
-				if (obj.t == 2 || obj.t == 3)
-				{
+				this.getControlAfterUlt(false);
+			} else {
+				if (obj.t == 2 || obj.t == 3) {
 					var tim1:Timer;;
 					if (obj.t == 2) tim1 = new Timer(470, 1);
 					else if (obj.t == 3) tim1 = new Timer(100, 1);
@@ -606,7 +602,9 @@ package artur.win
 				RemindCursors.is_ult = false;
 				App.cursor.changeCursor(App.cursor.mainCursor);
 				this.addUltEvents();
+				this.grid.disLightUltCells(unit_type);
 				this.getControlAfterUlt(true);
+				
 			}
 		}
 		 
@@ -697,9 +695,9 @@ package artur.win
 				spr.addChild(newArr[j]); 
 		}
 		
-		static public function makeUltimate(whom:int):void 
-		{
+		static public function makeUltimate(whom:int):void {
 			WinBattle.inst.removeUltEvents();
+			WinBattle.inst.grid.disLightUltCells(WinBattle.bat.u[WinBattle.myTeam][WinBattle.bat['set'][WinBattle.bat.cus].p].t);
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, WinBattle.onUltimateResult);
 			data.sendData(COMMANDS.ULTIMATE, whom.toString(), true);

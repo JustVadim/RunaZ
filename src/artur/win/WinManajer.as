@@ -49,8 +49,8 @@ package artur.win
 				
 				if (brama.currentFrame==20) 
 				{
-					App.clear();
-				
+					 App.clear();
+				     App.topPanel.frees();
 				 	 windows[currWin].frees();
 					 currWin = neadWin;
 					 windows[currWin].init();

@@ -81,7 +81,6 @@ package artur.display.battle
 			this.walcable = walcable;
 			this.mc.visible = (walcable == 0 || walcable == 1)
 			this.txt.text = xp.toString() + ":" + yp.toString();
-			//this.addChild(this.txt);
 			WinBattle.spr.addChild(this);
 			if (!mc.visible) 
 			{
@@ -194,8 +193,7 @@ package artur.display.battle
 			this.is_mouse_over = true;
 		}
 		
-		public function sendStep(obj:Object = null):void 
-		{
+		public function sendStep(obj:Object = null):void {
 			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
 			WinBattle.inst.grid.clearNodesControl();
 			WinBattle.inst.disableBanochki();
@@ -205,12 +203,8 @@ package artur.display.battle
 			var str:String;
 			if (obj != null) str = JSON2.encode(obj);
 			else str = "";
-			if (UserStaticData.hero.bat > -1)
-			{
-				if(UserStaticData.hero.bat < 1000)
-					data.sendData(COMMANDS.SEND_MISS_STEP, str, true);
-				else
-					data.sendData(COMMANDS.BATTLE_STEP, str, true);
+			if (UserStaticData.hero.bat > -1) {
+				data.sendData(COMMANDS.BATTLE_STEP, str, true);
 			}
 		}
 		
@@ -236,6 +230,7 @@ package artur.display.battle
 				this.removeEventListener(MouseEvent.ROLL_OVER, onOver);
 				this.buttonMode = false;
 			}
+			this.removeEventListener(MouseEvent.CLICK, this.onUltClick);
 			this.mc.gotoAndStop(1);
 			this.onOut1();
 		}
@@ -258,41 +253,42 @@ package artur.display.battle
 		{
 			this.buttonMode = true;
 			this.mc.gotoAndStop(2);
-			this.addEventListener(MouseEvent.CLICK, onUltClick);
+			this.addEventListener(MouseEvent.CLICK, this.onUltClick);
 		}
 		
-		public function dismakeUlt():void 
-		{
+		public function dismakeUlt():void {
 			this.buttonMode = false;
 			this.mc.gotoAndStop(1);
-			this.removeEventListener(MouseEvent.CLICK, onUltClick);
+			this.removeEventListener(MouseEvent.CLICK, this.onUltClick);
 		}
 		
-		private function onUltClick(e:MouseEvent):void 
-		{
-			var key:int;
+		private function onUltClick(e:MouseEvent):void {
+			var key:int = -1;
+			var loopKey:Object;
 			var bat:Object = WinBattle.bat;
-			for (var i:int = 0; i < 4; i ++ )
-			{
-				if (bat.locs[0][i] != null && bat.hps[0][i] > 0)
-				{
-					Node(WinBattle.inst.grid.nodes[bat.locs[0][i].x][bat.locs[0][i].y]).dismakeUlt()
-					if (bat.locs[0][i].x == this.xp && bat.locs[0][i].y == this.yp)
-					{
-						key = i;
-					}
-				}
-				
-				if (bat.locs[1][i] != null && bat.hps[1][i] > 0)
-				{
-					Node(WinBattle.inst.grid.nodes[bat.locs[1][i].x][bat.locs[1][i].y]).dismakeUlt()
-					if (bat.locs[1][i].x == this.xp && bat.locs[1][i].y == this.yp)
-					{
-						key = i;
+			for(loopKey in bat.locs[0]) {
+				if(bat.hps[0][loopKey] > 0) {
+					if (bat.locs[0][loopKey].x == this.xp && bat.locs[0][loopKey].y == this.yp) {
+						key = int(loopKey);
+						break;
 					}
 				}
 			}
-			WinBattle.makeUltimate(key);
+			if(key == -1) {
+				for(loopKey in bat.locs[1]) {
+				if(bat.hps[1][loopKey] > 0) {
+						if (bat.locs[1][loopKey].x == this.xp && bat.locs[1][loopKey].y == this.yp) {
+							key = int(loopKey);
+							break;
+						}
+					}
+				}
+			}
+			if(key == -1){
+				throw new Error("Dont find user on ultimate");
+			} else {
+				WinBattle.makeUltimate(key);
+			}
 		}
 		
 	}
