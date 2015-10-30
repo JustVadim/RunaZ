@@ -72,6 +72,7 @@ package artur.win {
 			txtCastle.scroll.visible = false;
 			txtCastle.txtGold.text = String(UserStaticData.hero.gold);
 			txtCastle.txtSilver.text = String(UserStaticData.hero.silver);
+			App.topPanel.init(this);
 		}
 		
 		public function updateSlots():void {
@@ -81,8 +82,9 @@ package artur.win {
 		
 		}
 		
-		public function update():void {
-			App.spr.addChild(App.btnRoot);
+		public function update():void 
+		{
+			
 		}
 		
 		public function frees():void {

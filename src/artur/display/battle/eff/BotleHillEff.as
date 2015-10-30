@@ -5,6 +5,7 @@ package artur.display.battle.eff
 	import artur.RasterClip;
 	import artur.win.WinBattle;
 	import flash.display.Bitmap;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	/**
 	 * ...
@@ -19,8 +20,10 @@ package artur.display.battle.eff
 		public var free:Boolean = true;
 		public function BotleHillEff() 
 		{
-			frm = PrepareGr.creatBms(new EffHillBotl(), false);
-			maxFrame = frm.length-2;
+			var mc:MovieClip = new EffHillBotl();
+			maxFrame = mc.totalFrames -3;
+			frm = PrepareGr.creatBms(mc, false);
+			
 		}
 		public function init(xp:int,yp:int):void
 		{
@@ -37,15 +40,18 @@ package artur.display.battle.eff
 		}
 		public function update():void
 		{
-			if (currFrame++ >maxFrame) 
+			if (!free) 
 			{
-				App.dellFromArr(this, EffManajer.pool);
-				frees();
-				return;
+				if (currFrame++ >maxFrame) 
+				{
+					App.dellFromArr(this, EffManajer.pool);
+					frees();
+					return;
+				}
+				 removeChild(currImg);
+				 currImg = frm[currFrame]
+				 this.addChild(currImg);
 			}
-			 removeChild(currImg);
-			 currImg = frm[currFrame]
-			 this.addChild(currImg);
 		}
 		public function frees():void
 		{

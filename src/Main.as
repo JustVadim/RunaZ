@@ -22,6 +22,7 @@ package  {
 		public var chat:ChatBasic;
 		
 		public function Main():void {
+		
 			if (stage) {
 				init();
 			} else {
