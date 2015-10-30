@@ -3,10 +3,12 @@ package artur.display.battle
 	import artur.App;
 	import artur.PrepareGr;
 	import artur.win.WinCastle;
+	import artur.win.WinKyz;
 	import artur.win.WinMap;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import report.Report;
 	/**
 	 * ...
 	 * @author Som911
@@ -25,23 +27,39 @@ package artur.display.battle
 				Sprite(mcBtns.getChildAt(i)).addEventListener(MouseEvent.CLICK, onBtn);
 				Sprite(mcBtns.getChildAt(i)).addEventListener(MouseEvent.MOUSE_OVER, over);
 				Sprite(mcBtns.getChildAt(i)).addEventListener(MouseEvent.MOUSE_OUT, out);
+				Sprite(mcBtns.getChildAt(i)).addEventListener(MouseEvent.MOUSE_DOWN, down);
+				Sprite(mcBtns.getChildAt(i)).addEventListener(MouseEvent.MOUSE_UP, up);
 				Sprite(mcBtns.getChildAt(i)).buttonMode = true;
 			}
 			mcBtns.over.mouseChildren = false;
 		    mcBtns.over.mouseEnabled = false;
 			this.x = 400;
+			mcBtns.over.gotoAndStop(1);
 		}
 		
+		private function up(e:MouseEvent):void 
+		{
+			mcBtns.over.gotoAndStop(1);
+		}
+		
+		private function down(e:MouseEvent):void 
+		{
+			mcBtns.over.gotoAndStop(2);
+			Report.addMassage('MouseDown');
+		}
+	
 		private function out(e:MouseEvent):void 
 		{
 			mcBtns.over.y = -200;
+			mcBtns.over.gotoAndStop(1);
 		}
 		
 		private function over(e:MouseEvent):void 
 		{
 			mcBtns.over.x = e.currentTarget.x;
 			mcBtns.over.y = e.currentTarget.y;
-				App.sound.playSound('over1', App.sound.onVoice, 1);
+			App.sound.playSound('over1', App.sound.onVoice, 1);
+			
 		}
 		
 		private function onBtn(e:MouseEvent):void 
@@ -59,7 +77,8 @@ package artur.display.battle
 			 case 'btnMap':
 				     App.winManajer.swapWin(2);
 				 break;
-				 case 'btnKyz':
+			 case 'btnKyz':
+				    App.winManajer.swapWin(4);
 				 break;
 			}
 			
@@ -69,7 +88,7 @@ package artur.display.battle
 		public function init(clas:Object):void 
 		{
 			App.spr.addChild(this);
-			
+			mcBtns.over.gotoAndStop(1);
 			for (var i:int = 0; i < mcBtns.numChildren; i++) 
 			{
 				mcBtns.getChildAt(i).visible = true;
@@ -84,6 +103,11 @@ package artur.display.battle
 			{
 				this.addChild(mcCurrWin[2]);
 				mcBtns.btnMap.visible = false;
+			}
+			else if (clas is WinKyz) 
+			{
+				this.addChild(mcCurrWin[3]);
+				mcBtns.btnKyz.visible = false;
 			}
 			
 			this.addChild(mcBtns);

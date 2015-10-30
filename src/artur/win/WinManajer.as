@@ -11,7 +11,14 @@ package artur.win
 	
 	public class WinManajer 
 	{
-		public var windows:Array = [new WinRoot(), new WinCastle(), new WinMap(), new WinBattle];
+		public var windows:Array = 
+		[
+		new WinRoot(),//0 
+		new WinCastle(), //1
+		new WinMap(), //2
+		new WinBattle(),//3
+		new WinKyz()//4
+		];
 		public var currWin:int=0;
 		public var neadWin:int=0;
 		private var brama:mcAnimBrama = new mcAnimBrama();
