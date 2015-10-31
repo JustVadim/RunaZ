@@ -18,6 +18,8 @@ package artur.display.battle
 		private var bg:Bitmap  = PrepareGr.creatBms(new mcBgTopPanel(), false)[0];
 		private var mcBtns:mcBtnTopPanel = new mcBtnTopPanel();
 		private var mcCurrWin:Array = PrepareGr.creatBms(new mcTopPanelCurrWin(), false);
+		private var btns:Array = [];
+		private var txts:Array = [];
 		public function TopPanel() 
 		{
 			this.addChild(bg);
@@ -35,6 +37,8 @@ package artur.display.battle
 		    mcBtns.over.mouseEnabled = false;
 			this.x = 400;
 			mcBtns.over.gotoAndStop(1);
+			btns = [mcBtns.btnCastle, mcBtns.btnArena, mcBtns.btnUp, mcBtns.btnMap, mcBtns.btnKyz];
+			txts  = ['Замок',"Арена","В город","Карта","Кузнеца"]
 		}
 		
 		private function up(e:MouseEvent):void 
@@ -52,6 +56,7 @@ package artur.display.battle
 		{
 			mcBtns.over.y = -200;
 			mcBtns.over.gotoAndStop(1);
+			App.info.frees();
 		}
 		
 		private function over(e:MouseEvent):void 
@@ -59,6 +64,14 @@ package artur.display.battle
 			mcBtns.over.x = e.currentTarget.x;
 			mcBtns.over.y = e.currentTarget.y;
 			App.sound.playSound('over1', App.sound.onVoice, 1);
+			var t:String
+			for (var i:int = 0; i < btns.length; i++) 
+			{
+				if (e.currentTarget.name == btns[i].name)
+					t = txts[i]
+			}
+			App.info.init( e.currentTarget.x+ this.x+40, e.currentTarget.y+ 60, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:t, type:0 } );
+			
 			
 		}
 		
