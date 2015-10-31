@@ -28,13 +28,14 @@ package artur.win
 		private var btns:Array = [];
 		private var mcText:mcTextRootWin = new mcTextRootWin();
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
-		
+		private var names:Array = ['Банк', 'Топ', 'Замок', 'Арена', 'Кузнеца', 'Карта'];
+		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
 		public function WinRoot() {
 			bg = new MyBitMap(App.prepare.cach[0]);
 			bg.x = -33; bg.y = -33;
-			var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
-			var xps:Array       = [127.8 , 562.35, 312.5, 153.9 , 520, 351];
-			var yps:Array       = [86.7   , 66.5   , 92.7  , 263.3, 233.2, 0.65];
+			
+			var xps:Array       = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5];
+			var yps:Array       = [214.75  , 218  , 291.25 , 367, 367.35, 89.15];
 			var names:Array = ['bank','top','castle','arena','shop','map'];
 			for (var i:int = 0; i < indxBtn.length; i++) {
 				var btn:MovieClip= new indxBtn[i]();
@@ -65,10 +66,18 @@ package artur.win
 		
 		private function onOutBtn(e:MouseEvent):void {
 			MovieClip(e.target).gotoAndStop(1);
+			App.info.frees();
 		}
 		
 		private function onOverBtn(e:MouseEvent):void {
 			MovieClip(e.target).gotoAndStop(2);
+			var t:String
+			for (var i:int = 0; i < indxBtn.length; i++) 
+			{
+				if (e.currentTarget is indxBtn[i])
+				t= names[i]
+			}
+			App.info.init( e.currentTarget.x, e.currentTarget.y, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:t, type:0 } );
 		}
 		
 		private function clickOnBtn(e:MouseEvent):void {
