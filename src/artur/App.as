@@ -47,6 +47,7 @@ package artur
 		public static var lock:LockSpr = new LockSpr();
 		public static var cursor:RemindCursors = new RemindCursors();
 		public static var topPanel:TopPanel = new TopPanel();
+		
 		public function App(stg:Stage) 
 		{
 			sound.addSound('cnock', new s_Cnock());

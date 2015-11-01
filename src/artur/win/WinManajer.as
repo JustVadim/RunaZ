@@ -23,6 +23,7 @@ package artur.win
 		public var neadWin:int=0;
 		private var brama:mcAnimBrama = new mcAnimBrama();
 		private var swapMode:Boolean = false;
+		
 		public function WinManajer() 
 		{
 			if (UserStaticData.hero.bat == -1)

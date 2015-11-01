@@ -53,14 +53,9 @@ package artur.display
 			this.tabChildren = false;
 			this.mouseEnabled = false;
 			this.battle_init = battle_init;
-			
-			for (var k:int = 0; k < parts.length; k++) 
-			{
-				MovieClip(parts[k]).buttonMode = true;
-				MovieClip(parts[k]).mouseChildren = false;
-			}
-			if (this.battle_init)
-			{
+			this.mcText.tabEnabled = false;
+			this.mcText.tabChildren = false;
+			if (this.battle_init) {
 				this.addChild(WinBattle.inv_bg);
 				WinBattle.inv_bg.x = WinBattle.inv_bg.y = -10;
 				this.progresEXP.x = 5;
@@ -68,33 +63,8 @@ package artur.display
 				this.mouseChildren = false;
 				this.mouseEnabled = false;
 				this.scaleX = this.scaleY = 0.9;
-			}
-			else
-			{
+			} else {
 				progresEXP.x = 10;  progresEXP.y = 283;
-			}
-			bg = new MyBitMap(App.prepare.cach[13]);
-			this.addChild(bg);
-			this.addChild(mcText);
-			this.x = 119.75;
-			this.y = 60.5;
-			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6];
-			for (var j:int = 0; j < parts.length; j++) 
-			{
-				this.setItem(MovieClip(parts[j]),192, yps[j], j);
-			}	 
-			for (j = 0; j < guns1.length; j++) 
-			{
-				this.setItem(guns1[j], 192, 165.7, 5)
-				this.setItem(guns2[j], 192, 165.7, 6)
-			}
-			for (j = 0; j < inv_array.length; j++) 
-			{
-				var inv:I_Inv = inv_array[j];
-				this.setItem(inv, 360, 137+j*40, 7);
-			}
-			if (!battle_init)
-			{
 				this.addEventsToBuffBtn(this.mcText.sk_crit);
 				this.addEventsToBuffBtn(this.mcText.sk_miss);
 				this.addEventsToBuffBtn(this.mcText.sk_double);
@@ -102,22 +72,38 @@ package artur.display
 				this.addEventsToBuffBtn(this.mcText.sk_return);
 				this.addEventsToBuffBtn(this.mcText.sk_ult);
 			}
+			bg = new MyBitMap(App.prepare.cach[13]);
+			this.addChild(bg);
+			this.addChild(mcText);
+			this.x = 119.75; this.y = 60.5;
+			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6];
+			
+			for (var j:int = 0; j < parts.length; j++) {
+				this.setItem(MovieClip(parts[j]),192, yps[j], j);
+			}	 
+			for (j = 0; j < guns1.length; j++) {
+				this.setItem(guns1[j], 192, 165.7, 5)
+				this.setItem(guns2[j], 192, 165.7, 6)
+			}
+			for (j = 0; j < inv_array.length; j++) {
+				var inv:I_Inv = inv_array[j];
+				this.setItem(inv, 360, 137+j*40, 7);
+			}
 		}
 		
-		private function setItem(mc:MovieClip, xx:Number, yy:Number, name:int):void 
-		{
+		private function setItem(mc:MovieClip, xx:Number, yy:Number, name:int):void {
 			mc.x = xx;
 			mc.y = yy;
-			if (!battle_init)
-			{
+			mc.buttonMode = true;
+			mc.mouseChildren = false;
+			if (!battle_init) {
 				mc.addEventListener(MouseEvent.ROLL_OVER, over);
 				mc.addEventListener(MouseEvent.ROLL_OUT, out);
 				mc.addEventListener(MouseEvent.CLICK, onItem);
 				mc.addEventListener(MouseEvent.MOUSE_DOWN, strFrag );
 				mc.buttonMode = true;
 			}
-			if (mc.greenRect)
-			{
+			if (mc.greenRect) {
 				mc.greenRect.visible = false;
 				mc.yRect.visible = false;
 			}
@@ -134,10 +120,6 @@ package artur.display
 				this.itemType = int(e.currentTarget.name);
 				this.itemID = int(e.currentTarget.currentFrame);
 				this.invPlace = this.getIsInv(MovieClip(e.currentTarget));
-				
-				
-				
-				
 				call= ItemCall.getCall();
 				call.init(heroType, this.itemType, this.itemID - 1);
 				call.x = App.spr.mouseX  - call.width / 2 + 8;

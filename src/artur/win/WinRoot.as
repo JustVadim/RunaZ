@@ -29,6 +29,9 @@ package artur.win
 		private var mcText:mcTextRootWin = new mcTextRootWin();
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
 		private var names:Array = ['Банк', 'Топ', 'Замок', 'Арена', 'Кузнеца', 'Карта'];
+		
+		
+		
 		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
 		public function WinRoot() {
 			bg = new MyBitMap(App.prepare.cach[0]);
@@ -48,10 +51,10 @@ package artur.win
 				btn.gotoAndStop(1);
 				btn.buttonMode = true;
 				btn.addEventListener(MouseEvent.CLICK, clickOnBtn);
-				btn.addEventListener(MouseEvent.MOUSE_OVER, onOverBtn);
-				btn.addEventListener(MouseEvent.MOUSE_OUT, onOutBtn);
+				btn.addEventListener(MouseEvent.ROLL_OVER, onOverBtn);
+				btn.addEventListener(MouseEvent.ROLL_OUT, onOutBtn);
 				btn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtn);
-				btn.addEventListener(MouseEvent.MOUSE_UP, onUpBtn);11111
+				btn.addEventListener(MouseEvent.MOUSE_UP, onUpBtn);
 			}
 			
 		}
@@ -107,15 +110,15 @@ package artur.win
 			App.lock.init(e.result);
 		}
 		public function init():void {
-			this.updateBar();
 			App.spr.addChild(bg);
 			App.spr.addChild(mcText);
+			this.updateBar();
 			for (var i:int = 0; i < btns.length; i++) {
 				App.spr.addChild(btns[i]);
 			}
 		}
 		
-		private function updateBar():void {
+		public function updateBar():void {
 			var hero:Hero = UserStaticData.hero;
 			var maxVit:int = hero.skills.vitality*10;
 			var currEn:int = hero.cur_vitality;
@@ -132,7 +135,9 @@ package artur.win
 			this.mcText.expBar.gotoAndStop(int(currExp /11* 100) + 1);
 			this.mcText.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
 			if(hero.fs > 0) {
-				lvlUp.init('Доступно: 2');
+				WinRoot.lvlUp.init("Доступно: " + hero.fs) ;
+			} else {
+				WinRoot.lvlUp.frees();
 			}
 		}
 		public function update():void {

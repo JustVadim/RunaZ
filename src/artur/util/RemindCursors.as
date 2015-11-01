@@ -27,13 +27,6 @@ package artur.util
 			this.addCursor(cursorTarget, "ult");
 		}
 		
-		/**
-		 * Создает курсор из класса. (Класс библиотеки или [embed] класс изображения)
-		 * @param	$cursorClass		Класс создаваемого курсора
-		 * @param	$name			Имя курсора (используется при переключении курсоров). Если параметр не задан - именем будет название класса
-		 * @param	$cursorHotSpot	Точка клика создаваемого курсора. Если не задано - x,y (0,0)
-		 * @param	$cursorFPS		Кол-во кадров в секунду для создаваемого курсора
-		 */
 		public function addCursor($cursorClass:Class, $name:String = null, $cursorHotSpot:Point = null, $cursorFPS: Number = NaN):void {
 			var cursorAnim: RemindCursorsAnim = new RemindCursorsAnim();
 			cursorAnim.addCursorFromClass($cursorClass, $name, $cursorHotSpot, $cursorFPS);

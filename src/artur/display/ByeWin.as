@@ -49,14 +49,12 @@ package artur.display
 			if (text1 == "") 
 			{
 				txt.text = "У вас не достаточно ресурсов, для этой покупки!";
-				//if (!this.contains(this.btnEx)) 	this.addChild(btnEx);
 				if (this.contains(this.iconGold)) 	this.removeChild(this.iconGold);
 				if (this.contains(this.btnGold)) 	this.removeChild(this.btnGold);
 				if (this.contains(this.iconSilver)) this.removeChild(this.iconSilver);
 				if (this.contains(this.btnSilver)) 	this.removeChild(this.btnSilver);
 				if (this.contains(this.txtGold)) 	this.removeChild(this.txtGold);
 				if (this.contains(this.txtSilver)) 	this.removeChild(this.txtSilver);
-				//txt.y = (this.height - txt.height) / 2;
 			}
 			else
 			{
