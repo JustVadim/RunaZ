@@ -9,7 +9,7 @@ package artur.display {
 			var yp:Array = [130.3, 154, 177.6, 201.4];
 			for (var i:int = 0; i < 4; i++) {
 				var btn:BaseButton = new BaseButton(34);
-				btn.x = 87;
+				btn.x = 88;
 				btn.y = yp[i];
 				this.addChild(btn);
 				btn.name = String(i);

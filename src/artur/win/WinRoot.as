@@ -51,8 +51,8 @@ package artur.win
 				btn.gotoAndStop(1);
 				btn.buttonMode = true;
 				btn.addEventListener(MouseEvent.CLICK, clickOnBtn);
-				btn.addEventListener(MouseEvent.MOUSE_OVER, onOverBtn);
-				btn.addEventListener(MouseEvent.MOUSE_OUT, onOutBtn);
+				btn.addEventListener(MouseEvent.ROLL_OVER, onOverBtn);
+				btn.addEventListener(MouseEvent.ROLL_OUT, onOutBtn);
 				btn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtn);
 				btn.addEventListener(MouseEvent.MOUSE_UP, onUpBtn);
 			}
