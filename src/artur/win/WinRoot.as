@@ -118,7 +118,7 @@ package artur.win
 			}
 		}
 		
-		private function updateBar():void {
+		public function updateBar():void {
 			var hero:Hero = UserStaticData.hero;
 			var maxVit:int = hero.skills.vitality*10;
 			var currEn:int = hero.cur_vitality;
@@ -135,7 +135,9 @@ package artur.win
 			this.mcText.expBar.gotoAndStop(int(currExp /11* 100) + 1);
 			this.mcText.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
 			if(hero.fs > 0) {
-				lvlUp.init("Доступно: " + hero.fs) ;
+				WinRoot.lvlUp.init("Доступно: " + hero.fs) ;
+			} else {
+				WinRoot.lvlUp.frees();
 			}
 		}
 		public function update():void {

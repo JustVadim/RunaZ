@@ -55,9 +55,6 @@ package artur.display
 			this.battle_init = battle_init;
 			this.mcText.tabEnabled = false;
 			this.mcText.tabChildren = false;
-			//this.mcText.mouseChildren = false;
-			//this.mcText.mouseEnabled = false;
-			
 			if (this.battle_init) {
 				this.addChild(WinBattle.inv_bg);
 				WinBattle.inv_bg.x = WinBattle.inv_bg.y = -10;
