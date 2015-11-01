@@ -54,12 +54,12 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\tile1.swc" />
     <element path="lib\warDoll.swc" />
     <element path="lib\dolls.swc" />
     <element path="lib\warItem.swc" />
     <element path="lib\Zadniki.swc" />
     <element path="lib\character.swc" />
+    <element path="lib\tile1.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

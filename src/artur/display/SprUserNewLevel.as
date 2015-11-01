@@ -1,6 +1,7 @@
 package artur.display {
 	import artur.App;
 	import flash.events.MouseEvent;
+	import report.Report;
 	
 	public class SprUserNewLevel extends mcLvlUp {
 		private var btns:Array = [];
@@ -35,6 +36,7 @@ package artur.display {
 		}
 		
 		public function init(text:String):void {
+			Report.addMassage("leelUpInit");
 			this.txt.text = text;
 			App.spr.addChild(this);
 		}

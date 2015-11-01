@@ -344,7 +344,7 @@ package artur.win
 							hero.miss[mapNum + 1] = { mn:new Object };
 							hero.fs++;
 							hero.exp = 0;
-							hero.level = mapNum + 1;
+							hero.level = mapNum + 2;
 						} else {
 							UserStaticData.hero.exp = missNum + 1;
 						}
