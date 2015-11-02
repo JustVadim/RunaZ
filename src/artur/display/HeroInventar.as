@@ -119,7 +119,9 @@ package artur.display
 		}
 		
 		public function init1(unit:Object, anim:Boolean = true, xx:int = 10, yy:int = 50):void {
-			this.bin = true;	
+			this.bin = true;
+			Report.addMassage(JSON.stringify(unit));
+			Report.addMassage(this.battle_init);
 			if (anim) {
 				this.alpha = 0;
 				this.scaleX = this.scaleY = 0.2;
@@ -130,10 +132,15 @@ package artur.display
 			for (var i:int = 0; i < parts.length; i++) {
 				this.parts[i].gotoAndStop(unit_tems_ids[i]+ 1);
 			}
-			this.guns1[heroType].gotoAndStop(unit_tems_ids[5] + 1);
-			this.guns2[heroType].gotoAndStop(unit_tems_ids[6] + 1);
-			this.addChild(this.guns1[heroType]);
-			this.addChild(this.guns2[heroType]);
+			if (guns1[heroType] == null) {
+				guns1[0].gotoAndStop(1);
+				this.addChild(guns1[0]);
+			} else {
+				guns1[heroType].gotoAndStop(int(unit_tems_ids[5] + 1));
+				guns2[heroType].gotoAndStop(int(unit_tems_ids[6] + 1));
+				this.addChild(guns1[heroType]);
+				this.addChild(guns2[heroType]);
+			}
 			for (i = 0; i < inv_array.length; i++) {
 				this.updateInv(i, unit);
 			}
@@ -148,7 +155,14 @@ package artur.display
 			}
 			this.calculateUnitStats(chars, unit);
 			this.updateSkillsStats(unit);
-			this.mcText.sk_ult.gotoAndStop(this.heroType + 1);
+			if (unit.ult != null) {
+				this.mcText.sk_ult.visible = true;
+				this.mcText.sk_ult.gotoAndStop(this.heroType + 1);
+			} else {
+				this.mcText.sk_ult.visible = true;
+				this.mcText.sk_ult.gotoAndStop(1);
+				
+			}
 			App.spr.addChild(this);
 		}
 		
@@ -727,10 +741,15 @@ package artur.display
 		
 		public function frees():void {
 			if (this.bin) {
-				Report.addMassage(frees);
-				this.enabledAllEvents(false);
-				this.removeChild(this.guns1[heroType]);
-				this.removeChild(this.guns2[heroType]);
+				if(!this.battle_init) {
+					this.enabledAllEvents(false);
+				}
+				if(this.guns1[this.heroType] == null) {
+					this.removeChild(this.guns1[0]);
+				} else {
+					this.removeChild(this.guns1[heroType]);
+					this.removeChild(this.guns2[heroType]);
+				}
 				if(this.parent) {
 					this.parent.removeChild(this);
 				}
