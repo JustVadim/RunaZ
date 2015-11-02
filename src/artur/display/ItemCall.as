@@ -41,7 +41,8 @@ package artur.display
 		
 		public function ItemCall() 
 		{
-	
+			this.tabEnabled = this.tabChildren = this.mouseChildren = false;
+			this.buttonMode = true;
 		}
 		public function init(unitType:int,itemType:int,index:int):void
 		{
@@ -83,20 +84,16 @@ package artur.display
 		}
 		
 		
-		public function frees():void
-		{
-			
-			 free = true;
-			 if(this.parent)
+		public function frees():void {
+			free = true;
+			if(this.parent)
 				this.parent.removeChild(this);
 		}
 		
-		public static function getCall():ItemCall
-		{
-			for (var i:int = 0; i < cache.length; i++) 
-			{
-				if (cache[i].free == true) 
-				{
+		public static function getCall():ItemCall {
+			for (var i:int = 0; i < cache.length; i++) {
+				if (cache[i].free == true) {
+					ItemCall(cache[i]).mouseEnabled = true;
 					return cache[i]; 
 				}
 			}

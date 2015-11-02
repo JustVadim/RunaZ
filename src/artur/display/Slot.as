@@ -130,17 +130,19 @@ package artur.display {
 			}
 		}
 		
-		public function higlightLvlStar():void 
-		{
-			var obj:Object = UserStaticData.hero.units[this.name];
-			this.lvl_star.txt.text = obj.lvl;
-			if (obj.fs > 0)
-			{
-				this.lvl_star.gotoAndStop(2);
+		public function higlightLvlStar(unit:Object = null):void {
+			if(unit == null) {
+				unit = UserStaticData.hero.units[this.name];
 			}
-			else
-			{
-				this.lvl_star.gotoAndStop(1);
+			this.lvl_star.txt.text = unit.lvl;
+			if (unit.fs > 0) {
+				if(this.lvl_star.currentFrame != 2) {
+					this.lvl_star.gotoAndStop(2);
+				}
+			} else {
+				if(this.lvl_star.currentFrame != 1) {
+					this.lvl_star.gotoAndStop(1);
+				}
 			}
 		}
 		
@@ -177,6 +179,7 @@ package artur.display {
 				WinCastle.currSlotClick = this.name;
 				this.addChild(MovieClip(unit));
 				WinCastle.txtCastle.scroll.visible = false;
+				WinCastle.inventar.frees();
 				WinCastle.inventar.init1(UserStaticData.hero.units[this.name])
 			}
 		}

@@ -4,6 +4,7 @@ package artur.display
 	import artur.util.Maker;
 	import artur.win.WinCastle;
 	import flash.events.MouseEvent;
+	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -133,7 +134,7 @@ package artur.display
 						WinCastle.chest.sellItem();
 						break;
 					case 'exit':
-						WinCastle.chest.putItemOnOldPlace(WinCastle.chest.upped_item_call);
+						WinCastle.chest.putItemOnOldPlace();
 						frees();
 						break;
 				}
@@ -157,12 +158,12 @@ package artur.display
 		
 		public function bye(indexPrice:int):void
 		{
-			 frees();
-			 App.lock.init();
-		     var obj:Object = { ns:WinCastle.currSlotClick, hn:index, p:indexPrice };
-			 var data:DataExchange = new DataExchange();
-			 data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);
-			 data.sendData(COMMANDS.BYE_UNIT, JSON2.encode(obj),true);
+			frees();
+			App.lock.init();
+			var obj:Object = { ns:WinCastle.currSlotClick, hn:index, p:indexPrice };
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);
+			data.sendData(COMMANDS.BYE_UNIT, JSON2.encode(obj),true);
 		}
 		
 		public function byeItem(indexPrice:int):void
@@ -176,28 +177,22 @@ package artur.display
 			 data.sendData(COMMANDS.BYE_ITEM, JSON2.encode(obj),true);
 		}
 		
-		private function getRess(e:DataExchangeEvent):void
-		{
+		private function getRess(e:DataExchangeEvent):void {
 	        DataExchange(e.target).removeEventListener(e.type, getRess);
 			App.sound.playSound('gold', App.sound.onVoice, 1);
 			var obj:Object = JSON2.decode(e.result);
-			if (obj.error == null)
-			{
-				if (obj.s != null)
-				{
+			if (obj.error == null) {
+				if (obj.s != null) {
 					UserStaticData.hero.silver = int(obj.s);
 					WinCastle.txtCastle.txtSilver.text = String(obj.s);
-				}
-				else
-				{
-
+				} else {
 					UserStaticData.hero.gold = int(obj.g);
 					WinCastle.txtCastle.txtGold.text = String(obj.g);
 				}
-				 UserStaticData.hero.units[int(WinCastle.currSlotClick)] = Maker.clone(UserStaticData.magaz_units[index]);
-				 WinCastle.getCastle().updateSlots();
-				 WinCastle.txtCastle.scroll.visible = false;
-				 App.lock.frees();
+				UserStaticData.hero.units[int(WinCastle.currSlotClick)] = Maker.clone(UserStaticData.magaz_units[index]);
+				WinCastle.getCastle().updateSlots();
+				WinCastle.txtCastle.scroll.visible = false;
+			 App.lock.frees();
 			}
 			else
 			{
@@ -206,45 +201,34 @@ package artur.display
 			//unlock crab
 		}
 		
-		private function getRess2(e:DataExchangeEvent):void
-		{
+		private function getRess2(e:DataExchangeEvent):void {
 			DataExchange(e.target).removeEventListener(e.type, getRess);
 			var obj:Object = JSON2.decode(e.result);
-			if (obj.error == null)
-			{
-				if (obj.s != null)
-				{
+			if (obj.error == null) {
+				if (obj.s != null) {
 					UserStaticData.hero.silver = int(obj.s);
 					WinCastle.txtCastle.txtSilver.text = String(obj.s);
-				}
-				else
-				{
+				} else {
 					UserStaticData.hero.gold = int(obj.g);
 					WinCastle.txtCastle.txtGold.text = String(obj.g);
 				}
 				var unit:Object = UserStaticData.hero.units[int(WinCastle.currSlotClick)];
-				if(this.invPlace == -1)
-				{
-					unit.it[itemType] = Maker.clone(UserStaticData.magazin_items[UserStaticData.hero.units[int(WinCastle.currSlotClick)].t ][itemType][index] ) ;
-					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate( Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]) )//WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].getUnitItemsArray() );
-					WinCastle.getCastle().updateSlots();
-					WinCastle.txtCastle.scroll.visible = false;
-				}
-				else
-				{
+				if(this.invPlace == -1) {
+					unit.it[this.itemType] = Maker.clone(UserStaticData.magazin_items[unit.t][this.itemType][this.index] ) ;
+					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(unit));
+					Report.addMassage(this.itemType + " " + this.index);
+					WinCastle.inventar.updateItem(this.itemType, this.index);
+					//WinCastle.txtCastle.scroll.visible = false;
+				} else {
 					unit.inv[invPlace] = Maker.clone(UserStaticData.magazin_items[UserStaticData.hero.units[int(WinCastle.currSlotClick)].t ][itemType][index]);
-					WinCastle.inventar.updateInv(this.invPlace, UserStaticData.hero.units[WinCastle.currSlotClick]);
+					WinCastle.inventar.updateInv(this.invPlace, unit);
 				}
-				 
-				 
-				 App.lock.frees();
-				 App.sound.playSound('gold', App.sound.onVoice, 1);
+				App.lock.frees();
+				App.sound.playSound('gold', App.sound.onVoice, 1);
 			}
-			else
-			{
+			else {
 				App.lock.init('Error: '+obj.error)
 			}
-			// unlock crab
 		}
 		
 		public function frees():void
