@@ -123,24 +123,7 @@ package artur.display
 				var mcC:mcCall = mcCall(e.target);
 				var itemNum:int = int(mcC.name);
 				if (this.upped_item_num != itemNum &&  this.isFreeCells(itemNum)) {
-					Mouse.show();
-					if(WinCastle.mcSell.stage) {
-						App.spr.removeChild(WinCastle.mcSell);
-					}
-					Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.onDragMove);
-					Main.THIS.stage.removeEventListener(Event.MOUSE_LEAVE, this.onUppedItemMouseLeave);
-					Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_UP, this.onItemUp);
-					WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
-					WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
-					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
-					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OVER, this.upped_item_call.over);
-					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OUT, this.upped_item_call.out);
-					this.upped_item_call.parent.removeChild(this.upped_item_call);
-					this.upped_item_call.frees();
-					this.removePutEvents();
-					WinCastle.inventar.enabledAllEvents(true);
-					WinCastle.inventar.hideGreenInv(this.uppedItemObj);
-					
+					this.afterPut();
 					//
 					App.lock.init();
 					var data:DataExchange = new DataExchange();
@@ -329,6 +312,7 @@ package artur.display
 			this.upped_item_call.addEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
 			this.upped_item_call.addEventListener(MouseEvent.MOUSE_OVER, this.upped_item_call.over);
 			this.upped_item_call.addEventListener(MouseEvent.MOUSE_OUT, this.upped_item_call.out);
+			this.upped_item_call.mouseEnabled = true;
 			this.items.push(this.upped_item_call);
 			this.addChild(this.upped_item_call);
 		}
