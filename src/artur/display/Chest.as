@@ -132,11 +132,12 @@ package artur.display
 					Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_UP, this.onItemUp);
 					WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
 					WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
-					this.removePutEvents();
 					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
 					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OVER, this.upped_item_call.over);
 					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OUT, this.upped_item_call.out);
 					this.upped_item_call.parent.removeChild(this.upped_item_call);
+					this.upped_item_call.frees();
+					this.removePutEvents();
 					WinCastle.inventar.enabledAllEvents(true);
 					WinCastle.inventar.hideGreenInv(this.uppedItemObj);
 					
@@ -151,43 +152,12 @@ package artur.display
 				}
 			} else if (e.target.name == "sell") {
 				Mouse.show();
-				if(WinCastle.mcSell.stage) {
-					App.spr.removeChild(WinCastle.mcSell);
-					}
-				Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.onDragMove);
-				Main.THIS.stage.removeEventListener(Event.MOUSE_LEAVE, this.onUppedItemMouseLeave);
-				Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_UP, this.onItemUp);
-				WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
-				WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
-				this.removePutEvents();
-				this.upped_item_call.removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
-				this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OVER, this.upped_item_call.over);
-				this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OUT, this.upped_item_call.out);
-				this.upped_item_call.parent.removeChild(this.upped_item_call);
-				WinCastle.inventar.enabledAllEvents(true);
-				WinCastle.inventar.hideGreenInv(this.uppedItemObj);
-				App.byeWin.init("Я хочу продать", "эту хрень", 0, int(this.uppedItemObj.c[100]/2) ,NaN,2,NaN);
+					this.afterPut();
+					App.byeWin.init("Я хочу продать", "эту хрень", 0, int(this.uppedItemObj.c[100]/2) ,NaN,2,NaN);
 			} else if("yRect" in e.target) {
 				var mc:MovieClip = MovieClip(e.target);
 				if (mc.yRect.visible) {
-					Mouse.show();
-					if(WinCastle.mcSell.stage) {
-						App.spr.removeChild(WinCastle.mcSell);
-						}
-					Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.onDragMove);
-					Main.THIS.stage.removeEventListener(Event.MOUSE_LEAVE, this.onUppedItemMouseLeave);
-					Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_UP, this.onItemUp);
-					WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
-					WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
-					this.removePutEvents();
-					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
-					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OVER, this.upped_item_call.over);
-					this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OUT, this.upped_item_call.out);
-					this.upped_item_call.parent.removeChild(this.upped_item_call);
-					WinCastle.inventar.enabledAllEvents(true);
-					WinCastle.inventar.hideGreenInv(this.uppedItemObj);
-					
-					
+					this.afterPut();
 					App.lock.init();
 					this.invP = WinCastle.inventar.getIsInv(mc);
 					var data1:DataExchange = new DataExchange();
@@ -203,19 +173,38 @@ package artur.display
 		}
 		
 		private function onUppedItemMouseLeave(e:Event):void {
+			this.afterPut();
+			this.putItemOnOldPlace();
+		}
+		
+		private function afterPut():void 
+		{
 			Mouse.show();
-			WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
-			WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
 			if(WinCastle.mcSell.stage) {
 				App.spr.removeChild(WinCastle.mcSell);
 			}
+			WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
+			WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
+			this.upped_item_call.removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
+			this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OVER, this.upped_item_call.over);
+			this.upped_item_call.removeEventListener(MouseEvent.MOUSE_OUT, this.upped_item_call.out);
+			this.upped_item_call.parent.removeChild(this.upped_item_call);
+			this.upped_item_call.frees();
+			this.removeFromArray(this.upped_item_call);
 			Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.onDragMove);
 			Main.THIS.stage.removeEventListener(Event.MOUSE_LEAVE, this.onUppedItemMouseLeave);
 			Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_UP, this.onItemUp);
 			this.removePutEvents();
-			this.putItemOnOldPlace();
 			WinCastle.inventar.enabledAllEvents(true);
 			WinCastle.inventar.hideGreenInv(this.uppedItemObj);
+		}
+		
+		private function removeFromArray(upped_item_call:ItemCall):void {
+			for (var i:int = 0; i < items.length; i++) {
+				if(this.items[i] == this.upped_item_call) {
+					this.items.splice(i, 1);
+				}
+			}
 		}
 		
 		
@@ -334,11 +323,13 @@ package artur.display
 				}
 			}
 			UserStaticData.hero.chest[upped_item_num].id = this.upped_item_id;
+			this.upped_item_call.free = false;
 			this.upped_item_call.x = grid[upped_item_num].x;
 			this.upped_item_call.y = grid[upped_item_num].y;
 			this.upped_item_call.addEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
 			this.upped_item_call.addEventListener(MouseEvent.MOUSE_OVER, this.upped_item_call.over);
 			this.upped_item_call.addEventListener(MouseEvent.MOUSE_OUT, this.upped_item_call.out);
+			this.items.push(this.upped_item_call);
 			this.addChild(this.upped_item_call);
 		}
 		
