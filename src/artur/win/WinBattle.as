@@ -9,6 +9,7 @@ package artur.win
 	import artur.display.battle.LifeManajer;
 	import artur.display.battle.MoveUnit;
 	import artur.display.battle.Node;
+	import artur.display.battle.TopPanelBattle;
 	import artur.display.GiftDialog;
 	import artur.display.HeroInventar;
 	import artur.display.Slot;
@@ -66,7 +67,7 @@ package artur.win
 		public static var battleChat:BattleChat = new BattleChat();
 		public static var sprGift:GiftDialog;
 		private var gift_id:int = 0;
-		
+		private var topPanel:TopPanelBattle = new TopPanelBattle();
 		
 		public function WinBattle() 
 		{
@@ -152,7 +153,7 @@ package artur.win
 			Main.THIS.chat.visible = false;
 			Main.THIS.stage.addChild(WinBattle.battleChat);
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
-			
+			topPanel.init();
 		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 
