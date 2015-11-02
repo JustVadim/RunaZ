@@ -30,6 +30,7 @@ package artur.win {
 		public function WinCastle() {
 			mcSell.gotoAndStop(1); 
 			mcSell.name = 'sell';
+			mcSell.mouseChildren = false;
 			inst = this;
 			bg = new MyBitMap(App.prepare.cach[7]);
 			inventar = new HeroInventar();

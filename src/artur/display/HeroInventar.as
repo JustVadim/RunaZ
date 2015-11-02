@@ -6,28 +6,29 @@ package artur.display
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.TweenLite;
 	import datacalsses.Hero;
+	import fl.text.TLFTextField;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.text.TextField;
 	import flash.ui.Mouse;
 	import mx.core.FlexMovieClip;
+	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
 	
-	public class HeroInventar extends Sprite
-	{
+	public class HeroInventar extends Sprite  {
 		private var bg:MyBitMap;
 		private var currHead:MovieClip = new I_Head();
 		private var currBody:MovieClip = new I_Body();
 		private var currBoot:MovieClip  = new I_Boot();
 		private var currHendTop:MovieClip = new I_HendTop();
 		private var currHendDown:MovieClip = new I_HendDown();
-		
 		private var currGun:MovieClip;
 		public var guns1:Array =  [new I_WarGun() ,new I_PallGun1() ,new I_Bows(), new I_MagGun()];
 		public var guns2:Array = [new MovieClip() ,new I_PallGun2(),new MovieClip(), new MovieClip()];
@@ -40,534 +41,209 @@ package artur.display
 		public var inv_array:Array = [new I_Inv(), new I_Inv(), new I_Inv(), new I_Inv()];
 		
 		
+		
+		
+		
+		
 		public var bin:Boolean = false;
 		private var mcText:mcTextHeroInventar = new mcTextHeroInventar();
 		private var call:ItemCall;
 		private var progresEXP:progresBar = new progresBar();
 		private var battle_init:Boolean;
 		private var lastDT:String;
+		private var bufsArray:Array;
 		
-		public function HeroInventar(battle_init:Boolean = false)
-		{
-			this.tabEnabled = false;
-			this.tabChildren = false;
-			this.mouseEnabled = false;
+		
+		
+		public function HeroInventar(battle_init:Boolean = false) {
 			this.battle_init = battle_init;
-			this.mcText.tabEnabled = false;
-			this.mcText.tabChildren = false;
+			this.tabEnabled = this.tabChildren = this.mouseEnabled = false;
+			this.x = 119.75; this.y = 60.5;
+			this.mcText.tabEnabled = this.mcText.tabChildren = false;
+			this.bufsArray = [this.mcText.sk_crit, this.mcText.sk_miss, this.mcText.sk_double, this.mcText.sk_out, this.mcText.sk_return, this.mcText.sk_ult];
+			
 			if (this.battle_init) {
-				this.addChild(WinBattle.inv_bg);
 				WinBattle.inv_bg.x = WinBattle.inv_bg.y = -10;
+				this.addChild(WinBattle.inv_bg);
 				this.progresEXP.x = 5;
 				this.progresEXP.y = 295
 				this.mouseChildren = false;
-				this.mouseEnabled = false;
 				this.scaleX = this.scaleY = 0.9;
+				this.mcText.mcFreeskils.visible = false;
 			} else {
 				progresEXP.x = 10;  progresEXP.y = 283;
-				this.addEventsToBuffBtn(this.mcText.sk_crit);
-				this.addEventsToBuffBtn(this.mcText.sk_miss);
-				this.addEventsToBuffBtn(this.mcText.sk_double);
-				this.addEventsToBuffBtn(this.mcText.sk_out);
-				this.addEventsToBuffBtn(this.mcText.sk_return);
-				this.addEventsToBuffBtn(this.mcText.sk_ult);
+				this.setBuffsBtnsProperties();
 			}
-			bg = new MyBitMap(App.prepare.cach[13]);
-			this.addChild(bg);
-			this.addChild(mcText);
-			this.x = 119.75; this.y = 60.5;
+			this.addChild(this.bg = new MyBitMap(App.prepare.cach[13]));
+			this.addChild(this.mcText);
 			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6];
 			
 			for (var j:int = 0; j < parts.length; j++) {
-				this.setItem(MovieClip(parts[j]),192, yps[j], j);
+				setInventarBtnProp(MovieClip(parts[j]), 192, yps[j], j);
+				this.addChild(parts[j]);
 			}	 
 			for (j = 0; j < guns1.length; j++) {
-				this.setItem(guns1[j], 192, 165.7, 5)
-				this.setItem(guns2[j], 192, 165.7, 6)
+				setInventarBtnProp(guns1[j], 192, 165.7, 5)
+				setInventarBtnProp(guns2[j], 192, 165.7, 6)
 			}
 			for (j = 0; j < inv_array.length; j++) {
 				var inv:I_Inv = inv_array[j];
-				this.setItem(inv, 360, 137+j*40, 7);
+				setInventarBtnProp(inv, 360, 137 + j * 40, 7);
+				this.addChild(inv);
 			}
-		}
-		
-		private function setItem(mc:MovieClip, xx:Number, yy:Number, name:int):void {
-			mc.x = xx;
-			mc.y = yy;
-			mc.buttonMode = true;
-			mc.mouseChildren = false;
-			if (!battle_init) {
-				mc.addEventListener(MouseEvent.ROLL_OVER, over);
-				mc.addEventListener(MouseEvent.ROLL_OUT, out);
-				mc.addEventListener(MouseEvent.CLICK, onItem);
-				mc.addEventListener(MouseEvent.MOUSE_DOWN, strFrag );
+			
+			function setInventarBtnProp(mc:MovieClip, xx:Number, yy:Number, name:int):void {
+				mc.x = xx;
+				mc.y = yy;
 				mc.buttonMode = true;
-			}
-			if (mc.greenRect) {
-				mc.greenRect.visible = false;
-				mc.yRect.visible = false;
-			}
-			mc.name = String(name.toString());
-		}
-		
-		private function strFrag(e:MouseEvent):void 
-		{
-			App.info.frees();
-			if (e.currentTarget.currentFrame != 1)
-			{
-				Mouse.hide();
-				App.spr.addChild(WinCastle.mcSell); WinCastle.mcSell.gotoAndPlay(1);
-				this.itemType = int(e.currentTarget.name);
-				this.itemID = int(e.currentTarget.currentFrame);
-				this.invPlace = this.getIsInv(MovieClip(e.currentTarget));
-				call= ItemCall.getCall();
-				call.init(heroType, this.itemType, this.itemID - 1);
-				call.x = App.spr.mouseX  - call.width / 2 + 8;
-				call.y = App.spr.mouseY - call.height / 2 + 8;
-				call.startDrag();
-				call.addEventListener(MouseEvent.MOUSE_UP, up);
-				call.addEventListener(MouseEvent.MOUSE_MOVE, move);
-				Main.THIS.stage.addEventListener(Event.MOUSE_LEAVE, fo);
-				e.currentTarget.gotoAndStop(1);
-			}
-		}
-		
-		private function fo(e:Event):void 
-		{
-			Main.THIS.stage.removeEventListener(Event.MOUSE_LEAVE, fo);
-			call.removeEventListener(MouseEvent.MOUSE_UP, up);
-			call.removeEventListener(MouseEvent.MOUSE_MOVE,move);
-			call.frees();
-			Mouse.show();
-			call.stopDrag();
-			
-			switch(true)
-			{
-				case (this.itemType < 5):
-					MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);
-					break;
-				case (this.itemType == 5):
-					MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
-					break;
-				case (this.itemType == 6):
-					MovieClip(guns2[heroType]).gotoAndStop(this.itemID);
-					break;
-				case (this.itemType == 7):
-					MovieClip(this.inv_array[this.invPlace]).gotoAndStop(this.itemID);
-					break;
-			}
-		}
-		
-		private function move(e:MouseEvent):void {
-			e.updateAfterEvent();
-			if (e.currentTarget.dropTarget!=null && e.currentTarget.dropTarget.parent != null) {
-				var str:String = e.currentTarget.dropTarget.parent.name;
-				if(str != this.lastDT) {
-					this.lastDT = str;
-					if (str.length >= 5 && str.substr(0, 5) == "celll") {
-						WinCastle.chest.clearCells();
-						var obj:Object = JSON2.decode(str.substr(5, str.length - 1));	
-						WinCastle.chest.selectToPut(obj.n, true, this.invPlace);
-					} else {
-						if (str == "sellSprite") {
-							if (WinCastle.mcSell.sellSprite.currentFrame == 1) {
-								WinCastle.mcSell.sellSprite.gotoAndStop(2);
-							}
-						} else {
-							if (WinCastle.mcSell.sellSprite.currentFrame == 2) {
-								WinCastle.mcSell.sellSprite.gotoAndStop(1);
-							}
-						}
-						WinCastle.chest.clearCells();
-					}
+				mc.mouseChildren = false;
+				if (mc.greenRect) {
+					mc.greenRect.visible = false;
+					mc.yRect.visible = false;
 				}
+				mc.name = String(name.toString());
+			}
+			this.addChild(progresEXP); 
+		}
+		
+		private function setBuffsBtnsProperties():void {
+			for (var i:int = 0; i < bufsArray.length; i++) {
+				setProp(MovieClip(bufsArray[i]));
+			}
+			function setProp(mc:MovieClip):void {
+				mc.mouseChildren = false;
+				mc.buttonMode = true;
+				mc.tabEnabled = false;
+				mc.tabChildren = false;
 			}
 		}
 		
-		private function up(e:MouseEvent):void 
-		{
-			call.removeEventListener(e.type, up);
-			call.removeEventListener(MouseEvent.MOUSE_MOVE, move);
-			Main.THIS.stage.removeEventListener(Event.MOUSE_LEAVE, fo);
-			call.frees();
-			Mouse.show();
-			this.stopDrag();
-			if (e.currentTarget.dropTarget==null || e.currentTarget.dropTarget.parent == null)
-			{
-				this.putOnOldPlace();
-			}
-			else
-			{
-				var str:String = e.currentTarget.dropTarget.parent.name;
-				if (str.length>=5 && str.substr(0, 5) == "celll")
-				{
-					var obj:Object = JSON2.decode(str.substr(5, str.length - 1));
-					if (UserStaticData.hero.chest[obj.n].id != 0)
-					{
-						this.putOnOldPlace();
-					}
-					else
-					{
-						var cell_y:int = obj.n / WinCastle.chest.wd;
-						var cell_x:int = obj.n - cell_y * WinCastle.chest.wd;
-						var item:Object;
-						item = (this.invPlace == -1) ? UserStaticData.hero.units[WinCastle.currSlotClick].it[this.itemType]:UserStaticData.hero.units[WinCastle.currSlotClick].inv[this.invPlace];
-						if (WinCastle.chest.isFreeCells(cell_x, cell_y, item.c[104], item.c[105]))
-						{
-							App.lock.init();
-							var data:DataExchange = new DataExchange();
-							data.addEventListener(DataExchangeEvent.ON_RESULT, this.onPutItemToChest);
-							var send_obj:Object = {cn:obj.n,un:int(WinCastle.currSlotClick),it:itemType, invP:this.invPlace};
-							data.sendData(COMMANDS.FROM_UNIT_TO_CHEST, JSON2.encode(send_obj), true);
-						}
-						else
-						{
-							this.putOnOldPlace();
-						}
-						WinCastle.chest.clearCells();
-					}
-				}
-                else if (str == 'sellSprite')
-				{
-					if (this.invPlace == -1)
-					{
-						App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
-					}
-					else
-					{
-						App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
-					}
-				}
-				else 
-				{
-					this.putOnOldPlace();
-				}
-			}
-			if (App.spr.contains(WinCastle.mcSell))
-			{
-				App.spr.removeChild(WinCastle.mcSell);
-				WinCastle.mcSell.sellSprite.gotoAndStop(1);
-			}
-		}
-		
-		public function putOnOldPlace():void 
-		{
-			App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1); 
-			switch(true)
-			{
-				case (this.itemType < 5):
-					MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);
-					break;
-				case (this.itemType == 5):
-					MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
-					break;
-				case (this.itemType == 6):
-					MovieClip(guns2[heroType]).gotoAndStop(this.itemID);
-					break;
-				case (this.itemType == 7):
-					var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
-					this.updateInv(this.invPlace, unit);
-					break;
-			}
-		}
-		
-		private function onPutItemToChest(e:DataExchangeEvent):void 
-		{
-			DataExchange(e.currentTarget).removeEventListener(e.type, onPutItemToChest);
-			var obj:Object = JSON2.decode(e.result);
-			if (obj.error == null)
-			{
-				App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1);
-				if (this.invPlace == -1)
-				{
-					delete(UserStaticData.hero.units[WinCastle.currSlotClick].it[this.itemType]);
-					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
-					this.init1(UserStaticData.hero.units[WinCastle.currSlotClick], false);
-				}
-				else
-				{
-					delete(UserStaticData.hero.units[WinCastle.currSlotClick].inv[this.invPlace]);
-					this.updateInv(this.invPlace, UserStaticData.hero.units[WinCastle.currSlotClick]);
-				}
-				UserStaticData.hero.chest = obj.ch;
-				delete(obj.ch);
-				WinCastle.chest.frees();
-				WinCastle.chest.init();
-				App.lock.frees();
-			}
-			else
-			{
-				App.lock.init('Error: '+obj.error);
-			}
-			
-		}
-		
-		private function onItem(e:MouseEvent):void 
-		{
-			if (MovieClip(e.currentTarget).currentFrame == 1) 
-			{
-				WinCastle.shopInventar.init(int(e.currentTarget.name),int(UserStaticData.hero.units[WinCastle.currSlotClick].t),this.getIsInv(MovieClip(e.currentTarget)));
-			}
-		}
-		
-		public function getIsInv(mc:MovieClip):int 
-		{
-			for (var i:int = 0; i < inv_array.length; i++) 
-			{
-				if (inv_array[i] == mc)
-					return i;
-			}
-			return -1;
-		}
-		
-		private function out(e:MouseEvent):void
-		{
-			App.info.frees();
-			e.currentTarget.mc.scaleX = 1;
-			e.currentTarget.mc.scaleY = 1;
-			e.currentTarget.mc.filters = [];
-			if (e.currentTarget.mc2)
-			{
-				e.currentTarget.mc2.scaleX = 1;
-				e.currentTarget.mc2.scaleY = 1;
-				e.currentTarget.mc2.filters = [];
-			}
-		}
-		
-		private function over(e:MouseEvent):void
-		{
-			var bat:MovieClip = MovieClip(e.currentTarget);
-			bat.mc.scaleX = 1.3;
-			bat.mc.scaleY = 1.3;
-			App.btnOverFilter.color = 0xFBFBFB;
-			bat.mc.filters = [App.btnOverFilter];
-			if (bat.mc2)
-			{
-				bat.mc2.scaleX = 1.3;
-				bat.mc2.scaleY = 1.3;
-				bat.mc2.filters = [App.btnOverFilter];
-			}
-			App.sound.playSound('overItem', App.sound.onVoice, 1);
-			if (bat.currentFrame == 1)
-			{
-				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {txtInfo_w:135,txtInfo_h:37,txtInfo_t:"Нажмите, чтобы\n купить вещь",type:0} )
-			}
-			else
-			{
-				switch(true)
-				{
-					case (int(bat.name) < 5):
-						App.info.init(bat.x + this.x - 236 - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false } )
-						break;
-					case (int(bat.name) == 5 || int(bat.name) == 6):
-						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false} )	
-						break;
-					case (int(bat.name) == 7):
-						break;
-				}
-			}
-		}
-		
-		public function init1(unit:Object, anim:Boolean = true, xx:int = 10, yy:int = 50):void
-		{
-			frees();
-			this.heroType = unit.t;
-			if (anim)
-			{
+		public function init1(unit:Object, anim:Boolean = true, xx:int = 10, yy:int = 50):void {
+			this.bin = true;	
+			if (anim) {
 				this.alpha = 0;
-				this.scaleX = 0.2;
-				this.scaleY = 0.2;
+				this.scaleX = this.scaleY = 0.2;
 				TweenLite.to(this, 0.5, { alpha: 1, scaleX: 1, scaleY: 1 });	
 			}
+			this.heroType = unit.t;
 			var unit_tems_ids:Object = Slot.getUnitItemsArray(unit);
-			for (var i:int = 0; i < parts.length; i++)
-			{
-				parts[i].gotoAndStop(int(unit_tems_ids[i] + 1));
-				this.addChild(parts[i]);
+			for (var i:int = 0; i < parts.length; i++) {
+				this.parts[i].gotoAndStop(unit_tems_ids[i]+ 1);
 			}
-			if (guns1[heroType] == null)
-			{
-				guns1[0].gotoAndStop(1);
-				this.addChild(guns1[0]);
-			}
-			else
-			{
-				guns1[heroType].gotoAndStop(int(unit_tems_ids[5] + 1));
-				guns2[heroType].gotoAndStop(int(unit_tems_ids[6] + 1));
-				this.addChild(guns1[heroType]);
-				this.addChild(guns2[heroType]);
-			}
-			for (i = 0; i < inv_array.length; i++) 
-			{
-				var inv:I_Inv = inv_array[i];
-				this.addChild(inv);
+			this.guns1[heroType].gotoAndStop(unit_tems_ids[5] + 1);
+			this.guns2[heroType].gotoAndStop(unit_tems_ids[6] + 1);
+			this.addChild(this.guns1[heroType]);
+			this.addChild(this.guns2[heroType]);
+			for (i = 0; i < inv_array.length; i++) {
 				this.updateInv(i, unit);
 			}
-			
 			var chars:Object;
-			if (this.battle_init) 
-			{
+			if(!this.battle_init) {
+				chars = [0, UserStaticData.hero.skills.energy * 10 , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
+				this.mcText.mcFreeskils.visible = unit.fs > 0;
+				this.enabledAllEvents(true);
+			} else {
+				this.x = xx; this.y = yy;
 				chars = [0, 0, 0, 0, 0];
-				this.x = xx;
-				this.y = yy;
 			}
-			else chars = [0, UserStaticData.hero.skills.energy , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
-			for (var key:Object in unit.it)
-				for (var key2:Object in unit.it[key].c )
-					chars[int(key2)] += unit.it[key].c[key2];
-			mcText.txtLife.text = String(unit.hp );
-			mcText.txtLife2.text = String(chars[0]);
-			mcText.txtMana.text = String(unit.mp );
-			mcText.txtMana2.text = String(chars[1]);
-			mcText.txtDmg.text = String(unit.min_d +' - ' + unit.max_d  );
-			mcText.txtDmg2.text =  String(chars[2]);
-			mcText.txtFizDeff.text = String(unit.f_d);
-			mcText.txtFizDeff2.text = String(chars[3]);
-			mcText.txtMagDeff.text = String(unit.m_d);
-			mcText.txtMagDeff2.text = String(chars[4]);
-			mcText.txtInic.text = String(unit["in"]);
-			mcText.txtInic2.text = "0";
-			mcText.txtSpeed.text = String(unit.sp);
-			mcText.txtSpeed2.text = "0";
-			mcText.txtKilled.text = String(" Убил: " + unit.k);
-			mcText.txtDied.text = String(" Умер: " + unit.l);
-			this.bin = true;
-			this.addChild(progresEXP); this.progresEXP.txt.text = unit.exp + "/" + unit.nle; this.progresEXP.gotoAndStop(int(100 * unit.exp / unit.nle));
-			this.progresEXP.txt2.text = unit.lvl;
+			this.calculateUnitStats(chars, unit);
+			this.updateSkillsStats(unit);
+			this.mcText.sk_ult.gotoAndStop(this.heroType + 1);
 			App.spr.addChild(this);
-			if(this.battle_init)
-				this.updateSkills(unit);
-			else
-				this.updateSkills();
 		}
 		
-		private function addEventsToBuffBtn(mc:MovieClip):void 
-		{
-			mc.mouseChildren = false;
-			mc.addEventListener(MouseEvent.ROLL_OVER, this.onBuffOver);
-			mc.addEventListener(MouseEvent.ROLL_OUT, this.onBuffOut);
-			mc.mouseChildren = false;
-			mc.buttonMode = true;
-			mc.tabEnabled = false;
-			mc.tabChildren = false;
+		private function calculateUnitStats(chars:Object, unit:Object):void {
+			for (var key:Object in unit.it) {
+				for (var key2:Object in unit.it[key].c ) {
+					chars[int(key2)] += unit.it[key].c[key2];
+				}
+			}
+			this.compareAndSet(this.mcText.txtLife, unit.hp);
+			this.compareAndSet(this.mcText.txtLife2, chars[0]);
+			this.compareAndSet(this.mcText.txtMana, unit.mp);
+			this.compareAndSet(this.mcText.txtMana2, chars[1]);
+			this.compareAndSet(this.mcText.txtDmg, String(unit.min_d + " - " + unit.max_d));
+			this.compareAndSet(this.mcText.txtDmg2, chars[2]);
+			this.compareAndSet(this.mcText.txtFizDeff, unit.f_d);
+			this.compareAndSet(this.mcText.txtFizDeff2, chars[3]);
+			this.compareAndSet(this.mcText.txtMagDeff, unit.m_d);
+			this.compareAndSet(this.mcText.txtMagDeff2, chars[4]);
+			this.compareAndSet(this.mcText.txtInic, unit["in"]);
+			this.compareAndSet(this.mcText.txtInic2, "0");
+			this.compareAndSet(this.mcText.txtSpeed, unit.sp);
+			this.compareAndSet(this.mcText.txtSpeed2, "0");
+			this.compareAndSet(this.mcText.txtKilled, String(" Убил: " + unit.k));
+			this.compareAndSet(this.mcText.txtDied, String(" Умер: " + unit.l));
+			this.compareAndSet(this.progresEXP.txt2, unit.lvl);
+			this.compareAndSet(this.progresEXP.txt, String(unit.exp + "/" + unit.nle));
+			var frame:int = int(100 * unit.exp / unit.nle);
+			if(this.progresEXP.currentFrame != frame) {
+				this.progresEXP.gotoAndStop(frame);
+			}
 		}
 		
-		private function updateSkills(unit:Object = null):void 
-		{
-			if(unit == null)
+		private function compareAndSet(textf:TLFTextField, text:String):void {
+			if(textf.text != text) {
+				textf.text = text;
+			}
+		}
+		
+		public function updateInv(invPlace:int, unit:Object):void {
+			if (unit.inv[invPlace] != null) {
+				MovieClip(this.inv_array[invPlace]).gotoAndStop(unit.inv[invPlace].id + 1);
+			}
+			else {
+				MovieClip(this.inv_array[invPlace]).gotoAndStop(1);
+			}
+		}
+		
+		private function updateSkillsStats(unit:Object = null):void {
+			if(unit == null) {
 				unit = UserStaticData.hero.units[WinCastle.currSlotClick];
-			this.mcText.txt_sk_crit.text = unit.b[0].l;
-			this.mcText.txt_sk_miss.text = unit.b[1].l;
-			this.mcText.txt_sk_double.text = unit.b[2].l;
-			this.mcText.txt_sk_out.text = unit.b[3].l;
-			this.mcText.txt_sk_return.text = unit.b[4].l;
-			this.mcText.sk_ult.gotoAndStop(this.heroType+1);
-			this.mcText.sk_ult.txt.text = unit.ult.lvl;
-			this.mcText.mcFreeskils.textf.text = "Доступно: " + unit.fs;
-			if (unit.fs > 0 && !battle_init)
-			{
-				this.mcText.mcFreeskils.visible = true;
-				this.addBuffClick(this.mcText.sk_crit);
-				this.addBuffClick(this.mcText.sk_miss);
-				this.addBuffClick(this.mcText.sk_double);
-				this.addBuffClick(this.mcText.sk_out);
-				this.addBuffClick(this.mcText.sk_return);
-				this.addBuffClick(this.mcText.sk_ult);
 			}
-			else
-			{
-				this.mcText.mcFreeskils.visible = false;
-				this.removeBuffClick(this.mcText.sk_crit);
-				this.removeBuffClick(this.mcText.sk_miss);
-				this.removeBuffClick(this.mcText.sk_double);
-				this.removeBuffClick(this.mcText.sk_out);
-				this.removeBuffClick(this.mcText.sk_return);
-				this.removeBuffClick(this.mcText.sk_ult);
-			}
+			this.compareAndSet(this.mcText.txt_sk_crit, unit.b[0].l);
+			this.compareAndSet(this.mcText.txt_sk_miss, unit.b[1].l);
+			this.compareAndSet(this.mcText.txt_sk_double, unit.b[2].l);
+			this.compareAndSet(this.mcText.txt_sk_out, unit.b[3].l);
+			this.compareAndSet(this.mcText.txt_sk_return, unit.b[4].l);
+			this.compareAndSet(this.mcText.sk_ult.txt, unit.ult.lvl);
+			this.compareAndSet(this.mcText.mcFreeskils.textf, "Доступно: " + unit.fs);
 		}
 		
-		private function removeBuffClick(mc:MovieClip):void 
-		{
-			mc.removeEventListener(MouseEvent.CLICK, this.onBuffClick);
-		}
-		
-		private function addBuffClick(mc:MovieClip):void 
-		{
-			mc.addEventListener(MouseEvent.CLICK, this.onBuffClick);
-		}
-		
-		private function onBuffClick(e:MouseEvent):void 
-		{
-			App.lock.init();
-			var skill_num:int = -1;
-			var mc:MovieClip = MovieClip(e.currentTarget);
-			switch(true)
-			{
-				case(mc == this.mcText.sk_crit):
-					skill_num = 0;
-					break;
-				case(this.mcText.sk_miss == mc):
-					skill_num = 1;
-					break;
-				case(this.mcText.sk_double == mc):
-					skill_num = 2;
-					break;
-				case(this.mcText.sk_out == mc):
-					skill_num = 3;
-					break;
-				case(this.mcText.sk_return == mc):
-					skill_num = 4;
-					break;
-				default:
-					skill_num = 5
-					break;
-			}
-			var obj:Object = new Object();
-			obj.un = WinCastle.currSlotClick;
-			obj.sn = skill_num;
-			var data:DataExchange = new DataExchange();
-			data.addEventListener(DataExchangeEvent.ON_RESULT, onBuffUpdateRes);
-			data.sendData(COMMANDS.UPDATE_SKILL, JSON2.encode(obj), true);			
-			function onBuffUpdateRes(evn:DataExchangeEvent = null):void
-			{
-				data.removeEventListener(evn.type, onBuffUpdateRes);
-				obj = JSON2.decode(evn.result);
-				if (obj.res != null)
-				{
-					App.sound.playSound('skillUp', App.sound.onVoice, 1);
-					UserStaticData.hero.units[WinCastle.currSlotClick].fs--;
-					var res:int = int(obj.res);
-					if (res < 5)
-					{
-						UserStaticData.hero.units[WinCastle.currSlotClick].b[res].l++;
-					}
-					else
-					{
-						UserStaticData.hero.units[WinCastle.currSlotClick].ult.lvl++;
-					}
-					Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).higlightLvlStar();
-					updateSkills();
-					onBuffOut(e);
-					onBuffOver(e);
-					App.lock.frees();
+		public function enabledAllEvents(cond:Boolean): void {
+			if(this.bin) {
+				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+				for (var i:int = 0; i < bufsArray.length; i++) {
+					this.addBuffEvents(MovieClip(bufsArray[i]), cond, unit);
 				}
-				else
-				{
-					App.lock.init(obj.error);
+				for (i = 0; i < parts.length; i++) {
+					this.addItemEvents(MovieClip(parts[i]), cond);
+				}
+				this.addItemEvents(this.guns1[heroType], cond);
+				this.addItemEvents(this.guns2[heroType], cond);
+				for (i = 0; i < inv_array.length; i++) {
+					this.addItemEvents(MovieClip(inv_array[i]), cond);
 				}
 			}
 		}
 		
-		
-		private function onBuffOut(e:MouseEvent):void 
-		{
-			var mc:MovieClip = MovieClip(e.target);
-			mc.filters = [];
-			App.info.frees();
+		private function addBuffEvents(mc:MovieClip, cond:Boolean, unit:Object):void {
+			if(cond) {
+				mc.addEventListener(MouseEvent.ROLL_OVER, this.onBuffOver);
+				mc.addEventListener(MouseEvent.ROLL_OUT, this.onBuffOut);
+				if(unit.fs) {
+					mc.addEventListener(MouseEvent.CLICK, this.onBuffClick);
+				}
+			} else {
+				mc.removeEventListener(MouseEvent.ROLL_OVER, this.onBuffOver);
+				mc.removeEventListener(MouseEvent.ROLL_OUT, this.onBuffOut);
+				if(mc.hasEventListener(MouseEvent.CLICK)) {
+					mc.removeEventListener(MouseEvent.CLICK, this.onBuffClick);
+				}
+			}
 		}
 		
-		private function onBuffOver(e:MouseEvent):void 
-		{
+		private function onBuffOver(e:MouseEvent):void {
 			var mc:MovieClip = MovieClip(e.target);
 			App.sound.playSound('over2', App.sound.onVoice, 1);
 			if (this.mcText.mcFreeskils.visible)
@@ -631,104 +307,435 @@ package artur.display
 			App.info.init(p.x + 35, p.y + 35, { type:0, title:"Навык", txtInfo_w:290, txtInfo_h:48, txtInfo_t:descr} );
 		}
 		
-		
-		public function update():void
-		{
-			
+		private function onBuffOut(e:MouseEvent):void {
+			var mc:MovieClip = MovieClip(e.target);
+			mc.filters = [];
+			App.info.frees();
 		}
 		
-		public function frees():void
-		{
-			if (bin)
-			{
-				bin = false;
-				for (var i:int = 0; i < parts.length; i++)
-				{
-					this.removeChild(parts[i]);
+		private function onBuffClick(e:MouseEvent):void {
+			App.lock.init();
+			var skill_num:int = -1;
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			switch(true) {
+				case(mc == this.mcText.sk_crit):
+					skill_num = 0;
+					break;
+				case(this.mcText.sk_miss == mc):
+					skill_num = 1;
+					break;
+				case(this.mcText.sk_double == mc):
+					skill_num = 2;
+					break;
+				case(this.mcText.sk_out == mc):
+					skill_num = 3;
+					break;
+				case(this.mcText.sk_return == mc):
+					skill_num = 4;
+					break;
+				default:
+					skill_num = 5
+					break;
+			}
+			var obj:Object = new Object();
+			obj.un = WinCastle.currSlotClick;
+			obj.sn = skill_num;
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, onBuffUpdateRes);
+			data.sendData(COMMANDS.UPDATE_SKILL, JSON2.encode(obj), true);			
+			
+			function onBuffUpdateRes(evn:DataExchangeEvent = null):void {
+				data.removeEventListener(evn.type, onBuffUpdateRes);
+				obj = JSON2.decode(evn.result);
+				if (obj.res != null) {
+					App.sound.playSound('skillUp', App.sound.onVoice, 1);
+					var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+					unit.fs--;
+					var res:int = int(obj.res);
+					if (res < 5) {
+						unit.b[res].l++;
+					} else {
+						unit.ult.lvl++;
+					}
+					Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).higlightLvlStar(unit);
+					updateSkillsStats();
+					onBuffOut(e);
+					onBuffOver(e);
+					removeClickEventFromBuff(unit.fs == 0);
+					App.lock.frees();
 				}
-				if (guns1[heroType] == null)
-				{
-					this.removeChild(guns1[0]);
+				else {
+					App.lock.init(obj.error);
 				}
-				else
-				{
-					this.removeChild(guns1[heroType]);
-					this.removeChild(guns2[heroType]);
-				}
-				if(App.spr.contains(this))
-				     App.spr.removeChild(this);
 			}
 		}
 		
-		public function sellItem():void 
-		{
+		private function removeClickEventFromBuff(isRemove:Boolean):void {
+			if(isRemove) {
+				for (var i:int = 0; i < this.bufsArray.length; i++) {
+					var mc:MovieClip = MovieClip(this.bufsArray[i]);
+					if(mc.hasEventListener(MouseEvent.CLICK)) {
+						mc.removeEventListener(MouseEvent.CLICK, this.onBuffClick);
+					}
+				}
+			}
+		}
+		
+		private function addItemEvents(mc:MovieClip, cond:Boolean):void {
+			if(cond) {
+				mc.addEventListener(MouseEvent.ROLL_OVER, this.itemOver);
+				mc.addEventListener(MouseEvent.ROLL_OUT, this.itemOut);
+				mc.addEventListener(MouseEvent.CLICK, this.onItem);
+				mc.addEventListener(MouseEvent.MOUSE_DOWN, this.onItemDown);
+			} else {
+				mc.removeEventListener(MouseEvent.ROLL_OVER, this.itemOver);
+				mc.removeEventListener(MouseEvent.ROLL_OUT, this.itemOut);
+				mc.removeEventListener(MouseEvent.CLICK, onItem);
+			}
+		}
+		
+		private function onItemDown(e:MouseEvent):void {
+			App.info.frees();
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			if (mc.currentFrame != 1) {
+				Mouse.hide();
+				this.itemOutDirect(mc);
+				App.spr.addChild(WinCastle.mcSell); 
+				WinCastle.mcSell.gotoAndPlay(1);
+				WinCastle.mcSell.addEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
+				WinCastle.mcSell.addEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
+				this.itemType = int(mc.name);
+				this.itemID = int(mc.currentFrame);
+				this.invPlace = this.getIsInv(mc);
+				this.call = ItemCall.getCall();
+				this.call.mouseEnabled = false;
+				this.call.init(this.heroType, this.itemType, this.itemID - 1);
+				this.call.x = App.spr.mouseX  - this.call.width / 2 + 8;
+				this.call.y = App.spr.mouseY - this.call.height / 2 + 8;
+				mc.gotoAndStop(1);
+				
+				this.enabledAllEvents(false);
+				WinCastle.chest.initPutItemEvents(UserStaticData.magazin_items[this.heroType][this.itemType][this.itemID]);
+				Main.THIS.stage.addEventListener(MouseEvent.MOUSE_MOVE, this.dragMove);
+				Main.THIS.stage.addEventListener(Event.MOUSE_LEAVE, onMouseLeave);
+				Main.THIS.stage.addEventListener(MouseEvent.MOUSE_UP, this.onItemUp);
+			}
+		}
+		
+		private function onItemUp(e:MouseEvent):void {
+			if (e.target.name == "sell") {
+				this.afterPut();
+				if (this.invPlace == -1) {
+					App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
+				} else
+				{
+					App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
+				}
+			} else if (e.target is mcCall) { 
+				this.afterPut();
+				var mcC:mcCall = mcCall(e.target);
+				var cellNum:int = int(mcC.name);
+				if(WinCastle.chest.isFreeCells(cellNum)) {
+					App.lock.init();
+					var data:DataExchange = new DataExchange();
+					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onPutItemToChest);
+					var send_obj:Object = { cn:cellNum, un:int(WinCastle.currSlotClick), it:itemType, invP:this.invPlace };
+					data.sendData(COMMANDS.FROM_UNIT_TO_CHEST, JSON2.encode(send_obj), true);
+					Report.addMassage("sendtochest");
+				} else {
+					this.putOnOldPlace();
+				}
+				
+			} else {
+				this.onMouseLeave(e);
+			}
+		}
+		
+		private function onPutItemToChest(e:DataExchangeEvent):void {
+			DataExchange(e.currentTarget).removeEventListener(e.type, onPutItemToChest);
+			var obj:Object = JSON2.decode(e.result);
+			if (obj.error == null) {
+				App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1);
+				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+				if (this.invPlace == -1) {
+					delete(unit.it[this.itemType]);
+					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(unit));
+					this.updateItem(this.itemType, 0);
+				} else {
+					delete(unit.inv[this.invPlace]);
+					this.updateInv(this.invPlace, unit);
+				}
+				UserStaticData.hero.chest = obj.ch;
+				delete(obj.ch);
+				WinCastle.chest.frees();
+				WinCastle.chest.init();
+				App.lock.frees();
+			} else {
+				this.putOnOldPlace();
+				App.lock.init('Error: ' + obj.error);
+			}
+		}
+		
+		private function onItemSellOut(e:MouseEvent):void {
+			WinCastle.mcSell.sellSprite.gotoAndStop(1);
+		}
+		
+		private function onItemSellOver(e:MouseEvent):void {
+			WinCastle.mcSell.sellSprite.gotoAndStop(2);
+		}
+		
+		private function onMouseLeave(e:Event):void {
+			
+			this.afterPut();
+			this.putOnOldPlace();
+		}
+		
+		public function afterPut():void {
+			Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_MOVE, this.dragMove);
+			Main.THIS.stage.removeEventListener(Event.MOUSE_LEAVE, onMouseLeave);
+			Main.THIS.stage.removeEventListener(MouseEvent.MOUSE_UP, this.onItemUp);
+			this.call.frees();
+			if (WinCastle.mcSell.parent) {
+				App.spr.removeChild(WinCastle.mcSell);
+			}
+			WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
+			WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
+			Mouse.show();
+			WinCastle.chest.removePutEvents();
+			this.enabledAllEvents(true);
+		}
+		
+		private function dragMove(e:MouseEvent):void {
+			this.call.x = Main.THIS.stage.mouseX - this.call.width / 2 +8;
+			this.call.y = Main.THIS.stage.mouseY - this.call.height / 2 +8;
+		}
+		
+		private function itemOut(e:MouseEvent):void {
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			this.itemOutDirect(mc);
+		}
+		
+		private function itemOutDirect(mc:MovieClip):void {
+			App.info.frees();
+			mc.mc.scaleX = 1;
+			mc.mc.scaleY = 1;
+			mc.mc.filters = [];
+			if (mc.mc2) {
+				mc.mc2.scaleX = 1;
+				mc.mc2.scaleY = 1;
+				mc.mc2.filters = [];
+			}
+		}
+		
+		private function itemOver(e:MouseEvent):void {
+			var bat:MovieClip = MovieClip(e.currentTarget);
+			bat.mc.scaleX = 1.3;
+			bat.mc.scaleY = 1.3;
+			App.btnOverFilter.color = 0xFBFBFB;
+			bat.mc.filters = [App.btnOverFilter];
+			if (bat.mc2) {
+				bat.mc2.scaleX = 1.3;
+				bat.mc2.scaleY = 1.3;
+				bat.mc2.filters = [App.btnOverFilter];
+			}
+			App.sound.playSound('overItem', App.sound.onVoice, 1);
+			if (bat.currentFrame == 1) {
+				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {txtInfo_w:135,txtInfo_h:37,txtInfo_t:"Нажмите, чтобы\n купить вещь",type:0} )
+			} else {
+				switch(true) {
+					case (int(bat.name) < 5):
+						App.info.init(bat.x + this.x - 236 - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false } )
+						break;
+					case (int(bat.name) == 5 || int(bat.name) == 6):
+						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false} )	
+						break;
+					case (int(bat.name) == 7):
+						break;
+				}
+			}
+		}
+		
+		private function onItem(e:MouseEvent):void {
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			if (mc.currentFrame == 1) {
+				WinCastle.shopInventar.init(int(mc.name), this.heroType, this.getIsInv(mc));
+			}
+		}
+		
+		public function getIsInv(mc:MovieClip):int {
+			for (var i:int = 0; i < inv_array.length; i++) {
+				if (inv_array[i] == mc) {
+					return i;
+				}
+			}
+			return -1;
+		}
+		
+		public function putOnOldPlace():void {
+			App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1); 
+			switch(true) {
+				case (this.itemType < 5):
+					MovieClip(parts[this.itemType]).gotoAndStop(this.itemID);
+					break;
+				case (this.itemType == 5):
+					MovieClip(guns1[heroType]).gotoAndStop(this.itemID);
+					break;
+				case (this.itemType == 6):
+					MovieClip(guns2[heroType]).gotoAndStop(this.itemID);
+					break;
+				case (this.itemType == 7):
+					var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+					this.updateInv(this.invPlace, unit);
+					break;
+			}
+		}
+		
+		public function sellItem():void {
 			App.lock.init();
 			var data:DataExchange = new DataExchange();
-			data.addEventListener(DataExchangeEvent.ON_RESULT, this.unitSell);
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.sellItemResult);
 			data.sendData(COMMANDS.SELL_ITEM_UNIT, JSON2.encode({un:int(WinCastle.currSlotClick), it:itemType, invP:this.invPlace}), true);
 		}
 		
-		public function updateInv(invPlace:int, unit:Object):void 
-		{
-			if (unit.inv[invPlace] != null)
-					MovieClip(this.inv_array[invPlace]).gotoAndStop(unit.inv[invPlace].id + 1);
-			else MovieClip(this.inv_array[invPlace]).gotoAndStop(1);
-		}
-		
-		public function lightYellowRectInt():void 
-		{
-			for (var i:int = 0; i < this.inv_array.length; i++) 
-			{
-				var mc:MovieClip = MovieClip(this.inv_array[i]);
-				if (mc.currentFrame == 1)
-				{
-					if(mc.yRect.visible == false)
-						mc.yRect.visible = true;
-					if(mc.greenRect.visible == true)
-						mc.greenRect.visible = false;
-				}
-			}
-		}
-		
-		public function takeAwayGreenYellowRect():void 
-		{
-			for (var i:int = 0; i < this.inv_array.length; i++) 
-			{
-				var mc:MovieClip = MovieClip(this.inv_array[i]);
-				if (mc.currentFrame == 1)
-				{
-					if(mc.yRect.visible == true)
-						mc.yRect.visible = false;
-					if(mc.greenRect.visible == true)
-						mc.greenRect.visible = false;
-				}
-			}
-		}
-		
-		private function unitSell(e:DataExchangeEvent):void 
-		{
-			DataExchange(e.currentTarget).removeEventListener(e.type, unitSell);
+		private function sellItemResult(e:DataExchangeEvent):void {
+			DataExchange(e.currentTarget).removeEventListener(e.type, this.sellItemResult);
 			var obj:Object = JSON2.decode(e.result);
-			if (!obj.error)
-			{
+			if (!obj.error) {
 				UserStaticData.hero.silver = obj.s;
 				WinCastle.txtCastle.txtSilver.text = String(obj.s);
-				
-				if(this.invPlace == -1)
+				if(this.invPlace == -1) {
 					delete(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType]);
-				else
+				} else {
 					delete(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace]);
+				}
 				App.sound.playSound('gold', App.sound.onVoice, 1);
 				WinCastle.getCastle().slots[WinCastle.currSlotClick].unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
 				App.lock.frees();
-			}
-			else
-			{
+			} else {
 				App.lock.init('Error: '+obj.error)
 			    this.putOnOldPlace();
 			}
 		}
-	
+		
+		public function updateItem(itemType:int, index:int):void {
+			switch(true) {
+				case itemType < 5:
+					this.parts[itemType].gotoAndStop(index + 1);
+					break;
+				case itemType == 5:
+					this.guns1[this.heroType].gotoAndStop(index + 1);
+					break;
+				case itemType == 6:
+					this.guns2[this.heroType].gotoAndStop(index + 1);
+					break;
+			}
+		}
+		
+		public function showGreenInv(uppedItemObj:Object):void 
+		{
+			if (this.bin) {
+				var type:int = uppedItemObj.c[103];
+				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+				switch(true) {
+					case type < 5:
+						if(UserStaticData.hero.units[WinCastle.currSlotClick].it[type] == null) {
+							this.addChestEvents(this.parts[type]);
+						}
+						break;
+					case ((type == 5) || (type == 6)):
+						if (this.heroType == uppedItemObj.c[102]) {
+							if(type == 5) {
+								if(unit.it[5] == null) {
+									this.addChestEvents(this.guns1[this.heroType]);
+								}
+							} else {
+								if(unit.it[6] == null) {
+									this.addChestEvents(this.guns2[this.heroType]);
+								}
+							}
+						}
+						break;
+					case type == 7:
+						for (var i:int = 0; i < this.inv_array.length; i++) {
+							if(unit.inv[i] == null) {
+								this.addChestEvents(this.inv_array[i]);
+							}
+						}
+						break;
+				}
+			}
+		}
+		
+		public function hideGreenInv(uppedItemObj:Object):void {
+			if (this.bin) {
+				var type:int = uppedItemObj.c[103];
+				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
+				switch(true) {
+					case type < 5:
+						if(UserStaticData.hero.units[WinCastle.currSlotClick].it[type] == null) {
+							this.removeChestEvents(this.parts[type]);
+						}
+						break;
+					case ((type == 5) || (type == 6)):
+						if (this.heroType == uppedItemObj.c[102]) {
+							if(type == 5) {
+								if(unit.it[5] == null) {
+									this.removeChestEvents(this.guns1[this.heroType]);
+								}
+							} else {
+								if(unit.it[6] == null) {
+									this.removeChestEvents(this.guns2[this.heroType]);
+								}
+							}
+						}
+						break;
+					case type == 7:
+						for (var i:int = 0; i < this.inv_array.length; i++) {
+							if(unit.inv[i] == null) {
+								this.removeChestEvents(this.inv_array[i]);
+							}
+						}
+						break;
+				}
+			}
+		}
+		
+		private function addChestEvents(mc:MovieClip):void {
+			mc.addEventListener(MouseEvent.ROLL_OVER, this.onChestPutOver);
+			mc.addEventListener(MouseEvent.ROLL_OUT, this.onChestPutOut);
+			mc.greenRect.visible = true;
+		}
+		
+		private function removeChestEvents(mc:MovieClip):void {
+			mc.removeEventListener(MouseEvent.ROLL_OVER, this.onChestPutOver);
+			mc.removeEventListener(MouseEvent.ROLL_OUT, this.onChestPutOut);
+			mc.greenRect.visible = false;
+			mc.yRect.visible = false;
+		}
+		
+		private function onChestPutOut(e:MouseEvent):void {
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			mc.greenRect.visible = true;
+			mc.yRect.visible = false;
+		}
+		
+		private function onChestPutOver(e:MouseEvent):void {
+			var mc:MovieClip = MovieClip(e.currentTarget);
+			mc.greenRect.visible = false;
+			mc.yRect.visible = true;
+		}
+		
+		public function frees():void {
+			if (this.bin) {
+				Report.addMassage(frees);
+				this.enabledAllEvents(false);
+				this.removeChild(this.guns1[heroType]);
+				this.removeChild(this.guns2[heroType]);
+				if(this.parent) {
+					this.parent.removeChild(this);
+				}
+				this.bin = false;
+			}			
+		}
 	}
-
 }
