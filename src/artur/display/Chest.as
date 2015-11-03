@@ -326,7 +326,7 @@ package artur.display
 				UserStaticData.hero.chest = obj.res;
 				delete(obj.ch);
 				this.frees();
-				this.init
+				this.init();
 				App.lock.frees();
 			}
 			else

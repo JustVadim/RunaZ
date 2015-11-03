@@ -69,7 +69,7 @@ package  {
 			stage.addChild(new movieMonitor());
 		}
 		
-		private function CloseApp(e:DataExchangeEvent):void {
+		public function CloseApp(e:DataExchangeEvent = null):void {
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			while (this.numChildren > 0) {
 				this.removeChildAt(0);

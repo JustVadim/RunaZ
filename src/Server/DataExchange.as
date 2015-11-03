@@ -138,6 +138,7 @@ package Server
 							switch(int(temp_obj.c))
 							{
 								case COMMANDS.new_window:
+									Main.THIS.CloseApp();
 									socket.removeEventListener(Event.CLOSE, onSocketClose);
 									socket.removeEventListener(ProgressEvent.SOCKET_DATA, onSocketDataHandler);
 									socket.close();

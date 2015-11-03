@@ -8,7 +8,7 @@ package artur.units
 			{ className:U_Paladin, type:'Paladin' }, 
 			{ className:U_Lyk, type:'Lyk' }, 
 			{ className:U_Mag, type:'Mag' }, 
-			{ className:Bot1, type:'Bot1' }, //{ className:BotGhost2, type:'Bot1' }, //
+			{ className:Bot1, type:'Bot1' },
 			{ className:Bot2, type:'Bot2' }, 
 			{ className:BotGolem, type:'BotGolem' },
 			{ className:U_LykBot, type:'LykBot' } ,

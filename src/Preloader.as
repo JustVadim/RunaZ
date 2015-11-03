@@ -2,6 +2,7 @@ package
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
@@ -10,11 +11,6 @@ package
 	import flash.text.TextField;
 	import flash.utils.getDefinitionByName;
 	
-	
-	/**
-	 * ...
-	 * @author Vadim
-	 */
 	public class Preloader extends MovieClip 
 	{
 		private var textf:TextField = new TextField();
@@ -28,9 +24,10 @@ package
 			loaderInfo.addEventListener(ProgressEvent.PROGRESS, progress);
 			loaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioError);
 			
-			// TODO show loader
+			//this.addChild(new mcLoader());
+			/*// TODO show loader
 			this.addChild(textf);
-			textf.text = "00%"
+			textf.text = "00%"*/
 		}
 		
 		private function ioError(e:IOErrorEvent):void 
@@ -69,7 +66,7 @@ package
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioError);
 			
 			//TODO hide loader
-			this.removeChild(this.textf);
+			//this.removeChild(this.textf);
 			
 			startup();
 		}
