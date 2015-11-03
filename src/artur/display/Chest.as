@@ -325,8 +325,8 @@ package artur.display
 				App.sound.playSound(ItemCall.sounds[UserStaticData.hero.chest[this.upped_item_num].c[103]][this.upped_item_id-1],App.sound.onVoice,1 );
 				UserStaticData.hero.chest = obj.res;
 				delete(obj.ch);
-				WinCastle.chest.frees();
-				WinCastle.chest.init();
+				this.frees();
+				this.init
 				App.lock.frees();
 			}
 			else

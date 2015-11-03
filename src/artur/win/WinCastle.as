@@ -83,8 +83,7 @@ package artur.win {
 		
 		}
 		
-		public function update():void 
-		{
+		public function update():void {
 			
 		}
 		
@@ -92,7 +91,8 @@ package artur.win {
 			for (var i:int = 0; i < slots.length; i++) {
 				slots[i].frees();
 			}
-			inventar.frees();
+			WinCastle.inventar.frees();
+			WinCastle.chest.frees();
 		}
 		
 		public static function getCastle():WinCastle {
