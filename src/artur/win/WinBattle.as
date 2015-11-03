@@ -54,7 +54,7 @@ package artur.win
 		public static var effManajer:EffManajer = new EffManajer();
 		public var lifeManajer:LifeManajer  = new LifeManajer();
 		public  var chekLifeBar:CheckLife = new CheckLife();
-		public  var chekAvtoboi:ChecAvtoboi = new ChecAvtoboi();
+		//public  var chekAvtoboi:ChecAvtoboi = new ChecAvtoboi();
 		public var bin:Boolean = false;
 		private var unitsInWin:Array = [];
 		public static var winAfterBattle:mcAfterBattle = new mcAfterBattle();
@@ -67,7 +67,7 @@ package artur.win
 		public static var battleChat:BattleChat = new BattleChat();
 		public static var sprGift:GiftDialog;
 		private var gift_id:int = 0;
-		private var topPanel:TopPanelBattle = new TopPanelBattle();
+		private var topPanel:TopPanelBattle;
 		
 		public function WinBattle() 
 		{
@@ -79,12 +79,11 @@ package artur.win
 			inst = this;
 			arrow.gotoAndStop(1);
 			atackNode = new AttackNode();
-			chekAvtoboi.y = 14;
-			this.chekAvtoboi.buttonMode = this.chekLifeBar.buttonMode = true;
+			this.chekLifeBar.buttonMode = true;
 			WinBattle.battleChat.addChild(ult_btn);
 			WinBattle.ult_btn.x = 719.8; WinBattle.ult_btn.y = 514.2;
 			WinBattle.ult_btn.stop();
-			WinBattle.ult_btn.buttonMode = WinBattle.ult_btn.mouseChildren = WinBattle.ult_btn.tabEnabled = WinBattle.ult_btn.tabChildren = this.chekAvtoboi.tabChildren = this.chekAvtoboi.tabEnabled = this.chekLifeBar.tabEnabled = this.chekLifeBar.tabChildren = false;
+			WinBattle.ult_btn.buttonMode = WinBattle.ult_btn.mouseChildren = WinBattle.ult_btn.tabEnabled = WinBattle.ult_btn.tabChildren = this.chekLifeBar.tabEnabled = this.chekLifeBar.tabChildren = false;
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
 			{
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
@@ -95,7 +94,7 @@ package artur.win
 				mc.mouseChildren = mc.tabEnabled = mc.tabChildren = false;
 				WinBattle.battleChat.addChild(mc);
 			}
-			
+			this.topPanel = new TopPanelBattle(this);
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -144,16 +143,15 @@ package artur.win
 			this.getMyTeam();
 			App.spr.addChild(bgs[0]);
 			App.spr.addChild(spr);
-			this.addListenersToChekboks(this.chekAvtoboi, 1);
 			this.addListenersToChekboks(this.chekLifeBar, 2);
-			
 			this.grid.init();
 			this.lifeManajer.init();
+			topPanel.init();
 			this.setCurrStep();
 			Main.THIS.chat.visible = false;
 			Main.THIS.stage.addChild(WinBattle.battleChat);
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
-			topPanel.init();
+			
 		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 
@@ -330,6 +328,7 @@ package artur.win
 		}
 		
 		private function endBattle(obj:Object):void {
+			WinBattle.bat.is_end
 			this.grid.clearNodesControl();
 			var mc:MovieClip;
 			if (obj.is_w) {
@@ -422,20 +421,22 @@ package artur.win
 			return false;
 		}
 		 
-		public function setCurrStep():void 
-		{
+		public function setCurrStep():void {
 			
 			this.ult_clicked = false;
 			WinBattle.sortSpr();
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
-			if (currUnit) {currUnit.filters = []; currUnit.shawdow.alpha = 1;} 
+			if (currUnit != null) {
+				currUnit.filters = []; currUnit.shawdow.alpha = 1; 
+			}
 			currUnit = WinBattle.units[cus.t][cus.p]; 
 			App.btnOverFilter.color = 0xFFFFFF;
 			MovieClip(currUnit).filters = [App.btnOverFilter]; currUnit.shawdow.alpha = 0;
 			WinBattle.showCurrUnit(cus.t);
-			grid.clearNodesControl();
-			grid.lightUnits(bat.locs[0], bat.hps[0], 0);
-			grid.lightUnits(bat.locs[1], bat.hps[1], 1);
+			this.grid.clearNodesControl();
+			this.grid.lightUnits(bat.locs[0], bat.hps[0], 0);
+			this.grid.lightUnits(bat.locs[1], bat.hps[1], 1);
+			
 			if (cus.t == myTeam)
 			{
 				
@@ -445,16 +446,13 @@ package artur.win
 				var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
 				r = cur_unit.sp;
 				is_arr = cur_unit.t_d;
-				if (WinBattle.anim.length == 0)
-				{
-					if (this.chekAvtoboi.currentFrame == 1)
-					{
+				if (WinBattle.anim.length == 0) {
+					if (!this.topPanel.isAuto()) {
 						grid.showAvailableCells(loc.x, loc.y, r, is_arr);
 						this.makeUltimate(cur_unit, cus);
 						this.makeBanochki(cur_unit, cus);
-					}
-					else
-					{
+					} else {
+						/////if battle!end
 						Node(this.grid.nodes[0][0]).sendStep();
 					}
 				}
@@ -635,7 +633,6 @@ package artur.win
 			this.lifeManajer.frees();
 			WinBattle.atackNode.frees();
 			this.grid.frees();
-			this.addListenersToChekboks(this.chekAvtoboi, 1, false);
 			this.addListenersToChekboks(this.chekLifeBar, 2, false);
 		
 			this.mover.unit = null;
@@ -676,14 +673,14 @@ package artur.win
 			{myTeam = 1;}
 		}
 		
-		public static function showCurrUnit(team_n:int):void
-		{
+		public static function showCurrUnit(team_n:int):void {
 			WinBattle.arrow.x = WinBattle.currUnit.x;
 			WinBattle.arrow.y = WinBattle.currUnit.y + WinBattle.currUnit._head.y - WinBattle.currUnit._head.height/2;
-			if (WinBattle.myTeam == team_n)
+			if (WinBattle.myTeam == team_n) {
 				WinBattle.arrow.mc.gotoAndStop(1);
-			else
+			} else {
 				WinBattle.arrow.mc.gotoAndStop(2);
+			}
 			App.spr.addChild(arrow);
 			WinBattle.arrow.visible = true; 
 			WinBattle.arrow.play();

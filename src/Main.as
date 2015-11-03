@@ -11,7 +11,7 @@ package  {
 	import Server.DataExchangeEvent;
 	import Server.Lang;
 	import Utils.json.JSON2;
-	
+	//method=getProfiles&fields=first_name,last_name,photo_100&uids={viewer_id}&format=json&v=2.0
 	[Frame(factoryClass = "Preloader")]
 	public class Main extends Sprite {
 		
@@ -31,6 +31,7 @@ package  {
 		}
 		
 		private function init(e:Event = null):void {
+			
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			Main.THIS = this;
