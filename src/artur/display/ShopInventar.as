@@ -9,8 +9,8 @@ package artur.display {
 	import flash.events.MouseEvent;
 	
 	public class ShopInventar extends mcShopInventar {
-		 private var heads:Array           	= 	PrepareGr.creatBms(new Shop_Head(),true)
-		 private var bodys:Array           	= 	PrepareGr.creatBms(new Shop_Bodys(),true) 
+		private var heads:Array           	= 	PrepareGr.creatBms(new Shop_Head(),true)
+		private var bodys:Array           	= 	PrepareGr.creatBms(new Shop_Bodys(),true) 
 		private var boots:Array            	= 	PrepareGr.creatBms(new Shop_Boots(),true)
 		private var hends_top:Array 		=	PrepareGr.creatBms(new Shop_HendTop(),true)
 		private var hends_down:Array 		= 	PrepareGr.creatBms(new Shop_HendDown,true) 
