@@ -2,6 +2,7 @@ package  {
 	
 	import artur.App;
 	import Chat.ChatBasic;
+	import com.greensock.TweenLite;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
@@ -63,14 +64,25 @@ package  {
 		private function onLogin(e:DataExchangeEvent = null):void {
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
-			stage.addChild(this.chat = new ChatBasic());
-			this.addChild(this.app = new App(this.stage));
+			this.chat = new ChatBasic();
+			this.app = new App(this.stage);
+			if(Preloader.loader!=null) {
+				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
+			}
+		}
+		
+		private function onHalfPreloader():void 
+		{
+			stage.addChild(this.chat);
+			this.addChild(this.app);
 			this.addChild(this.mcOff);
 			stage.addChild(new movieMonitor());
-			if(Preloader.loader!=null) {
-				Preloader.loader.parent.removeChild(Preloader.loader);
-				Preloader.loader = null;
-			}
+			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onHalfPreloader} );
+		}
+		
+		private function onPreloader():void  {
+			Preloader.loader.parent.removeChild(Preloader.loader);
+			Preloader.loader = null;
 		}
 		
 		public function CloseApp(e:DataExchangeEvent = null):void {

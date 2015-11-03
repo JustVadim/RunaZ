@@ -26,8 +26,10 @@ package
 		}
 		
 		private function progress(e:ProgressEvent):void {
-			
-			//textf.text = getPers(int(e.bytesLoaded / e.bytesTotal * 100));
+			var pers:int = int(e.bytesLoaded / e.bytesTotal * 100);
+			Preloader.loader.mc.txt.text = this.getPers(pers);
+			Preloader.loader.mc.gotoAndStop(pers);
+			//textf.text = );
 		}
 		
 		private function getPers(per:int):String {
@@ -54,6 +56,7 @@ package
 		private function startup():void 
 		{
 			var mainClass:Class = getDefinitionByName("Main") as Class;
+			Preloader.loader.mc.txt.text = "Connection to server ... ";
 			addChild(new mainClass() as DisplayObject);
 		}
 		
