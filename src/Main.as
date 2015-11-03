@@ -77,7 +77,7 @@ package  {
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
 			stage.addChild(new movieMonitor());
-			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onHalfPreloader} );
+			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onPreloader} );
 		}
 		
 		private function onPreloader():void  {
