@@ -47,7 +47,7 @@
   <file-specs>
     <path-element>D:\Working\AS3Projects\RunaZ\src\Main.as</path-element>
   </file-specs>
-  <default-background-color>#FFFFFF</default-background-color>
+  <default-background-color>#000000</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
     <width>800</width>

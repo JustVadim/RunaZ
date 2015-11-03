@@ -11,63 +11,43 @@ package
 	import flash.text.TextField;
 	import flash.utils.getDefinitionByName;
 	
-	public class Preloader extends MovieClip 
-	{
-		private var textf:TextField = new TextField();
-		public function Preloader() 
-		{
-			if (stage) {
-				stage.scaleMode = StageScaleMode.NO_SCALE;
-				stage.align = StageAlign.TOP_LEFT;
-			}
-			addEventListener(Event.ENTER_FRAME, checkFrame);
-			loaderInfo.addEventListener(ProgressEvent.PROGRESS, progress);
-			loaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioError);
-			
-			//this.addChild(new mcLoader());
-			/*// TODO show loader
-			this.addChild(textf);
-			textf.text = "00%"*/
+	public class Preloader extends MovieClip {
+		public static var loader:mcLoader = new mcLoader();
+		
+		public function Preloader() {
+			this.addEventListener(Event.ENTER_FRAME, this.checkFrame);
+			this.loaderInfo.addEventListener(ProgressEvent.PROGRESS, this.progress);
+			this.loaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.ioError);
+			this.addChild(Preloader.loader);
 		}
 		
-		private function ioError(e:IOErrorEvent):void 
-		{
+		private function ioError(e:IOErrorEvent):void {
 			trace(e.text);
 		}
 		
-		private function progress(e:ProgressEvent):void 
-		{
-			// TODO update loader
-			textf.text = getPers(int(e.bytesLoaded / e.bytesTotal * 100));
+		private function progress(e:ProgressEvent):void {
+			
+			//textf.text = getPers(int(e.bytesLoaded / e.bytesTotal * 100));
 		}
 		
-		private function getPers(per:int):String 
-		{
-		
-			if (per < 10)
+		private function getPers(per:int):String {
+			if (per < 10) {
 				return "0" + per;
-			else
-				return per.toString();
+			}
+			return per.toString();
 		}
 		
-		private function checkFrame(e:Event):void 
-		{
-			if (currentFrame == totalFrames) 
-			{
-				stop();
-				loadingFinished();
+		private function checkFrame(e:Event):void {
+			if (this.currentFrame == this.totalFrames) {
+				this.stop();
+				this.loadingFinished();
 			}
 		}
 		
-		private function loadingFinished():void 
-		{
+		private function loadingFinished():void {
 			removeEventListener(Event.ENTER_FRAME, checkFrame);
 			loaderInfo.removeEventListener(ProgressEvent.PROGRESS, progress);
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioError);
-			
-			//TODO hide loader
-			//this.removeChild(this.textf);
-			
 			startup();
 		}
 		

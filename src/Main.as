@@ -67,6 +67,10 @@ package  {
 			this.addChild(this.app = new App(this.stage));
 			this.addChild(this.mcOff);
 			stage.addChild(new movieMonitor());
+			if(Preloader.loader!=null) {
+				Preloader.loader.parent.removeChild(Preloader.loader);
+				Preloader.loader = null;
+			}
 		}
 		
 		public function CloseApp(e:DataExchangeEvent = null):void {
