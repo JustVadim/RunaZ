@@ -10,8 +10,8 @@ package artur.display.battle {
 	
 	public class TopPanelBattle extends Sprite {
 		private var bg:Bitmap  = PrepareGr.creatBms(new mcBgTopPanelBatle(), false)[0];
-		private var bmActive:Bitmap = PrepareGr.creatBms(new mcActiveAuto(), false)[0];
-		private var bmActive2:Bitmap = PrepareGr.creatBms(new mcBtnsTopPanelBattle(), false)[0];
+		private var bmAutoFight :Bitmap = PrepareGr.creatBms(new mcActiveAuto(), false)[0];
+		private var bmHold        :Bitmap = PrepareGr.creatBms(new mcBtnsTopPanelBattle(), false)[0];
 		private var mcBtns:mcBtnTopPanelBatle = new mcBtnTopPanelBatle();
 		
 		private var winBattle:WinBattle;
@@ -21,8 +21,8 @@ package artur.display.battle {
 			this.tabEnabled = this.mouseEnabled = this.tabChildren = false;
 			this.x = 400;
 			this.addChild(bg);
-			this.addChild(bmActive);
-			this.addChild(bmActive2);
+			this.addChild(bmAutoFight);
+			this.addChild(bmHold);
 			this.addChild(mcBtns);
 			for (var i:int = 0; i < mcBtns.numChildren; i++) {
 				var mc:MovieClip = MovieClip(this.mcBtns.getChildAt(i));
@@ -66,11 +66,12 @@ package artur.display.battle {
 			mc.removeEventListener(MouseEvent.MOUSE_UP, this.up);
 		}
 		
-		public function init():void {
+		public function init():void 
+		{
 			App.spr.addChild(this);
 			this.mcBtns.over.gotoAndStop(1);
-			this.bmActive.visible = false;
-			this.bmActive2.visible = this.mcBtns.btnFree.visible = this.mcBtns.btnHold.visible = false;
+			this.bmAutoFight.visible = false;
+			this.bmHold.visible = true;
 		}
 		
 		private function up(e:MouseEvent):void {
@@ -109,7 +110,7 @@ package artur.display.battle {
 		}
 		
 		public function isAuto():Boolean {
-			return this.bmActive.visible;
+			return this.bmAutoFight.visible;
 		}
 		
 		private function onBtn(e:MouseEvent):void {
@@ -119,8 +120,8 @@ package artur.display.battle {
 				case this.mcBtns.btnHold:
 					break;
 				case this.mcBtns.btnAuto:
-					bmActive.visible = !bmActive.visible;
-					if (bmActive.visible && this.isOurStep()) {
+					bmAutoFight.visible = !bmAutoFight.visible;
+					if (bmAutoFight.visible && this.isOurStep()) {
 						Node(this.winBattle.grid.nodes[0][0]).sendStep();
 						return
 					}
