@@ -34,7 +34,8 @@ package artur.units
 		 public var vector:String = 'right';
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
 		 private static var sounds:Array = [{id:'bot1_fs1',frame:40},{id:'bot1_fs2',frame:50},{id:'bow1',frame:64},{ id:'pall_hurt', frame:69 },{id:'blade1',frame:66},{id:'bot1_die',frame:74},{id:'blade2',frame:74},];
-		 
+		  private static var normalScales:Array = [1, 1.5, 1, 1, 1, 1, 1, 1];
+		  private var lvl:int=1;
 		public function U_LykBot() 
 		{
 			this.mouseEnabled = false;
@@ -82,7 +83,7 @@ package artur.units
 			this._leg3L.addChild(legs3L[0]);
 			this._arrow.addChild(arrows[0]);
 		
-			itemUpdate ( [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] );
+			itemUpdate ( 0 );
 			
 		}
 		 public function onWalk():void
@@ -103,6 +104,8 @@ package artur.units
 		}
 		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
+			this.lvl = lvl;
+			normScale = normalScales[lvl - 1];
 			scaleX = normScale;
 			scaleY = normScale;
 			vector = 'right';
@@ -140,36 +143,16 @@ package artur.units
 			}
 			 
 		}
-		public function itemUpdate(obj:Object):void
+	    public function itemUpdate(ix:int=0):void
 		{
+			
 			for (var i:int = 0; i < parts.length; i++) 
 			{
-				Sprite(parts[i]).removeChildAt(1);
-				switch(true)
-			    {
-				    case (i == 0):
-					   Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[0])]);
-					   break;
-					case(i == 1):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[1])]);
-					    break;
-					case(i == 2):
-					    Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[5])]);
-					    break;
-					case(i == 3 || i == 4):
-						 Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[3])]);
-					    break;
-					case(i > 4 && i < 8):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[4])]);
-					    break;
-					case(i > 7 && i < 14):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[2])]);
-					    break;
-					case(i == 14):
-					     Sprite(parts[14]).addChild(this.parts_of_parts[i][int(obj[6])]);
-						 break;
-			   }
+			   Sprite(parts[i]).removeChildAt(1);
+			   Sprite(parts[i]).addChild(this.parts_of_parts[i][lvl-1]);
 			}
+
+			
 		}
 		
 	}
