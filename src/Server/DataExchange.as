@@ -111,10 +111,10 @@ package Server
 			temp_str = "";
 			socket.dispatchEvent(new DataExchangeEvent(DataExchangeEvent.DISCONECTED));
 			socket.removeEventListener(Event.CLOSE, onSocketClose);
-			if(socket.hasEventListener(ProgressEvent.SOCKET_DATA))
-			{
+			if(socket.hasEventListener(ProgressEvent.SOCKET_DATA)) {
 				socket.removeEventListener(ProgressEvent.SOCKET_DATA, onSocketDataHandler);
 			}
+			Main.THIS.CloseApp();
 			//socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
 			//socket.addEventListener(Event.CONNECT, onConnectHandler);
 			//recconect_timer.start();
@@ -138,10 +138,11 @@ package Server
 							switch(int(temp_obj.c))
 							{
 								case COMMANDS.new_window:
-									Main.THIS.CloseApp();
 									socket.removeEventListener(Event.CLOSE, onSocketClose);
 									socket.removeEventListener(ProgressEvent.SOCKET_DATA, onSocketDataHandler);
 									socket.close();
+									DataExchange.loged = false;
+									Main.THIS.CloseApp();
 								break;
 								case COMMANDS.new_user_comes:
 									temp_obj = JSON2.decode(temp_obj.m);

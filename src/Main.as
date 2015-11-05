@@ -6,8 +6,11 @@ package  {
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.system.Security;
+	import flash.utils.Timer;
 	import report.Report;
+	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Server.Lang;
@@ -32,7 +35,6 @@ package  {
 		}
 		
 		private function init(e:Event = null):void {
-			
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			Main.THIS = this;
@@ -47,7 +49,6 @@ package  {
 				DataExchange.setConnection();
 			} catch (err:Error) {
 				Report.addMassage("error" + err.getStackTrace() + " " + err.message + " "  +err.name);
-				
 			}
 		}
 		
@@ -66,6 +67,7 @@ package  {
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
+			this.updater();
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
@@ -85,7 +87,7 @@ package  {
 			Preloader.loader = null;
 		}
 		
-		public function CloseApp(e:DataExchangeEvent = null):void {
+		public function CloseApp():void {
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			while (this.numChildren > 0) {
 				this.removeChildAt(0);
@@ -93,5 +95,16 @@ package  {
 			this.chat.parent.removeChild(this.chat);
 		}
 		
+		private function updater():void {
+			var timer:Timer = new Timer(60000);
+			timer.addEventListener(TimerEvent.TIMER, this.onUpdate);
+			timer.start();
+		}
+		
+		private function onUpdate(e:TimerEvent):void  {
+			if(DataExchange.loged) {
+				new DataExchange().sendData("1500", "", false);
+			}
+		}
 	}
 }
