@@ -26,7 +26,7 @@ package
 		}
 		
 		private function progress(e:ProgressEvent):void {
-			var pers:int = int(e.bytesLoaded / e.bytesTotal * 100);
+			var pers:int = int(e.bytesLoaded / e.bytesTotal * 100 + 1);
 			Preloader.loader.mc.txt.text = this.getPers(pers);
 			Preloader.loader.mc.gotoAndStop(pers);
 			//textf.text = );
