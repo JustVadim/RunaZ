@@ -1,4 +1,5 @@
-package artur.display {
+package artur.display 
+{
 	import artur.App;
 	import artur.util.Maker;
 	import artur.win.WinCastle;
