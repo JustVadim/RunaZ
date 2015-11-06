@@ -95,6 +95,7 @@ package artur.win
 				WinBattle.battleChat.addChild(mc);
 			}
 			this.topPanel = new TopPanelBattle(this);
+			
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -223,11 +224,11 @@ package artur.win
 			var hp:int = 0;
 			var mp:int = 0;
 			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
-			uf(banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_MPBANKA) {
+			if(banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_MPBANKA) {
 				if (banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA) {
 					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
-				} else (banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_MPBANKA) {
+				} else {
 					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
 				}
