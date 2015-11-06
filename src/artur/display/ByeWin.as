@@ -1,17 +1,18 @@
-package artur.display 
-{
+package artur.display {
 	import artur.App;
 	import artur.util.Maker;
 	import artur.win.WinCastle;
+	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Utils.Functions;
 	import Utils.json.JSON2;
 	
-	public class ByeWin extends dialogBye
-	{
+	public class ByeWin extends dialogBye {
+		
 		private var btnGold:BaseButton;
 		private var btnSilver:BaseButton;
 		private var btnEx:BaseButton;
@@ -20,133 +21,116 @@ package artur.display
 		private var byeType:int = 0;
 		private var itemType:int;
 		private var invPlace:int = -1;
-		public function ByeWin() 
-		{
+		
+		public function ByeWin() {
+			Functions.SetPriteAtributs(this.iconGold, false, false);
+			Functions.SetPriteAtributs(this, false, true);
+			Functions.SetPriteAtributs(this.txtSilver, false, false);
+			Functions.SetPriteAtributs(this.txtGold, false, false);
+			Functions.SetPriteAtributs(this.iconGold, false, false);
 			
-			btnEx = new BaseButton(11); btnEx.x = 507.9; btnEx.y = 258.75-100;
-			btnGold = new BaseButton(12); btnGold.x = 364.9; btnGold.y = 352.55-100;
-			btnSilver = new BaseButton(12); btnSilver.x = 458.9; btnSilver.y = 352.55 - 100;
-			btnGold.name = 'gold'; btnSilver.name = 'silver'; btnEx.name = 'exit'
-			btnGold.addEventListener(MouseEvent.CLICK, onBtn);
-			btnSilver.addEventListener(MouseEvent.CLICK, onBtn);
-			btnEx.addEventListener(MouseEvent.CLICK, onBtn);
-			this.tabChildren = false;
-			this.tabEnabled = false;
-			this.iconGold.mouseEnabled = false;
-			this.iconGold.mouseChildren = false;
-			this.txtSilver.mouseChildren = false;
-			this.txtSilver.mouseEnabled = false;
-			this.txtGold.mouseEnabled = false;
-			this.txtGold.mouseChildren = false;
-			this.iconSilver.mouseChildren = false;
-			this.iconSilver.mouseEnabled = false;
-			this.iconGold.mouseEnabled = false;
-			this.iconGold.mouseChildren = false;
-			this.addChild(btnEx);
+			this.initBtn(this.btnEx = new BaseButton(11), 507.9, 158.75);
+			this.initBtn(this.btnSilver = new BaseButton(12), 458.9, 252.55);
+			this.initBtn(this.btnGold = new BaseButton(12), 352.55, 252.55);
+			this.addChild(this.btnEx);
 		}
-		public function init(text1:String = "", text2:String = "", priceGold:int = 0, priceSilver:int = 0, index:int = NaN, byeType:int = 0, itemType:int = NaN, invPlace:int = NaN):void
-		{
-			 
-			if (text1 == "") 
-			{
-				txt.text = "У вас не достаточно ресурсов, для этой покупки!";
-				if (this.contains(this.iconGold)) 	this.removeChild(this.iconGold);
-				if (this.contains(this.btnGold)) 	this.removeChild(this.btnGold);
-				if (this.contains(this.iconSilver)) this.removeChild(this.iconSilver);
-				if (this.contains(this.btnSilver)) 	this.removeChild(this.btnSilver);
-				if (this.contains(this.txtGold)) 	this.removeChild(this.txtGold);
-				if (this.contains(this.txtSilver)) 	this.removeChild(this.txtSilver);
-			}
-			else
-			{
+		
+		
+		private function initBtn(mc:BaseButton, xx:Number, yy:Number):void {
+			mc.x = xx;
+			mc.y = yy;
+			mc.addEventListener(MouseEvent.CLICK, this.onBtn);
+			Functions.SetPriteAtributs(mc, true, false);
+		}
+		
+		
+		public function init(text1:String = "", text2:String = "", priceGold:int = 0, priceSilver:int = 0, index:int = NaN, byeType:int = 0, itemType:int = NaN, invPlace:int = NaN):void {
+			if (text1 == "") {
+				this.txt.text = "У вас не достаточно ресурсов, для этой покупки!";
+				if (this.iconGold.parent) 	this.removeChild(this.iconGold);
+				if (this.btnGold.parent) 	this.removeChild(this.btnGold);
+				if (this.iconSilver.parent) this.removeChild(this.iconSilver);
+				if (this.btnSilver.parent) 	this.removeChild(this.btnSilver);
+				if (this.txtGold.parent) 	this.removeChild(this.txtGold);
+				if (this.txtSilver.parent) 	this.removeChild(this.txtSilver);
+			} else {
 				txt.text = String(text1 + '\n' + text2 + '\n за');
 				this.index = index;
 				this.byeType = byeType;
 				this.itemType = itemType;
 				this.invPlace = invPlace;
-				if (priceGold && WinCastle.isGold(priceGold))
-				{
+				if (priceGold && WinCastle.isGold(priceGold)) {
 					this.txtGold.text = String(priceGold);
 					this.addChild(this.btnGold);
 					this.addChild(this.iconGold);
 					this.addChild(this.txtGold); 
+				} else {
+					if (this.btnGold.parent) 	this.removeChild(this.btnGold);
+					if (this.iconGold.parent) 	this.removeChild(this.iconGold);
+					if (this.txtGold.parent) 	this.removeChild(this.txtGold);
 				}
-				else
-				{
-					if (this.contains(this.btnGold)) 	this.removeChild(this.btnGold);
-					if (this.contains(this.iconGold)) 	this.removeChild(this.iconGold);
-					if (this.contains(this.txtGold)) 	this.removeChild(this.txtGold);
-				}
-				if (WinCastle.isSilver(priceSilver))
-				{
+				if (WinCastle.isSilver(priceSilver)) {
 					this.txtSilver.text = String(priceSilver);
 					this.addChild(this.btnSilver);
 					this.addChild(this.txtSilver);
 					this.addChild(this.iconSilver);
-				}
-				else
-				{
-					if (this.contains(this.btnSilver))		this.removeChild(this.btnSilver);
-					if (this.contains(this.txtSilver)) 		this.removeChild(this.txtSilver);
-					if (this.contains(this.iconSilver))		this.removeChild(this.iconSilver);
+				} else {
+					if (this.btnSilver.parent)		this.removeChild(this.btnSilver);
+					if (this.txtSilver.parent) 		this.removeChild(this.txtSilver);
+					if (this.iconSilver.parent)		this.removeChild(this.iconSilver);
 				}
 			}
 			App.spr.addChild(this);
 		}
 		
-		private function onBtn(e:MouseEvent):void 
-		{
-			switch (byeType)
-			{
+		private function onBtn(e:MouseEvent):void {
+			var mc:BaseButton = BaseButton(e.currentTarget);
+			switch (byeType) {
 				case 0:
-					switch(e.currentTarget.name)
-				    {
-					case 'gold':
+					switch(mc) {
+					case this.btnGold:
 						bye(1);
 						break;
-					case 'silver':
+					case this.btnSilver:
 						bye(0);
 						break;
-					case 'exit':
+					case this.btnEx:
 						frees();
 						break;
 				    }
 				 break;
 			 case 1:
-				switch (e.currentTarget.name)
-				{
-					case 'gold':
+				switch (mc) {
+					case this.btnGold:
 						byeItem(1);
 						break;
-					case 'silver':
+					case this.btnSilver:
 						byeItem(0);
 						break;
-					case 'exit':
+					case this.btnEx:
 						frees();
 						break;
 				}
 				break;
 			case 2:
-				switch (e.currentTarget.name)
-				{
-					case 'silver':
+				switch (mc) {
+					case this.btnSilver:
 						frees();
 						WinCastle.chest.sellItem();
 						break;
-					case 'exit':
+					case this.btnEx:
 						WinCastle.chest.putItemOnOldPlace();
 						frees();
 						break;
 				}
 				break; 
 			case 3:
-				switch (e.currentTarget.name)
-				{
-					case 'silver':
+				switch (mc) {
+					case this.btnSilver:
 						frees();
 						WinCastle.inventar.sellItem();
 						break;
-					case 'exit':
+					case this.btnEx:
 						WinCastle.inventar.putOnOldPlace()
 						frees();
 						break;
@@ -156,8 +140,7 @@ package artur.display
 			
 		}
 		
-		public function bye(indexPrice:int):void
-		{
+		public function bye(indexPrice:int):void {
 			frees();
 			App.lock.init();
 			var obj:Object = { ns:WinCastle.currSlotClick, hn:index, p:indexPrice };
@@ -193,9 +176,7 @@ package artur.display
 				WinCastle.getCastle().updateSlots();
 				WinCastle.txtCastle.scroll.visible = false;
 			 App.lock.frees();
-			}
-			else
-			{
+			} else {
 				App.lock.init('Error: '+obj.error)
 			}
 			//unlock crab
@@ -218,7 +199,7 @@ package artur.display
 					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(unit));
 					Report.addMassage(this.itemType + " " + this.index);
 					WinCastle.inventar.updateItem(this.itemType, this.index);
-					//WinCastle.txtCastle.scroll.visible = false;
+					WinCastle.inventar.calculateUnitStats(Functions.GetHeroChars(), unit, 1);
 				} else {
 					unit.inv[invPlace] = Maker.clone(UserStaticData.magazin_items[UserStaticData.hero.units[int(WinCastle.currSlotClick)].t ][itemType][index]);
 					WinCastle.inventar.updateInv(this.invPlace, unit);
@@ -231,8 +212,7 @@ package artur.display
 			}
 		}
 		
-		public function frees():void
-		{
+		public function frees():void {
 			App.spr.removeChild(this);
 		}
 		

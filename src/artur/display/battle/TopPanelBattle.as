@@ -7,6 +7,7 @@ package artur.display.battle {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import report.Report;
 	
 	public class TopPanelBattle extends Sprite {
 		private var bg:Bitmap  = PrepareGr.creatBms(new mcBgTopPanelBatle(), false)[0];
@@ -32,6 +33,7 @@ package artur.display.battle {
 			mcBtns.over.mouseChildren = mcBtns.over.mouseEnabled = false;
 			mcBtns.over.gotoAndStop(1);
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
+			this.bmAutoFight.visible = true;
 		}
 		
 		private function onAddedToStage(e:Event):void {	
@@ -120,12 +122,16 @@ package artur.display.battle {
 				case this.mcBtns.btnHold:
 					break;
 				case this.mcBtns.btnAuto:
-					bmAutoFight.visible = !bmAutoFight.visible;
+					this.bmAutoFight.visible = !this.bmAutoFight.visible;
+					
+					this.mcBtns.btnHold.visible = false;
+					this.bmHold.visible = false;
+					
 					if (bmAutoFight.visible && this.isOurStep()) {
 						Node(this.winBattle.grid.nodes[0][0]).sendStep();
 						return
 					}
-					this.setDefence(this.isOurStep());
+					
 					break;
 				case this.mcBtns.btnFree:
 					break;
@@ -138,9 +144,10 @@ package artur.display.battle {
 			return WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam && WinBattle.anim.length == 0;
 		}
 		
-		private function setDefence(state:Boolean):void  {
-			if(this.isAuto()) {
-				mcBtns.btnHold.visible = state;
+		public function setDefence(state:Boolean):void  {
+			if (!this.isAuto()) {
+				this.mcBtns.btnHold.visible = state;
+				this.bmHold.visible = state;
 			}
 		}
 	}
