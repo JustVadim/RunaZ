@@ -121,8 +121,6 @@ package artur.display
 		
 		public function init1(unit:Object, anim:Boolean = true, xx:int = 10, yy:int = 50):void {
 			this.bin = true;
-			Report.addMassage(JSON.stringify(unit));
-			Report.addMassage(this.battle_init);
 			if (anim) {
 				this.alpha = 0;
 				this.scaleX = this.scaleY = 0.2;

@@ -216,28 +216,28 @@ package artur.win
 			}
 		}
 		
-		private function useBanochka(obj:Object):void 
-		{
+		private function useBanochka(obj:Object):void {
 			var hps:Object = WinBattle.bat.hps[obj.tu.t];
 			var mps:Object = WinBattle.bat.mps[obj.tu.t];
 			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
 			var hp:int = 0;
 			var mp:int = 0;
-			var banka:Object = UserStaticData.magazin_items[unit.t][Items.BANOCHKATYPE][obj.ban];
-			Report.addMassage(JSON2.encode(banka));
-			if (banka.c[Items.BANOCHKATYPE_TYPE] == Items.BANOCHKATYPE_HP) {
-				Report.addMassage(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY]);
-				hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
-				LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
-			} else if (banka.c[Items.BANOCHKATYPE_TYPE] == Items.BANOCHKATYPE_MP) {
-				mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
-				LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
+			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
+			uf(banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_MPBANKA) {
+				if (banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA) {
+					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
+					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
+				} else (banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_MPBANKA) {
+					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
+					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
+				}
+				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
+				var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
+				var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+				EffManajer.effBotleHill.init(node.x, node.y);
+				return;
 			}
-			LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
-			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
-			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
-			App.sound.playSound("eff_heal", App.sound.onVoice, 1);
-			EffManajer.effBotleHill.init(node.x, node.y);
 		}
 		
 		private function onUltimateData(obj:Object):void {

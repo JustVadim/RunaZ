@@ -10,6 +10,7 @@ package artur.util
 	import flash.geom.Point;
 	import flash.ui.*;
 	import flash.display.SimpleButton;
+	import report.Report;
 	
 	public class RemindCursors extends Sprite 
 	{ 
@@ -38,14 +39,14 @@ package artur.util
 		 * Изменяет текущий курсор на заданный
 		 * @param	$name	Имя курсора
 		 */
-		public function changeCursor($name:String):void 
-		{
+		public function changeCursor($name:String):void {
 			if ($name != null) {
 				var numCursors: int = cursors.length;
-				for (var i:int = 0; i < numCursors; i++) 
-				{
+				for (var i:int = 0; i < numCursors; i++) {
 					if (cursors[i].name == $name) {
-						Mouse.cursor = $name;
+						if(Mouse.cursor != $name) {
+							Mouse.cursor = $name;
+						}
 						break;
 					}
 				}
@@ -150,31 +151,23 @@ package artur.util
 			enableButtonListeners = true;
 		}
 		
-		private function mouseOver(e:MouseEvent):void 
-		{
+		private function mouseOver(e:MouseEvent):void {
+			e.updateAfterEvent();
 			var mc:Object = e.target;
-			if (!RemindCursors.is_ult)
-			{
-				if (('buttonMode' in mc) && mc.buttonMode == true || mc is BaseButton)
-				{
-					changeCursor(btnCursor);
-				}
-				else
-				{
-					if (mainCursor != "") 
-					{
-						changeCursor(mainCursor);
-					} 
-					else 
-					{
-						Mouse.cursor = "arrow";
-					}
-				}
-			}
-			else
-			{
+			if(RemindCursors.is_ult) {
 				changeCursor("ult");
+				return
 			}
+			if(e.target is SimpleButton) {
+				changeCursor(btnCursor);
+				return;
+			}
+			if (('buttonMode' in mc) && mc.buttonMode == true || mc is BaseButton) {
+				changeCursor(btnCursor);
+				return;
+			}
+			changeCursor(mainCursor);
+			
 		}
 		
 		

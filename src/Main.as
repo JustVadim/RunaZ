@@ -15,6 +15,7 @@ package  {
 	import Server.DataExchangeEvent;
 	import Server.Lang;
 	import Utils.json.JSON2;
+	import flash.ui.Mouse;
 	//method=getProfiles&fields=first_name,last_name,photo_100&uids={viewer_id}&format=json&v=2.0
 	[Frame(factoryClass = "Preloader")]
 	public class Main extends Sprite {
@@ -65,6 +66,7 @@ package  {
 		private function onLogin(e:DataExchangeEvent = null):void {
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
+			
 			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
 			this.updater();
