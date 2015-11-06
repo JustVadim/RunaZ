@@ -194,6 +194,7 @@ package artur.display.battle
 		}
 		
 		public function sendStep(obj:Object = null):void {
+			WinBattle.inst.topPanel.setDefence(false);
 			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
 			WinBattle.inst.grid.clearNodesControl();
 			WinBattle.inst.disableBanochki();

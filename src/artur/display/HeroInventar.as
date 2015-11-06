@@ -20,6 +20,7 @@ package artur.display
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Utils.Functions;
 	import Utils.json.JSON2;
 	
 	public class HeroInventar extends Sprite  {
@@ -146,14 +147,14 @@ package artur.display
 			}
 			var chars:Object;
 			if(!this.battle_init) {
-				chars = [0, UserStaticData.hero.skills.energy * 10 , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
+				chars = Functions.GetHeroChars();
 				this.mcText.mcFreeskils.visible = unit.fs > 0;
 				this.enabledAllEvents(true);
 			} else {
 				this.x = xx; this.y = yy;
 				chars = [0, 0, 0, 0, 0];
 			}
-			this.calculateUnitStats(chars, unit);
+			this.calculateUnitStats(chars, unit,1);
 			this.updateSkillsStats(unit);
 			if (unit.ult != null) {
 				this.mcText.sk_ult.visible = true;
@@ -166,7 +167,7 @@ package artur.display
 			App.spr.addChild(this);
 		}
 		
-		private function calculateUnitStats(chars:Object, unit:Object):void {
+		public function calculateUnitStats(chars:Object, unit:Object, fsd:int):void {
 			for (var key:Object in unit.it) {
 				for (var key2:Object in unit.it[key].c ) {
 					chars[int(key2)] += unit.it[key].c[key2];
@@ -376,6 +377,7 @@ package artur.display
 					onBuffOut(e);
 					onBuffOver(e);
 					removeClickEventFromBuff(unit.fs == 0);
+					mcText.mcFreeskils.visible = unit.fs > 0;
 					App.lock.frees();
 				}
 				else {
@@ -455,7 +457,6 @@ package artur.display
 					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onPutItemToChest);
 					var send_obj:Object = { cn:cellNum, un:int(WinCastle.currSlotClick), it:itemType, invP:this.invPlace };
 					data.sendData(COMMANDS.FROM_UNIT_TO_CHEST, JSON2.encode(send_obj), true);
-					Report.addMassage("sendtochest");
 				} else {
 					this.putOnOldPlace();
 				}
@@ -483,6 +484,7 @@ package artur.display
 				delete(obj.ch);
 				WinCastle.chest.frees();
 				WinCastle.chest.init();
+				this.calculateUnitStats(Functions.GetHeroChars(), unit, 1);
 				App.lock.frees();
 			} else {
 				this.putOnOldPlace();
@@ -514,6 +516,7 @@ package artur.display
 			}
 			WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
 			WinCastle.mcSell.removeEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
+			WinCastle.mcSell.gotoAndStop(1);
 			Mouse.show();
 			WinCastle.chest.removePutEvents();
 			this.enabledAllEvents(true);

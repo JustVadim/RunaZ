@@ -67,7 +67,7 @@ package artur.win
 		public static var battleChat:BattleChat = new BattleChat();
 		public static var sprGift:GiftDialog;
 		private var gift_id:int = 0;
-		private var topPanel:TopPanelBattle;
+		public var topPanel:TopPanelBattle;
 		
 		public function WinBattle() 
 		{
@@ -438,9 +438,7 @@ package artur.win
 			this.grid.lightUnits(bat.locs[0], bat.hps[0], 0);
 			this.grid.lightUnits(bat.locs[1], bat.hps[1], 1);
 			
-			if (cus.t == myTeam)
-			{
-				
+			if (cus.t == myTeam) {
 				var r:int;
 				var is_arr:int;
 				var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
@@ -448,19 +446,18 @@ package artur.win
 				r = cur_unit.sp;
 				is_arr = cur_unit.t_d;
 				if (WinBattle.anim.length == 0) {
-					if (!this.topPanel.isAuto()) {
+					Report.addMassage(this.topPanel.isAuto());
+					if (this.topPanel.isAuto() == false) {
 						grid.showAvailableCells(loc.x, loc.y, r, is_arr);
 						this.makeUltimate(cur_unit, cus);
 						this.makeBanochki(cur_unit, cus);
+						this.topPanel.setDefence(true);
 					} else {
-						/////if battle!end
 						Node(this.grid.nodes[0][0]).sendStep();
 					}
 				}
 				WinBattle.ult_btn.gotoAndStop(cur_unit.t+2);
-			}
-			else
-			{
+			} else {
 				WinBattle.ult_btn.gotoAndStop(1);
 				WinBattle.ult_btn.mc.visible = false;
 				WinBattle.ult_btn.buttonMode = false;
