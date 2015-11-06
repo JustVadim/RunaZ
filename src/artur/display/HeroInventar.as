@@ -526,7 +526,7 @@ package artur.display
 		}
 		
 		private function itemOut(e:MouseEvent):void {
-			var mc:MovieClip = MovieClip(e.currentTarget);
+			var mc:MovieClip = MovieClip(e.target);
 			this.itemOutDirect(mc);
 		}
 		
@@ -543,7 +543,7 @@ package artur.display
 		}
 		
 		private function itemOver(e:MouseEvent):void {
-			var bat:MovieClip = MovieClip(e.currentTarget);
+			var bat:MovieClip = MovieClip(e.target);
 			bat.mc.scaleX = 1.3;
 			bat.mc.scaleY = 1.3;
 			App.btnOverFilter.color = 0xFBFBFB;

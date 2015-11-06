@@ -36,7 +36,7 @@ package artur.display
 			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
 			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
 			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1']
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
 		]
 		
 		public function ItemCall() 
