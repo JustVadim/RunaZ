@@ -95,6 +95,7 @@ package artur.win
 				WinBattle.battleChat.addChild(mc);
 			}
 			this.topPanel = new TopPanelBattle(this);
+			
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
