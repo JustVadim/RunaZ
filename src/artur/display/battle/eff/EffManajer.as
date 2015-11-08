@@ -6,7 +6,7 @@ package artur.display.battle.eff
 	
 	public class EffManajer
 	{
-		private static var data:Array = [{type: 'base', className: BaseEff}, {type: 'text', className: TextEff}];
+		private static var data:Array = [{type: 'base', className: BaseEff}, {type: 'text', className: TextEff},{type: 'manaHill', className:BotleManaEff},{type: 'swDeff', className:SwDeffEff},{type: 'swAtack', className:SwAtackEff}];
 		public static var pool:Array = [];
 		public static var lgs:Lightning = new Lightning();
 		private static var lgsDell:int = 0;

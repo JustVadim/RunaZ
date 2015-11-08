@@ -5,7 +5,10 @@ package artur.win
 	import artur.display.battle.BattleChat;
 	import artur.display.battle.BattleGrid;
 	import artur.display.battle.eff.BaseEff;
+	import artur.display.battle.eff.BotleManaEff;
 	import artur.display.battle.eff.EffManajer;
+	import artur.display.battle.eff.SwAtackEff;
+	import artur.display.battle.eff.SwDeffEff;
 	import artur.display.battle.LifeManajer;
 	import artur.display.battle.MoveUnit;
 	import artur.display.battle.Node;
@@ -218,6 +221,7 @@ package artur.win
 		}
 		
 		private function useBanochka(obj:Object):void {
+			
 			var hps:Object = WinBattle.bat.hps[obj.tu.t];
 			var mps:Object = WinBattle.bat.mps[obj.tu.t];
 			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
@@ -237,6 +241,9 @@ package artur.win
 				var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
 				EffManajer.effBotleHill.init(node.x, node.y);
+				//SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
+				//SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
+				//BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
 				return;
 			}
 		}
