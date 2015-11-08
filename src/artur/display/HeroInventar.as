@@ -405,12 +405,13 @@ package artur.display
 				mc.removeEventListener(MouseEvent.ROLL_OVER, this.itemOver);
 				mc.removeEventListener(MouseEvent.ROLL_OUT, this.itemOut);
 				mc.removeEventListener(MouseEvent.CLICK, onItem);
+				mc.removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemDown);
 			}
 		}
 		
 		private function onItemDown(e:MouseEvent):void {
 			App.info.frees();
-			var mc:MovieClip = MovieClip(e.currentTarget);
+			var mc:MovieClip = MovieClip(e.target);
 			if (mc.currentFrame != 1) {
 				Mouse.hide();
 				this.itemOutDirect(mc);
@@ -526,11 +527,13 @@ package artur.display
 		}
 		
 		private function itemOut(e:MouseEvent):void {
+			Report.addMassage("over");
 			var mc:MovieClip = MovieClip(e.target);
 			this.itemOutDirect(mc);
 		}
 		
 		private function itemOutDirect(mc:MovieClip):void {
+			Report.addMassage("Direct");
 			App.info.frees();
 			mc.mc.scaleX = 1;
 			mc.mc.scaleY = 1;

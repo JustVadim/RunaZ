@@ -239,10 +239,10 @@ package artur.win
 				EffManajer.effBotleHill.init(node.x, node.y);
 				return;
 			}
+			
 		}
 		
 		private function onUltimateData(obj:Object):void {
-			
 			var ef_coord:Object;
 			var node:Node;
 			switch(obj.t) {
