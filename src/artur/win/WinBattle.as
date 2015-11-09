@@ -5,7 +5,10 @@ package artur.win
 	import artur.display.battle.BattleChat;
 	import artur.display.battle.BattleGrid;
 	import artur.display.battle.eff.BaseEff;
+	import artur.display.battle.eff.BotleManaEff;
 	import artur.display.battle.eff.EffManajer;
+	import artur.display.battle.eff.SwAtackEff;
+	import artur.display.battle.eff.SwDeffEff;
 	import artur.display.battle.LifeManajer;
 	import artur.display.battle.MoveUnit;
 	import artur.display.battle.Node;
@@ -218,25 +221,43 @@ package artur.win
 		}
 		
 		private function useBanochka(obj:Object):void {
+			
 			var hps:Object = WinBattle.bat.hps[obj.tu.t];
 			var mps:Object = WinBattle.bat.mps[obj.tu.t];
 			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
 			var hp:int = 0;
 			var mp:int = 0;
 			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
-			if(banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_MPBANKA) {
-				if (banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA) {
+			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
+			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+			if(banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
+				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+				if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA) {
 					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
+					EffManajer.effBotleHill.init(node.x, node.y);
 				} else {
 					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
+					BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
 				}
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
-				var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
-				var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+				
+				//SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
+				//SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
+				//
+				return;
+			}
+			if(banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVDeffence) {
 				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
-				EffManajer.effBotleHill.init(node.x, node.y);
+				SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
+				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
+				return;
+			}
+			if(banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVAttack) {
+				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+				SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
+				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 				return;
 			}
 			
@@ -287,16 +308,15 @@ package artur.win
 			t_obj[obj.whm.p] = obj.hpl;
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
+			
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			if (obj.hpl == 0) {
 				this.grid.clearNodesControl();
 				var coord:Object = bat.locs[obj.whm.t][obj.whm.p];
 				hurt_unit.gotoAndPlay("die");
 				hurt_unit.addEventListener("DIE", this.mover.onUnitDie);
-				for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
-				{
-					if (WinBattle.sortArr[i] == hurt_unit)
-					{
+				for (var i:int = 0; i < WinBattle.sortArr.length; i++) {
+					if (WinBattle.sortArr[i] == hurt_unit) {
 						WinBattle.sortArr.splice(i, 1);
 						break;
 					}

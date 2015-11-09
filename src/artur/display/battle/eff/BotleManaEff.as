@@ -10,16 +10,17 @@ package artur.display.battle.eff
 	 * ...
 	 * @author art
 	 */
-	public class BotleHillEff extends Sprite
+	public class BotleManaEff extends Sprite
 	{
 		private var frm:Array = [];
 		private var currFrame:int;
 		private var maxFrame:int;
 		private var currImg:Bitmap;
 		public var free:Boolean = true;
-		public function BotleHillEff() 
+		public var type:String = 'manaHill'
+		public function BotleManaEff() 
 		{
-			frm = PrepareGr.creatBms(new EffHillBotl(), false);
+			frm = PrepareGr.creatBms(new EffManallBotl(), false);
 			maxFrame = frm.length-3;
 		}
 		public function init(xp:int,yp:int):void
@@ -40,6 +41,7 @@ package artur.display.battle.eff
 			if (currFrame++ >maxFrame) 
 			{
 				App.dellFromArr(this, EffManajer.pool);
+				App.dellFromArr(this, WinBattle.sortArr);
 				frees();
 				return;
 			}
