@@ -71,7 +71,7 @@ package artur.win
 		public static var sprGift:GiftDialog;
 		private var gift_id:int = 0;
 		public var topPanel:TopPanelBattle;
-		
+		public static var bigLifeBar:mcBigLifeBar = new mcBigLifeBar();
 		public function WinBattle() 
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
@@ -80,6 +80,8 @@ package artur.win
 			WinBattle.winAfterBattle.tabChildren = WinBattle.winAfterBattle.tabEnabled = WinBattle.looseAfterBattle.tabChildren = WinBattle.looseAfterBattle.tabEnabled = false;
 			WinBattle.hero_inv = new HeroInventar(true);
 			inst = this;
+			bigLifeBar.y = 528.2;
+			bigLifeBar.x = -443.9;
 			arrow.gotoAndStop(1);
 			atackNode = new AttackNode();
 			this.chekLifeBar.buttonMode = true;
@@ -155,7 +157,7 @@ package artur.win
 			Main.THIS.chat.visible = false;
 			Main.THIS.stage.addChild(WinBattle.battleChat);
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
-			
+			App.spr.addChild(bigLifeBar);
 		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 
@@ -228,28 +230,42 @@ package artur.win
 			var hp:int = 0;
 			var mp:int = 0;
 			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
-			if(banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_MPBANKA) {
-				if (banka.c[Items.BANOCHKATYPE_TYPE] == Items.INVENTAR_HPBANKA) {
+			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
+			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+			if(banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
+				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+				if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA) {
 					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
+					EffManajer.effBotleHill.init(node.x, node.y);
 				} else {
 					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
+					BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
 				}
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
-				var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
-				var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
-				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
-				EffManajer.effBotleHill.init(node.x, node.y);
+				
 				//SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
 				//SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
-				//BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
+				//
 				return;
 			}
+			if(banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVDeffence) {
+				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+				SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
+				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
+				return;
+			}
+			if(banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVAttack) {
+				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+				SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
+				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
+				return;
+			}
+			
 		}
 		
 		private function onUltimateData(obj:Object):void {
-			
 			var ef_coord:Object;
 			var node:Node;
 			switch(obj.t) {
@@ -294,16 +310,15 @@ package artur.win
 			t_obj[obj.whm.p] = obj.hpl;
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
+			
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			if (obj.hpl == 0) {
 				this.grid.clearNodesControl();
 				var coord:Object = bat.locs[obj.whm.t][obj.whm.p];
 				hurt_unit.gotoAndPlay("die");
 				hurt_unit.addEventListener("DIE", this.mover.onUnitDie);
-				for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
-				{
-					if (WinBattle.sortArr[i] == hurt_unit)
-					{
+				for (var i:int = 0; i < WinBattle.sortArr.length; i++) {
+					if (WinBattle.sortArr[i] == hurt_unit) {
 						WinBattle.sortArr.splice(i, 1);
 						break;
 					}

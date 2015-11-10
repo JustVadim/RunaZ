@@ -15,8 +15,7 @@ package artur.display
 	import Utils.Functions;
 	import Utils.json.JSON2;
 	
-	public class Chest extends Sprite
-	{
+	public class Chest extends Sprite {
 		public var  wd:int = 5;
 		public var  hg:int  = 8;
 		public var grid:Array = new Array();
@@ -27,17 +26,14 @@ package artur.display
 		public var upped_item_call:ItemCall;
 		private var uppedItemObj:Object;
 		
-		
 		public function Chest() {
 			this.name = "chest"
-			this.mouseEnabled = this.tabEnabled = this.tabChildren = false;
+			Functions.SetPriteAtributs(this, false, true);
 			for (var yp:int = 0; yp < hg; yp++) {
 				for (var xp:int = 0; xp < wd; xp++) {
 					var pos:int = yp * wd + xp;
 					var mc:MovieClip = new mcCall();
-					mc.mouseChildren = mc.tabChildren = mc.tabEnabled = false;
-					mc.x = xp * mc.width;
-					mc.y = yp * mc.width;
+					Functions.SetPriteAtributs(mc, true, false, xp * mc.width, yp * mc.width);
 					mc.gotoAndStop(1);
 					this.grid[pos] = mc;
 					this.addChild(mc);
