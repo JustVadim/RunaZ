@@ -6,6 +6,7 @@ package artur.display {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
+	import report.Report;
 	
 	public class Slot extends Sprite {
 		public var btnByeUnit:BaseButton;
@@ -86,11 +87,8 @@ package artur.display {
 			}
 		}
 		
-		public function init():void
-		{
-			
-			 if (UserStaticData.hero.units[int(name)] == null) 
-			 {
+		public function init():void {
+			 if (UserStaticData.hero.units[int(name)] == null) {
 				if (this.unit != null && this.contains(MovieClip(this.unit)))
 				{
 					this.removeChild(this.lvl_star);
@@ -99,7 +97,7 @@ package artur.display {
 				this.addChild(btnByeUnit);
 			 }
 			 else
-			 {
+			 { 
 				if (!WinCastle.getCastle().mcCurr.parent)
 				{
 					WinCastle.currSlotClick = this.name;

@@ -213,19 +213,14 @@ package artur.display.battle
 		{
 			DataExchange(e.target).removeEventListener(e.type, getRess);
 			var obj:Object = JSON2.decode(e.result);
-			if (obj.error== null) 
-			{
+			if (obj.error== null) {
 				App.lock.frees();
+				return
 			}
-			else
-			{
-				App.lock.init(obj.error);
-			}
+			App.lock.init(obj.error);
 		}
-		public function clearControl():void
-		{
-			if (this.hasEventListener(MouseEvent.ROLL_OVER))
-			{
+		public function clearControl():void {
+			if (this.hasEventListener(MouseEvent.ROLL_OVER)) {
 				this.removeEventListener(MouseEvent.CLICK, moveNode);
 				this.removeEventListener(MouseEvent.ROLL_OUT, onOut);
 				this.removeEventListener(MouseEvent.ROLL_OVER, onOver);
@@ -236,22 +231,18 @@ package artur.display.battle
 			this.onOut1();
 		}
 		
-		public function resetFP():void
-		{
+		public function resetFP():void {
 			this.checked = false;
 			this.rad = 1000;
 		}
 		
-		public function setRadius(radius:int):void 
-		{
-			if (this.rad > radius)
-			{
+		public function setRadius(radius:int):void {
+			if (this.rad > radius) {
 				this.rad = radius;
 			}
 		}
 		
-		public function makeUlt():void 
-		{
+		public function makeUlt():void {
 			this.buttonMode = true;
 			this.mc.gotoAndStop(2);
 			this.addEventListener(MouseEvent.CLICK, this.onUltClick);
@@ -264,6 +255,7 @@ package artur.display.battle
 		}
 		
 		private function onUltClick(e:MouseEvent):void {
+			App.lock.init();
 			var key:int = -1;
 			var loopKey:Object;
 			var bat:Object = WinBattle.bat;
