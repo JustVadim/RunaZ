@@ -712,6 +712,7 @@ package artur.win
 		}
 		
 		static public function makeUltimate(whom:int):void {
+			
 			WinBattle.inst.removeUltEvents();
 			WinBattle.inst.grid.disLightUltCells(WinBattle.bat.u[WinBattle.myTeam][WinBattle.bat['set'][WinBattle.bat.cus].p].t);
 			var data:DataExchange = new DataExchange();
