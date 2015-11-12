@@ -83,7 +83,6 @@ package artur.display.battle
 			var bar:mcBar = un_Data[t][p].bar;
 			bar.x = unit.x;
 			bar.y = unit.y + unit._head.y* unit.normScale - unit._head.height / 3;
-			//obj.unit.y + (obj.unit._head.y*obj.unit.normScale) - obj.unit._head.height/3;
 		}
 		
 		public static function updateCurrLife(t:int, p:int):void
@@ -103,6 +102,8 @@ package artur.display.battle
 			}
 			
 		}
+		
+		
 		
 		public static function updateCurrMannaPoing():void
 		{

@@ -23,6 +23,8 @@ package artur
 	
 	public class App extends Sprite
 	{
+		[Embed(source = "../../bin/sounds/useBotle.mp3")]    private var s_useBotl:Class;
+		[Embed(source = "../../bin/sounds/Switok.mp3")]    private var s_Switok:Class;
 		[Embed(source = "../../bin/sounds/BramaCnock.mp3")]    private var s_Cnock:Class;
 		[Embed(source = "../../bin/sounds/BramaMove.mp3")]      private var s_Move:Class;
 		[Embed(source = "../../bin/sounds/overItem.mp3")]          private var over_item:Class;
@@ -50,6 +52,8 @@ package artur
 		
 		public function App(stg:Stage) 
 		{
+			sound.addSound('sw', new s_Switok());
+			sound.addSound('botl', new s_useBotl());
 			sound.addSound('cnock', new s_Cnock());
 			sound.addSound('move', new s_Move());
 			sound.addSound('over1', new Over());

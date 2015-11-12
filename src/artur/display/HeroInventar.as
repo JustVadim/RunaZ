@@ -428,9 +428,8 @@ package artur.display
 				this.call.x = App.spr.mouseX  - this.call.width / 2 + 8;
 				this.call.y = App.spr.mouseY - this.call.height / 2 + 8;
 				mc.gotoAndStop(1);
-				
 				this.enabledAllEvents(false);
-				WinCastle.chest.initPutItemEvents(UserStaticData.magazin_items[this.heroType][this.itemType][this.itemID]);
+				WinCastle.chest.initPutItemEvents(UserStaticData.magazin_items[this.heroType][this.itemType][this.itemID-1]);
 				Main.THIS.stage.addEventListener(MouseEvent.MOUSE_MOVE, this.dragMove);
 				Main.THIS.stage.addEventListener(Event.MOUSE_LEAVE, onMouseLeave);
 				Main.THIS.stage.addEventListener(MouseEvent.MOUSE_UP, this.onItemUp);

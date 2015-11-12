@@ -143,19 +143,15 @@ package Server
 									socket.close();
 									DataExchange.loged = false;
 									Main.THIS.CloseApp();
+									App.lock.init("New window was opened");
 								break;
 								case COMMANDS.new_user_comes:
 									temp_obj = JSON2.decode(temp_obj.m);
 									UserStaticData.users_info[temp_obj["id"]] = temp_obj;
-									{
-										UserStaticData.users_info[temp_obj["id"]][6] = 1; 
-									}
-									if (!Main.THIS.chat.find_user.text == "Поиск игрока")
-									{
+									UserStaticData.users_info[temp_obj["id"]][6] = 1; 
+									if (!Main.THIS.chat.find_user.text == "Поиск игрока") {
 										Main.THIS.chat.updateUserList(Main.THIS.chat.find_user.text);
-									}
-									else
-									{
+									} else {
 										Main.THIS.chat.updateUserList();
 									}
 									break;

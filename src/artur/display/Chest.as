@@ -190,6 +190,7 @@ package artur.display
 		
 		
 		public function initPutItemEvents(item:Object):void {
+			Report.addMassage(JSON2.encode(item));
 			this.uppedItemObj = item;
 			for (var i:int = 0; i < items.length; i++) {
 				ItemCall(items[i]).mouseEnabled = false;
@@ -241,6 +242,7 @@ package artur.display
 		
 		
 		public function isFreeCells(num:int = -1, xx:int = 0, yy:int = 0):Boolean {
+			Report.addMassage(JSON2.encode(this.uppedItemObj));
 			if(num != -1) {
 				yy = num / this.wd;
 				xx = num - yy * this.wd;

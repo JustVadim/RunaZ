@@ -57,7 +57,6 @@ package artur.win
 		public static var effManajer:EffManajer = new EffManajer();
 		public var lifeManajer:LifeManajer  = new LifeManajer();
 		public  var chekLifeBar:CheckLife = new CheckLife();
-		//public  var chekAvtoboi:ChecAvtoboi = new ChecAvtoboi();
 		public var bin:Boolean = false;
 		private var unitsInWin:Array = [];
 		public static var winAfterBattle:mcAfterBattle = new mcAfterBattle();
@@ -71,7 +70,7 @@ package artur.win
 		public static var sprGift:GiftDialog;
 		private var gift_id:int = 0;
 		public var topPanel:TopPanelBattle;
-		public static var bigLifeBar:mcBigLifeBar = new mcBigLifeBar();
+		public var bigLifeBar:mcBigLifeBar = new mcBigLifeBar();
 		public function WinBattle() 
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
@@ -232,8 +231,10 @@ package artur.win
 			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
 			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
 			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
-			if(banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
-				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) 
+			{
+				
+			    App.sound.playSound("botl", App.sound.onVoice, 1);
 				if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA) {
 					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
@@ -244,20 +245,18 @@ package artur.win
 					BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
 				}
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
-				
-				//SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
-				//SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
-				//
 				return;
 			}
-			if(banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVDeffence) {
-				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVDeffence) 
+			{
+				App.sound.playSound("sw", App.sound.onVoice, 1);
 				SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 				return;
 			}
-			if(banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVAttack) {
-				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVAttack) 
+			{
+				App.sound.playSound("sw", App.sound.onVoice, 1);
 				SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 				return;
@@ -304,38 +303,51 @@ package artur.win
 			var t_obj:Object = bat.mps[obj.wh.t];
 			t_obj[obj.wh.p] = obj.mcl;
 			LifeManajer.un_Data[obj.wh.t][obj.wh.p].currMana = obj.mcl;
-			LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
+			
 			//whom unit
 			t_obj = bat.hps[obj.whm.t];
 			t_obj[obj.whm.p] = obj.hpl;
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
-			LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
 			
-			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
-			if (obj.hpl == 0) {
-				this.grid.clearNodesControl();
-				var coord:Object = bat.locs[obj.whm.t][obj.whm.p];
-				hurt_unit.gotoAndPlay("die");
-				hurt_unit.addEventListener("DIE", this.mover.onUnitDie);
-				for (var i:int = 0; i < WinBattle.sortArr.length; i++) {
-					if (WinBattle.sortArr[i] == hurt_unit) {
-						WinBattle.sortArr.splice(i, 1);
-						break;
-					}
+			if (obj.t == 0 || obj.t == 1) {
+				if (WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam && !this.topPanel.isAuto() && WinBattle.anim.length == 0) {
+					this.getControlAfterUlt(false);
 				}
-				WinBattle.bat.map.grid[coord.x][coord.y].id = 0;
-				Node(WinBattle.inst.grid.nodes[coord.x][coord.y]).walcable = 0;
-				WinBattle.units[obj.whm.t][obj.whm.p] = null;
-				this.getControlAfterUlt(false);
-			} else {
-				if (obj.t == 2 || obj.t == 3) {
-					var tim1:Timer;;
-					if (obj.t == 2) tim1 = new Timer(470, 1);
-					else if (obj.t == 3) tim1 = new Timer(100, 1);
-					tim1.addEventListener(TimerEvent.TIMER_COMPLETE, function onTimCompl(e:TimerEvent):void { tim1.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimCompl); hurt_unit.gotoAndPlay("hurt") } );
-					tim1.start();
-				}
+				LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
+				LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
+				return;
 			}
+			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
+			var tim1:Timer;;
+			if (obj.t == 2) tim1 = new Timer(470, 1);
+			else if (obj.t == 3) tim1 = new Timer(100, 1);
+			tim1.addEventListener(TimerEvent.TIMER_COMPLETE, 
+				function onTimCompl(e:TimerEvent):void {
+					tim1.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimCompl); 
+					if (WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam && !topPanel.isAuto() && WinBattle.anim.length == 0) {
+						getControlAfterUlt(false);
+					}
+					LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
+					LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
+					if (obj.hpl != 0) {
+						hurt_unit.gotoAndPlay("hurt");
+						return
+					}
+					var coord:Object = bat.locs[obj.whm.t][obj.whm.p];
+					hurt_unit.gotoAndPlay("die");
+					hurt_unit.addEventListener("DIE", mover.onUnitDie);
+					for (var i:int = 0; i < WinBattle.sortArr.length; i++) {
+						if (WinBattle.sortArr[i] == hurt_unit) {
+							WinBattle.sortArr.splice(i, 1);
+							break;
+						}
+					}
+					WinBattle.bat.map.grid[coord.x][coord.y].id = 0;
+					Node(WinBattle.inst.grid.nodes[coord.x][coord.y]).walcable = 0;
+					WinBattle.units[obj.whm.t][obj.whm.p] = null;
+				} 
+			);
+			tim1.start();
 		}
 		
 		private function onLgsTimerCplt(e:TimerEvent):void 
@@ -445,32 +457,33 @@ package artur.win
 		}
 		 
 		public function setCurrStep():void {
-			
 			this.ult_clicked = false;
 			WinBattle.sortSpr();
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
 			if (currUnit != null) {
 				currUnit.filters = []; currUnit.shawdow.alpha = 1; 
 			}
-			currUnit = WinBattle.units[cus.t][cus.p]; 
+			WinBattle.currUnit = WinBattle.units[cus.t][cus.p]; 
 			App.btnOverFilter.color = 0xFFFFFF;
 			MovieClip(currUnit).filters = [App.btnOverFilter]; currUnit.shawdow.alpha = 0;
 			WinBattle.showCurrUnit(cus.t);
 			this.grid.clearNodesControl();
 			this.grid.lightUnits(bat.locs[0], bat.hps[0], 0);
 			this.grid.lightUnits(bat.locs[1], bat.hps[1], 1);
+			var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
+			var lifeObject:Object = LifeManajer.un_Data[cus.t][cus.p];
+			this.bigLifeBar.mcLife.gotoAndStop(int(1 + lifeObject.currLife / lifeObject.maxLife * 100));
+			this.bigLifeBar.mcLife.txt.text = lifeObject.currLife + "/" + lifeObject.maxLife;
+			this.bigLifeBar.mcMana.gotoAndStop(int(1 + lifeObject.currMana / lifeObject.maxMana * 100));
+			this.bigLifeBar.mcMana.txt.text = lifeObject.currMana + "/" + lifeObject.maxMana;
 			
-			if (cus.t == myTeam) {
-				var r:int;
-				var is_arr:int;
-				var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
+			if (cus.t == myTeam && WinBattle.anim.length == 0) {
+				var is_arr:int = cur_unit.t_d;
+				var r:int = cur_unit.sp;
 				var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
-				r = cur_unit.sp;
-				is_arr = cur_unit.t_d;
 				if (WinBattle.anim.length == 0) {
-					Report.addMassage(this.topPanel.isAuto());
 					if (this.topPanel.isAuto() == false) {
-						grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+						this.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
 						this.makeUltimate(cur_unit, cus);
 						this.makeBanochki(cur_unit, cus);
 						this.topPanel.setDefence(true);
@@ -600,12 +613,9 @@ package artur.win
 			WinBattle.ult_btn.buttonMode = true;
 		}
 		 
-		private function onUltClick(e:MouseEvent):void 
-		{
-			if (!RemindCursors.is_ult)
-			{
-				if (WinBattle.atackNode.parent)
-				{
+		private function onUltClick(e:MouseEvent):void {
+			if (!RemindCursors.is_ult) {
+				if (WinBattle.atackNode.parent) {
 					WinBattle.atackNode.parent.removeChild(WinBattle.atackNode);
 					WinBattle.atackNode.currNode = null;
 				}
@@ -615,15 +625,12 @@ package artur.win
 				var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
 				var unit_type:int = WinBattle.bat.u[WinBattle.myTeam][cus.p].t;
 				this.grid.highLightUltCells(unit_type);
-			}
-			else
-			{
+			} else {
 				RemindCursors.is_ult = false;
 				App.cursor.changeCursor(App.cursor.mainCursor);
 				this.addUltEvents();
 				this.grid.disLightUltCells(unit_type);
 				this.getControlAfterUlt(true);
-				
 			}
 		}
 		 
@@ -643,30 +650,25 @@ package artur.win
 			effManajer.update();
 		}
 		
-		public function frees():void
-		{
+		public function frees():void {
 			DataExchange.socket.removeEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
 			this.freeUnits(units[0]);
 			this.freeUnits(units[1]);
-			
 			WinBattle.units = null;
 			this.lifeManajer.frees();
 			WinBattle.atackNode.frees();
 			this.grid.frees();
 			this.addListenersToChekboks(this.chekLifeBar, 2, false);
-		
 			this.mover.unit = null;
 			this.mover.cur_obj = null;
 			WinBattle.currUnit = null;
 			UserStaticData.hero.bat = -1;
 			UserStaticData.hero.mbat = null;
 			effManajer.frees();
-			for (var i:int = 0; i < unitsInWin.length; i++) 
-			{
+			for (var i:int = 0; i < unitsInWin.length; i++) {
 				unitsInWin[i].frees();
 			}
 			sortArr.splice(0, sortArr.length);
-			
 		}
 		
 		private function freeUnits(unit:Object):void 
@@ -685,8 +687,9 @@ package artur.win
 		{
 			myTeam = - 1;
 			var id:String = UserStaticData.from + UserStaticData.id;
-			if (UserStaticData.hero.bat > -1)
-			{WinBattle.bat= UserStaticData.hero.mbat; }
+			if (UserStaticData.hero.bat > -1) {
+				WinBattle.bat= UserStaticData.hero.mbat; 
+			}
 			if (WinBattle.bat.ids[0] == id)
 			{myTeam = 0;}
 			else if (WinBattle.bat.ids[1] == id)
@@ -728,7 +731,7 @@ package artur.win
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.res != null)
 			{
-				WinBattle.inst.getControlAfterUlt(false);
+				App.lock.frees();
 			}
 		}
 		
