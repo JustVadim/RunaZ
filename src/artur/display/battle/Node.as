@@ -101,33 +101,25 @@ package artur.display.battle
 			}
 		}
 		
-		public function onOver1(e:MouseEvent = null):void 
-		{
-			if (this.walcable == 1)
-			{
+		public function onOver1(e:MouseEvent = null):void {
+			if (this.walcable == 1) {
 				var key:Object;
 				var unit_local:Object;
-				for (key in WinBattle.bat.locs[0])
-				{
-					if (WinBattle.bat.locs[0][key].x == this.xp && WinBattle.bat.locs[0][key].y == this.yp)
-					{
+				for (key in WinBattle.bat.locs[0]) {
+					if (WinBattle.bat.locs[0][key].x == this.xp && WinBattle.bat.locs[0][key].y == this.yp) {
 						unit_local = WinBattle.bat.u[0][key];
 						break;
 					}
 				}
-				if (unit_local == null)
-				{
-					for (key in WinBattle.bat.locs[1])
-					{
-						if (WinBattle.bat.locs[1][key].x == this.xp && WinBattle.bat.locs[1][key].y == this.yp)
-						{
+				if (unit_local == null) {
+					for (key in WinBattle.bat.locs[1]) {
+						if (WinBattle.bat.locs[1][key].x == this.xp && WinBattle.bat.locs[1][key].y == this.yp) {
 							unit_local = WinBattle.bat.u[1][key];
 							break;
 						}
 					}
 				}
-				if (unit_local != null)
-				{
+				if (unit_local != null) {
 					Node.unit = unit_local;
 					Node.unit_info_timer.start();
 					Node.x_ = (this.x < 410)?this.x + 30:this.x - WinBattle.hero_inv.width + this.width / 2;

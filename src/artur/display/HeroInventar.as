@@ -166,9 +166,11 @@ package artur.display
 		}
 		
 		public function calculateUnitStats(chars:Object, unit:Object, fsd:int):void {
-			for (var key:Object in unit.it) {
-				for (var key2:Object in unit.it[key].c ) {
-					chars[int(key2)] += unit.it[key].c[key2];
+			if(!this.battle_init) {
+				for (var key:Object in unit.it) {
+					for (var key2:Object in unit.it[key].c ) {
+						chars[int(key2)] += unit.it[key].c[key2];
+					}
 				}
 			}
 			this.compareAndSet(this.mcText.txtLife, unit.hp);
