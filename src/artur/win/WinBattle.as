@@ -231,8 +231,10 @@ package artur.win
 			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
 			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
 			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
-			if(banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
-				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) 
+			{
+				
+			    App.sound.playSound("botl", App.sound.onVoice, 1);
 				if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA) {
 					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
@@ -245,14 +247,16 @@ package artur.win
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 				return;
 			}
-			if(banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVDeffence) {
-				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVDeffence) 
+			{
+				App.sound.playSound("sw", App.sound.onVoice, 1);
 				SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 				return;
 			}
-			if(banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVAttack) {
-				App.sound.playSound("eff_heal", App.sound.onVoice, 1);
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVAttack) 
+			{
+				App.sound.playSound("sw", App.sound.onVoice, 1);
 				SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 				return;
