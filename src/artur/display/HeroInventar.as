@@ -20,6 +20,7 @@ package artur.display
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Server.Lang;
 	import Utils.Functions;
 	import Utils.json.JSON2;
 	
@@ -526,13 +527,11 @@ package artur.display
 		}
 		
 		private function itemOut(e:MouseEvent):void {
-			Report.addMassage("over");
 			var mc:MovieClip = MovieClip(e.target);
 			this.itemOutDirect(mc);
 		}
 		
 		private function itemOutDirect(mc:MovieClip):void {
-			Report.addMassage("Direct");
 			App.info.frees();
 			mc.mc.scaleX = 1;
 			mc.mc.scaleY = 1;
@@ -546,6 +545,7 @@ package artur.display
 		
 		private function itemOver(e:MouseEvent):void {
 			var bat:MovieClip = MovieClip(e.target);
+			var itemId:int = int(bat.name);
 			bat.mc.scaleX = 1.3;
 			bat.mc.scaleY = 1.3;
 			App.btnOverFilter.color = 0xFBFBFB;
@@ -557,7 +557,7 @@ package artur.display
 			}
 			App.sound.playSound('overItem', App.sound.onVoice, 1);
 			if (bat.currentFrame == 1) {
-				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {txtInfo_w:135,txtInfo_h:37,txtInfo_t:"Нажмите, чтобы\n купить вещь",type:0} )
+				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {title:Lang.getTitle(1, itemId), txtInfo_w:200, txtInfo_h:37,txtInfo_t:"Нажмите, чтобы\n купить вещь",type:0} )
 			} else {
 				switch(true) {
 					case (int(bat.name) < 5):
