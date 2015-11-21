@@ -31,6 +31,16 @@ package Server
 			lang_table[0][19] = ["Кровавый прибой", "", "", ""];
 			lang_table[0][20] = ["Прах и ярость", "", "", ""];
 			lang_table[0][21] = ["БОСС", "", "", ""];
+			
+			Lang.lang_table[1] = new Array();
+			Lang.lang_table[1][0] = ["Шлем", "", ""];
+			Lang.lang_table[1][1] = ["Кольчуга", "", ""];
+			Lang.lang_table[1][2] = ["Сапоги", "", ""];
+			Lang.lang_table[1][3] = ["Наплечники", "", ""];
+			Lang.lang_table[1][4] = ["Перчатки", "", ""];
+			Lang.lang_table[1][5] = ["Оружие", "", ""];
+			Lang.lang_table[1][6] = ["Щиты", "", ""];
+			Lang.lang_table[1][7] = ["Инвентарь", "", ""];
 		}
 		
 		public function Lang()

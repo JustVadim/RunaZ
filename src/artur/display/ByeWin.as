@@ -29,7 +29,6 @@ package artur.display
 			Functions.SetPriteAtributs(this.txtSilver, false, false);
 			Functions.SetPriteAtributs(this.txtGold, false, false);
 			Functions.SetPriteAtributs(this.iconGold, false, false);
-			
 			this.initBtn(this.btnEx = new BaseButton(11), 507.9, 158.75);
 			this.initBtn(this.btnSilver = new BaseButton(12), 458.9, 252.55);
 			this.initBtn(this.btnGold = new BaseButton(12), 352.55, 252.55);
