@@ -7,7 +7,12 @@ package artur.display.battle {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.PerspectiveProjection;
 	import report.Report;
+	import Server.COMMANDS;
+	import Server.DataExchange;
+	import Server.DataExchangeEvent;
+	import Utils.json.JSON2;
 	
 	public class TopPanelBattle extends Sprite {
 		private var bg:Bitmap  = PrepareGr.creatBms(new mcBgTopPanelBatle(), false)[0];
@@ -74,6 +79,7 @@ package artur.display.battle {
 			this.mcBtns.over.gotoAndStop(1);
 			this.bmAutoFight.visible = false;
 			this.bmHold.visible = true;
+			this.btnsEventsAdd(this.mcBtns.btnFree);
 		}
 		
 		private function up(e:MouseEvent):void {
@@ -134,10 +140,26 @@ package artur.display.battle {
 					
 					break;
 				case this.mcBtns.btnFree:
+					App.lock.init();
+					var data:DataExchange = new DataExchange();
+					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onSurrenderRes);
+					data.sendData(COMMANDS.SURRENDER, "", true);
+					this.btnsEventsRemove(this.mcBtns.btnFree);
+					this.out(e);
 					break;
 			
 			}
 			
+		}
+		
+		private function onSurrenderRes(e:DataExchangeEvent):void 
+		{
+			var res:Object = JSON2.decode(e.result);
+			if(res.res) {
+				App.lock.frees();
+			} else {
+				App.lock.init(res.error);
+			}
 		}
 		
 		private function isOurStep():Boolean {

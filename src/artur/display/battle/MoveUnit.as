@@ -23,6 +23,7 @@ package artur.display.battle {
 		public var unit:MovieClip;
 		private var timer:Timer = new Timer(2, 1);
 		public var cur_obj:Object;
+		public var otherAnim:Boolean = false;
 		private var arrow:mcAtackArrow = new mcAtackArrow();
 		private var is_range:Boolean = true;
 		private var type:int;
@@ -49,7 +50,8 @@ package artur.display.battle {
 			if (this.cur_obj.a != null && this.cur_obj.a.b[4] != null) {
 				this.temp_attack = this.cur_obj.a.b[4];
 			}
-			bin = true;
+			this.bin = true;
+			this.otherAnim = false;
 			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
 			WinBattle.inst.grid.clearNodesControl();
 			WinBattle.inst.removeUltEvents();
@@ -62,26 +64,28 @@ package artur.display.battle {
 		}
 		
 		public function update():void {
-			if (bin) {
-				var is_run:Boolean = (this.unit.currentLabel == "run");
-				if (step == 0 && (path.length - 1) > 0) {
-					this.onStepMake(is_run);
-				} else if (step > 0) {
-					this.onUnitMove(is_run);
-				} else {
-					if (is_run) {
-						this.unit.x = this.path[0].x;
-						this.unit.y = this.path[0].y + 10;
-						if(LifeManajer.bin)
-							LifeManajer.unpateCurrMove(cur_obj.m.u.t, cur_obj.m.u.p);
-					}
-					if (this.cur_obj.a == null) {
-						this.frees();
+			if (this.bin) {
+				if (this.otherAnim == false) {
+					var is_run:Boolean = (this.unit.currentLabel == "run");
+					if (step == 0 && (path.length - 1) > 0) {
+						this.onStepMake(is_run);
+					} else if (step > 0) {
+						this.onUnitMove(is_run);
 					} else {
-						if (this.unit.currentLabel != "atack1" && this.arrow_anim == 0) {
-							this.makeAttack();
+						if (is_run) {
+							this.unit.x = this.path[0].x;
+							this.unit.y = this.path[0].y + 10;
+							if(LifeManajer.bin)
+								LifeManajer.unpateCurrMove(cur_obj.m.u.t, cur_obj.m.u.p);
+						}
+						if (this.cur_obj.a == null) {
+							this.frees();
 						} else {
-							this.attackAnim();	
+							if (this.unit.currentLabel != "atack1" && this.arrow_anim == 0) {
+								this.makeAttack();
+							} else {
+								this.attackAnim();	
+							}
 						}
 					}
 				}

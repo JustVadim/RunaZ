@@ -71,6 +71,8 @@ package artur.win
 		private var gift_id:int = 0;
 		public var topPanel:TopPanelBattle;
 		public var bigLifeBar:mcBigLifeBar = new mcBigLifeBar();
+		
+		
 		public function WinBattle() 
 		{
 			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
@@ -179,6 +181,7 @@ package artur.win
 		 
 		 public function onBattleMassage(e:DataExchangeEvent):void 
 		 {
+			 Report.addMassage(e.result);
 			var obj:Object = JSON2.decode(e.result);
 			WinBattle.anim.push(obj);
 		 }
@@ -265,6 +268,8 @@ package artur.win
 		}
 		
 		private function onUltimateData(obj:Object):void {
+			mover.bin = true;
+			mover.otherAnim = true
 			var ef_coord:Object;
 			var node:Node;
 			switch(obj.t) {
@@ -303,35 +308,36 @@ package artur.win
 			var t_obj:Object = bat.mps[obj.wh.t];
 			t_obj[obj.wh.p] = obj.mcl;
 			LifeManajer.un_Data[obj.wh.t][obj.wh.p].currMana = obj.mcl;
-			
 			//whom unit
 			t_obj = bat.hps[obj.whm.t];
 			t_obj[obj.whm.p] = obj.hpl;
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
-			
-			if (obj.t == 0 || obj.t == 1) {
-				if (WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam && !this.topPanel.isAuto() && WinBattle.anim.length == 0) {
-					this.getControlAfterUlt(false);
-				}
-				LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
-				LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
-				return;
-			}
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			var tim1:Timer;;
-			if (obj.t == 2) tim1 = new Timer(470, 1);
-			else if (obj.t == 3) tim1 = new Timer(100, 1);
+			if (obj.t == 2 || obj.t == 0 || obj.t == 1) {
+				tim1 = new Timer(470, 1);
+			}else if (obj.t == 3) {
+				tim1 = new Timer(250, 1);
+			}
+			
 			tim1.addEventListener(TimerEvent.TIMER_COMPLETE, 
 				function onTimCompl(e:TimerEvent):void {
 					tim1.removeEventListener(TimerEvent.TIMER_COMPLETE, onTimCompl); 
+					mover.bin = false;
+					mover.otherAnim = false;
 					if (WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam && !topPanel.isAuto() && WinBattle.anim.length == 0) {
 						getControlAfterUlt(false);
 					}
 					LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
 					LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
-					if (obj.hpl != 0) {
-						hurt_unit.gotoAndPlay("hurt");
-						return
+					
+					if (obj.t == 2 || obj.t == 3) {
+						if(obj.hpl != 0) {
+							hurt_unit.gotoAndPlay("hurt");
+							return;
+						}
+					} else {
+						return;
 					}
 					var coord:Object = bat.locs[obj.whm.t][obj.whm.p];
 					hurt_unit.gotoAndPlay("die");
@@ -481,6 +487,10 @@ package artur.win
 				var is_arr:int = cur_unit.t_d;
 				var r:int = cur_unit.sp;
 				var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
+				WinBattle.ult_btn.gotoAndStop(cur_unit.t + 2);
+				if(WinBattle.ult_btn.currentFrame!=1){
+					WinBattle.ult_btn.mcBg.visible = false;
+				}
 				if (WinBattle.anim.length == 0) {
 					if (this.topPanel.isAuto() == false) {
 						this.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
@@ -491,7 +501,6 @@ package artur.win
 						Node(this.grid.nodes[0][0]).sendStep();
 					}
 				}
-				WinBattle.ult_btn.gotoAndStop(cur_unit.t+2);
 			} else {
 				WinBattle.ult_btn.gotoAndStop(1);
 				WinBattle.ult_btn.mc.visible = false;
@@ -501,10 +510,8 @@ package artur.win
 			
 		}
 		
-		private function makeBanochki(cur_unit:Object, cus:Object = null):void 
-		{
-			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
-			{
+		private function makeBanochki(cur_unit:Object, cus:Object = null):void {
+			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) {
 				this.updateBanochka(cur_unit, i);
 			}
 		}
@@ -603,6 +610,10 @@ package artur.win
 			WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
 			WinBattle.ult_btn.removeEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
 			WinBattle.ult_btn.removeEventListener(MouseEvent.CLICK, this.onUltClick);
+			if (WinBattle.ult_btn.currentFrame != 1) {
+				WinBattle.ult_btn.mcBg.visible = false;
+			}
+			
 		}
 		
 		private function addUltEvents():void
@@ -634,14 +645,17 @@ package artur.win
 			}
 		}
 		 
-		private function onUltOut(e:MouseEvent):void 
-		{
-			
+		private function onUltOut(e:MouseEvent):void {
+			if(WinBattle.ult_btn.currentFrame > 1) {
+				WinBattle.ult_btn.mcBg.visible = false;
+			}
 		}
 		 
-		private function onUltOver(e:MouseEvent):void 
-		{
-			
+		private function onUltOver(e:MouseEvent):void {
+			if(WinBattle.ult_btn.currentFrame > 1) {
+				WinBattle.ult_btn.mcBg.visible = true;
+			}
+			App.sound.playSound("over1", App.sound.onVoice, 1);
 		}
 		 
 		public function update():void
