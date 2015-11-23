@@ -17,8 +17,8 @@ package artur.util
 		
 		public var sounds:Dictionary;
 		public var currPlayingSounds:Dictionary;
-		public var onVoice:Number = 0.6;
-		public var onSound:Number = 0.4;
+		public var onVoice:Number = 0//0.6;
+		public var onSound:Number = 0//0.4;
 		public function SoundManager(pvt:PrivateClass)
 		{
 			sounds = new Dictionary();
