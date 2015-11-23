@@ -186,19 +186,16 @@ package artur.win
 			WinBattle.anim.push(obj);
 		 }
 		 
-		public function makeStep():void
-		{
+		public function makeStep():void {
 			var obj:Object = anim.shift();
-			if (obj.m != null)
-			{
+			if (obj.m != null) {
 				var is_r:Boolean;
 				var type:int;
 				var loc:Object = WinBattle.bat.locs[obj.m.u.t][obj.m.u.p];
 				var unit:Object = WinBattle.bat.u[obj.m.u.t][obj.m.u.p];
 				is_r = (unit.t_d == 1);
 				type = unit.t;
-				if (unit.b[5] != null)
-				{
+				if (unit.b[5] != null) {
 					delete(unit.b[5]);
 					WinBattle.currUnit.hideBuff();
 				}
@@ -209,23 +206,16 @@ package artur.win
 				loc.x = obj.m.x;
 				loc.y = obj.m.y;
 				bat.cus = obj.n;
-			}
-			else if (obj.whm != null)
-			{
+			} else if (obj.whm != null) {
 				this.onUltimateData(obj)
-			}
-			else if (obj.ban != null)
-			{
+			} else if (obj.ban != null) {
 				this.useBanochka(obj);
-			}
-			else if(obj.is_w != null)
-			{
+			} else if(obj.is_w != null) {
 				this.endBattle(obj)
 			}
 		}
 		
 		private function useBanochka(obj:Object):void {
-			
 			var hps:Object = WinBattle.bat.hps[obj.tu.t];
 			var mps:Object = WinBattle.bat.mps[obj.tu.t];
 			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
@@ -234,31 +224,38 @@ package artur.win
 			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
 			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
 			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
-			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) 
-			{
-				
+		
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
 			    App.sound.playSound("botl", App.sound.onVoice, 1);
 				if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA) {
 					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
 					EffManajer.effBotleHill.init(node.x, node.y);
+					this.bigLifeBar.mcLife.txt.text = hps[obj.tu.p] + "/" + unit.hp;
+					this.bigLifeBar.mcLife.gotoAndStop(int(1 + hps[obj.tu.p] / unit.hp * 100))
 				} else {
 					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
 					BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
+					this.bigLifeBar.mcMana.txt.text = mps[obj.tu.p] + "/" + unit.mp;
+					this.bigLifeBar.mcMana.gotoAndStop(int(1 + mps[obj.tu.p] / unit.mp * 100));
+					if (!this.topPanel.isAuto() && WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam) {
+						this.makeUltimate(unit, WinBattle.bat['set'][WinBattle.bat.cus]);
+						//Report.addMassage("CheckUltimate");
+					}
 				}
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 				return;
 			}
-			if (banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVDeffence) 
-			{
+			
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVDeffence)  {
 				App.sound.playSound("sw", App.sound.onVoice, 1);
 				SwDeffEff(EffManajer.getEff('swDeff')).init(node.x, node.y);
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
 				return;
 			}
-			if (banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVAttack) 
-			{
+			
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INTENTAR_SVAttack) {
 				App.sound.playSound("sw", App.sound.onVoice, 1);
 				SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
@@ -272,6 +269,7 @@ package artur.win
 			mover.otherAnim = true
 			var ef_coord:Object;
 			var node:Node;
+			WinBattle.bat.is_ult = true;
 			switch(obj.t) {
 				case 0:
 					App.sound.playSound("battle_cry", App.sound.onVoice, 1);
@@ -330,13 +328,19 @@ package artur.win
 					}
 					LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
 					LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
+					bigLifeBar.mcMana.txt.text = WinBattle.bat.mps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].mp;
+					bigLifeBar.mcMana.gotoAndStop(1 + int(WinBattle.bat.mps[obj.wh.t][obj.wh.p] * 100 / WinBattle.bat.u[obj.wh.t][obj.wh.p].mp));
 					
 					if (obj.t == 2 || obj.t == 3) {
 						if(obj.hpl != 0) {
 							hurt_unit.gotoAndPlay("hurt");
 							return;
 						}
-					} else {
+					} else if (obj.t == 1 && obj.wh.p == obj.whm.p) {
+						bigLifeBar.mcLife.txt.text = WinBattle.bat.hps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].hp;
+						bigLifeBar.mcLife.gotoAndStop(1 + int(100 * WinBattle.bat.hps[obj.wh.t][obj.wh.p] / WinBattle.bat.u[obj.wh.t][obj.wh.p].hp));
+						return
+					}else {
 						return;
 					}
 					var coord:Object = bat.locs[obj.whm.t][obj.whm.p];
@@ -369,7 +373,8 @@ package artur.win
 		}
 		
 		private function endBattle(obj:Object):void {
-			WinBattle.bat.is_end
+			WinBattle.bat.is_end = true;
+			App.info.frees();
 			this.grid.clearNodesControl();
 			var mc:MovieClip;
 			if (obj.is_w) {
@@ -588,17 +593,13 @@ package artur.win
 			
 		}
 		
-		private function makeUltimate(cur_unit:Object, cus:Object):void 
-		{
+		private function makeUltimate(cur_unit:Object, cus:Object):void {
 			var t_mp:Object = bat.mps[myTeam];
-			if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && t_mp[cus.p] >= cur_unit.ult.mc && !bat.is_ult)
-			{
+			if (cur_unit.ult != null && cur_unit.ult.lvl != 0 && t_mp[cus.p] >= cur_unit.ult.mc && !bat.is_ult) {
 				WinBattle.ult_btn.mc.visible = false;
 				WinBattle.ult_btn.buttonMode = true;
 				this.addUltEvents();
-			}
-			else
-			{
+			} else {
 				WinBattle.ult_btn.mc.visible = true;
 				this.removeUltEvents();
 			}
@@ -723,8 +724,7 @@ package artur.win
 			WinBattle.arrow.play();
 		}
 		 
-		static public function sortSpr():void 
-		{
+		static public function sortSpr():void {
 			var newArr:Array = sortArr.sortOn('y', Array.NUMERIC);
 			for (var j:int = 0; j < newArr.length; j++) 
 				spr.addChild(newArr[j]); 

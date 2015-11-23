@@ -10,7 +10,8 @@ package artur.display.battle.eff
 		public static var pool:Array = [];
 		public static var lgs:Lightning = new Lightning();
 		private static var lgsDell:int = 0;
-        public static var effBotleHill:BotleHillEff = new BotleHillEff();		
+        public static var effBotleHill:BotleHillEff = new BotleHillEff();	
+		
 		public function EffManajer()
 		{
 		
@@ -37,12 +38,9 @@ package artur.display.battle.eff
 			}
 		}
 		
-		public static function getEff(type:String):Object
-		{
-			for (var i:int = 0; i < pool.length; i++)
-			{
-				if (pool[i].type == type && pool[i].free)
-				{
+		public static function getEff(type:String):Object {
+			for (var i:int = 0; i < pool.length; i++) {
+				if (pool[i].type == type && pool[i].free) {
 					return pool[i];
 				}
 			} 

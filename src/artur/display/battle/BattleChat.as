@@ -10,6 +10,7 @@ package artur.display.battle
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Utils.json.JSON2;
@@ -111,13 +112,13 @@ package artur.display.battle
 			this.input_text.alpha = 1;
 		}
 		
-		public function addMassage(obj:Object):void
-		{
+		public function addMassage(obj:Object):void {
+			
 			var mass:TextField = new TextField();
-			mass.x = 200; mass.y = -20;
+			mass.x = 5; mass.y = 520;
 			mass.text = obj.mass;
 			this.addChild(mass);
-			TweenLite.to(mass, 0.5, { alpha:0, delay: 1, onComplete: onMass } );
+			TweenLite.to(mass, 2, { alpha:0, delay: 2, onComplete: onMass } );
 			this.massages.push(mass);
 			for (var i:int = massages.length-1; i >=0 ; i--) {
 				if (TextField(this.massages[i]).stage) {

@@ -6,10 +6,7 @@ package artur.display.battle.eff
 	import artur.win.WinBattle;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class SwAtackEff extends Sprite
 	{
 		private var frm:Array = [];
