@@ -191,8 +191,7 @@ package Server
 								App.winManajer.swapWin(3);
 								break;
 							case int(COMMANDS.SEND_BATTLE_MASSEGE):
-								if (WinBattle.battleChat.stage)
-								{
+								if (WinBattle.battleChat.stage) {
 									WinBattle.battleChat.addMassage(JSON2.decode(temp_obj.m));
 								}
 								break;
@@ -232,6 +231,7 @@ package Server
 									Main.THIS.chat.updateUserList();
 								}
 								loged = true;
+								Report.addMassage(temp_obj.m);
 								socket.dispatchEvent(new DataExchangeEvent(DataExchangeEvent.ON_LOGIN_COMPLETE));
 							}
 							else

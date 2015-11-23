@@ -7,10 +7,7 @@ package artur.display.battle.eff
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import report.Report;
-	/**
-	 * ...
-	 * @author art
-	 */
+	
 	public class SwDeffEff extends Sprite
 	{
 		private var frm:Array = [];

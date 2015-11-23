@@ -3,6 +3,8 @@ package artur.win
 	import artur.App;
 	import artur.display.MyBitMap;
 	import flash.display.Bitmap;
+	import report.Report;
+	import Server.Lang;
 	
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -26,6 +28,8 @@ package artur.win
 		
 		public function WinManajer() 
 		{
+			Report.addMassage(UserStaticData.hero.bat)
+			Report.addMassage(JSON2.encode(UserStaticData.hero.mbat));
 			if (UserStaticData.hero.bat == -1)
 			{
 				swapWin(0)
@@ -102,7 +106,8 @@ package artur.win
 				unit.lvl = obj.lvl;
 				unit.nle = obj.nle;
 				unit.fs = obj.fs;
-				App.closedDialog.init("У одного из вашых воинов повысился уровень, зайдите  в замок чтобы улучшить его",true);
+				App.closedDialog.init(Lang.getTitle(2), true);
+				
 			}
 			else
 			{

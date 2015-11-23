@@ -20,6 +20,7 @@ package artur.win
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Server.Lang;
 	
 	public class WinRoot 
 	{
@@ -28,7 +29,7 @@ package artur.win
 		private var btns:Array = [];
 		private var mcText:mcTextRootWin = new mcTextRootWin();
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
-		private var names:Array = ['Банк', 'Топ', 'Замок', 'Арена', 'Кузнеца', 'Карта'];
+		//private var names:Array = ['Банк', 'Топ', 'Замок', 'Арена', 'Кузнеца', 'Карта'];
 		
 		
 		
@@ -75,10 +76,11 @@ package artur.win
 		private function onOverBtn(e:MouseEvent):void {
 			MovieClip(e.target).gotoAndStop(2);
 			var t:String
-			for (var i:int = 0; i < indxBtn.length; i++) 
-			{
-				if (e.currentTarget is indxBtn[i])
-				t= names[i]
+			for (var i:int = 0; i < indxBtn.length; i++) {
+				if (e.currentTarget is indxBtn[i]) {
+					t = Lang.getTitle(3,i);
+					break;
+				}
 			}
 			App.info.init( e.currentTarget.x, e.currentTarget.y, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:t, type:0 } );
 		}
