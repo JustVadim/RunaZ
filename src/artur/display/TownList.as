@@ -65,6 +65,8 @@ package artur.display
 		{
 			if (GetServerData.getUserIsReadyToBattle()) 
 			{
+				WinMap.sprSelLevel.init();
+				return;
 				App.lock.init();	
 				var data:DataExchange = new DataExchange();
 				data.addEventListener(DataExchangeEvent.ON_RESULT, getRessBattle);

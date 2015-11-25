@@ -36,7 +36,11 @@ package artur
 		[Embed(source = "../../bin/sounds/Win.mp3")] private var s_win:Class;
 		[Embed(source = "../../bin/sounds/shock.mp3")] private var s_shok:Class;
 		[Embed(source="../../bin/sounds/bot1_die.mp3")] private var s_bot1_die:Class;
-		
+		[Embed(source = "../../bin/sounds/MagHurt.mp3")] private var s_mag_hurt:Class;
+		[Embed(source = "../../bin/sounds/magDie.mp3")] private var s_mag_die:Class;
+		[Embed(source = "../../bin/sounds/GhostHurt.mp3")] private var s_g_hurt:Class;
+		[Embed(source = "../../bin/sounds/GhostDie.mp3")] private var s_g_die:Class;
+		[Embed(source="../../bin/sounds/GhostAtack.mp3")] private var s_g_atack:Class;
 		public static var sound:SoundManager = SoundManager.getInstance();
 		public static var winManajer:WinManajer;
 		public static var spr:Sprite;
@@ -52,6 +56,11 @@ package artur
 		
 		public function App(stg:Stage) 
 		{
+			sound.addSound('gDie', new s_g_die());
+			sound.addSound('gAtack', new s_g_atack());
+			sound.addSound('gHurt', new s_g_hurt());
+			sound.addSound('magHurt', new s_mag_hurt());
+			sound.addSound('magDie', new s_mag_die());
 			sound.addSound('sw', new s_Switok());
 			sound.addSound('botl', new s_useBotl());
 			sound.addSound('cnock', new s_Cnock());
