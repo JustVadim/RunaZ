@@ -9,6 +9,7 @@ package artur.display
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Server.Lang;
 	import Utils.Functions;
 	import Utils.json.JSON2;
 	
@@ -46,7 +47,7 @@ package artur.display
 		
 		public function init(text1:String = "", text2:String = "", priceGold:int = 0, priceSilver:int = 0, index:int = NaN, byeType:int = 0, itemType:int = NaN, invPlace:int = NaN):void {
 			if (text1 == "") {
-				this.txt.text = "У вас не достаточно ресурсов, для этой покупки!";
+				this.txt.text = Lang.getTitle(4);
 				if (this.iconGold.parent) 	this.removeChild(this.iconGold);
 				if (this.btnGold.parent) 	this.removeChild(this.btnGold);
 				if (this.iconSilver.parent) this.removeChild(this.iconSilver);

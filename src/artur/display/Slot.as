@@ -7,6 +7,7 @@ package artur.display {
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import report.Report;
+	import Server.Lang;
 	
 	public class Slot extends Sprite {
 		public var btnByeUnit:BaseButton;
@@ -83,7 +84,7 @@ package artur.display {
 				}
 			}
 			if (WinCastle.currSlotClick != this.name) {
-				App.info.init(this.x + this.btnByeUnit.width / 2 + 15 , this.y - (115 / 2), { title:UnitBlank.names[obj.t], type:1, chars:chars } );
+				App.info.init(this.x + this.btnByeUnit.width / 2 + 15 , this.y - (115 / 2), { title:Lang.getTitle(38, obj.t), type:1, chars:chars } );
 			}
 		}
 		

@@ -11,18 +11,18 @@ package artur.display
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Server.Lang;
 	import Utils.BuffsVars;
 	import Utils.json.JSON2;
 	
-	public class UnitBlank extends Sprite
-	{
+	public class UnitBlank extends Sprite {
 		public var index:int;
 		public var btn:BaseButton;
 		private var mcText:txtBlank;
 		private var whRect:sideRect = new sideRect();
 		private var unit:Object;
 		private var unitType:String;
-		public static var names:Array = ['Варвар','Омник','Лучник', "Маг"];
+		//public static var names:Array = ['Варвар','Омник','Лучник', "Маг"];
 		
 		public function UnitBlank(index:int, unit:String, chars:Object) 
 		{
@@ -50,7 +50,7 @@ package artur.display
 			this.mcText.txt_sk_double.text = String(chars.b[BuffsVars.combo].l);
 			this.mcText.txt_sk_out.text = String(chars.b[BuffsVars.armorness].l);
 			this.mcText.txt_sk_return.text = String(chars.b[BuffsVars.feedback].l);
-			this.mcText.txtName.text = names[index];
+			this.mcText.txtName.text = Lang.getTitle(38, index);
 			
 			this.addSkillListener(this.mcText.sk_crit);
 			this.addSkillListener(this.mcText.sk_double);
@@ -90,7 +90,7 @@ package artur.display
 					descr = "<font color=\"#00FF00\">Уворот</font>\nшанс уклониться от удара врага";
 					break;
 				case(this.mcText.sk_return == mc):
-					descr = "<font color=\"#00FF00\">Ответный удар</font>\n<font color=\"#FFFFFF\">"+ "шанс нанести ответный удар";
+					descr = "<font color=\"#00FF00\">Ответный удар</font>\n<font color=\"#FFFFFF\">" + "шанс нанести ответный удар";
 					break;
 				case (this.mcText.sk_ult == mc):
 					switch(this.index)
@@ -125,7 +125,7 @@ package artur.display
 			var s:int = int(mcText.txtSilver.text);
 			if (WinCastle.isMoney(g,s))
 			{
-				App.byeWin.init('Я желаю нанять', names[index], g, s,index);
+				App.byeWin.init('Я желаю нанять', Lang.getTitle(38, index), g, s,index);
 			}
 			else
 			{

@@ -157,8 +157,7 @@ package artur.display.battle
 			}
 		}
 		
-		private function moveNode(e:MouseEvent):void 
-		{
+		private function moveNode(e:MouseEvent):void {
 			WinBattle.inst.grid.clearNodesControl();
 			var obj:Object = new Object();
 			obj.a = 0;
@@ -174,10 +173,8 @@ package artur.display.battle
 			this.is_mouse_over = false;
 		}
 		
-		private function onOver(e:MouseEvent = null):void 
-		{
-			if (cur_fr == 6)
-			{
+		private function onOver(e:MouseEvent = null):void {
+			if (cur_fr == 6) {
 				if (WinBattle.atackNode.currNode != this)
 					WinBattle.atackNode.init(this);
 			}
