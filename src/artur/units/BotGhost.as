@@ -18,7 +18,7 @@ package artur.units {
 		private var parts:Array ;
 		private var parts_of_parts:Array;
 		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
-		private static var sounds:Array = [];
+		private static var sounds:Array = [{id:'gAtack',frame:55},{id:'gHurt',frame:65},{id:'blade2',frame:60},{id:'gDie',frame:70},{id:'blade1',frame:68}];
 		public var _head:Sprite 
 		
 		public function BotGhost() 

@@ -386,19 +386,23 @@ package artur.win
 					var mapNum:int = int(obj.mcd.mapn);
 					var missNum:int = int(obj.mcd.misn);
 					var hero:Hero = UserStaticData.hero;
-					if (UserStaticData.hero.miss[mapNum].mn[missNum] == null) {
-						UserStaticData.hero.miss[mapNum].mn[missNum] = new Object; 
-						if ((missNum + 1) % 11 == 0) {
-							hero.miss[mapNum + 1] = { mn:new Object };
-							hero.fs++;
-							hero.exp = 0;
-							hero.level = mapNum + 2;
-						} else {
-							UserStaticData.hero.exp = missNum + 1;
+					var miss:Object = UserStaticData.hero.miss[mapNum].mn[missNum];
+					if(miss.st[bat.d] == 0) {
+						if(bat.d == 0) {
+							if((missNum + 1) % 11 == 0) {
+								hero.miss[mapNum + 1] = { mn:new Object };
+								hero.miss[mapNum+1].mn[0] = { st:[0, 0, 0, 0] };
+								hero.exp = 0;
+								hero.level = mapNum + 2;
+								hero.fs++;
+							} else {
+								hero.miss[mapNum].mn[missNum + 1] = { st:[0, 0, 0, 0] };
+								hero.exp = missNum + 1;
+							}
+							
 						}
 						this.gift_id = obj.mcd.gift.k;
 						hero.chest[obj.mcd.gift.d] = Maker.clone(UserStaticData.magazin_items[0][7][this.gift_id]);
-						
 					}
 					UserStaticData.hero.miss[mapNum].mn[missNum].st = obj.mcd.sa;
 					UserStaticData.hero.gold += obj.mcd.g;

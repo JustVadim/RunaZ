@@ -35,40 +35,34 @@ package artur.display
 		{
 			App.spr.removeChild(this);
 		}
+		
 		public function init(currMap:int, currTwon:int, title:String):void
 		{
 			MapTown.currTownClick = currTwon;
 			this.title.txt.text = title;
 			App.spr.addChild(this);
 			var obj:Object = UserStaticData.hero.miss[currTwon].mn;
-			var lastMision:int = -1
-			for (var i:int = 0; i < blanks.length; i++) 
-			{
+			
+			for (var i:int = 0; i < blanks.length; i++) {
 				var blank:MissionBlank = MissionBlank(blanks[i]);
 				blank.setName(Lang.getTitle(0,MapTown.currTownClick * 11 + i));
-				if (obj[i] != null) 
-				{
+				if (obj[i] != null) {
 					blank.hasComplete(obj[i]);
-					lastMision = i;
-				}
-				else
-				{
+				} else {
 					blank.hideMission();
 				}
 			}
-			if ( lastMision < blanks.length-1) 
-			{
-				MissionBlank(blanks[lastMision + 1]).enableMission();
-			}
+			
 		}
+		
 		private function onBatle(e:MouseEvent):void 
 		{
 			if (GetServerData.getUserIsReadyToBattle()) 
 			{
-				App.lock.init();	
-				var data:DataExchange = new DataExchange();
-				data.addEventListener(DataExchangeEvent.ON_RESULT, getRessBattle);
-				data.sendData(COMMANDS.CREAT_BATTLE, String(MapTown.currTownClick * 11 + int(e.currentTarget.name)) , true);
+				var missNum:int = MapTown.currTownClick * 11 + int(e.currentTarget.name)
+				WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
+				return;
+				
 			}
 			else
 			{

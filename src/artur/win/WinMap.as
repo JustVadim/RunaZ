@@ -3,6 +3,7 @@ package artur.win
 	import artur.App;
 	import artur.display.BaseButton;
 	import artur.display.MapTown;
+	import artur.display.SprSelectLevel;
 	import artur.display.TownList;
 	import artur.PrepareGr;
 	import artur.RasterClip;
@@ -26,7 +27,7 @@ package artur.win
 			['Арагон','Бригас','Наом','Тамкар','Травинкал','Апром','Мигор','Квонг','Сагос','Неаро','Валка','Валес']
 		]
 		public var townList:TownList 
-		
+		public static var sprSelLevel:SprSelectLevel = new SprSelectLevel();
 		public function WinMap() 
 		{
 			////

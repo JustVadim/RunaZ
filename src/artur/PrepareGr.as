@@ -48,7 +48,11 @@ package artur
 			new btnCloseList(),//31
 			new imgBtnCastle(),//32
 			new btnTakes(),//33
-			new btnPlus()//34
+			new btnPlus(),//34
+		    new btnSel1(),//35
+			new btnSel2(),//36
+			new btnSel3(),//37
+			new btnSel4()//38
 		];
 		
 		public static var scaleFactor:Number = 2;
