@@ -59,19 +59,12 @@ package artur.display
 		{
 			if (GetServerData.getUserIsReadyToBattle()) 
 			{
-<<<<<<< HEAD
-				//WinMap.sprSelLevel.init();
-				//return;
-				App.lock.init();	
-				var data:DataExchange = new DataExchange();
-				data.addEventListener(DataExchangeEvent.ON_RESULT, getRessBattle);
-				data.sendData(COMMANDS.CREAT_BATTLE, String(MapTown.currTownClick * 11 + int(e.currentTarget.name)) , true);
-=======
+
 				var missNum:int = MapTown.currTownClick * 11 + int(e.currentTarget.name)
 				WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
 				return;
 				
->>>>>>> 308ae587cff63c012338094ebd62ac790d18e484
+
 			}
 			else
 			{
