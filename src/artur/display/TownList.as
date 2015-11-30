@@ -57,15 +57,10 @@ package artur.display
 		
 		private function onBatle(e:MouseEvent):void 
 		{
-			if (GetServerData.getUserIsReadyToBattle()) 
-			{
-				var missNum:int = MapTown.currTownClick * 11 + int(e.currentTarget.name)
+			if (GetServerData.getUserIsReadyToBattle()) {
+				var missNum:int = int(e.currentTarget.name)
 				WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
-				return;
-				
-			}
-			else
-			{
+			} else {
 				App.closedDialog.init(Lang.getTitle(36) , true);
 			}
 		}

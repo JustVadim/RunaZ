@@ -80,7 +80,8 @@ package artur.display {
 		}
 		
 		public function init(missNum:int, misObj:Object):void {
-			this.missNum = missNum;
+			
+			this.missNum = missNum + (MapTown.currTownClick*11);
 			App.spr.addChild(this);
 			this.addChild(this.btn);
 			this.btn.addEventListener(MouseEvent.CLICK, onBtn);
