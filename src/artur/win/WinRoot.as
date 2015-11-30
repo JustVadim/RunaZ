@@ -95,8 +95,8 @@ package artur.win
 				App.winManajer.swapWin(1);
 				break;
 			case 'arena':
-				App.lock.init("Ожидание боя");
-				this.goBattle();
+				//App.lock.init("Ожидание боя");
+				//this.goBattle();
 				break;
 			}
 		}

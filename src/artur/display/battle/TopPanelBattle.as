@@ -122,22 +122,28 @@ package artur.display.battle {
 		}
 		
 		private function onBtn(e:MouseEvent):void {
+			App.info.frees();
 			App.sound.playSound('click1', App.sound.onVoice, 1);
 			var mc:MovieClip = MovieClip(e.target);
 			switch(mc) {
 				case this.mcBtns.btnHold:
+					WinBattle.inst.grid.clearNodesControl();
+					var loc:Object = WinBattle.bat.locs[WinBattle.myTeam][WinBattle.bat["set"][WinBattle.bat.cus].p];
+					var obj:Object = new Object();
+					obj.a = 0;
+					obj.x = loc.x;
+					obj.y = loc.y;
+					WinBattle.atackNode.frees();
+					Node(winBattle.grid.nodes[0][0]).sendStep(obj);//this.sendStep(obj);
 					break;
 				case this.mcBtns.btnAuto:
 					this.bmAutoFight.visible = !this.bmAutoFight.visible;
-					
 					this.mcBtns.btnHold.visible = false;
 					this.bmHold.visible = false;
-					
 					if (bmAutoFight.visible && this.isOurStep()) {
 						Node(this.winBattle.grid.nodes[0][0]).sendStep();
 						return
 					}
-					
 					break;
 				case this.mcBtns.btnFree:
 					App.lock.init();

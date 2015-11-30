@@ -35,46 +35,47 @@ package artur.display
 		{
 			App.spr.removeChild(this);
 		}
+		
 		public function init(currMap:int, currTwon:int, title:String):void
 		{
 			MapTown.currTownClick = currTwon;
 			this.title.txt.text = title;
 			App.spr.addChild(this);
 			var obj:Object = UserStaticData.hero.miss[currTwon].mn;
-			var lastMision:int = -1
-			for (var i:int = 0; i < blanks.length; i++) 
-			{
+			
+			for (var i:int = 0; i < blanks.length; i++) {
 				var blank:MissionBlank = MissionBlank(blanks[i]);
 				blank.setName(Lang.getTitle(0,MapTown.currTownClick * 11 + i));
-				if (obj[i] != null) 
-				{
+				if (obj[i] != null) {
 					blank.hasComplete(obj[i]);
-					lastMision = i;
-				}
-				else
-				{
+				} else {
 					blank.hideMission();
 				}
 			}
-			if ( lastMision < blanks.length-1) 
-			{
-				MissionBlank(blanks[lastMision + 1]).enableMission();
-			}
+			
 		}
+		
 		private function onBatle(e:MouseEvent):void 
 		{
 			if (GetServerData.getUserIsReadyToBattle()) 
 			{
+<<<<<<< HEAD
 				//WinMap.sprSelLevel.init();
 				//return;
 				App.lock.init();	
 				var data:DataExchange = new DataExchange();
 				data.addEventListener(DataExchangeEvent.ON_RESULT, getRessBattle);
 				data.sendData(COMMANDS.CREAT_BATTLE, String(MapTown.currTownClick * 11 + int(e.currentTarget.name)) , true);
+=======
+				var missNum:int = MapTown.currTownClick * 11 + int(e.currentTarget.name)
+				WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
+				return;
+				
+>>>>>>> 308ae587cff63c012338094ebd62ac790d18e484
 			}
 			else
 			{
-				App.closedDialog.init("Вы не сможете победить! \n Наймите воина. Если у вас уже есть воин - купите ему оружие", true);
+				App.closedDialog.init(Lang.getTitle(36) , true);
 			}
 		}
 		
@@ -92,7 +93,7 @@ package artur.display
 			{
 				if (obj.error == 1) {
 					App.lock.frees();
-					App.closedDialog.init("Миссия еще не доступна, ожидайте ее в скором времени!!", false);
+					App.closedDialog.init(Lang.getTitle(37), false);
 				} else {
 					App.lock.init('Error: ' + obj.error)
 				}

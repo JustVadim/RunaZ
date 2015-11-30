@@ -186,8 +186,8 @@ package artur.display
 			this.compareAndSet(this.mcText.txtInic2, "0");
 			this.compareAndSet(this.mcText.txtSpeed, unit.sp);
 			this.compareAndSet(this.mcText.txtSpeed2, "0");
-			this.compareAndSet(this.mcText.txtKilled, String(" Убил: " + unit.k));
-			this.compareAndSet(this.mcText.txtDied, String(" Умер: " + unit.l));
+			this.compareAndSet(this.mcText.txtKilled, String(Lang.getTitle(34) + unit.k));
+			this.compareAndSet(this.mcText.txtDied, String(Lang.getTitle(35) + unit.l));
 			this.compareAndSet(this.progresEXP.txt2, unit.lvl);
 			this.compareAndSet(this.progresEXP.txt, String(unit.exp + "/" + unit.nle));
 			var frame:int = int(100 * unit.exp / unit.nle);
@@ -273,52 +273,52 @@ package artur.display
 			switch(true)
 			{
 				case(mc == this.mcText.sk_crit):
-					descr = "<font color=\"#00FF00\">Критический урон</font>\n<font color=\"#FFFFFF\">" + bc[0][ub[0].l] + "% шанс нанести двойной урон</font>\n Следующий уровень - " + bc[0][ub[0].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(5) +"</font>\n<font color=\"#FFFFFF\">" + bc[0][ub[0].l] + "% "+ Lang.getTitle(10) + " - " + bc[0][ub[0].l + 1] + "%";
 					break;
 				case(this.mcText.sk_miss == mc):
-					descr = "<font color=\"#00FF00\">Уворот</font>\n<font color=\"#FFFFFF\">" + bc[1][ub[1].l] + "% шанс уклониться от удара</font>\n Следующий уровень - " + bc[1][ub[1].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(6) +"</font>\n<font color=\"#FFFFFF\">" + bc[1][ub[1].l] + "% "+ Lang.getTitle(11)+" - " + bc[1][ub[1].l + 1] + "%";
 					break;
 				case(this.mcText.sk_double == mc):
-					descr = "<font color=\"#00FF00\">Двойная атака</font>\n<font color=\"#FFFFFF\">" + bc[2][ub[2].l] + "% шанс атаковать два раза</font>\n Следующий уровень - " + bc[2][ub[2].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">"+ Lang.getTitle(7)+"</font>\n<font color=\"#FFFFFF\">" + bc[2][ub[2].l] + "% "+ Lang.getTitle(12)+" - " + bc[2][ub[2].l + 1] + "%";
 					break;
 				case(this.mcText.sk_out == mc):
-					descr = "<font color=\"#00FF00\">Бешенсво</font>\n<font color=\"#FFFFFF\">" + bc[3][ub[3].l] + "% шанс атаковать сквозь защиту</font>\n Следующий уровень - " + bc[3][ub[3].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">"+Lang.getTitle(8)+"</font>\n<font color=\"#FFFFFF\">" + bc[3][ub[3].l] + "% "+ Lang.getTitle(13)+" - " + bc[3][ub[3].l + 1] + "%";
 					break;
 				case(this.mcText.sk_return == mc):
-					descr = "<font color=\"#00FF00\">Ответный удар</font>\n<font color=\"#FFFFFF\">" + bc[4][ub[4].l] + "% шанс нанести ответный удар</font>\n Следующий уровень - " + bc[4][ub[4].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">" +Lang.getTitle(9) +"</font>\n<font color=\"#FFFFFF\">" + bc[4][ub[4].l] + "% "+Lang.getTitle(14)+" - " + bc[4][ub[4].l + 1] + "%";
 					break;
 				case (this.mcText.sk_ult == mc):
 					switch(UserStaticData.hero.units[WinCastle.currSlotClick].t)
 					{
 						case 0:
-							descr = "<font color=\"#00FF00\">Ярость</font>\n";
-							descr += "<font color=\"#FFFFFF\">увеличивает урон юнита на " + bc[5][uult.lvl] + "% на текущий ход</font>\n";
-							descr += "Следующий уровень - " + bc[5][uult.lvl + 1] + "%";
+							descr = "<font color=\"#00FF00\">" + Lang.getTitle(15) + "</font>\n";
+							descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(19) + bc[5][uult.lvl] + "% " + Lang.getTitle(20) + "</font>\n";
+							descr += Lang.getTitle(26) + bc[5][uult.lvl + 1] + "%";
 							break;
 						case 1:
-							descr = "<font color=\"#00FF00\">Лечение</font>\n";
-							descr += "<font color=\"#FFFFFF\"> востанавливает " + bc[6][uult.lvl] + " единиц здоровья любому союзному юниту</font>\n";
-							descr += "Следующий уровень - " + bc[6][uult.lvl + 1] + " единиц";
+							descr = "<font color=\"#00FF00\">" + Lang.getTitle(16) + "</font>\n";
+							descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(21) + bc[6][uult.lvl] + Lang.getTitle(22) + "</font>\n";
+							descr += Lang.getTitle(26) + bc[6][uult.lvl + 1] + Lang.getTitle(27);
 							break;
 						case 2:
-							descr = "<font color=\"#00FF00\">Огненная стрела</font>\n";
-							descr += "<font color=\"#FFFFFF\"> Оглушает вражеского юнита огненной стрелой и наносит " + bc[7][uult.lvl] + " урона</font>\n";
-							descr += "Следующий уровень - " + bc[7][uult.lvl + 1] + " урона"
+							descr = "<font color=\"#00FF00\">" + Lang.getTitle(17) + "</font>\n";
+							descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(23) + bc[7][uult.lvl] + Lang.getTitle(24) + "</font>\n";
+							descr += Lang.getTitle(26) + bc[7][uult.lvl + 1] + Lang.getTitle(24);
 							break;
 						case 3:
-							descr = "<font color=\"#00FF00\">Молния</font>\n"
-							descr += "<font color=\"#FFFFFF\"> Поражает вражеского юнита молнией при этом наносит ему + " + bc[8][uult.lvl] + " урона</font>\n";
-							descr += "Следующий уровень - " + bc[8][uult.lvl + 1] + " урона"
+							descr = "<font color=\"#00FF00\">" + Lang.getTitle(18) + "</font>\n";
+							descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(25) + bc[8][uult.lvl] + Lang.getTitle(24) + "</font>\n";
+							descr += Lang.getTitle(26) + bc[8][uult.lvl + 1] + Lang.getTitle(24);
 							break;
 					}
-					descr+= "\n<font color=\"#15B4FF\">Стоимость заклинания "+ uult.mc + " манны</font>\n";
+					descr += "\n<font color=\"#15B4FF\">" +Lang.getTitle(28) + uult.mc + Lang.getTitle(29) + "</font>\n";
 					break;
 			}
 			if (this.mcText.mcFreeskils.visible)
 			{
-				descr += "\n\n<font color=\"#00FF00\" size=\"10\">Нажмите что бы улучшить!</font>"
+				descr += "\n\n<font color=\"#00FF00\" size=\"10\">" + Lang.getTitle(30) + "</font>"
 			}
-			App.info.init(p.x + 35, p.y + 35, { type:0, title:"Навык", txtInfo_w:290, txtInfo_h:48, txtInfo_t:descr} );
+			App.info.init(p.x + 35, p.y + 35, { type:0, title:Lang.getTitle(31), txtInfo_w:290, txtInfo_h:48, txtInfo_t:descr} );
 		}
 		
 		private function onBuffOut(e:MouseEvent):void {
@@ -441,10 +441,10 @@ package artur.display
 			if (e.target.name == "sell") {
 				this.afterPut();
 				if (this.invPlace == -1) {
-					App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
+					App.byeWin.init(Lang.getTitle(32), "Вещицу", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
 				} else
 				{
-					App.byeWin.init("Я хочу продать", "эту хрень", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
+					App.byeWin.init(Lang.getTitle(32), "Вещицу", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
 				}
 			} else if (e.target is mcCall) { 
 				this.afterPut();
@@ -557,14 +557,14 @@ package artur.display
 			}
 			App.sound.playSound('overItem', App.sound.onVoice, 1);
 			if (bat.currentFrame == 1) {
-				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {title:Lang.getTitle(1, itemId), txtInfo_w:200, txtInfo_h:37,txtInfo_t:"Нажмите, чтобы\n купить вещь",type:0} )
+				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {title:Lang.getTitle(1, itemId), txtInfo_w:200, txtInfo_h:37,txtInfo_t:Lang.getTitle(33),type:0} )
 			} else {
 				switch(true) {
 					case (int(bat.name) < 5):
-						App.info.init(bat.x + this.x - 236 - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false } )
+						App.info.init(bat.x + this.x - 236 - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Вещица", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false } )
 						break;
 					case (int(bat.name) == 5 || int(bat.name) == 6):
-						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Шмотка", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false} )	
+						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Вещица", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false} )	
 						break;
 					case (int(bat.name) == 7):
 						break;

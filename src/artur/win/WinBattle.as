@@ -270,8 +270,8 @@ package artur.win
 			var ef_coord:Object;
 			var node:Node;
 			WinBattle.bat.is_ult = true;
-			switch(obj.t) {
-				case 0:
+			switch(true) {
+				case obj.t == 0:
 					App.sound.playSound("battle_cry", App.sound.onVoice, 1);
 					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
@@ -279,19 +279,19 @@ package artur.win
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 2);
 					bat.u[obj.wh.t][obj.wh.p].b[5] = new Object();
 					break;
-				case 1:
+				case obj.t == 1 || obj.t == 100:
 					App.sound.playSound("eff_heal", App.sound.onVoice, 1);
 					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 					break;
-				case 2:
+				case obj.t == 2:
 					App.sound.playSound("eff_arrow", App.sound.onVoice, 1);
 					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y + 25, 3);
 					break;
-				case 3:
+				case obj.t == 3:
 					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					EffManajer.showLgs(30, WinBattle.spr, 0xFFFFFF, node.x, node.y - 1000, node.x, node.y-40);
@@ -312,10 +312,12 @@ package artur.win
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			var tim1:Timer;;
-			if (obj.t == 2 || obj.t == 0 || obj.t == 1) {
+			if (obj.t == 2 || obj.t == 0) {
 				tim1 = new Timer(470, 1);
-			}else if (obj.t == 3) {
+			} else if (obj.t == 3) {
 				tim1 = new Timer(250, 1);
+			} else if (obj.t == 1 || (obj.t == 100 && WinBattle.bat.u[1][obj.wh.p].lvl == 1)) {
+				tim1 = new Timer(1100, 1);
 			}
 			
 			tim1.addEventListener(TimerEvent.TIMER_COMPLETE, 
@@ -336,7 +338,7 @@ package artur.win
 							hurt_unit.gotoAndPlay("hurt");
 							return;
 						}
-					} else if (obj.t == 1 && obj.wh.p == obj.whm.p) {
+					} else if ((obj.t == 1 || (obj.t ==100 && obj.lvl ==1)) && obj.wh.p == obj.whm.p) {
 						bigLifeBar.mcLife.txt.text = WinBattle.bat.hps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].hp;
 						bigLifeBar.mcLife.gotoAndStop(1 + int(100 * WinBattle.bat.hps[obj.wh.t][obj.wh.p] / WinBattle.bat.u[obj.wh.t][obj.wh.p].hp));
 						return
@@ -384,19 +386,23 @@ package artur.win
 					var mapNum:int = int(obj.mcd.mapn);
 					var missNum:int = int(obj.mcd.misn);
 					var hero:Hero = UserStaticData.hero;
-					if (UserStaticData.hero.miss[mapNum].mn[missNum] == null) {
-						UserStaticData.hero.miss[mapNum].mn[missNum] = new Object; 
-						if ((missNum + 1) % 11 == 0) {
-							hero.miss[mapNum + 1] = { mn:new Object };
-							hero.fs++;
-							hero.exp = 0;
-							hero.level = mapNum + 2;
-						} else {
-							UserStaticData.hero.exp = missNum + 1;
+					var miss:Object = UserStaticData.hero.miss[mapNum].mn[missNum];
+					if(miss.st[bat.d] == 0) {
+						if(bat.d == 0) {
+							if((missNum + 1) % 11 == 0) {
+								hero.miss[mapNum + 1] = { mn:new Object };
+								hero.miss[mapNum+1].mn[0] = { st:[0, 0, 0, 0] };
+								hero.exp = 0;
+								hero.level = mapNum + 2;
+								hero.fs++;
+							} else {
+								hero.miss[mapNum].mn[missNum + 1] = { st:[0, 0, 0, 0] };
+								hero.exp = missNum + 1;
+							}
+							
 						}
 						this.gift_id = obj.mcd.gift.k;
 						hero.chest[obj.mcd.gift.d] = Maker.clone(UserStaticData.magazin_items[0][7][this.gift_id]);
-						
 					}
 					UserStaticData.hero.miss[mapNum].mn[missNum].st = obj.mcd.sa;
 					UserStaticData.hero.gold += obj.mcd.g;
