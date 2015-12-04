@@ -82,9 +82,7 @@ package  {
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
 			stage.addChild(new movieMonitor());
-			stage.addChild(new WinRootMcText());
 			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onPreloader } );
-			Report.addMassage(new Art2().fontName);
 		}
 		
 		private function onPreloader():void  {

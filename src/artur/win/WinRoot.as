@@ -5,6 +5,7 @@ package artur.win
 	import artur.display.battle.eff.EffManajer;
 	import artur.display.MyBitMap;
 	import artur.display.SprUserNewLevel;
+	import artur.display.WinRootMcText;
 	import artur.PrepareGr;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
@@ -28,7 +29,8 @@ package artur.win
 		public var bin:Boolean;
 		public var bg:Bitmap ;
 		private var btns:Array = [];
-		private var mcText:mcTextRootWin = new mcTextRootWin();
+		private var mcText:WinRootMcText = new WinRootMcText();
+		private var mcTextOld:mcTextRootWin = new mcTextRootWin();
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
 		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
 		
@@ -106,6 +108,7 @@ package artur.win
 		}
 		public function init():void {
 			App.spr.addChild(bg);
+			App.spr.addChild(mcTextOld);
 			App.spr.addChild(mcText);
 			this.updateBar();
 			for (var i:int = 0; i < btns.length; i++) {
@@ -127,8 +130,8 @@ package artur.win
 			this.mcText.txtSilver.text = String(hero.silver);
 			this.mcText.txtExp.text = String(currExp + '/' + 11);
 			this.mcText.txtVit.text = String(currEn + '/' + maxVit);
-			this.mcText.expBar.gotoAndStop(int(currExp /11* 100) + 1);
-			this.mcText.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
+			this.mcTextOld.expBar.gotoAndStop(int(currExp /11* 100) + 1);
+			this.mcTextOld.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
 			if(hero.fs > 0) {
 				WinRoot.lvlUp.init("Доступно: " + hero.fs) ;
 			} else {
