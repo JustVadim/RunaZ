@@ -45,6 +45,7 @@ package Utils {
 			title.width = ww;
 			title.height = hh;
 			title.text = str;
+			//title.border = true;
 			title.alpha = alpha;
 			if (title.text.length > 1) {
 				title.cacheAsBitmap = true;

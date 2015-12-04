@@ -106,7 +106,7 @@ package artur.win
 		}
 		public function init():void {
 			App.spr.addChild(bg);
-			App.spr.addChild(mcText);
+			//App.spr.addChild(mcText);
 			this.updateBar();
 			for (var i:int = 0; i < btns.length; i++) {
 				App.spr.addChild(btns[i]);
