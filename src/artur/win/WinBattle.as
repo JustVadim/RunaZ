@@ -9,6 +9,7 @@ package artur.win
 	import artur.display.battle.eff.EffManajer;
 	import artur.display.battle.eff.SwAtackEff;
 	import artur.display.battle.eff.SwDeffEff;
+	import artur.display.battle.eff.TextEff;
 	import artur.display.battle.LifeManajer;
 	import artur.display.battle.MoveUnit;
 	import artur.display.battle.Node;
@@ -307,7 +308,9 @@ package artur.win
 			t_obj[obj.wh.p] = obj.mcl;
 			LifeManajer.un_Data[obj.wh.t][obj.wh.p].currMana = obj.mcl;
 			//whom unit
+			
 			t_obj = bat.hps[obj.whm.t];
+			var diff:int = obj.hpl - t_obj[obj.whm.p];
 			t_obj[obj.whm.p] = obj.hpl;
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
@@ -336,9 +339,11 @@ package artur.win
 					if (obj.t == 2 || obj.t == 3) {
 						if(obj.hpl != 0) {
 							hurt_unit.gotoAndPlay("hurt");
+							TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 60, String(diff.toString()), 0xF75757);
 							return;
 						}
-					} else if ((obj.t == 1 || (obj.t ==100 && obj.lvl ==1)) && obj.wh.p == obj.whm.p) {
+					} else if ((obj.t == 1 || (obj.t == 100 && bat.u[obj.wh.t][obj.wh.p].lvl == 1)) && obj.wh.p == obj.whm.p) {
+						TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 60, String("+" + diff.toString()), 0x80FF00);
 						bigLifeBar.mcLife.txt.text = WinBattle.bat.hps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].hp;
 						bigLifeBar.mcLife.gotoAndStop(1 + int(100 * WinBattle.bat.hps[obj.wh.t][obj.wh.p] / WinBattle.bat.u[obj.wh.t][obj.wh.p].hp));
 						return

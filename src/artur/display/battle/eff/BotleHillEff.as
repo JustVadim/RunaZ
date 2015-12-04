@@ -14,7 +14,7 @@ package artur.display.battle.eff {
 		private var maxFrame:int;
 		private var currImg:Bitmap;
 		public var free:Boolean = true;
-		//public var type
+		public var type:String = "BotleHillEff";
 	
 		public function BotleHillEff() {
 			var mc:MovieClip = new EffHillBotl();

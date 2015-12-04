@@ -12,6 +12,7 @@ package artur.display {
 	public class SprUserNewLevel extends mcLvlUp {
 		private var btns:Array = [];
 		private var pushedBtn:String;
+		
 		public function SprUserNewLevel() {
 			var yp:Array = [130.3, 154, 177.6, 201.4];
 			for (var i:int = 0; i < 4; i++) {

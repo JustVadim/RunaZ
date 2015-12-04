@@ -1,5 +1,8 @@
 package Utils {
 	import flash.display.MovieClip;
+	import flash.text.AntiAliasType;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	public class Functions {
 		
@@ -21,6 +24,34 @@ package Utils {
 			var chars:Array = [0, UserStaticData.hero.skills.energy * 10 , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
 			return chars;
 		}
+		
+		public static function getTitledTextfield(xx:Number, yy:Number, ww:Number, hh:Number, fontName:String, size:int, text_color:int, align:String, str:String = "", alpha:Number = 1):TextField {
+			var textf:TextFormat = new TextFormat();
+			textf.font = fontName;
+			textf.size = size;
+			textf.color = text_color;
+			textf.align = align;
+			var title:TextField = new TextField();
+			title.embedFonts = true;
+			title.antiAliasType = AntiAliasType.ADVANCED
+			title.defaultTextFormat = textf;
+			title.x = xx;
+			title.y = yy;
+			title.textColor = text_color;
+			title.selectable = false;
+			title.tabEnabled = false;
+			title.mouseEnabled = false;
+			title.mouseWheelEnabled = false;
+			title.width = ww;
+			title.height = hh;
+			title.text = str;
+			title.alpha = alpha;
+			if (title.text.length > 1) {
+				title.cacheAsBitmap = true;
+			}
+			return title;
+		}
+
 	
 		
 		
