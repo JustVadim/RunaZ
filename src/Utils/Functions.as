@@ -1,6 +1,7 @@
 package Utils {
 	import flash.display.MovieClip;
 	import flash.text.AntiAliasType;
+	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
@@ -25,12 +26,14 @@ package Utils {
 			return chars;
 		}
 		
-		public static function getTitledTextfield(xx:Number, yy:Number, ww:Number, hh:Number, fontName:String, size:int, text_color:int, align:String, str:String = "", alpha:Number = 1):TextField {
+		public static function getTitledTextfield(xx:Number, yy:Number, ww:Number, hh:Number, fontName:String, size:int, text_color:int, align:String, str:String = "", alpha:Number = 1, kerning:Object = Kerning.AUTO, letterSpacing:Object = 0):TextField {
 			var textf:TextFormat = new TextFormat();
 			textf.font = fontName;
 			textf.size = size;
 			textf.color = text_color;
 			textf.align = align;
+			textf.kerning = kerning;
+			textf.letterSpacing = letterSpacing; 
 			var title:TextField = new TextField();
 			title.embedFonts = true;
 			title.antiAliasType = AntiAliasType.ADVANCED
@@ -45,7 +48,7 @@ package Utils {
 			title.width = ww;
 			title.height = hh;
 			title.text = str;
-			title.border = true;
+			//title.border = true;
 			title.alpha = alpha;
 			if (title.text.length > 1) {
 				title.cacheAsBitmap = true;
