@@ -36,6 +36,7 @@ package artur.display {
 			bg.x = -8;
 			this.lvl_star.x = -40;
 			this.lvl_star.y = -30;
+			this.lvl_star.y = -30;
 			this.buttonMode = true;
 		}
 		
