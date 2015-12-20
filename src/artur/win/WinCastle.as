@@ -13,8 +13,8 @@ package artur.win {
 	import flash.events.MouseEvent;
 	
 	public class WinCastle {
-		private var bg:MyBitMap
 		public var bin:Boolean = false;
+		private var bg:MyBitMap;
 		public var slots:Array = [];
 		public static var txtCastle:mcTextCastleWin = new mcTextCastleWin();
 		private var spr_units:Sprite = new Sprite();

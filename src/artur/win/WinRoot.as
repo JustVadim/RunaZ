@@ -5,6 +5,7 @@ package artur.win
 	import artur.display.battle.eff.EffManajer;
 	import artur.display.MyBitMap;
 	import artur.display.SprUserNewLevel;
+	import artur.display.WinRootMcText;
 	import artur.PrepareGr;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
@@ -21,34 +22,29 @@ package artur.win
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Server.Lang;
+	import Utils.Functions;
 	
 	public class WinRoot 
 	{
 		public var bin:Boolean;
 		public var bg:Bitmap ;
 		private var btns:Array = [];
-		private var mcText:mcTextRootWin = new mcTextRootWin();
+		private var mcText:WinRootMcText = new WinRootMcText();
+		private var mcTextOld:mcTextRootWin = new mcTextRootWin();
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
-		//private var names:Array = ['Банк', 'Топ', 'Замок', 'Арена', 'Кузнеца', 'Карта'];
-		
-		
-		
 		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
+		
 		public function WinRoot() {
-			bg = new MyBitMap(App.prepare.cach[0]);
-			bg.x = -33; bg.y = -33;
-			
+			this.bg = new MyBitMap(App.prepare.cach[0]);
+			this.bg.x = bg.y = -33;
 			var xps:Array       = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5];
 			var yps:Array       = [214.75  , 218  , 291.25 , 367, 367.35, 89.15];
 			var names:Array = ['bank','top','castle','arena','shop','map'];
 			for (var i:int = 0; i < indxBtn.length; i++) {
-				var btn:MovieClip= new indxBtn[i]();
-				btn.x = xps[i] ; btn.y = yps[i];
+				var btn:MovieClip = new indxBtn[i]();
+				Functions.SetPriteAtributs(btn, true, false, xps[i], yps[i]);
 				btn.name = names[i];
 				btns.push(btn);
-				btn.mouseChildren = false;
-				btn.tabChildren = false;
-				btn.tabEnabled = false;
 				btn.gotoAndStop(1);
 				btn.buttonMode = true;
 				btn.addEventListener(MouseEvent.CLICK, clickOnBtn);
@@ -57,7 +53,6 @@ package artur.win
 				btn.addEventListener(MouseEvent.MOUSE_DOWN, onDownBtn);
 				btn.addEventListener(MouseEvent.MOUSE_UP, onUpBtn);
 			}
-			
 		}
 		
 		private function onUpBtn(e:MouseEvent):void {
@@ -113,6 +108,7 @@ package artur.win
 		}
 		public function init():void {
 			App.spr.addChild(bg);
+			App.spr.addChild(mcTextOld);
 			App.spr.addChild(mcText);
 			this.updateBar();
 			for (var i:int = 0; i < btns.length; i++) {
@@ -134,8 +130,8 @@ package artur.win
 			this.mcText.txtSilver.text = String(hero.silver);
 			this.mcText.txtExp.text = String(currExp + '/' + 11);
 			this.mcText.txtVit.text = String(currEn + '/' + maxVit);
-			this.mcText.expBar.gotoAndStop(int(currExp /11* 100) + 1);
-			this.mcText.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
+			this.mcTextOld.expBar.gotoAndStop(int(currExp /11* 100) + 1);
+			this.mcTextOld.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
 			if(hero.fs > 0) {
 				WinRoot.lvlUp.init("Доступно: " + hero.fs) ;
 			} else {

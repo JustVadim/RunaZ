@@ -36,6 +36,7 @@ package artur.display {
 			bg.x = -8;
 			this.lvl_star.x = -40;
 			this.lvl_star.y = -30;
+			this.lvl_star.y = -30;
 			this.buttonMode = true;
 		}
 		
@@ -56,7 +57,7 @@ package artur.display {
 		}
 		
 		private function over(e:MouseEvent):void {
-		   App.sound.playSound('over1', App.sound.onVoice, 1);
+			App.sound.playSound('over1', App.sound.onVoice, 1);
 			if (!UserStaticData.hero.units[int(e.currentTarget.name)]) {
 				return;
 			}
@@ -73,7 +74,7 @@ package artur.display {
 			chars[7] = obj.max_d;
 			chars[8] = obj.t_d;
 			chars[200] = 0;
-			chars[201] = UserStaticData.hero.skills.energy;1
+			chars[201] = UserStaticData.hero.skills.energy;
 			chars[202] = UserStaticData.hero.skills.attack;
 			chars[203] = UserStaticData.hero.skills.defence;
 			chars[204] = UserStaticData.hero.skills.defence;
@@ -162,12 +163,12 @@ package artur.display {
 			return arr;
 		}
 		
-		public function getItemId(obj:Object):int
-		{
-			if (obj == null)
+		public function getItemId(obj:Object):int {
+			if (obj == null) {
 				return 0;
-			else
+			} else {
 				return int(obj.id);
+			}
 		}
 		
 		private function clickUnit():void {
@@ -183,8 +184,7 @@ package artur.display {
 			}
 		}
 		
-		private function onBtnAddUnit():void 
-		{
+		private function onBtnAddUnit():void {
 			WinCastle.txtCastle.scroll.visible = true;
 			WinCastle.currSlotClick = this.name;
 			this.addChild(WinCastle.getCastle().mcCurr);
@@ -192,14 +192,11 @@ package artur.display {
 			WinCastle.inventar.frees();
 		}
 		
-		public function frees():void
-		{
-			if ( this.contains(WinCastle.getCastle().mcCurr) ) 
-			{
+		public function frees():void {
+			if ( this.contains(WinCastle.getCastle().mcCurr) ) {
 				this.removeChild(WinCastle.getCastle().mcCurr);
 			}
-			if (unit) 
-			{
+			if (unit) {
 				unit.frees();
 				Sprite(unit).removeEventListener(MouseEvent.CLICK, clickUnit);
 				unit = null;

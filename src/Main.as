@@ -1,6 +1,7 @@
 package  {
 	
 	import artur.App;
+	import artur.display.WinRootMcText;
 	import Chat.ChatBasic;
 	import com.greensock.TweenLite;
 	import flash.display.Sprite;
@@ -27,7 +28,6 @@ package  {
 		public var chat:ChatBasic;
 		
 		public function Main():void {
-		
 			if (stage) {
 				init();
 			} else {
@@ -73,6 +73,7 @@ package  {
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
+			
 		}
 		
 		private function onHalfPreloader():void 
@@ -81,7 +82,7 @@ package  {
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
 			stage.addChild(new movieMonitor());
-			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onPreloader} );
+			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onPreloader } );
 		}
 		
 		private function onPreloader():void  {
