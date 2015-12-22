@@ -1,5 +1,8 @@
 package artur 
 {
+	import artur.display.btnClosedShopExtended;
+	import artur.display.BtnHeroExtend;
+	import artur.display.btnSel1Extend;
 	import artur.display.MyBitMap;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -8,6 +11,7 @@ package artur
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+	import Server.Lang;
 	
 	public class PrepareGr 
 	{
@@ -23,13 +27,13 @@ package artur
 			new btnSend,//6
 			new bgCastle1,//7
 			new btnAddHero,//8
-			new btnAddHero2,//9
+			new BtnHeroExtend,//9
 			new bgBlankUnit,//10;
 			new btnExit(),//11
 			new btnBye(),//12
 			new mcBgHeroInv(),//13
 			new btnTown(),//14
-			new btnClosedShop(),//15
+			new btnClosedShopExtended(),//15
 			new mcBrmPart(),//16
 			new t1(), // 17
 			new t2(), // 18
@@ -49,10 +53,10 @@ package artur
 			new imgBtnCastle(),//32
 			new btnTakes(),//33
 			new btnPlus(),//34
-		    new btnSel1(),//35
-			new btnSel2(),//36
-			new btnSel3(),//37
-			new btnSel4()//38
+			new btnSel1Extend(Lang.getTitle(40, 0)),//35
+			new btnSel1Extend(Lang.getTitle(40, 1)),//36
+			new btnSel1Extend(Lang.getTitle(40, 2)),//37
+			new btnSel1Extend(Lang.getTitle(40, 3)),//38
 		];
 		
 		public static var scaleFactor:Number = 2;

@@ -13,7 +13,7 @@ package artur.display {
 		public var btnByeUnit:BaseButton;
 		public var unit:Object;
 		public var bg:slotBg = new slotBg();
-		public var lvl_star:mcStar = new mcStar();
+		public var lvl_star:LvlStar = new LvlStar();
 		public static var namesUnit:Object = new Object();
 		namesUnit[0] = 'Barbarian';
 		namesUnit[1] = 'Paladin';
@@ -38,6 +38,7 @@ package artur.display {
 			this.lvl_star.y = -30;
 			this.lvl_star.y = -30;
 			this.buttonMode = true;
+			this.lvl_star.stop();
 		}
 		
 		private function onSlotClick(e:MouseEvent):void {

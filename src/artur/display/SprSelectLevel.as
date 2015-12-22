@@ -5,6 +5,9 @@ package artur.display {
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -20,12 +23,19 @@ package artur.display {
 		private var b3:BaseButton = new BaseButton(37); // btn strateg
 		private var b4:BaseButton = new BaseButton(38); // btn king
 		private var missNum:int;
+		
+		
 		//  зелени галочкы s0 s1 s2 s3
 		public function SprSelectLevel() {
 			Functions.SetPriteAtributs(this, true, true);
 			Functions.SetPriteAtributs(this.btn, true, false, 405, 302);
 			for (var i:int = 1; i < 5; i++) {
-				Functions.SetPriteAtributs(this["b" + i], true, false, 361.95, 128.75 + 30.5 * i);
+				if (i > 1) {
+					var text:TextField = Functions.getTitledTextfield(289, 117.5 + 30.2 * i, 147, 22, new Art().fontName, 16, 0xEFEFEF, TextFormatAlign.CENTER, Lang.getTitle(40,i-1));
+					text.filters = [new GlowFilter(0, 1, 2, 2, 1)];
+					this.addChild(text);
+				}
+				Functions.SetPriteAtributs(this["b" + i], true, false, 362.2, 128.75 + 30.2 * i);
 				Functions.SetPriteAtributs(this["s" + int(i - 1).toString()], false, false);
 				this["s" + int(i - 1).toString()].visible = false;
 			}

@@ -4,51 +4,83 @@ package artur.display
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.text.engine.Kerning;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
+	import Utils.Functions;
 	
 	public class ShopItemBG extends bgBlankItemShop
 	{
 		public var free:Boolean = true;
 		private var item_image:Sprite = new Sprite();
+		public var txtGold:TextField = Functions.getTitledTextfield(65, 1, 45, 18, new Art().fontName, 12, 0xFFF642, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
+		public var txtSilver:TextField = Functions.getTitledTextfield(155, 1, 45, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
+		public var txtBtn:TextField = Functions.getTitledTextfield(0, -2, 77, 20, new Art().fontName, 14, 0xC29A4C, TextFormatAlign.CENTER, "Купити", 1, Kerning.AUTO, 0);
+		public var title:TextField = Functions.getTitledTextfield(4, 125, 85, 16, new Art().fontName, 12, 0xFFB119, TextFormatAlign.CENTER, "Купити", 1, Kerning.AUTO, 0);
+		
+		public var txtHp:McInfoInfos = new McInfoInfos("Жизнь");
+		public var txtMp:McInfoInfos = new McInfoInfos("Манна");
+		public var txtDmg:McInfoInfos = new McInfoInfos("Урон");
+		public var txtf_fiz:McInfoInfos = new McInfoInfos("Физ.Защита");
+		public var txtf_mag:McInfoInfos = new McInfoInfos("Маг.Защита");
+		public var txtInc:McInfoInfos = new McInfoInfos("Инициатива");
+		public var txtSpeed:McInfoInfos = new McInfoInfos("Скорость");
+		
 		
 		public function ShopItemBG() 
 		{
 			this.tabEnabled = this.tabChildren = this.mouseChildren = this.inc.visible = false;
 			this.addChild(this.item_image);
-			this.makeInvisiblePlussAndNumber(this.hp);
-			this.makeInvisiblePlussAndNumber(this.mp);
-			this.makeInvisiblePlussAndNumber(this.dmg);
-			this.makeInvisiblePlussAndNumber(this.f_fiz);
-			this.makeInvisiblePlussAndNumber(this.f_mag);
-			this.makeInvisiblePlussAndNumber(this.inc);
-			this.makeInvisiblePlussAndNumber(this.speed);
-			this.hp.txt1.text = "1";
+			this.makeInvisiblePlussAndNumber(this.txtHp);
+			this.makeInvisiblePlussAndNumber(this.txtMp);
+			this.makeInvisiblePlussAndNumber(this.txtDmg);
+			this.makeInvisiblePlussAndNumber(this.txtf_fiz);
+			this.makeInvisiblePlussAndNumber(this.txtf_mag);
+			this.makeInvisiblePlussAndNumber(this.txtInc);
+			this.makeInvisiblePlussAndNumber(this.txtSpeed);
+			this.btn.addChild(this.txtBtn);
+			
+			this.hp.addChild(this.txtHp);
+			this.mp.addChild(this.txtMp);
+			this.dmg.addChild(this.txtDmg);
+			this.f_fiz.addChild(this.txtf_fiz);
+			this.f_mag.addChild(this.txtf_mag);
+			this.inc.addChild(this.txtInc);
+			this.speed.addChild(this.txtSpeed);
+			this.addChild(this.title);
+			
+			
+			//this.hp.txt1.text = "1";
 			this.buttonMode = true;
 			this.cacheAsBitmap = true;
 			this.dmg.iconRange.visible = false;
+			this.price.addChild(this.txtGold);
+			this.price.addChild(this.txtSilver);
 		}	
 		
-		private function makeInvisiblePlussAndNumber(hp:MovieClip):void 
-		{
-			hp.txtPlus.visible = false;
-			hp.txt2.visible = false;
+		private function makeInvisiblePlussAndNumber(info:McInfoInfos):void {
+			info.txtPlus.visible = false;
+			info.txt2.visible = false;
+			
 		}
 		
-		public function init(par:Sprite, image:Sprite, item_obj:Object):void
+		public function init(par:Sprite, image:Sprite, item_obj:Object, str:String):void
 		{
+			//size logic
+			this.gotoAndStop(1);
 			this.name = item_obj.id;
 			this.free = false;
 			this.item_image.addChild(image);
 			par.addChild(this);
-			this.gotoAndStop(1);
 			var i:int = 0;
-			if (this.showChars(0, i, item_obj, this.hp)) i++;
-			if (this.showChars(1, i, item_obj, this.mp)) i++;
-			if (this.showChars(2, i, item_obj, this.dmg)) i++;
-			if (this.showChars(3, i, item_obj, this.f_fiz)) i++;
-			if (this.showChars(4, i, item_obj, this.f_mag)) i++;
-			if (this.showChars(5, i, item_obj, this.speed)) i++;
-			this.price.txtGold.text = item_obj.c[101];
-			this.price.txtSilver.text = item_obj.c[100];
+			if (this.showChars(0, i, item_obj, this.hp, txtHp)) i++;
+			if (this.showChars(1, i, item_obj, this.mp, txtMp)) i++;
+			if (this.showChars(2, i, item_obj, this.dmg, txtDmg)) i++;
+			if (this.showChars(3, i, item_obj, this.f_fiz,txtf_fiz)) i++;
+			if (this.showChars(4, i, item_obj, this.f_mag,txtf_mag)) i++;
+			if (this.showChars(5, i, item_obj, this.speed,txtSpeed)) i++;
+			this.txtGold.text = item_obj.c[101];
+			this.txtSilver.text = item_obj.c[100];
 			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
 			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut)
 		}
@@ -63,13 +95,13 @@ package artur.display
 			this.btn.gotoAndStop(2);
 		}
 		
-		private function showChars(char:int, i:int, obj:Object, mc:MovieClip):Boolean 
+		private function showChars(char:int, i:int, obj:Object, mc:MovieClip, info:McInfoInfos):Boolean 
 		{
 			if (obj.c[char] != null)
 			{
 				mc.visible = true;
 				mc.y = 5 + i * 16;
-				mc.txt1.text = " +" + obj.c[char];
+				info.txt1.text = " +" + obj.c[char];
 			}
 			else
 			{

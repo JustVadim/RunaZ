@@ -5,11 +5,17 @@ package artur.display
 	import artur.util.GetServerData;
 	import artur.win.WinMap;
 	import flash.events.MouseEvent;
+	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
+	import flash.text.engine.Kerning;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Server.Lang;
+	import Utils.Functions;
 	import Utils.json.JSON2;
 	
 	public class TownList extends mcTownList
@@ -17,9 +23,9 @@ package artur.display
 		private var blanks:Array = [];
 		public static var NAMES:Array = [[[]]];
 		private var btnClose:BaseButton = new BaseButton(31);
+		private var txtTitle:TextField = Functions.getTitledTextfield( -61.25, -9, 122.5, 16, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0);
 		
-		public function TownList() 
-		{
+		public function TownList() {
 			for (var i:int = 0; i < 11; i++) 
 			{
 				var blank:MissionBlank = new MissionBlank(i, 235, 106 + 21 * i, this.onBatle);
@@ -29,6 +35,8 @@ package artur.display
 			btnClose.x = 563 + btnClose.width / 2 ; btnClose.y = 65 + btnClose.height / 2;
 			this.addChild(btnClose);
 			btnClose.addEventListener(MouseEvent.CLICK, closeClick);
+			this.title.addChild(this.txtTitle);
+			this.txtTitle.filters = [new GlowFilter(0, 1, 3, 3, 1, 1), new DropShadowFilter(1, 42, 0xFFFFFF, 1, 1, 1, 0.5), new DropShadowFilter(1, 234, 0xFFCC99, 1, 1, 1, 0.5)];
 		}
 		
 		private function closeClick(e:MouseEvent):void 
@@ -39,7 +47,7 @@ package artur.display
 		public function init(currMap:int, currTwon:int, title:String):void
 		{
 			MapTown.currTownClick = currTwon;
-			this.title.txt.text = title;
+			this.txtTitle.text = title;
 			App.spr.addChild(this);
 			var obj:Object = UserStaticData.hero.miss[currTwon].mn;
 			

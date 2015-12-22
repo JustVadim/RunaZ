@@ -1,6 +1,7 @@
 package artur.display
 {
 	import artur.App;
+	import artur.ProgressBarExtended;
 	import artur.win.WinBattle;
 	import artur.win.WinCastle;
 	import com.greensock.events.LoaderEvent;
@@ -48,9 +49,9 @@ package artur.display
 		
 		
 		public var bin:Boolean = false;
-		private var mcText:mcTextHeroInventar = new mcTextHeroInventar();
+		private var mcText:mcTextHeroInventarExtend = new mcTextHeroInventarExtend();
 		private var call:ItemCall;
-		private var progresEXP:progresBar = new progresBar();
+		private var progresEXP:ProgressBarExtended = new ProgressBarExtended();
 		private var battle_init:Boolean;
 		private var lastDT:String;
 		private var bufsArray:Array;
@@ -172,31 +173,32 @@ package artur.display
 					chars[int(key2)] += unit.it[key].c[key2];
 				}
 			}
-			this.compareAndSet(this.mcText.txtLife, unit.hp);
-			this.compareAndSet(this.mcText.txtLife2, chars[0]);
-			this.compareAndSet(this.mcText.txtMana, unit.mp);
-			this.compareAndSet(this.mcText.txtMana2, chars[1]);
-			this.compareAndSet(this.mcText.txtDmg, String(unit.min_d + " - " + unit.max_d));
-			this.compareAndSet(this.mcText.txtDmg2, chars[2]);
-			this.compareAndSet(this.mcText.txtFizDeff, unit.f_d);
-			this.compareAndSet(this.mcText.txtFizDeff2, chars[3]);
-			this.compareAndSet(this.mcText.txtMagDeff, unit.m_d);
-			this.compareAndSet(this.mcText.txtMagDeff2, chars[4]);
-			this.compareAndSet(this.mcText.txtInic, unit["in"]);
-			this.compareAndSet(this.mcText.txtInic2, "0");
-			this.compareAndSet(this.mcText.txtSpeed, unit.sp);
-			this.compareAndSet(this.mcText.txtSpeed2, "0");
-			this.compareAndSet(this.mcText.txtKilled, String(Lang.getTitle(34) + unit.k));
-			this.compareAndSet(this.mcText.txtDied, String(Lang.getTitle(35) + unit.l));
-			this.compareAndSet(this.progresEXP.txt2, unit.lvl);
-			this.compareAndSet(this.progresEXP.txt, String(unit.exp + "/" + unit.nle));
+			this.compareAndSet(this.mcText.txtLife.txt1, unit.hp);
+			this.compareAndSet(this.mcText.txtLife.txt2, chars[0]);
+			this.compareAndSet(this.mcText.txtMana.txt1, unit.mp);
+			this.compareAndSet(this.mcText.txtMana.txt2, chars[1]);
+			this.compareAndSet(this.mcText.txtDmg.txt1, String(unit.min_d + " - " + unit.max_d));
+			this.compareAndSet(this.mcText.txtDmg.txt2, chars[2]);
+			this.compareAndSet(this.mcText.txtFizDeff.txt1, unit.f_d);
+			this.compareAndSet(this.mcText.txtFizDeff.txt2, chars[3]);
+			this.compareAndSet(this.mcText.txtMagDeff.txt1, unit.m_d);
+			this.compareAndSet(this.mcText.txtMagDeff.txt2, chars[4]);
+			this.compareAndSet(this.mcText.txtInic.txt1, unit["in"]);
+			this.compareAndSet(this.mcText.txtInic.txt2, "0");
+			this.compareAndSet(this.mcText.txtSpeed.txt1, unit.sp);
+			this.compareAndSet(this.mcText.txtSpeed.txt2, "0");
+			this.compareAndSet(this.mcText.died, String(Lang.getTitle(35) + unit.l));
+			this.compareAndSet(this.mcText.killed, String(Lang.getTitle(34) + unit.k));
+			
+			this.compareAndSet(this.progresEXP.lvl, unit.lvl);
+			this.compareAndSet(this.progresEXP.exp, String(unit.exp + "/" + unit.nle));
 			var frame:int = int(100 * unit.exp / unit.nle);
 			if(this.progresEXP.currentFrame != frame) {
 				this.progresEXP.gotoAndStop(frame);
 			}
 		}
 		
-		private function compareAndSet(textf:TLFTextField, text:String):void {
+		private function compareAndSet(textf:TextField, text:String):void {
 			if(textf.text != text) {
 				textf.text = text;
 			}
@@ -215,13 +217,14 @@ package artur.display
 			if(unit == null) {
 				unit = UserStaticData.hero.units[WinCastle.currSlotClick];
 			}
+			this.compareAndSet(this.mcText.txt_sk_return, unit.b[4].l);
+			this.compareAndSet(this.mcText.txt_sk_double, unit.b[2].l);
 			this.compareAndSet(this.mcText.txt_sk_crit, unit.b[0].l);
 			this.compareAndSet(this.mcText.txt_sk_miss, unit.b[1].l);
-			this.compareAndSet(this.mcText.txt_sk_double, unit.b[2].l);
 			this.compareAndSet(this.mcText.txt_sk_out, unit.b[3].l);
-			this.compareAndSet(this.mcText.txt_sk_return, unit.b[4].l);
-			this.compareAndSet(this.mcText.sk_ult.txt, unit.ult.lvl);
-			this.compareAndSet(this.mcText.mcFreeskils.textf, "Доступно: " + unit.fs);
+			this.compareAndSet(this.mcText.txt_sk_ult, unit.ult.lvl);
+			
+			this.compareAndSet(this.mcText.txt_available, "Доступно: " + unit.fs);
 		}
 		
 		public function enabledAllEvents(cond:Boolean): void {

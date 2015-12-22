@@ -30,9 +30,9 @@ package artur.display {
 		public function ShopInventar() {
 			this.tabEnabled = this.tabChildren = this.scroll_sprite.mouseEnabled = false; 
 			this.scroll.source = this.scroll_sprite;
-			btnClosed.addEventListener(MouseEvent.CLICK, closClick);
-			btnClosed.x = 415-85
-			btnClosed.y = 407.5
+			this.btnClosed.addEventListener(MouseEvent.CLICK, closClick);
+			this.btnClosed.x = 415 - 85;
+			this.btnClosed.y = 407.5
 		}
 		
 		private function closClick(e:MouseEvent):void {
@@ -64,7 +64,7 @@ package artur.display {
 				var it_obj:Object = UserStaticData.magazin_items[this.unitType][this.itemType][i];	
 				if(it_obj !=null) {
 					var mov:ShopItemBG = this.getBg();
-					mov.init(this.scroll_sprite, Sprite(currPart[i-1]), it_obj);
+					mov.init(this.scroll_sprite, Sprite(currPart[i-1]), it_obj, "Вещица");
 					mov.y = h;
 					h += mov.height;
 				}

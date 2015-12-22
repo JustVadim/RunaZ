@@ -32,6 +32,7 @@ package artur.display
 			this.addChild(this.txtDeff);
 			this.addChild(this.txtMana);
 			this.addChild(this.txtEnergy);
+			this.txtGold.filters = this.txtSilver.filters = [new GlowFilter(0, 1, 2, 2, 1, 1)];
 		}	
 	}
 }

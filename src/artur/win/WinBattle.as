@@ -16,6 +16,9 @@ package artur.win
 	import artur.display.battle.TopPanelBattle;
 	import artur.display.GiftDialog;
 	import artur.display.HeroInventar;
+	import artur.display.McAfterBattleLoseExtend;
+	import artur.display.mcBigLifeBarExtend;
+	import artur.display.McWinAfterBattleExtend;
 	import artur.display.Slot;
 	import artur.PrepareGr;
 	import artur.RasterClip;
@@ -32,6 +35,7 @@ package artur.win
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.text.TextField;
 	import flash.utils.Timer;
 	import report.Report;
 	import Server.COMMANDS;
@@ -60,8 +64,8 @@ package artur.win
 		public  var chekLifeBar:CheckLife = new CheckLife();
 		public var bin:Boolean = false;
 		private var unitsInWin:Array = [];
-		public static var winAfterBattle:mcAfterBattle = new mcAfterBattle();
-		public static var looseAfterBattle:mcAfterBattleLose = new mcAfterBattleLose();
+		public static var winAfterBattle:McWinAfterBattleExtend = new McWinAfterBattleExtend();
+		public static var looseAfterBattle:McAfterBattleLoseExtend = new McAfterBattleLoseExtend();
 		public static var inv_bg:mcBgBatleInventar = new mcBgBatleInventar();
 		public static var hero_inv:HeroInventar;
 		private static var ult_btn:UltSkillPanel = new UltSkillPanel();
@@ -71,14 +75,14 @@ package artur.win
 		public static var sprGift:GiftDialog;
 		private var gift_id:int = 0;
 		public var topPanel:TopPanelBattle;
-		public var bigLifeBar:mcBigLifeBar = new mcBigLifeBar();
+		public var bigLifeBar:mcBigLifeBarExtend = new mcBigLifeBarExtend();
 		
 		
 		public function WinBattle() 
 		{
-			WinBattle.winAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
+			WinBattle.winAfterBattle.closeBtn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.sprGift = new GiftDialog(this.onCloseWin);
-			WinBattle.looseAfterBattle.btn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
+			WinBattle.looseAfterBattle.closeBtn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.winAfterBattle.tabChildren = WinBattle.winAfterBattle.tabEnabled = WinBattle.looseAfterBattle.tabChildren = WinBattle.looseAfterBattle.tabEnabled = false;
 			WinBattle.hero_inv = new HeroInventar(true);
 			inst = this;
@@ -232,17 +236,16 @@ package artur.win
 					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
 					EffManajer.effBotleHill.init(node.x, node.y);
-					this.bigLifeBar.mcLife.txt.text = hps[obj.tu.p] + "/" + unit.hp;
+					this.bigLifeBar.txtHP.text = hps[obj.tu.p] + "/" + unit.hp;
 					this.bigLifeBar.mcLife.gotoAndStop(int(1 + hps[obj.tu.p] / unit.hp * 100))
 				} else {
 					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
 					BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
-					this.bigLifeBar.mcMana.txt.text = mps[obj.tu.p] + "/" + unit.mp;
+					this.bigLifeBar.txtMp.text = mps[obj.tu.p] + "/" + unit.mp;
 					this.bigLifeBar.mcMana.gotoAndStop(int(1 + mps[obj.tu.p] / unit.mp * 100));
 					if (!this.topPanel.isAuto() && WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam) {
 						this.makeUltimate(unit, WinBattle.bat['set'][WinBattle.bat.cus]);
-						//Report.addMassage("CheckUltimate");
 					}
 				}
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
@@ -280,13 +283,13 @@ package artur.win
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 2);
 					bat.u[obj.wh.t][obj.wh.p].b[5] = new Object();
 					break;
-				case obj.t == 1 || obj.t == 100:
+				case obj.t == 1 || obj.t == 100 && (bat.u[obj.wh.t][obj.wh.p].lvl == 1):
 					App.sound.playSound("eff_heal", App.sound.onVoice, 1);
 					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 					break;
-				case obj.t == 2:
+				case obj.t == 2 || (obj.t == 104 && (bat.u[obj.wh.t][obj.wh.p].lvl == 1)):
 					App.sound.playSound("eff_arrow", App.sound.onVoice, 1);
 					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
@@ -315,7 +318,7 @@ package artur.win
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			var tim1:Timer;;
-			if (obj.t == 2 || obj.t == 0) {
+			if (obj.t == 2 || obj.t == 0 || (obj.t == 104&&(bat.u[obj.wh.t][obj.wh.p].lvl == 1)) ) {
 				tim1 = new Timer(470, 1);
 			} else if (obj.t == 3) {
 				tim1 = new Timer(250, 1);
@@ -333,10 +336,10 @@ package artur.win
 					}
 					LifeManajer.updateCurrLife(obj.wh.t, obj.wh.p);
 					LifeManajer.updateCurrLife(obj.whm.t, obj.whm.p);
-					bigLifeBar.mcMana.txt.text = WinBattle.bat.mps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].mp;
+					bigLifeBar.txtMp.text = WinBattle.bat.mps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].mp;
 					bigLifeBar.mcMana.gotoAndStop(1 + int(WinBattle.bat.mps[obj.wh.t][obj.wh.p] * 100 / WinBattle.bat.u[obj.wh.t][obj.wh.p].mp));
 					
-					if (obj.t == 2 || obj.t == 3) {
+					if (obj.t == 2 || obj.t == 3 || obj.t == 104&&(bat.u[obj.wh.t][obj.wh.p].lvl == 1)) {
 						if(obj.hpl != 0) {
 							hurt_unit.gotoAndPlay("hurt");
 							TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 60, String(diff.toString()), 0xF75757);
@@ -344,7 +347,7 @@ package artur.win
 						}
 					} else if ((obj.t == 1 || (obj.t == 100 && bat.u[obj.wh.t][obj.wh.p].lvl == 1)) && obj.wh.p == obj.whm.p) {
 						TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 60, String("+" + diff.toString()), 0x80FF00);
-						bigLifeBar.mcLife.txt.text = WinBattle.bat.hps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].hp;
+						bigLifeBar.txtHP.text = WinBattle.bat.hps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].hp;
 						bigLifeBar.mcLife.gotoAndStop(1 + int(100 * WinBattle.bat.hps[obj.wh.t][obj.wh.p] / WinBattle.bat.u[obj.wh.t][obj.wh.p].hp));
 						return
 					}else {
@@ -414,8 +417,8 @@ package artur.win
 					UserStaticData.hero.silver += obj.mcd.s;
 					mc.starBar.visible = true;
 					mc.ress.visible = true;
-					mc.ress.txtGold.text = obj.mcd.g;
-					mc.ress.txtSilver.text = obj.mcd.s;
+					McWinAfterBattleExtend(mc).ressTxtGold.text = obj.mcd.g;
+					McWinAfterBattleExtend(mc).ressTxtSilver.text = obj.mcd.s;
 					for (var j:int = 0; j < 4; j++) {
 						if (obj.mcd.sa[j] == 1) {
 							mc.starBar["st" + j].visible = true;
@@ -435,11 +438,13 @@ package artur.win
 			var all_units:Object = bat.u[WinBattle.myTeam];
 			for (var i:int = 0; i < 4; i++)  {
 				var blank:mcBlankWinn = mc[String("k" + i)];
+				var txt1:TextField = mc.txt1[i];
+				var txt2:TextField = mc.txt2[i];
 				if (UserStaticData.hero.units[i] != null) {
 					UserStaticData.hero.units[i].inv = all_units[i].inv;
 					delete(all_units[i].inv);
-					blank.txt1.visible = true;
-					blank.txt2.visible = true;
+					txt1.visible = true;
+					txt2.visible = true;
 					var unit_data:Object = UserStaticData.hero.units[i];
 					var unit:Object = UnitCache.getUnit(Slot.namesUnit[unit_data.t]);
 					var living:Boolean = (obj.st[i].d == 0);
@@ -447,20 +452,20 @@ package artur.win
 					unit.init(blank);
 					unit.x = 25; unit.y = 50;
 					this.unitsInWin.push(unit);
-					blank.txt1.text = "Убито: " + obj.st[i].k;
+					txt1.text = "Убито: " + obj.st[i].k;
 					if (living) {
-						blank.txt2.textColor = 0x62F523; 
-						blank.txt2.text = "+" + obj.exp +" опыта";
+						txt2.textColor = 0x62F523; 
+						txt2.text = "+" + obj.exp +" опыта";
 						unit_data.exp += obj.exp;
 					} else {
-						blank.txt2.textColor = 0xF52323 ; 
-						blank.txt2.text = "Умер";
+						txt2.textColor = 0xF52323 ; 
+						txt2.text = "Умер";
 						unit_data.l += obj.st[i].d;
 					}
 					unit_data.k += obj.st[i].k;
 				} else {
-					blank.txt1.visible = false;
-					blank.txt2.visible = false;
+					txt1.visible = false;
+					txt2.visible = false;
 				}
 			}
 			Main.THIS.chat.visible = true;
@@ -495,9 +500,9 @@ package artur.win
 			var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
 			var lifeObject:Object = LifeManajer.un_Data[cus.t][cus.p];
 			this.bigLifeBar.mcLife.gotoAndStop(int(1 + lifeObject.currLife / lifeObject.maxLife * 100));
-			this.bigLifeBar.mcLife.txt.text = lifeObject.currLife + "/" + lifeObject.maxLife;
+			this.bigLifeBar.txtHP.text = lifeObject.currLife + "/" + lifeObject.maxLife;
 			this.bigLifeBar.mcMana.gotoAndStop(int(1 + lifeObject.currMana / lifeObject.maxMana * 100));
-			this.bigLifeBar.mcMana.txt.text = lifeObject.currMana + "/" + lifeObject.maxMana;
+			this.bigLifeBar.txtMp.text = lifeObject.currMana + "/" + lifeObject.maxMana;
 			
 			if (cus.t == myTeam && WinBattle.anim.length == 0) {
 				var is_arr:int = cur_unit.t_d;

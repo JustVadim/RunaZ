@@ -65,7 +65,7 @@ package artur.display {
 		}
 		
 		public function init(text:String):void {
-			this.txt.text = text;
+			//this.txt.text = text;
 			if(!this.parent) {
 				App.spr.addChild(this);
 			}

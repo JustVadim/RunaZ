@@ -5,6 +5,9 @@ package artur.display
 	import artur.win.WinCastle;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
+	import flash.text.engine.Kerning;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -24,16 +27,19 @@ package artur.display
 		private var itemType:int;
 		private var invPlace:int = -1;
 		
+		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 70, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false);
+		private var txtGold:TextField = Functions.getTitledTextfield(345, 242, 52, 17, new Art().fontName, 14, 0, TextFormatAlign.LEFT, "", 0.6, Kerning.OFF, -1, false);
+		private var txtSilver:TextField = Functions.getTitledTextfield(437, 242, 52, 17, new Art().fontName, 14, 0, TextFormatAlign.LEFT, "", 0.6, Kerning.OFF, -1, false);
+		
 		public function ByeWin() {
 			Functions.SetPriteAtributs(this.iconGold, false, false);
-			Functions.SetPriteAtributs(this, false, true);
-			Functions.SetPriteAtributs(this.txtSilver, false, false);
-			Functions.SetPriteAtributs(this.txtGold, false, false);
+			Functions.SetPriteAtributs(this, true, true);
 			Functions.SetPriteAtributs(this.iconGold, false, false);
 			this.initBtn(this.btnEx = new BaseButton(11), 507.9, 158.75);
 			this.initBtn(this.btnSilver = new BaseButton(12), 458.9, 252.55);
 			this.initBtn(this.btnGold = new BaseButton(12), 352.55, 252.55);
 			this.addChild(this.btnEx);
+			this.addChild(this.txt);
 		}
 		
 		

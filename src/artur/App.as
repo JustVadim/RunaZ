@@ -18,9 +18,6 @@ package artur
 	import flash.filters.GlowFilter;
 	import report.Report;
 	
-
-	
-	
 	public class App extends Sprite
 	{
 		[Embed(source = "../../bin/sounds/useBotle.mp3")]    private var s_useBotl:Class;
@@ -48,7 +45,7 @@ package artur
 		public static var btnOverFilter:GlowFilter = new GlowFilter(0xFFFFFF, 1, 4, 4, 5);
 		public static var byeWin:ByeWin 
 		public static var closedDialog:CloseDialog
-	    static public var btns:Array = [];
+	   // static public var btns:Array = [];
 		public static var info:InfoWin = new InfoWin();
 		public static var lock:LockSpr = new LockSpr();
 		public static var cursor:RemindCursors = new RemindCursors();
@@ -100,29 +97,14 @@ package artur
 			spr = Sprite(this);
 			winManajer = new WinManajer();
 			this.addEventListener(Event.ENTER_FRAME, update);
-			this.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 			byeWin = new ByeWin();
 			closedDialog = new CloseDialog();
-	
-	
 			cursor.addCursor(mcCursorArrow, 'arr');
 			cursor.addCursor(mcCursorHand, 'hand');		
 			cursor.changeCursor('arr');
 			cursor.setButtonCursor('arr', 'hand', stg);	
 			this.tabEnabled = false;
 			this.tabChildren = false;
-			//App.spr.alpha = 0.5;
-		}
-		
-
-		
-		private function mouseUp(e:MouseEvent):void 
-		{
-			for (var i:int = 0; i < btns.length; i++) 
-			{
-				btns[i].scaleX = 1;
-				btns[i].scaleY = 1;
-			}
 		}
 		
 		private function update(e:Event):void 
@@ -130,10 +112,8 @@ package artur
 			info.update();
 			winManajer.update();
 			UnitCache.update();
-			spr.addChild(cursor);
 		}
-		public static function clear():void
-		{
+		public static function clear():void {
 			while (spr.numChildren > 0)
 			 spr.removeChildAt(0);
 		}
