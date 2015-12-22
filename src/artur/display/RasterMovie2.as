@@ -5,13 +5,17 @@ package artur.display
 	import flash.display.Sprite;
 	
 	
-	public class RasterMovie extends Sprite
+	public class RasterMovie2 extends Sprite
 	{
 		public var frames:Array = [];
 		public var currFrame:int = 0;
 		public var maxFrame:int;
 		public var free:Boolean = false;
-		public function RasterMovie(baseClip:MovieClip,getSprite:Boolean = false,filter:Object = null) 
+		private static var data:Array = 
+		[
+		     {clas:},
+		];
+		public function RasterMovie2(baseClip:MovieClip,getSprite:Boolean = false,filter:Object = null) 
 		{
 			frames = PrepareGr.creatBms(baseClip,getSprite,filter);
 			this.addChild(frames[currFrame]);

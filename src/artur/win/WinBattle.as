@@ -33,6 +33,7 @@ package artur.win
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.text.TextField;
@@ -106,7 +107,8 @@ package artur.win
 				WinBattle.battleChat.addChild(mc);
 			}
 			this.topPanel = new TopPanelBattle(this);
-			
+			BaseEff(EffManajer.getEff("base"));
+			BaseEff(EffManajer.getEff("base"));
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -186,9 +188,10 @@ package artur.win
 		 
 		 public function onBattleMassage(e:DataExchangeEvent):void 
 		 {
-			 Report.addMassage(e.result);
+			Report.addMassage(e.result);
+			
 			var obj:Object = JSON2.decode(e.result);
-			WinBattle.anim.push(obj);
+			WinBattle.anim.push(obj);	
 		 }
 		 
 		public function makeStep():void {
@@ -217,10 +220,23 @@ package artur.win
 				this.useBanochka(obj);
 			} else if(obj.is_w != null) {
 				this.endBattle(obj)
+			} else if(obj.bk != null) {
+				this.banochckaUsed(obj);
 			}
 		}
 		
+		private function banochckaUsed(obj:Object):void {
+			var unit:Object
+			var cur_pos:int = WinBattle.bat['set'][WinBattle.bat.cus].p;
+			var inv_place:int = int(obj.bk);
+			unit = bat.u[WinBattle.myTeam][cur_pos];
+			delete(unit.inv[inv_place]);
+		}
+		
 		private function useBanochka(obj:Object):void {
+			mover.bin = true;
+			mover.otherAnim = true
+			
 			var hps:Object = WinBattle.bat.hps[obj.tu.t];
 			var mps:Object = WinBattle.bat.mps[obj.tu.t];
 			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
@@ -229,6 +245,9 @@ package artur.win
 			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
 			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
 			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+			var tim:Timer = new Timer(1500, 1);
+			tim.addEventListener(TimerEvent.TIMER_COMPLETE, onBanochkaUseTim);
+			tim.start();
 		
 			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
 			    App.sound.playSound("botl", App.sound.onVoice, 1);
@@ -266,6 +285,13 @@ package artur.win
 				return;
 			}
 			
+			
+		}
+		
+		private function onBanochkaUseTim(e:TimerEvent):void {
+			Timer(e.target).removeEventListener(e.type, onBanochkaUseTim);
+			mover.bin = false;
+			mover.otherAnim = false;
 		}
 		
 		private function onUltimateData(obj:Object):void {
@@ -300,6 +326,7 @@ package artur.win
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					EffManajer.showLgs(30, WinBattle.spr, 0xFFFFFF, node.x, node.y - 1000, node.x, node.y-40);
 					EffManajer.lgs.update();
+					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y + 25, 4);
 					var tim:Timer = new Timer(15, 15);
 					tim.addEventListener(TimerEvent.TIMER, this.onLgsTimer);
 					tim.addEventListener(TimerEvent.TIMER_COMPLETE, this.onLgsTimerCplt);
@@ -321,7 +348,7 @@ package artur.win
 			if (obj.t == 2 || obj.t == 0 || (obj.t == 104&&(bat.u[obj.wh.t][obj.wh.p].lvl == 1)) ) {
 				tim1 = new Timer(470, 1);
 			} else if (obj.t == 3) {
-				tim1 = new Timer(250, 1);
+				tim1 = new Timer(500, 1);
 			} else if (obj.t == 1 || (obj.t == 100 && WinBattle.bat.u[1][obj.wh.p].lvl == 1)) {
 				tim1 = new Timer(1100, 1);
 			}
