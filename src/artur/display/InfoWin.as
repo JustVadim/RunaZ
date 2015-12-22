@@ -2,23 +2,47 @@ package artur.display
 {
 	import artur.App;
 	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
+	import flash.text.engine.Kerning;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
+	import report.Report;
+	import Utils.Functions;
 	
-	public class InfoWin extends mcInfo
-	{
+	public class InfoWin extends mcInfo {
 		private var wds:Array = [70, 100, 243];
 		private var delay:int = 0;
-		private var infos:Array 
+		private var infos:Array;
+		private var infos1:Array;
+		public var titleTxtName:TextField = Functions.getTitledTextfield( -46.5, -9, 93, 15, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, true);
+		public var txtInfo:TextField = Functions.getTitledTextfield( -1.5, 0.5, 237, 108.25, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0);
+		public var txtGold:TextField = Functions.getTitledTextfield( 69, 1, 45, 18, new Art().fontName, 12, 0xFFF642, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
+		public var txtSilver:TextField = Functions.getTitledTextfield( 159, 1, 45, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
 		
-		public function InfoWin() 
-		{
+		public function InfoWin() {
 			this.mouseChildren = false;
 			this.mouseEnabled = false;
 			this.title.y = -5;
-			infos = [this.hp, this.mp, this.dmg,this.f_fiz, this.f_mag, this.speed, this.inc];
+			infos1 = [this.hp, this.mp, this.dmg, this.f_fiz, this.f_mag, this.speed, this.inc];
+			this.infos = [addInfo(this.hp, "Жизни"), addInfo(this.mp,"Манна"), addInfo(this.dmg,"Урон"), addInfo(this.f_fiz, "Физ.Защита"), addInfo(this.f_mag, "Маг.Защита"), addInfo(this.speed, "Скорость"), addInfo(this.inc, "Инициатива")];
 			this.hideAll();
 			this.filters = [new GlowFilter(0x000000, 1, 3, 3)]
 			this.dmg.iconRange.visible = false;
+			this.title.addChild(this.titleTxtName);
+			this.titleTxtName.filters = [new DropShadowFilter(1, 42, 0xFFFFFF, 1, 1, 1, 0.5, 1, true), new DropShadowFilter(1, 234, 0xFFCC99, 1, 1, 1, 0.5, 1, true), new GlowFilter(0x0, 1, 3, 3, 1, 1)];
+			this.txtInfo.multiline = true;
+			this.txtInfo.wordWrap = true;
+			this.addChild(this.txtInfo);
+			this.price.addChild(this.txtGold);
+			this.price.addChild(this.txtSilver);
+		}
+		
+		private function addInfo(mc:MovieClip, str:String):McInfoInfos {
+			var info:McInfoInfos = new McInfoInfos(str);
+			mc.addChild(info);
+			return info;
 		}
 		
 		private function hideAll():void 
@@ -27,7 +51,8 @@ package artur.display
 			this.txtInfo.visible = false;
 			for (var i:int = 0; i < infos.length; i++) 
 			{
-				var mov:MovieClip = MovieClip(infos[i]);
+				MovieClip(this.infos1[i]).visible = false;
+				var mov:McInfoInfos= McInfoInfos(infos[i]);
 				mov.visible = false;
 				mov.txt1.visible = false;
 				mov.txtPlus.visible = false;
@@ -40,12 +65,12 @@ package artur.display
 		{	 
 			this.x = xp
 			this.y = yp	
-			var cur_Y:int = 0;
+			var cur_Y:int = -5;
 			this.txtInfo.textColor = 0xFFFFFF;
 			if (data.title != null)
 			{
 				this.title.visible = true;
-				this.title.txt.text = String(data.title); 
+				this.titleTxtName.text = String(data.title); 
 				cur_Y = 10;
 			}
 			switch(data.type)
@@ -58,65 +83,60 @@ package artur.display
 					this.txtInfo.x = this.bg.x;
 					this.txtInfo.y = cur_Y;
 					this.bg.width = data.txtInfo_w;
-					this.bg.height = txtInfo.height + cur_Y + 5;
+					this.bg.height = txtInfo.height + cur_Y + 8;
 					break;
 				case(1):
-					for (var i:int = 0; i < infos.length; i++) 
-					{
-						var mov:MovieClip = MovieClip(infos[i]);
-						mov.y = cur_Y;
+					for (var i:int = 0; i < infos.length; i++) {
+						MovieClip(infos1[i]).visible = true;
+						MovieClip(infos1[i]).y = cur_Y;
+						var mov:McInfoInfos = McInfoInfos(infos[i]);
 						mov.visible = true;
 						mov.txt1.visible = true;
-						mov.txt1.text = data.chars[i];
+						if(i!=2) {
+							mov.txt1.text = data.chars[i];
+						} else {
+							mov.txt1.text  = data.chars[2] + " - " + data.chars[7];
+						}
 						if (data.chars[200 + i] != null && int(data.chars[200 + i]) > 0)
 						{
 							mov.txt2.visible = true;
 							mov.txt2.text = String(data.chars[200 + i]);
 							mov.txtPlus.visible = true;
 						}
-						this.dmg.txt1.text = data.chars[2] + " - " + data.chars[7];
 						cur_Y += 18;
 					}
 					this.bg.width = 236;
 					this.bg.height = cur_Y + 5;
-					if (data.chars[8] == 0)
-					{
+					if (data.chars[8] == 0) {
 						this.dmg.iconRange.visible = true;
 						this.dmg.iconMili.visible = false;
-					}
-					else
-					{
+					} else {
 						this.dmg.iconRange.visible = false;
 						this.dmg.iconMili.visible = true;
 					}
 					break;
 				case(2):
-					for (var j:int = 0; j < infos.length; j++) 
-					{
-						if (data.chars[j] != null)
-						{
-							var mov1:MovieClip = this.infos[j];
-							mov1.y = cur_Y;
+					for (var j:int = 0; j < infos.length; j++) {
+						if (data.chars[j] != null) {
+							MovieClip(infos1[j]).visible = true;
+							MovieClip(infos1[j]).y = cur_Y;
+							var mov1:McInfoInfos = this.infos[j];
 							mov1.visible = true;
 							mov1.txt1.visible = true;
 							mov1.txt1.text = "+" + data.chars[j];
-							this.infos[j].visible = true;
+							Report.addMassage(cur_Y  + " i=" + j);
 							cur_Y += 18;
 						}
 					}
 					this.bg.width = 236;
 					this.price.y = cur_Y;
 					this.price.visible = true;
-					
-					if (data.bye)
-					{
-						this.price.txtGold.text = data.chars[101];
-						this.price.txtSilver.text = data.chars[100];
-					}
-					else
-					{
-						this.price.txtGold.text = 0;
-						this.price.txtSilver.text = int(data.chars[100]/2);
+					if (data.bye) {
+						this.txtGold.text = data.chars[101];
+						this.txtSilver.text = data.chars[100];
+					} else {
+						this.txtGold.text = "0";
+						this.txtSilver.text = String(data.chars[100]/2);
 					}
 					this.bg.height = cur_Y + price.height + 10;
 					break;
@@ -147,13 +167,12 @@ package artur.display
 			Main.THIS.stage.addChild(this);
 			this.title.x = bg.width / 2 ;
 		}
-		public function update():void
-		{
-			if (delay-- < 0) 
-			{
+		public function update():void {
+			if (delay-- < 0) {
 				this.visible = true;
 			}
 		}
+		
 		public function frees():void
 		{
 			if(Main.THIS.stage.contains(this))

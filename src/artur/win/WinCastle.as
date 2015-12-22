@@ -8,6 +8,8 @@ package artur.win {
 	import artur.display.ShopInventar;
 	import artur.display.Slot;
 	import artur.display.UnitBlank;
+	import artur.display.WinSellExtend;
+	import artur.McTextCastleWinExtend;
 	import artur.units.UnitCache;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -16,7 +18,7 @@ package artur.win {
 		public var bin:Boolean = false;
 		private var bg:MyBitMap;
 		public var slots:Array = [];
-		public static var txtCastle:mcTextCastleWin = new mcTextCastleWin();
+		public static var txtCastle:McTextCastleWinExtend = new McTextCastleWinExtend();
 		private var spr_units:Sprite = new Sprite();
 		public static var currSlotClick:String;
 		private static var inst:WinCastle;
@@ -24,7 +26,7 @@ package artur.win {
 		public static var inventar:HeroInventar
 		public static var shopInventar:ShopInventar
 		public static var chest:Chest = new Chest();
-		public static var mcSell:WinSell = new WinSell();
+		public static var mcSell:WinSellExtend = new WinSellExtend();
 		
 		
 		public function WinCastle() {
@@ -65,14 +67,14 @@ package artur.win {
 		public function init():void {
 			App.spr.addChild(bg);
 			App.spr.addChild(txtCastle);
-			chest.init();
+			WinCastle.chest.init();
 			for (var i:int = 0; i < slots.length; i++) {
 				App.spr.addChildAt(slots[i], 0);
 				slots[i].init();
 			}
-			txtCastle.scroll.visible = false;
-			txtCastle.txtGold.text = String(UserStaticData.hero.gold);
-			txtCastle.txtSilver.text = String(UserStaticData.hero.silver);
+			WinCastle.txtCastle.scroll.visible = false;
+			WinCastle.txtCastle.txtGold.text = String(UserStaticData.hero.gold);
+			WinCastle.txtCastle.txtSilver.text = String(UserStaticData.hero.silver);
 			App.topPanel.init(this);
 		}
 		

@@ -34,6 +34,8 @@ package artur.win
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
 		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
 		
+			//[btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
+		
 		public function WinRoot() {
 			this.bg = new MyBitMap(App.prepare.cach[0]);
 			this.bg.x = bg.y = -33;

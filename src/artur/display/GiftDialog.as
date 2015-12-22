@@ -21,7 +21,7 @@ package artur.display  {
 				if (mc.visible) {
 					mc.visible = false;
 				}
-				this.txt.text = text;
+				//this.txt.text = text;
 			} else {
 				if(!mc.visible) {
 					mc.visible = true;

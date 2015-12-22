@@ -12,6 +12,11 @@ package artur.win
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
+	import flash.text.engine.Kerning;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
+	import Utils.Functions;
 	
 	public class WinMap 
 	{
@@ -22,6 +27,10 @@ package artur.win
 		private var sprsXY:Array = [new mcBuildsCoordinate1()];
 		public var bin:Boolean = false;
 		private var bg:Bitmap;
+		public var txtGold:TextField = Functions.getTitledTextfield( 585, 8, 75, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
+		public var txtSilver:TextField = Functions.getTitledTextfield( 713, 8, 75, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
+		
+		
 	    private var names:Array =
 		[
 			['Арагон','Бригас','Наом','Тамкар','Травинкал','Апром','Мигор','Квонг','Сагос','Неаро','Валка','Валес']
@@ -31,6 +40,7 @@ package artur.win
 		public function WinMap() 
 		{
 			////
+			this.txtGold.filters = this.txtSilver.filters = [new GlowFilter(0, 1, 2, 2, 1, 1)];
 			townList = new TownList();
 			for (var j:int = 0; j < bgs.length; j++) 
 			{
@@ -47,7 +57,7 @@ package artur.win
 				maps[i] = [];
 				for (var z:int = 0; z < cClip.numChildren; z++) 
 				{
-					 var town:MapTown = new MapTown(new BaseButton(17 +z),names[currMap][z]);
+					 var town:MapTown = new MapTown(new BaseButton(17 +z), names[currMap][z]);
 					 town.x = cClip.getChildAt(z).x+ town.width/2;
 					 town.y = cClip.getChildAt(z).y + town.height / 2;
 					 town.name = String(z);
@@ -59,6 +69,7 @@ package artur.win
 		{
 			bg = bgs[currMap];
 			App.spr.addChild(bg);
+			
 			var lastTown:int = GetServerData.getLastTown();
 			WinMap.currMap = int(lastTown/12);
 			for (var i:int = 0; i < maps[currMap].length; i++) 
@@ -68,22 +79,24 @@ package artur.win
 				switch(true)
 				{
 					case lastTown == i:
-						town.updateTable(MapTown.CURR_TOWN);
+						town.updateTable1(MapTown.CURR_TOWN);
 						town.addEventListener(MouseEvent.CLICK, onTown);
 						break;
 					case lastTown < i:
-						town.updateTable(MapTown.HOLD_TOWN);
+						town.updateTable1(MapTown.HOLD_TOWN);
 						break;
 					 case lastTown > i:
 						town.addEventListener(MouseEvent.CLICK, onTown);
-						town.updateTable(MapTown.WINN_TOWN);
+						town.updateTable1(MapTown.WINN_TOWN);
 						break;
 				}
 			}
 			
 			App.spr.addChild(mcRess);
-			mcRess.txtGold.text = String(UserStaticData.hero.gold);
-			mcRess.txtSilver.text = String(UserStaticData.hero.silver);
+			this.mcRess.addChild(txtGold);
+			this.mcRess.addChild(txtSilver);
+			this.txtGold.text = String(UserStaticData.hero.gold);
+			this.txtSilver.text = String(UserStaticData.hero.silver);
 			App.topPanel.init(this);
 		}
 		

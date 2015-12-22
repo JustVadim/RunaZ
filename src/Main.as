@@ -1,6 +1,9 @@
 package  {
 	
 	import artur.App;
+	import artur.display.LvlStar;
+	import artur.display.McAfterBattleLoseExtend;
+	import artur.display.McWinAfterBattleExtend;
 	import artur.display.WinRootMcText;
 	import Chat.ChatBasic;
 	import com.greensock.TweenLite;
@@ -17,7 +20,6 @@ package  {
 	import Server.Lang;
 	import Utils.json.JSON2;
 	import flash.ui.Mouse;
-	//method=getProfiles&fields=first_name,last_name,photo_100&uids={viewer_id}&format=json&v=2.0
 	[Frame(factoryClass = "Preloader")]
 	public class Main extends Sprite {
 		
@@ -29,9 +31,9 @@ package  {
 		
 		public function Main():void {
 			if (stage) {
-				init();
+				this.init();
 			} else {
-				addEventListener(Event.ADDED_TO_STAGE, init);
+				this.addEventListener(Event.ADDED_TO_STAGE, this.init);
 			}
 		}
 		
@@ -39,18 +41,14 @@ package  {
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			Main.THIS = this;
-			stage.addChild(rep = new Report());
-			try {
-				UserStaticData.flash_vars = stage.loaderInfo.parameters as Object;
-				if (UserStaticData.flash_vars['api_id']) {
-					this.vkPrepare();
-				}
-				Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
-				DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
-				DataExchange.setConnection();
-			} catch (err:Error) {
-				Report.addMassage("error" + err.getStackTrace() + " " + err.message + " "  +err.name);
+			this.stage.addChild(rep = new Report());
+			UserStaticData.flash_vars = this.stage.loaderInfo.parameters as Object;
+			if (UserStaticData.flash_vars['api_id']) {
+				this.vkPrepare();
 			}
+			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
+			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
+			DataExchange.setConnection();
 		}
 		
 		private function vkPrepare():void {
@@ -66,7 +64,6 @@ package  {
 		private function onLogin(e:DataExchangeEvent = null):void {
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
-			
 			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
 			this.updater();
@@ -76,12 +73,12 @@ package  {
 			
 		}
 		
-		private function onHalfPreloader():void 
-		{
+		private function onHalfPreloader():void {
 			stage.addChild(this.chat);
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
 			stage.addChild(new movieMonitor());
+			stage.addChild(new LvlStar());
 			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onPreloader } );
 		}
 		
@@ -95,7 +92,9 @@ package  {
 			while (this.numChildren > 0) {
 				this.removeChildAt(0);
 			}
-			this.chat.parent.removeChild(this.chat);
+			if(this.chat.parent){
+				this.chat.parent.removeChild(this.chat);
+			}
 		}
 		
 		private function updater():void {

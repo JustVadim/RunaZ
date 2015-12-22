@@ -210,31 +210,23 @@ package artur.display.battle {
 				}
 		}
 		
-		private function makeAttack():void 
-		{
+		private function makeAttack():void {
 			var hurt_unit:MovieClip  = WinBattle.units[cur_obj.a.u.t][cur_obj.a.u.p];
-			if (cur_obj.a.b[2] != null)
-			{
+			if (cur_obj.a.b[2] != null) {
 				TextEff(EffManajer.getEff('text')).init(this.unit.x, this.unit.y - 60, String("Двойная Aтака"), 0x00FF40);
 			}
 			this.unit.gotoAndStop("atack1");
 			this.unit.addEventListener("ATTACK", this.onAttack);
-			if (this.unit.x > hurt_unit.x)
-				{this.unit.scaleX = -this.unit.normScale;}
-			else
-				{this.unit.scaleX = this.unit.normScale; }
-			 	
+			this.unit.scaleX = (this.unit.x > hurt_unit.x)? -this.unit.normScale:this.unit.normScale; 	
 			hurt_unit.scaleX =  this.unit.scaleX * ( -1);
-			if (hurt_unit.scaleX < 0) hurt_unit.scaleX = -hurt_unit.normScale; else hurt_unit.scaleX = hurt_unit.normScale;
-			if (this.unit.y == hurt_unit.y)
-			{
-				if (WinBattle.spr.getChildIndex(unit) < WinBattle.spr.getChildIndex(hurt_unit))
-					{WinBattle.spr.swapChildren(hurt_unit, this.unit);}
-			}
-			else
-			{
-				if (this.type != 3)
-				{
+			hurt_unit.scaleX = (hurt_unit.scaleX < 0) ? -hurt_unit.normScale:hurt_unit.normScale;
+			
+			if (this.unit.y == hurt_unit.y) {
+				if (WinBattle.spr.getChildIndex(unit) < WinBattle.spr.getChildIndex(hurt_unit)) {
+					WinBattle.spr.swapChildren(hurt_unit, this.unit);
+				}
+			} else {
+				if (this.type != 3) {
 					this.unit.rotation = (hurt_unit.y > this.unit.y) ? 25: -25;
 					this.unit.rotation *= this.unit.scaleX;
 				}
@@ -279,38 +271,28 @@ package artur.display.battle {
 			}
 		}
 		
-		private function onAttack(e:Event):void 
-		{
+		private function onAttack(e:Event):void {
 			unit.removeEventListener(e.type, onAttack);
 			var pos:int = cur_obj.a.u.p;
 			var t:int = cur_obj.a.u.t;
 			var hurt_unit:MovieClip  = WinBattle.units[t][pos];
 			
-			if (cur_obj.a.b[1] != null)
-			{
+			if (cur_obj.a.b[1] != null) {
 				TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 80, String("Промах"), 0x80FF00);
-			}
-			else
-			{
+			} else {
 				var hps:Object = WinBattle.bat.hps[t];
 				hps[pos] = cur_obj.a.ll;
 				LifeManajer.un_Data[t][pos].currLife = hps[pos];
-				if (LifeManajer.bin)		
-				{
+				if (LifeManajer.bin) {
 					LifeManajer.updateCurrLife(t,pos);
 				}
-				if (hps[pos] > 0)
-				{
+				if (hps[pos] > 0) {
 					hurt_unit.gotoAndPlay("hurt");
-				}
-				else
-				{
+				} else {
 					hurt_unit.gotoAndPlay("die");
 					hurt_unit.addEventListener("DIE", onUnitDie);
-					for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
-					{
-						if (WinBattle.sortArr[i] == hurt_unit)
-						{
+					for (var i:int = 0; i < WinBattle.sortArr.length; i++) {
+						if (WinBattle.sortArr[i] == hurt_unit) {
 							WinBattle.sortArr.splice(i, 1);
 							break;
 						}
@@ -319,20 +301,14 @@ package artur.display.battle {
 					Node(WinBattle.inst.grid.nodes[cur_obj.a.x][cur_obj.a.y]).walcable = 0;
 					WinBattle.units[t][pos] = null;
 				}
-				
 				BaseEff(EffManajer.getEff('base')).init(hurt_unit);
-				if (cur_obj.a.b[0] != null)
-				{
+				if (cur_obj.a.b[0] != null) {
 					TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 60, String("2хУрон"), 0xF75757);
 					TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 40, String('-' + cur_obj.a.d), 0xF75757);
-				}
-				else if (cur_obj.a.b[3] != null)
-				{
+				} else if (cur_obj.a.b[3] != null) {
 					TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 60, String("Сквозь Броню"), 0xF75757);
 					TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 40, String('-' + cur_obj.a.d), 0xF75757);
-				}
-				else
-				{
+				} else {
 					TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 60, String('-' + cur_obj.a.d), 0xF75757);
 				}
 			}
@@ -343,17 +319,18 @@ package artur.display.battle {
 			var mc:MovieClip = MovieClip(e.target);
 			mc.removeEventListener(e.type, onUnitDie);
 			mc.frees();
-			for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
+			/*for (var i:int = 0; i < WinBattle.sortArr.length; i++) 
 			{
 				if (mc == WinBattle.sortArr[i])
 					WinBattle.sortArr.splice(i, 1);
-			}
+			}*/
 		}
-		public function frees():void
-		{
+		
+		public function frees():void {
 			bin = false;
-			if(unit.currentFrameLabel!= "idle")
+			if(unit.currentFrameLabel!= "idle") {
 				unit.gotoAndPlay('idle');
+			}
 			WinBattle.inst.setCurrStep();
 			
 		}

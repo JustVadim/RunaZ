@@ -106,19 +106,18 @@ package artur.units
 			App.btnOverFilter.color = 0xFFFFFF;
 			this.filters = [App.btnOverFilter];
 		}
-		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
-		{
+		
+		public function init(parr:DisplayObjectContainer = null, lvl:int = 0):void {
 			scaleX = normScale;
 			scaleY = normScale;
 			vector = 'right';
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
-			if (parr) 
-			{
+			this.visible = true;
+			if (parr) {
 				parr.addChild(this);
 			}
-			this.visible = true;
 		}
 		public function update():void
 		{

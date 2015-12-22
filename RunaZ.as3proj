@@ -8,11 +8,11 @@
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="11" />
-    <movie minorVersion="7" />
+    <movie version="18" />
+    <movie minorVersion="0" />
     <movie platform="Flash Player" />
     <movie background="#000000" />
-    <movie preferredSDK="Flex 4.6.0, AIR 3.7;4.6.0, 3.7;" />
+    <movie preferredSDK="Flex 4.6.0, AIR 20.0;4.6.0, 20.0;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -59,8 +59,8 @@
     <element path="lib\warItem.swc" />
     <element path="lib\Zadniki.swc" />
     <element path="lib\character.swc" />
-    <element path="lib\tile1.swc" />
     <element path="lib\loader.swc" />
+    <element path="lib\tile1.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

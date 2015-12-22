@@ -2,6 +2,11 @@ package artur.display
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
+	import flash.text.engine.Kerning;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
+	import Utils.Functions;
 
 	public class MapTown extends Sprite
 	{
@@ -15,16 +20,20 @@ package artur.display
 		private var nameTown:String;
 		 
 		public var table:mcTownTable = new mcTownTable();
+		private var title:TextField = Functions.getTitledTextfield(-30.5, -8, 61, 15, new Art().fontName, 10, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO,0);
+		
 		public static var currTownClick:int 
 		
-		public function MapTown(baseBtn:BaseButton,nameTown:String) 
+		public function MapTown(baseBtn:BaseButton, nameTown:String) 
 		{
+			this.title.filters = [new GlowFilter(0, 1, 2, 2, 1)];
 			this.town = baseBtn;
+			this.table.addChild(this.title);
 			this.addChild(town);
 			this.addChild(table);
 			table.y = town.height / 2 + table.height / 2 -0.5;
-			table.txt.text = nameTown; table.mouseChildren = false;
-			updateTable();
+			updateTable1();
+			this.title.text = nameTown;
 			table.addEventListener(MouseEvent.MOUSE_DOWN, onKlickTable);
 			table.addEventListener(MouseEvent.MOUSE_OVER, town.over);
 			table.addEventListener(MouseEvent.MOUSE_OUT, town.out);
@@ -45,10 +54,9 @@ package artur.display
 			town.down();
 		}
 		
-		public function updateTable(frame:int=1):void
-		{
+		public function updateTable1(frame:int=1):void {
 			table.gotoAndStop(frame);
-			table.txt.textColor = COLORS_TEXT [frame];
+			this.title.textColor = COLORS_TEXT [frame];
 			town.setActive( frame != 1);
 			table.buttonMode = Boolean(frame != 1);
 		}
