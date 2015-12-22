@@ -11,9 +11,9 @@ package artur.display
 		public var currFrame:int = 0;
 		public var maxFrame:int;
 		public var free:Boolean = false;
-		public function RasterMovie(baseClip:MovieClip,getSprite:Boolean = false) 
+		public function RasterMovie(baseClip:MovieClip,getSprite:Boolean = false,filter:Object = null) 
 		{
-			frames = PrepareGr.creatBms(baseClip,getSprite);
+			frames = PrepareGr.creatBms(baseClip,getSprite,filter);
 			this.addChild(frames[currFrame]);
 			maxFrame = frames.length -2 ;
 		}

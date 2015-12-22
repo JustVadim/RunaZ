@@ -102,7 +102,8 @@ package artur.win
 				WinBattle.battleChat.addChild(mc);
 			}
 			this.topPanel = new TopPanelBattle(this);
-			
+			BaseEff(EffManajer.getEff("base"));
+			BaseEff(EffManajer.getEff("base"));
 		}
 		
 		private function onCloseWin(e:MouseEvent):void 
@@ -297,6 +298,7 @@ package artur.win
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					EffManajer.showLgs(30, WinBattle.spr, 0xFFFFFF, node.x, node.y - 1000, node.x, node.y-40);
 					EffManajer.lgs.update();
+					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y + 25, 4);
 					var tim:Timer = new Timer(15, 15);
 					tim.addEventListener(TimerEvent.TIMER, this.onLgsTimer);
 					tim.addEventListener(TimerEvent.TIMER_COMPLETE, this.onLgsTimerCplt);

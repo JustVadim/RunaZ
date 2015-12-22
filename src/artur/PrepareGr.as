@@ -81,10 +81,13 @@ package artur
 			}
 		}
 		
-		public static function creatBms(clip:MovieClip,getSprites:Boolean = false ):Array {
+		public static function creatBms(clip:MovieClip,getSprites:Boolean = false,filter:Object=null ):Array {
 			var bms:Array = [];
 			clip.width *= scaleFactor;
 			clip.height *= scaleFactor;
+			if (filter)
+			  clip.filters = [filter];
+			  
 			for (var i:int = 0; i < clip.totalFrames; i++) {
 				clip.gotoAndStop(i + 1);
 				drawSpr.addChild(clip);
@@ -120,6 +123,7 @@ package artur
 				   bms.push(bm);
 				}
 			}
+			clip = null;
 			return bms;
 		}
 	}
