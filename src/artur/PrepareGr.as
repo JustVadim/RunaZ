@@ -85,7 +85,11 @@ package artur
 			}
 		}
 		
+<<<<<<< HEAD
 		public static function creatBms(clip:MovieClip,getSprites:Boolean = false,filter:Object=null,frame:int = 0 ):Array {
+=======
+		public static function creatBms(clip:MovieClip, getSprites:Boolean = false, filter:Object = null ):Array {
+>>>>>>> 28d6593b534d4ea76638ae859fbf5fcb7a24473f
 			var bms:Array = [];
 			clip.width *= scaleFactor;
 			clip.height *= scaleFactor;

@@ -8,6 +8,7 @@ package artur.display {
 		public var txt:TextField = Functions.getTitledTextfield(-11.25, -8.5, 20.65, 16, new Art().fontName, 11, 0, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1, true);
 		public function LvlStar() {
 			this.addChild(this.txt);
+			this.txt.text = "12";
 			this.txt.filters = [new GlowFilter(0, 1, 1, 1, 1)];
 		}
 	}

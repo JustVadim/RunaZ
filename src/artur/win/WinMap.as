@@ -16,6 +16,7 @@ package artur.win
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import report.Report;
 	import Utils.Functions;
 	
 	public class WinMap 
@@ -65,6 +66,7 @@ package artur.win
 				}
 			 }
 		}
+		
 		public function init():void
 		{
 			bg = bgs[currMap];

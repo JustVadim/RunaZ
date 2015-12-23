@@ -8,6 +8,7 @@ package artur.display
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
+	import report.Report;
 	
 	public class ItemCall extends Sprite
 	{
@@ -15,17 +16,21 @@ package artur.display
 		
 		public var free:Boolean = true;
 		
-		private var heads:RasterMovie = new RasterMovie(new Cell_Heads())///new RasterMovie(new Cell_Heads())
-		private var bodys:RasterMovie = new RasterMovie(new Cell_Bodys())
-		private var boots:RasterMovie =  new RasterMovie(new Cell_Boots())
-		private var hends_top:RasterMovie =new RasterMovie(new Cell_TopHands())
-		private var hends_down:RasterMovie =new RasterMovie(new Cell_DownHands())
+		
+		private var heads:RasterMovie = new RasterMovie(new Cell_Heads());
+		private var bodys:RasterMovie = new RasterMovie(new Cell_Bodys());
+		private var boots:RasterMovie =  new RasterMovie(new Cell_Boots());
+		private var hends_top:RasterMovie = new RasterMovie(new Cell_TopHands());
+		private var hends_down:RasterMovie = new RasterMovie(new Cell_DownHands());
 		private var guns1:Array = [new RasterMovie(new Cell_Guns()), new RasterMovie(new Cell_Swords()),new RasterMovie(new Cell_Bows()), new RasterMovie(new Cell_Totem())];
 		private var guns2:Array = [new RasterMovie(new Cell_Guns()), new RasterMovie(new Cell_Shilds())];
 		private var parts_of_parts:Array = [heads, bodys, boots, hends_top, hends_down];
 		private var inv:RasterMovie = new RasterMovie(new Cell_Inv());
 		
+		
+		
 		private var currItem:RasterMovie; 
+		private var itemImage:ItemCallImage;
 		
 		public static var sounds:Array =
 		[
@@ -44,28 +49,12 @@ package artur.display
 			this.tabEnabled = this.tabChildren = this.mouseChildren = false;
 			this.buttonMode = true;
 		}
-		public function init(unitType:int,itemType:int,index:int):void
-		{
-			free = false;
-			switch(true)
-			{
-				case (itemType < 5):
-					currItem = parts_of_parts[itemType];
-					break;
-				case (itemType == 5):
-					currItem = guns1[unitType];
-					break;
-				case (itemType == 6):
-					currItem = guns2[unitType];
-					break;
-				case (itemType == 7):
-					currItem = this.inv;
-					break;
-			}
-			currItem.gotoAndStop(index);
-			while (this.numChildren > 0)
-				this.removeChildAt(0);
-			this.addChild(currItem);
+		
+		public function init(unitType:int, itemType:int, index:int):void {
+			
+			this.free = false;
+			this.free = false;
+			this.addChild(this.itemImage = ItemCallImage.getItemCallImage(unitType, itemType, index));
 			Main.THIS.stage.addChild(this);
 		}
 		
@@ -86,8 +75,12 @@ package artur.display
 		
 		public function frees():void {
 			free = true;
-			if(this.parent)
+			if (this.parent) {
+				this.removeChild(this.itemImage);
+				this.itemImage.free = true;
 				this.parent.removeChild(this);
+				Report.addMassage(ItemCallImage.ITEMS_CASH.length);
+			}
 		}
 		
 		public static function getCall():ItemCall {

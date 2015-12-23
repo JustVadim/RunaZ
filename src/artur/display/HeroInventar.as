@@ -17,7 +17,6 @@ package artur.display
 	import flash.text.TextField;
 	import flash.ui.Mouse;
 	import mx.core.FlexMovieClip;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;

@@ -348,7 +348,7 @@ package artur.win
 			if (obj.t == 2 || obj.t == 0 || (obj.t == 104&&(bat.u[obj.wh.t][obj.wh.p].lvl == 1)) ) {
 				tim1 = new Timer(470, 1);
 			} else if (obj.t == 3) {
-				tim1 = new Timer(500, 1);
+				tim1 = new Timer(350, 1);
 			} else if (obj.t == 1 || (obj.t == 100 && WinBattle.bat.u[1][obj.wh.p].lvl == 1)) {
 				tim1 = new Timer(1100, 1);
 			}
@@ -401,7 +401,10 @@ package artur.win
 		{
 			Timer(e.currentTarget).removeEventListener(TimerEvent.TIMER, this.onLgsTimer);
 			Timer(e.currentTarget).removeEventListener(TimerEvent.TIMER_COMPLETE, this.onLgsTimerCplt);
-			WinBattle.spr.removeChild(EffManajer.lgs);
+			if(EffManajer.lgs.parent) {
+				EffManajer.lgs.parent.removeChild(EffManajer.lgs);
+			}
+			
 		}
 		
 		private function onLgsTimer(e:TimerEvent):void 

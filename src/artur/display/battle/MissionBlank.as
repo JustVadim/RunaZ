@@ -47,6 +47,7 @@ package artur.display.battle {
 				else
 					this.starBar['st' + j].visible = false;
 			}
+			this.title.textColor = 0xFFFFFF;
 		}
 		
 		public function hideMission():void 
