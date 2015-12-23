@@ -142,7 +142,7 @@ package artur.display
 					this.invP = WinCastle.inventar.getIsInv(mc);
 					var data1:DataExchange = new DataExchange();
 					data1.addEventListener(DataExchangeEvent.ON_RESULT, this.fromChestToUnitRes);
-					var send_obj1:Object = {cn:upped_item_num, un:int(WinCastle.currSlotClick), it:0, invP:this.invP};
+					var send_obj1:Object = { cn:upped_item_num, un:int(WinCastle.currSlotClick), it:0, invP:this.invP };
 					data1.sendData(COMMANDS.FROM_CHEST_TO_UNIT, JSON2.encode(send_obj1), true);
 				} else {
 					this.onUppedItemMouseLeave(e);
@@ -305,6 +305,7 @@ package artur.display
 				}
 			}
 			UserStaticData.hero.chest[upped_item_num].id = this.upped_item_id;
+			this.upped_item_call.init( -1, -1, -1);
 			this.upped_item_call.free = false;
 			this.upped_item_call.x = grid[upped_item_num].x;
 			this.upped_item_call.y = grid[upped_item_num].y;
