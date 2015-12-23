@@ -85,37 +85,17 @@ package artur
 			}
 		}
 		
-<<<<<<< HEAD
-		public static function creatBms(clip:MovieClip,getSprites:Boolean = false,filter:Object=null,frame:int = 0 ):Array {
-=======
-		public static function creatBms(clip:MovieClip, getSprites:Boolean = false, filter:Object = null ):Array {
->>>>>>> 28d6593b534d4ea76638ae859fbf5fcb7a24473f
+
+		public static function creatBms(clip:MovieClip, getSprites:Boolean = false, filter:Object = null ):Array 
+		{
+
 			var bms:Array = [];
 			clip.width *= scaleFactor;
 			clip.height *= scaleFactor;
 			if (filter)
 			  clip.filters = [filter];
 			  
-			 if (frame) 
-			 {
-				 clip.gotoAndStop(frame);
-				 drawSpr.addChild(clip);
-				 
-				rect = drawSpr.getBounds(drawSpr);
-				mtx = new Matrix();
-				mtx.tx = -rect.x;
-				mtx.ty = -rect.y;
-				bmd = new BitmapData(drawSpr.width, drawSpr.height, true, 0);
-				bmd.draw(drawSpr, mtx);
-				drawSpr.removeChild(clip);
-				bm = new Bitmap(bmd, PixelSnapping.AUTO, false);
-				bm.width /= scaleFactor; 
-				bm.height /= scaleFactor;
-				bm.x -= mtx.tx/scaleFactor;
-				bm.y -= mtx.ty / scaleFactor;
-				
-				return [bm];
-			 } 
+		
 			for (var i:int = 0; i < clip.totalFrames; i++) 
 			{
 				clip.gotoAndStop(i + 1);
