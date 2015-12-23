@@ -38,7 +38,7 @@ package artur.units
 		 public var vector:String = 'right';
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
 		 private static var sounds:Array = [{id:'bot1_fs1',frame:40},{id:'bot1_fs2',frame:50},{id:'bow1',frame:64},{ id:'pall_hurt', frame:69 },{id:'blade1',frame:66}];
-		 public static var f:GlowFilter = new GlowFilter(0x000000, 1, 2, 2,1.5);
+		 public static var f:GlowFilter = new GlowFilter(0x000000, 1, 2, 2,1);
 		public function U_Lyk() 
 		{
 			this.mouseEnabled = false;
