@@ -63,9 +63,7 @@ package artur.display
 			
 		}
 		
-		private function onBatle(e:MouseEvent):void 
-		{
-
+		private function onBatle(e:MouseEvent):void {
 			if (GetServerData.getUserIsReadyToBattle()) {
 				var missNum:int = int(e.currentTarget.name)
 				WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);

@@ -39,7 +39,7 @@ package artur.display {
 			this.addChild(this.txt_sk_out);
 			this.addChild(this.txt_sk_miss);
 			this.addChild(this.txt_sk_ult);
-			this.mcFreeskils.addChild(this.txt_available);
+			this.addChild(this.txt_available);
 			this.txtLife.x = this.txtMana.x = this.txtDmg.x = this.txtFizDeff.x = this.txtMagDeff.x = this.txtInic.x = this.txtSpeed.x = -85; 
 			this.txtLife.y = -2;
 			this.txtMana.y = 15;

@@ -6,6 +6,7 @@ package artur.display
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import report.Report;
 	import Utils.Functions;
 
 	public class MapTown extends Sprite
@@ -54,7 +55,8 @@ package artur.display
 			town.down();
 		}
 		
-		public function updateTable1(frame:int=1):void {
+		public function updateTable1(frame:int = 1):void {
+			Report.addMassage("tableUpdate" + frame);
 			table.gotoAndStop(frame);
 			this.title.textColor = COLORS_TEXT [frame];
 			town.setActive( frame != 1);

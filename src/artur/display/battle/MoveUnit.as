@@ -154,40 +154,30 @@ package artur.display.battle {
 						}
 					}
 				}
-			}
-			else if (this.arrow_anim > 1)
-			{
+			} else if (this.arrow_anim > 1) {
 				if (type == 2 || type == 103)
 				{
-					 arrow.x += speedX;
-					 arrow.y += speedY;
-				}
-				else if (type == 3)
-				{
+					arrow.x += speedX;
+					arrow.y += speedY;
+				} else if (type == 3) {
 					EffManajer.lgs.update();
 				}
 				arrow_anim--;
-			}
-			else
-			{
+			} else {
 				this.arrow_anim = 0;
 				this.unit.dispatchEvent(new Event("ATTACK"));
-				if(type == 2 || type == 103)
-				{
+				if(type == 2 || type == 103) {
 					WinBattle.spr.removeChild(this.arrow);
-				}
-				else if (type == 3)
-				{
-					WinBattle.spr.removeChild(EffManajer.lgs);
+				} else if (type == 3) {
+					if(EffManajer.lgs.parent) {
+						EffManajer.lgs.parent.removeChild(EffManajer.lgs);
+					}
 				}
 				
-				if (this.cur_obj.a.b[2] != null)
-				{
+				if (this.cur_obj.a.b[2] != null) {
 					this.cur_obj.a = this.cur_obj.a.b[2];
 					delete(this.cur_obj.a.b[2]);
-				}
-				else
-				{
+				} else {
 					this.frees();
 				}
 			}
