@@ -14,7 +14,6 @@ package artur.win
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
-	import flash.events.DRMMetadataEvent;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import report.Report;

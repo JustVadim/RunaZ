@@ -85,18 +85,25 @@ package artur
 			}
 		}
 		
-		public static function creatBms(clip:MovieClip, getSprites:Boolean = false, filter:Object = null ):Array {
+
+		public static function creatBms(clip:MovieClip, getSprites:Boolean = false, filter:Object = null ):Array 
+		{
+
 			var bms:Array = [];
 			clip.width *= scaleFactor;
 			clip.height *= scaleFactor;
 			if (filter)
 			  clip.filters = [filter];
 			  
-			for (var i:int = 0; i < clip.totalFrames; i++) {
+		
+			for (var i:int = 0; i < clip.totalFrames; i++) 
+			{
 				clip.gotoAndStop(i + 1);
 				drawSpr.addChild(clip);
-				for (var j:int = 0; j < clip.numChildren; j++) {
-					if(clip.getChildAt(j) is MovieClip) {
+				for (var j:int = 0; j < clip.numChildren; j++) 
+				{
+					if (clip.getChildAt(j) is MovieClip)
+					{
 						MovieClip(clip.getChildAt(j)).gotoAndStop(i + 1)
 					}
 				}
@@ -113,17 +120,23 @@ package artur
 				bm.x -= mtx.tx/scaleFactor;
 				bm.y -= mtx.ty / scaleFactor;
 				 
-				if (clip.currentLabel) {
+				if (clip.currentLabel) 
+				{
 					bm.name = clip.currentLabel;
-				} else  {
+				} 
+				else  
+				{
 					bm.name = String(clip.currentFrame);
 				}
-				if (getSprites) {
+				if (getSprites) 
+				{
 					var spr:Sprite = new Sprite();
 					spr.addChild(bm);
 					spr.name = bm.name;
 					bms.push(spr); 
-				} else {
+				} 
+				else 
+				{
 				   bms.push(bm);
 				}
 			}

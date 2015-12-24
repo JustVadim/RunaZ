@@ -6,6 +6,7 @@ package artur.units
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
 	
 	public class U_Lyk extends LykDoll
 	{
@@ -37,30 +38,31 @@ package artur.units
 		 public var vector:String = 'right';
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
 		 private static var sounds:Array = [{id:'bot1_fs1',frame:40},{id:'bot1_fs2',frame:50},{id:'bow1',frame:64},{ id:'pall_hurt', frame:69 },{id:'blade1',frame:66}];
-		 
+		 public static var f:GlowFilter = new GlowFilter(0x000000, 1, 2, 2,1);
 		public function U_Lyk() 
 		{
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh);
-			heads = PrepareGr.creatBms(new ItemHeadLyk());
-			bodys = PrepareGr.creatBms(new ItemBodyLyk());
-			bows  = PrepareGr.creatBms(new ItemGun1Lyk());
+			//var f
+			heads = PrepareGr.creatBms(new ItemHeadLyk(),false,f);
+			bodys = PrepareGr.creatBms(new ItemBodyLyk(),false,f);
+			bows  = PrepareGr.creatBms(new ItemGun1Lyk(),false,f);
 			
-			appArmsR = PrepareGr.creatBms(new ItemUpArmLyk());
-			hends1L  = PrepareGr.creatBms(new ItemHand1LLyk());
+			appArmsR = PrepareGr.creatBms(new ItemUpArmLyk(),false,f);
+			hends1L  = PrepareGr.creatBms(new ItemHand1LLyk(),false,f);
 			
-			hends1R  = PrepareGr.creatBms(new ItemHand1RLyk());
-			hends2R  = PrepareGr.creatBms(new ItemHand2RLyk());
+			hends1R  = PrepareGr.creatBms(new ItemHand1RLyk(),false,f);
+			hends2R  = PrepareGr.creatBms(new ItemHand2RLyk(),false,f);
 			 
-			hends2L  = PrepareGr.creatBms(new ItemHand2LLyk());
-			legs1R =  PrepareGr.creatBms(new ItemLeg1RLyk());
-			legs2R =  PrepareGr.creatBms(new ItemLeg2RLyk());
-			legs3R =  PrepareGr.creatBms(new ItemLeg3RLyk());
-			legs1L =  PrepareGr.creatBms(new ItemLeg1LLyk());
-			legs2L =  PrepareGr.creatBms(new ItemLeg2LLyk());
-			legs3L =  PrepareGr.creatBms(new ItemLeg3LLyk());
-			arrows =  PrepareGr.creatBms(new ItemArrows());
+			hends2L  = PrepareGr.creatBms(new ItemHand2LLyk(),false,f);
+			legs1R =  PrepareGr.creatBms(new ItemLeg1RLyk(),false,f);
+			legs2R =  PrepareGr.creatBms(new ItemLeg2RLyk(),false,f);
+			legs3R =  PrepareGr.creatBms(new ItemLeg3RLyk(),false,f);
+			legs1L =  PrepareGr.creatBms(new ItemLeg1LLyk(),false,f);
+			legs2L =  PrepareGr.creatBms(new ItemLeg2LLyk(),false,f);
+			legs3L =  PrepareGr.creatBms(new ItemLeg3LLyk(),false,f);
+			arrows =  PrepareGr.creatBms(new ItemArrows(),false,f);
 			parts = 				[this._head, this._body, this._bow, this._appArmR, this._appArmL, this._hend1R, this._hend2R, this._hend2L,  this._leg1R, this._leg2R, this._leg3R, this._leg1L, this._leg2L, this._leg3L, this._arrow];
 			parts_of_parts = [	heads,         bodys,     bows,         appArmsR,         hends1L,         hends1R,        hends2R,         hends2L,        legs1R,       legs2R,         legs3R,       legs1L,        legs2L,       legs3L,       arrows];
 			
