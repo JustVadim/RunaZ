@@ -19,7 +19,8 @@ package artur.win
 		new WinCastle(), //1
 		new WinMap(), //2
 		new WinBattle(),//3
-		new WinKyz()//4
+		new WinKyz(),//4
+		new WinArena//5
 		];
 		public var currWin:int=0;
 		public var neadWin:int=0;

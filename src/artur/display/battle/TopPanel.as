@@ -2,6 +2,7 @@ package artur.display.battle
 {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.win.WinArena;
 	import artur.win.WinCastle;
 	import artur.win.WinKyz;
 	import artur.win.WinMap;
@@ -82,7 +83,8 @@ package artur.display.battle
 				case 'btnCastle':
 					 App.winManajer.swapWin(1);
 				 break;
-				 case 'btnArena':
+			 case 'btnArena':
+				      App.winManajer.swapWin(5);
 				 break;
 			     case 'btnUp':
 				     App.winManajer.swapWin(0);
@@ -121,6 +123,11 @@ package artur.display.battle
 			{
 				this.addChild(mcCurrWin[3]);
 				mcBtns.btnKyz.visible = false;
+			}
+			else if (clas is WinArena) 
+			{
+				this.addChild(mcCurrWin[1]);
+				mcBtns.btnArena.visible = false;
 			}
 			
 			this.addChild(mcBtns);

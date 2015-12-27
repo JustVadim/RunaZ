@@ -57,6 +57,7 @@ package artur
 			new btnSel1Extend(Lang.getTitle(40, 1)),//36
 			new btnSel1Extend(Lang.getTitle(40, 2)),//37
 			new btnSel1Extend(Lang.getTitle(40, 3)),//38
+		    new mcArena//39
 		];
 		
 		public static var scaleFactor:Number = 2;
