@@ -231,6 +231,7 @@ package artur.win
 			var inv_place:int = int(obj.bk);
 			unit = bat.u[WinBattle.myTeam][cur_pos];
 			delete(unit.inv[inv_place]);
+			this.updateBanochka(unit, inv_place);
 		}
 		
 		private function useBanochka(obj:Object):void {
@@ -514,6 +515,7 @@ package artur.win
 		}
 		 
 		public function setCurrStep():void {
+			Report.addMassage("setCUrrStep")
 			this.ult_clicked = false;
 			WinBattle.sortSpr();
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
@@ -527,12 +529,14 @@ package artur.win
 			this.grid.clearNodesControl();
 			this.grid.lightUnits(bat.locs[0], bat.hps[0], 0);
 			this.grid.lightUnits(bat.locs[1], bat.hps[1], 1);
-			var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
+			var cur_unit:Object = WinBattle.bat.u[cus.t][cus.p];
 			var lifeObject:Object = LifeManajer.un_Data[cus.t][cus.p];
 			this.bigLifeBar.mcLife.gotoAndStop(int(1 + lifeObject.currLife / lifeObject.maxLife * 100));
 			this.bigLifeBar.txtHP.text = lifeObject.currLife + "/" + lifeObject.maxLife;
 			this.bigLifeBar.mcMana.gotoAndStop(int(1 + lifeObject.currMana / lifeObject.maxMana * 100));
 			this.bigLifeBar.txtMp.text = lifeObject.currMana + "/" + lifeObject.maxMana;
+			this.showBanochki(cur_unit, cus);
+			
 			
 			if (cus.t == myTeam && WinBattle.anim.length == 0) {
 				var is_arr:int = cur_unit.t_d;
@@ -559,6 +563,18 @@ package artur.win
 				this.removeUltEvents();
 			}
 			
+		}
+		
+		private function showBanochki(cur_unit:Object, cus:Object):void {
+			Report.addMassage("showBanochki " + JSON.stringify(cur_unit.inv));
+			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) {
+				var mc:Panel_Inv = WinBattle.inv_btns[i];
+				if (cur_unit.inv[i] != null) { 
+					mc.gotoAndStop(cur_unit.inv[i].id+1);
+				} else {
+					mc.gotoAndStop(1);
+				}
+			}
 		}
 		
 		private function makeBanochki(cur_unit:Object, cus:Object = null):void {
@@ -597,7 +613,7 @@ package artur.win
 			for (var i:int = 0; i < inv_btns.length; i++) 
 			{
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
-				mc.gotoAndStop(1);
+				//mc.gotoAndStop(1);
 				mc.buttonMode = false;
 				mc.removeEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);
 				mc.removeEventListener(MouseEvent.ROLL_OUT, this.onBankaOut);

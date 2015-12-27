@@ -17,7 +17,11 @@ package artur.display.battle
 		public var nodes:Array = new Array();
 		public static var wd:int = 13;
 		public static var hg:int = 9;
-		public static var stones:Array = [];
+		//private static var stones:Array = [];
+		
+		
+		
+		
 		
 		public function BattleGrid() 
 		{
@@ -47,11 +51,11 @@ package artur.display.battle
 				for (var j:int = 0; j < hg; j++) 
 					Node(nodes[i][j]).frees();
 			}
-			for (var key:Object in BattleGrid.stones)
-			{
-				BattleGrid.stones[key].free = true;
-				if(WinBattle.spr.contains(BattleGrid.stones[key] ))
-				WinBattle.spr.removeChild(BattleGrid.stones[key]);
+			for (var key:Object in MapStone.stonesArr) {
+				var ms:MapStone = MapStone.stonesArr[key];
+				if(!ms.free) {
+					ms.frees();
+				}
 			}
 		}
 		
@@ -309,22 +313,9 @@ package artur.display.battle
 			return (xx >= 0 && xx < BattleGrid.wd && yy >= 0 && yy < BattleGrid.hg);
 		}
 		
-		public static function getStone():RasterMovie
-		{
-			for (var i:int = 0; i < stones.length; i++) 
-			{
-				if (stones[i].free) 
-				{
-					stones[i].free = false;
-					return stones[i];
-				}
-			}
-			
-			var stone:RasterMovie = new RasterMovie(new Stone1(), true);
-			stone.free = false;
-			stones.push(stone);
-			return stone;
-		}
+		
+		
+		
 		
 		public function highLightUltCells(unit_type:int):void 
 		{

@@ -23,7 +23,7 @@ package artur.display.battle
 		public var yp:uint;
 		public var walcable:int;
 		public var mc:mcNode = new mcNode();
-		private var txt:TextField = new TextField();
+		//private var txt:TextField = new TextField();
 		private var cur_fr:int;
 		public var rad:int;
 		public var checked:Boolean;
@@ -36,11 +36,11 @@ package artur.display.battle
 		public function Node() 
 		{
 			this.mouseChildren = false;
-		   	txt.width = mc.width;
+		  /*txt.width = mc.width;
 			txt.height = 40;
 			txt.x = - txt.width / 2;
 			txt.y = - txt.height / 2;
-			txt.alpha = 0.5;
+			txt.alpha = 0.5;*/
 			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver1);
 			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver2);
 			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut2);
@@ -67,27 +67,23 @@ package artur.display.battle
 			Node.unit_info_timer.stop();
 			WinBattle.hero_inv.init1(unit, false, Node.x_, Node.y_);
 		}
-		public function init(xp:int,yp:int,walcable:int):void
+		public function init(xp:int,yp:int, walcable:int):void
 		{
 			this.is_mouse_over = false;
 			this.addChild(mc); 
 			this.mc.gotoAndStop(1);
 			this.xp = xp; this.yp = yp;
-			
-			
-			this.x = xp*this.width + 44 +(yp%2)*int(this.width/2);
+			this.x = xp * this.width + 44 +(yp % 2) * int(this.width / 2);
 			this.y = yp*49 + 80 + 40;
-			
 			this.walcable = walcable;
-			this.mc.visible = (walcable == 0 || walcable == 1)
-			this.txt.text = xp.toString() + ":" + yp.toString();
+			this.mc.visible = (walcable == 0 || walcable == 1);
+			//this.txt.text = xp.toString() + ":" + yp.toString();
 			WinBattle.spr.addChild(this);
-			if (!mc.visible) 
-			{
-				var st:RasterMovie = BattleGrid.getStone();
-				st.gotoAndStop(1);
+			if (!mc.visible) {
+				var st:MapStone = MapStone.getStone(walcable-1);
 				WinBattle.spr.addChild(st);
-				st.x = this.x; st.y = this.y;
+				st.x = this.x;
+				st.y = this.y;
 				WinBattle.sortArr.push(st);
 			}
 		}
