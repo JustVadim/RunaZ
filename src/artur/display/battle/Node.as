@@ -33,8 +33,7 @@ package artur.display.battle
 		private static var y_:int = 0;
 		private var is_mouse_over:Boolean = false;
 		
-		public function Node() 
-		{
+		public function Node() {
 			this.mouseChildren = false;
 		  /*txt.width = mc.width;
 			txt.height = 40;
@@ -45,39 +44,34 @@ package artur.display.battle
 			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver2);
 			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut2);
 			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut1);
-			if (unit_info_timer == null)
-			{
+			if (unit_info_timer == null) {
 				Node.unit_info_timer = new Timer(1000);
 				Node.unit_info_timer.addEventListener(TimerEvent.TIMER, Node.onInfoTimer);
 			}
 		}
 		
-		private function onOut2(e:MouseEvent):void 
-		{
+		private function onOut2(e:MouseEvent):void {
 			this.is_mouse_over = false;
 		}
 		
-		private function onOver2(e:MouseEvent):void 
-		{
+		private function onOver2(e:MouseEvent):void {
 			this.is_mouse_over = true;
 		}
 		
-		private static function onInfoTimer(e:TimerEvent):void 
-		{
+		private static function onInfoTimer(e:TimerEvent):void {
 			Node.unit_info_timer.stop();
 			WinBattle.hero_inv.init1(unit, false, Node.x_, Node.y_);
 		}
-		public function init(xp:int,yp:int, walcable:int):void
-		{
+		public function init(xp:int,yp:int, walcable:int):void {
+			//this.txt.text = xp.toString() + ":" + yp.toString();
 			this.is_mouse_over = false;
-			this.addChild(mc); 
+			this.addChild(mc);
 			this.mc.gotoAndStop(1);
 			this.xp = xp; this.yp = yp;
 			this.x = xp * this.width + 44 +(yp % 2) * int(this.width / 2);
-			this.y = yp*49 + 80 + 40;
+			this.y = yp * 49 + 120;
 			this.walcable = walcable;
 			this.mc.visible = (walcable == 0 || walcable == 1);
-			//this.txt.text = xp.toString() + ":" + yp.toString();
 			WinBattle.spr.addChild(this);
 			if (!mc.visible) {
 				var st:MapStone = MapStone.getStone(walcable-1);
@@ -262,7 +256,7 @@ package artur.display.battle
 					}
 				}
 			}
-			if(key == -1){
+			if (key == -1) {	
 				throw new Error("Dont find user on ultimate");
 			} else {
 				WinBattle.makeUltimate(key);
