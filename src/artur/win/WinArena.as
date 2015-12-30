@@ -14,16 +14,27 @@ package artur.win
 		private var bg:MyBitMap;
 		private var btn1:BaseButton;
 		private var mcFound:mcFounMovie = new mcFounMovie();
+		private var btnClose:BaseButton 
 		public function WinArena() 
 		{
 			bg = new MyBitMap(App.prepare.cach[39]);
+			
 			btn1 = new BaseButton(40);
+			btnClose = new BaseButton(31);
 			btn1.x = 400;
 			btn1.y = 100;
 			mcFound.x = 400;
 			mcFound.y = 250;
 			mcFound.gotoAndStop(1);
 			btn1.addEventListener(MouseEvent.CLICK, onBtn);
+			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
+		}
+		
+		private function onBtnClose(e:MouseEvent):void 
+		{
+			App.spr.removeChild(mcFound);
+			mcFound.gotoAndStop(1);
+			App.spr.removeChild(btnClose);
 		}
 		
 		private function onBtn(e:MouseEvent):void 
@@ -31,12 +42,17 @@ package artur.win
 			mcFound.rotation = 0;
 			mcFound.rot.visible = false;
 			mcFound.gotoAndPlay(1);
+			App.spr.addChild(mcFound);
+			App.spr.addChild(btnClose);
+			btnClose.x = e.currentTarget.x;
+			btnClose.y = e.currentTarget.y + 50;
 		}
 		public function init():void 
 		{
 			App.spr.addChild(bg);
 		    App.spr.addChild(btn1);
-			App.spr.addChild(mcFound);
+		//App.spr.addChild(mcFound);
+
 			mcFound.gotoAndStop(1);
 			mcFound.rotation = 0;
 			mcFound.rot.visible = false;
