@@ -22,6 +22,7 @@ package Server
 		static public const SEND_BATTLE_MASSEGE:String = "19";
 		static public const PERSON_UPDATE:String = "20";
 		static public const SURRENDER:String = "21";
+		static public const CANCEL_BATTLE:String = "22";
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;
 		static public var new_user_comes:int = 101;
@@ -29,5 +30,3 @@ package Server
 		
 	}
 }
-
-//10277

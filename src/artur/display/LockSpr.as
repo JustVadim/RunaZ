@@ -1,4 +1,5 @@
 package artur.display {
+	import com.greensock.TweenLite;
 	import flash.display.Sprite;
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
@@ -16,6 +17,8 @@ package artur.display {
 			this.txt.text = txt;
 			Main.THIS.addChild(this);
 			this.gotoAndPlay(1);
+			this.txt.alpha = 0;
+			TweenLite.to(this.txt, 1, { alpha:1 } );
 		}
 		
 		public function frees():void {
