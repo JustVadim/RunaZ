@@ -38,39 +38,47 @@ package artur.win
 			bgPrice.addChild(btnClosePrice);
 			for ( i= 0; i < 9; i++) 
 			{
-				var txt:TextField = Maker.getTextField(50, 20, 0x0F0F0F, false,false,false,13);
-				txt.x = 5;
-				txt.y = 20 + i * 35;
-				txt.alpha = 1;
-				txt_stones.push(txt);
-				txt.text = "123";
-				txt.filters = [App.btnOverFilter];
-				var btn:BaseButton = new BaseButton(41);
-				btn.x = 43;
-				btn.y =  15 + i * 35;
-				btns_add.push(btn);
+				
 			}
-			
+			 var index:int = 0;
 			for ( i = 0; i < 3; i++) 
 			{
-				for (var j:int = 0; j < 3; j++) 
+				for (var j:int = 0; j < 5; j++) 
 				{
+					index ++;
+					 var txt:TextField = Maker.getTextField(35, 20, 0xFEEE96, false, false, false, 13);
 					 var btn:BaseButton = new BaseButton(44);
+					 txt.x = 30;
+					 txt.text = String(index);
+					 btn.addChild(txt);
 				     btn.x = i * 230 + btn.width/2;
 					 btn.y = j * 75 + btn.height/2;
-					 btn.name = String(i + j);
+					 btn.name = String(index);
 					 bgPrice.addChild(btn);
+					 
+					
+					 txt = Maker.getTextField(35, 20, 0x0F0F0F, false, false, false, 13);
+				     txt.x = 20+ i*70;
+					 txt.y = 74 + j * 40;
+					 txt.alpha = 1;
+					 txt_stones.push(txt);
+					 txt.text = "123";
+					 txt.filters = [App.btnOverFilter];
+					 btn = new BaseButton(41);
+					 btn.x = txt.x+30;
+					 btn.y =  txt.y - 8;
+					 btns_add.push(btn);
 				}
 			}
 			
 			btnStoneCreat = new BaseButton(43);
 			btnCraft = new BaseButton(42);
-			btnStoneCreat.x = 151
-			btnStoneCreat.y = 27;
+			btnStoneCreat.x = 91.5;
+			btnStoneCreat.y = 26.5;
 			btnCraft.x = 410.15;
 			btnCraft.y = 218.35;
 			bgPrice.x = 60;
-			bgPrice.y = 100;
+			bgPrice.y = 20;
 			
 			btnStoneCreat.addEventListener(MouseEvent.CLICK, onCreatStone);
 			btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);
