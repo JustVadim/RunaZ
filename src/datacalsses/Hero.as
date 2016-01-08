@@ -15,6 +15,7 @@ package datacalsses
 		public var bat:Number
 		public var mbat:Object;
 		public var fs:int;
+		public var st:Object
 		
 		public function setHero(obj:Object):void
 		{
@@ -33,6 +34,7 @@ package datacalsses
 			this.exp = obj.exp;
 			this.miss = obj.miss;
 			this.fs = obj.fs;
+			this.st = obj.st;
 			/// - crab;
 		}
 	}

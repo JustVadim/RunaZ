@@ -16,10 +16,10 @@ package artur.display
 	import Utils.json.JSON2;
 	
 	public class Chest extends Sprite {
-		public var  wd:int = 5;
-		public var  hg:int  = 8;
-		public var grid:Array = new Array();
-		public var items:Array = new Array();
+		public const wd:int = 5;
+		public const hg:int  = 8;
+		private var grid:Array = new Array();
+		private var items:Array = new Array();
 		public var upped_item_num:int;
 		public var upped_item_id:int;
 		private var invP:int = -1;
@@ -64,8 +64,8 @@ package artur.display
 							item_call.y = mcCall(grid[key]).y;
 							item_call.name = String(key);
 							item_call.addEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
-							item_call.addEventListener(MouseEvent.MOUSE_OVER, item_call.over);
-							item_call.addEventListener(MouseEvent.MOUSE_OUT, item_call.out);
+							item_call.addEventListener(MouseEvent.ROLL_OVER, item_call.over);
+							item_call.addEventListener(MouseEvent.ROLL_OUT, item_call.out);
 							this.addChild(item_call);
 							items.push(item_call);
 						}
@@ -280,7 +280,6 @@ package artur.display
 			for (var i:Object in items) {
 				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
 				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OVER, items[i].over);
-				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OUT, items[i].out);
 				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OUT, items[i].out);
 				ItemCall(items[i]).frees();
 				delete(items[i]);

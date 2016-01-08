@@ -74,11 +74,11 @@ package artur.display.battle
 			this.mc.visible = (walcable == 0 || walcable == 1);
 			WinBattle.spr.addChild(this);
 			if (!mc.visible) {
-				var st:MapStone = MapStone.getStone(walcable-1);
+				/*var st:MapStone = MapStone.getStone(walcable-1);
 				WinBattle.spr.addChild(st);
 				st.x = this.x;
 				st.y = this.y;
-				WinBattle.sortArr.push(st);
+				WinBattle.sortArr.push(st);*/
 			}
 		}
 		

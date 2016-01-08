@@ -51,12 +51,12 @@ package artur.display.battle
 				for (var j:int = 0; j < hg; j++) 
 					Node(nodes[i][j]).frees();
 			}
-			for (var key:Object in MapStone.stonesArr) {
+			/*for (var key:Object in MapStone.stonesArr) {
 				var ms:MapStone = MapStone.stonesArr[key];
 				if(!ms.free) {
 					ms.frees();
 				}
-			}
+			}*/
 		}
 		
 		private function setUnitsOnScreen(unit_locs:Object, units:Object, sc_array:Array, life_array:Array, hp:Object, mp:Object, scalse:int = 1):void 

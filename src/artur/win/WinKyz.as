@@ -1,6 +1,7 @@
 package artur.win {
 	import artur.App;
 	import artur.display.BaseButton;
+	import artur.display.KuznitsaChest;
 	import artur.PrepareGr;
 	import artur.RasterClip;
 	import artur.util.Maker;
@@ -19,10 +20,12 @@ package artur.win {
 		private var bgPrice:Sprite =  new Sprite();
 		private var btnsInBg:Array = [];
 		private var btnClosePrice:BaseButton = new BaseButton(31);
+		private var chest:KuznitsaChest = new KuznitsaChest();
 		
 		public function WinKyz() {
 			var i:int
 			var block:Sprite = new mcBlock();
+			var index:int = 0;
 			block.x = - 200;
 			block.y = - 200;
 			block.alpha = 0.5;
@@ -32,41 +35,45 @@ package artur.win {
 			bgPrice.addChild(Sprite(PrepareGr.creatBms(new bgStonePrice(), true)[0]));
 			bgPrice.addChild(btnClosePrice);
 			
-			for ( i= 0; i < 9; i++) 
-			{
-				var txt:TextField = Maker.getTextField(50, 20, 0x0F0F0F, false,false,false,13);
-				txt.x = 5;
-				txt.y = 20 + i * 35;
-				txt.alpha = 1;
-				txt_stones.push(txt);
-				txt.text = "123";
-				txt.filters = [App.btnOverFilter];
-				var btn:BaseButton = new BaseButton(41);
-				btn.x = 43;
-				btn.y =  15 + i * 35;
-				btns_add.push(btn);
-			}
-			
-			for ( i = 0; i < 3; i++) 
-			{
-				for (var j:int = 0; j < 3; j++) 
-				{
-					 var btn:BaseButton = new BaseButton(44);
-				     btn.x = i * 230 + btn.width/2;
-					 btn.y = j * 75 + btn.height/2;
-					 btn.name = String(i + j);
-					 bgPrice.addChild(btn);
+			for ( i = 0; i < 3; i++) {
+				for (var j:int = 0; j < 5; j++) {
+					var txt:TextField = Maker.getTextField(35, 20, 0xFEEE96, false, false, false, 13);
+					var btn:BaseButton = new BaseButton(44);
+					txt.x = 30;
+					txt.text = String(10 + i * 10);
+					btn.addChild(txt);
+					btn.x = i * 230 + btn.width/2;
+					btn.y = j * 75 + btn.height/2;
+					btn.name = String(index);
+					bgPrice.addChild(btn);
+					
+					 
+					
+					txt = Maker.getTextField(35, 20, 0x0F0F0F, false, false, false, 13);
+					txt.x = 20 + i * 70;
+					txt.y = 74 + j * 40;
+					txt.alpha = 1;
+					txt_stones.push(txt);
+					txt.text = UserStaticData.hero.st[index]; //"123";
+					txt.filters = [App.btnOverFilter];
+					btn = new BaseButton(41);
+					btn.x = txt.x+30;
+					btn.y =  txt.y - 8;
+					btn.name = index.toString();
+					btn.visible = false;
+					btns_add[index] = btn;
+					index ++;
 				}
 			}
 			
 			btnStoneCreat = new BaseButton(43);
 			btnCraft = new BaseButton(42);
-			btnStoneCreat.x = 151
-			btnStoneCreat.y = 27;
+			btnStoneCreat.x = 91.5;
+			btnStoneCreat.y = 26.5;
 			btnCraft.x = 410.15;
 			btnCraft.y = 218.35;
 			bgPrice.x = 60;
-			bgPrice.y = 100;
+			bgPrice.y = 20;
 			
 			btnStoneCreat.addEventListener(MouseEvent.CLICK, onCreatStone);
 			btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);
@@ -79,20 +86,18 @@ package artur.win {
 		
 		private function onCreatStone(e:MouseEvent):void 
 		{
-				App.spr.addChild(bgPrice);
+			App.spr.addChild(bgPrice);
 		}
-		public function init():void
-		{
+		public function init():void {
 			App.spr.addChild(bg);
-			for (var i:int = 0; i < txt_stones.length; i++) 
-			{
+			for (var i:int = 0; i < txt_stones.length; i++) {
 				App.spr.addChild(txt_stones[i]);
 				App.spr.addChild(btns_add[i]);
 			}
 			App.spr.addChild(btnStoneCreat);
 			App.spr.addChild(btnCraft);
+			this.chest.init();
 			App.topPanel.init(this);
-			
 		}
 		public function update():void
 		{
@@ -100,7 +105,7 @@ package artur.win {
 		}
 		public function frees():void
 		{
-			
+			this.chest.frees();
 		}
 		
 	}

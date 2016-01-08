@@ -21,6 +21,7 @@ package  {
 	import Utils.json.JSON2;
 	import flash.ui.Mouse;
 	[Frame(factoryClass = "Preloader")]
+	
 	public class Main extends Sprite {
 		
 		public static var THIS:Main;
