@@ -4,7 +4,7 @@ package artur.display {
 	import report.Report;
 	import Utils.Functions;
 	public class WinSellExtend extends WinSell{
-		private var sellTittle:TextField = Functions.getTitledTextfield( -65.7, -6, 147.7, 30, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "ПРОДАТЬ");;
+		public var sellTittle:TextField = Functions.getTitledTextfield( -65.7, -6, 147.7, 30, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "ПРОДАТЬ");;
 		public function WinSellExtend() {
 			this.sellSprite.addChild(this.sellTittle);
 			this.sellSprite.addFrameScript(1, this.frameFunc);

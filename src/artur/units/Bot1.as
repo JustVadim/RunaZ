@@ -47,24 +47,23 @@ package artur.units
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh)
-			heads = PrepareGr.creatBms(new itemHead_bot1(),false,U_Lyk.f);
-			bodys = PrepareGr.creatBms(new itemBody_bot1(),false,U_Lyk.f);
-			sikirs = PrepareGr.creatBms(new itemSikir_bot1(),false,U_Lyk.f);
-			appArmsR = PrepareGr.creatBms(new itemAppArm_bot1(),false,U_Lyk.f);
-			hends1R  = PrepareGr.creatBms(new itemHend1R_bot1(),false,U_Lyk.f);
-			hends2R  = PrepareGr.creatBms(new itemHend2R_bot1(),false,U_Lyk.f);
-			hends3R  = PrepareGr.creatBms(new itemHend3R_bot1(),false,U_Lyk.f);
-			
-			appArmsL = PrepareGr.creatBms(new itemAppArm2_bot1(),false,U_Lyk.f);
-			hends1L  = PrepareGr.creatBms(new itemHend1L_bot1(),false,U_Lyk.f);
-			hends2L  = PrepareGr.creatBms(new itemHend2L_bot1(),false,U_Lyk.f);
-			hends3L  = PrepareGr.creatBms(new itemHend3L_bot1(),false,U_Lyk.f);
-			legs1R =  PrepareGr.creatBms(new itemLeg1R_bot1(),false,U_Lyk.f);
-			legs2R =  PrepareGr.creatBms(new itemLeg2R_bot1(),false,U_Lyk.f);
-			legs3R =  PrepareGr.creatBms(new itemLeg3R_bot1(),false,U_Lyk.f);
-			legs1L =  PrepareGr.creatBms(new itemLeg1L_bot1(),false,U_Lyk.f);
-			legs2L =  PrepareGr.creatBms(new itemLeg2L_bot1(),false,U_Lyk.f);
-			legs3L =  PrepareGr.creatBms(new itemLeg3L_bot1(),false,U_Lyk.f);
+			heads = PrepareGr.creatBms(new itemHead_bot1(), false, U_Lyk.f);
+			bodys = PrepareGr.creatBms(new itemBody_bot1(), false, U_Lyk.f);
+			sikirs = PrepareGr.creatBms(new itemSikir_bot1(), false, U_Lyk.f);
+			appArmsR = PrepareGr.creatBms(new itemAppArm_bot1(), false, U_Lyk.f);
+			hends1R  = PrepareGr.creatBms(new itemHend1R_bot1(), false, U_Lyk.f);
+			hends2R  = PrepareGr.creatBms(new itemHend2R_bot1(), false, U_Lyk.f);
+			hends3R  = PrepareGr.creatBms(new itemHend3R_bot1(), false, U_Lyk.f);
+			appArmsL = PrepareGr.creatBms(new itemAppArm2_bot1(), false, U_Lyk.f);
+			hends1L  = PrepareGr.creatBms(new itemHend1L_bot1(), false, U_Lyk.f);
+			hends2L  = PrepareGr.creatBms(new itemHend2L_bot1(), false, U_Lyk.f);
+			hends3L  = PrepareGr.creatBms(new itemHend3L_bot1(), false, U_Lyk.f);
+			legs1R =  PrepareGr.creatBms(new itemLeg1R_bot1(), false, U_Lyk.f);
+			legs2R =  PrepareGr.creatBms(new itemLeg2R_bot1(), false, U_Lyk.f);
+			legs3R =  PrepareGr.creatBms(new itemLeg3R_bot1(), false, U_Lyk.f);
+			legs1L =  PrepareGr.creatBms(new itemLeg1L_bot1(), false, U_Lyk.f);
+			legs2L =  PrepareGr.creatBms(new itemLeg2L_bot1(), false, U_Lyk.f);
+			legs3L =  PrepareGr.creatBms(new itemLeg3L_bot1(), false, U_Lyk.f);
 			
 			parts = [this._head, this._body, this._sikira, this._appArmR, this._hend1R, this._hend2R, this._hend3R, this._appArmL, this._hend1L, this._hend2L, this._hend3L, this._leg1R, this._leg2R, this._leg3R, this._leg1L, this._leg2L, this._leg3L];
 			parts_of_parts = [heads, bodys, sikirs, appArmsR, hends1R, hends2R, hends3R, appArmsL, hends1L, hends2L, hends3L, legs1R, legs2R, legs3R, legs1L, legs2L, legs3L];

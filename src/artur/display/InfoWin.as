@@ -124,7 +124,6 @@ package artur.display
 							mov1.visible = true;
 							mov1.txt1.visible = true;
 							mov1.txt1.text = "+" + data.chars[j];
-							Report.addMassage(cur_Y  + " i=" + j);
 							cur_Y += 18;
 						}
 					}

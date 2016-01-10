@@ -26,7 +26,7 @@ package Utils {
 			return chars;
 		}
 		
-		public static function getTitledTextfield(xx:Number, yy:Number, ww:Number, hh:Number, fontName:String, size:int, text_color:int, align:String, str:String = "", alpha:Number = 1, kerning:Object = Kerning.AUTO, letterSpacing:Object = 0, bold:Boolean = false):TextField {
+		public static function getTitledTextfield(xx:Number, yy:Number, ww:Number, hh:Number, fontName:String, size:int, text_color:int, align:String, str:String = "", alpha:Number = 1, kerning:Object = Kerning.AUTO, letterSpacing:Object = 0, bold:Boolean = false, leading:int = 0):TextField {
 			var textf:TextFormat = new TextFormat();
 			textf.font = fontName;
 			textf.size = size;
@@ -35,6 +35,7 @@ package Utils {
 			textf.kerning = kerning;
 			textf.letterSpacing = letterSpacing; 
 			textf.bold = bold;
+			textf.leading = leading;
 			var title:TextField = new TextField();
 			title.embedFonts = true;
 			title.antiAliasType = AntiAliasType.ADVANCED

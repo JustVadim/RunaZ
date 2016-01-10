@@ -419,9 +419,10 @@ package artur.display
 				Mouse.hide();
 				this.itemOutDirect(mc);
 				App.spr.addChild(WinCastle.mcSell); 
-				WinCastle.mcSell.gotoAndPlay(1);
 				WinCastle.mcSell.addEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
 				WinCastle.mcSell.addEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
+				WinCastle.mcSell.sellSprite.gotoAndStop(1);
+				WinCastle.mcSell.gotoAndPlay(1);
 				this.itemType = int(mc.name);
 				this.itemID = int(mc.currentFrame);
 				this.invPlace = this.getIsInv(mc);

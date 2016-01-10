@@ -9,7 +9,7 @@ package artur.display {
 	public class CloseDialog extends dialogBye {
 		private var btnEx:BaseButton;
 		private var btnCastl:BaseButton;
-		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 70, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false);
+		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 70, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false, 2);
 		
 		
 		public function CloseDialog() {

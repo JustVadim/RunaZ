@@ -16,6 +16,7 @@ package datacalsses
 		public var mbat:Object;
 		public var fs:int;
 		public var st:Object
+		public var sz:Object;
 		
 		public function setHero(obj:Object):void
 		{
@@ -35,6 +36,7 @@ package datacalsses
 			this.miss = obj.miss;
 			this.fs = obj.fs;
 			this.st = obj.st;
+			this.sz = obj.sz;
 			/// - crab;
 		}
 	}

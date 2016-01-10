@@ -3,11 +3,11 @@ package artur.display
 	import artur.App;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import report.Report;
 	
-	public class BaseButton extends Sprite
-	{
+	public class BaseButton extends Sprite {
 		private var bm:MyBitMap
 		public var index:int;
 		private var active:Boolean = true;
@@ -33,16 +33,34 @@ package artur.display
 			bm.x = - bm.width / 2;
 			bm.y = -bm.height / 2;
 			this.cont.addChild(bm);
-			this.addEventListener(MouseEvent.ROLL_OVER, over);
-			this.addEventListener(MouseEvent.ROLL_OUT, out);
-			this.addEventListener(MouseEvent.MOUSE_DOWN, down);
-			this.addEventListener(MouseEvent.MOUSE_UP, up);
+			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			this.buttonMode = true;
 			this.addChild(this.cont);
 		}
 		
-		private function up(e:MouseEvent):void 
+		private function onAddedToStage(e:Event):void 
 		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
+			this.addEventListener(MouseEvent.ROLL_OVER, over);
+			this.addEventListener(MouseEvent.ROLL_OUT, out);
+			this.addEventListener(MouseEvent.MOUSE_DOWN, down);
+			this.addEventListener(MouseEvent.MOUSE_UP, up);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage)
+		}
+		
+		private function onRemovedFromStage(e:Event):void 
+		{
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
+			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
+			this.removeEventListener(MouseEvent.ROLL_OVER, over);
+			this.removeEventListener(MouseEvent.ROLL_OUT, out);
+			this.removeEventListener(MouseEvent.MOUSE_DOWN, down);
+			this.removeEventListener(MouseEvent.MOUSE_UP, up);
+
+			
+		}
+		
+		private function up(e:MouseEvent):void {
 			if (this.active) {
 				this.cont.scaleX = this.cont.scaleY = 1;
 			}
@@ -81,8 +99,7 @@ package artur.display
 			//bm.y = -bm.height / 2;
 		}
 		
-		public function setActive(val:Boolean ):void
-		{
+		public function setActive(val:Boolean ):void {
 			active = val;
 			this.buttonMode = val;
 			this.mouseChildren = val;

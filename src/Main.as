@@ -1,7 +1,7 @@
 package  {
 	
 	import artur.App;
-	import artur.display.LvlStar;
+	
 	import artur.display.McAfterBattleLoseExtend;
 	import artur.display.McWinAfterBattleExtend;
 	import artur.display.WinRootMcText;

@@ -27,16 +27,10 @@ package artur.win
 		private var brama:mcAnimBrama = new mcAnimBrama();
 		private var swapMode:Boolean = false;
 		
-		public function WinManajer() 
-		{
-			Report.addMassage(UserStaticData.hero.bat)
-			Report.addMassage(JSON2.encode(UserStaticData.hero.mbat));
-			if (UserStaticData.hero.bat == -1)
-			{
+		public function WinManajer() {
+			if (UserStaticData.hero.bat == -1) {
 				swapWin(0)
-			}
-			else
-			{
+			} else {
 			    swapWin(3)	 
 			}
 			

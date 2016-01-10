@@ -6,7 +6,7 @@ package artur.display.battle {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	import report.Report;
+	
 	public class MapStone extends Sprite {
 		public var id:int;
 		public var free:Boolean = false;
@@ -15,7 +15,6 @@ package artur.display.battle {
 		
 		
 		public function MapStone(id:int) {
-			Report.addMassage("create stone ID: " + id);
 			this.id = id;
 			this.getImage(this.id);
 		}

@@ -79,6 +79,7 @@ package artur.display
 		private function onItemInChestMouserDown(e:MouseEvent):void {
 			Mouse.hide();
 			App.spr.addChild(WinCastle.mcSell);
+			WinCastle.mcSell.sellSprite.gotoAndStop(1);
 			WinCastle.mcSell.gotoAndPlay(1);
 			WinCastle.mcSell.addEventListener(MouseEvent.ROLL_OVER, this.onItemSellOver);
 			WinCastle.mcSell.addEventListener(MouseEvent.ROLL_OUT, this.onItemSellOut);
@@ -132,8 +133,8 @@ package artur.display
 				}
 			} else if (e.target.name == "sell") {
 				Mouse.show();
-					this.afterPut();
-					App.byeWin.init("Я хочу продать", "эту хрень", 0, int(this.uppedItemObj.c[100]/2) ,NaN,2,NaN);
+				this.afterPut();
+				App.byeWin.init("Я хочу продать", "эту хрень", 0, int(this.uppedItemObj.c[100]/2) ,NaN,2,NaN);
 			} else if("yRect" in e.target) {
 				var mc:MovieClip = MovieClip(e.target);
 				if (mc.yRect.visible) {

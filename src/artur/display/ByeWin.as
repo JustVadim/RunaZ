@@ -3,6 +3,7 @@ package artur.display
 	import artur.App;
 	import artur.util.Maker;
 	import artur.win.WinCastle;
+	import artur.win.WinKyz;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.text.engine.Kerning;
@@ -27,7 +28,7 @@ package artur.display
 		private var itemType:int;
 		private var invPlace:int = -1;
 		
-		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 70, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false);
+		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 80, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false, 2);
 		private var txtGold:TextField = Functions.getTitledTextfield(345, 242, 52, 17, new Art().fontName, 14, 0, TextFormatAlign.LEFT, "", 0.6, Kerning.OFF, -1, false);
 		private var txtSilver:TextField = Functions.getTitledTextfield(437, 242, 52, 17, new Art().fontName, 14, 0, TextFormatAlign.LEFT, "", 0.6, Kerning.OFF, -1, false);
 		
@@ -40,6 +41,7 @@ package artur.display
 			this.initBtn(this.btnGold = new BaseButton(12), 352.55, 252.55);
 			this.addChild(this.btnEx);
 			this.addChild(this.txt);
+			
 		}
 		
 		
@@ -61,12 +63,12 @@ package artur.display
 				if (this.txtGold.parent) 	this.removeChild(this.txtGold);
 				if (this.txtSilver.parent) 	this.removeChild(this.txtSilver);
 			} else {
-				txt.text = String(text1 + '\n' + text2 + '\n за');
+				txt.text = String(text1 + "\n" + text2 + "\nза");
 				this.index = index;
 				this.byeType = byeType;
 				this.itemType = itemType;
 				this.invPlace = invPlace;
-				if (priceGold && WinCastle.isGold(priceGold)) {
+				if (priceGold != 0 && WinCastle.isGold(priceGold)) {
 					this.txtGold.text = String(priceGold);
 					this.addChild(this.btnGold);
 					this.addChild(this.iconGold);
@@ -76,7 +78,7 @@ package artur.display
 					if (this.iconGold.parent) 	this.removeChild(this.iconGold);
 					if (this.txtGold.parent) 	this.removeChild(this.txtGold);
 				}
-				if (WinCastle.isSilver(priceSilver)) {
+				if (priceSilver != 0 && (WinCastle.isSilver(priceSilver) || this.index == 2 || this.index == 3)) {
 					this.txtSilver.text = String(priceSilver);
 					this.addChild(this.btnSilver);
 					this.addChild(this.txtSilver);
@@ -122,24 +124,46 @@ package artur.display
 			case 2:
 				switch (mc) {
 					case this.btnSilver:
-						frees();
 						WinCastle.chest.sellItem();
+						this.frees();
 						break;
 					case this.btnEx:
 						WinCastle.chest.putItemOnOldPlace();
-						frees();
+						this.frees();
 						break;
 				}
 				break; 
 			case 3:
 				switch (mc) {
 					case this.btnSilver:
-						frees();
 						WinCastle.inventar.sellItem();
+						this.frees();
 						break;
 					case this.btnEx:
 						WinCastle.inventar.putOnOldPlace()
-						frees();
+						this.frees();
+						break;
+				}
+				break;
+			case 4:
+				switch(mc) {
+					case this.btnEx:
+						this.frees();
+						break;
+					case this.btnGold:
+						WinKyz.inst.zakazKamnja(this.itemType);
+						this.frees();
+						break;
+				}
+				break;
+			case 5:
+				switch(mc) {
+					case this.btnEx:
+						this.frees();
+						break;
+					case this.btnGold:
+						WinKyz.inst.craftItem();
+						this.frees();
 						break;
 				}
 				break;
@@ -204,7 +228,6 @@ package artur.display
 				if(this.invPlace == -1) {
 					unit.it[this.itemType] = Maker.clone(UserStaticData.magazin_items[unit.t][this.itemType][this.index] ) ;
 					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(unit));
-					Report.addMassage(this.itemType + " " + this.index);
 					WinCastle.inventar.updateItem(this.itemType, this.index);
 					WinCastle.inventar.calculateUnitStats(Functions.GetHeroChars(), unit, 1);
 				} else {

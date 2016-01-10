@@ -38,7 +38,7 @@ package artur.display {
 			this.lvl_star.y = -30;
 			this.lvl_star.y = -30;
 			this.buttonMode = true;
-			this.lvl_star.stop();
+			this.lvl_star.star.stop();
 		}
 		
 		private function onSlotClick(e:MouseEvent):void {
@@ -137,27 +137,22 @@ package artur.display {
 			}
 			this.lvl_star.txt.text = unit.lvl;
 			if (unit.fs > 0) {
-				if(this.lvl_star.currentFrame != 2) {
-					this.lvl_star.gotoAndStop(2);
+				if(this.lvl_star.star.currentFrame != 2) {
+					this.lvl_star.star.gotoAndStop(2);
 				}
 			} else {
-				if(this.lvl_star.currentFrame != 1) {
-					this.lvl_star.gotoAndStop(1);
+				if(this.lvl_star.star.currentFrame != 1) {
+					this.lvl_star.star.gotoAndStop(1);
 				}
 			}
 		}
 		
-		public  static function getUnitItemsArray( un_obj:Object ):Array
-		{
+		public  static function getUnitItemsArray( un_obj:Object ):Array {
 			var arr:Array = new Array();
-			for (var i:int = 0; i < 7; i++) 
-			{
-				if (un_obj.it[i] == null)
-				{
+			for (var i:int = 0; i < 7; i++) {
+				if (un_obj.it[i] == null) {
 					arr[i] = 0;
-				}
-				else
-				{
+				} else {
 					arr[i] = un_obj.it[i].id;
 				}
 			}
