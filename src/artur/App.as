@@ -37,7 +37,9 @@ package artur
 		[Embed(source = "../../bin/sounds/magDie.mp3")] private var s_mag_die:Class;
 		[Embed(source = "../../bin/sounds/GhostHurt.mp3")] private var s_g_hurt:Class;
 		[Embed(source = "../../bin/sounds/GhostDie.mp3")] private var s_g_die:Class;
-		[Embed(source="../../bin/sounds/GhostAtack.mp3")] private var s_g_atack:Class;
+		[Embed(source = "../../bin/sounds/GhostAtack.mp3")] private var s_g_atack:Class;
+		[Embed(source = "../../bin/sounds/stone.mp3")] private var s_stone:Class;
+		[Embed(source = "../../bin/sounds/rare.mp3")] private var s_craft:Class;
 		public static var sound:SoundManager = SoundManager.getInstance();
 		public static var winManajer:WinManajer;
 		public static var spr:Sprite;
@@ -53,6 +55,8 @@ package artur
 		
 		public function App(stg:Stage) 
 		{
+			sound.addSound('stone', new s_stone());
+			sound.addSound('craft', new s_craft());
 			sound.addSound('gDie', new s_g_die());
 			sound.addSound('gAtack', new s_g_atack());
 			sound.addSound('gHurt', new s_g_hurt());
