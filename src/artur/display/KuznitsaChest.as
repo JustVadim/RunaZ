@@ -1,6 +1,7 @@
 package artur.display {
 	import adobe.utils.CustomActions;
 	import artur.App;
+	import artur.win.WinKyz;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -36,7 +37,7 @@ package artur.display {
 				for (xp = 0; xp < this.wd; xp++) {
 					pos = yp * this.wd + xp;
 					mc = new mcCall();
-					Functions.SetPriteAtributs(mc, true, false, xp * mc.width, yp * mc.width);
+					Functions.SetPriteAtributs(mc, false, true, xp * mc.width, yp * mc.width);
 					mc.gotoAndStop(1);
 					this.grid[pos] = mc;
 					this.addChild(mc);
@@ -47,7 +48,7 @@ package artur.display {
 				for (yp = 0; yp < this.crafterHG; yp++ ) {
 					pos = xp * this.crafterHG + yp;
 					mc = new mcCall();
-					Functions.SetPriteAtributs(mc, true, false, -260 + xp * mc.width, yp * mc.width);
+					Functions.SetPriteAtributs(mc, false, true, -260 + xp * mc.width, yp * mc.width);
 					mc.gotoAndStop(1);
 					this.craftGrid[pos] = mc;
 					this.addChild(mc);
@@ -91,20 +92,26 @@ package artur.display {
 		}
 		
 		private function onItemInChestMouserDown(e:MouseEvent):void {
-			this.removeSelectedItem(); 
 			var chest:Object = UserStaticData.hero.chest;
 			var key:String = ItemCall(e.target).name;
-			ItemCall(e.target).alpha = 0.6;
-			this.selectedItem = ItemCall.getCall();
-			this.selectedItem.init(chest[key].c[102], chest[key].c[103], chest[key].id);
-			this.selectedItem.x = mcCall(craftGrid[0]).x;
-			this.selectedItem.y = mcCall(craftGrid[0]).y;
-			this.selectedItem.name = key;
-			//this.selectedItem.addEventListener(MouseEvent.ROLL_OVER, selectedItem.over);
-			//this.selectedItem.addEventListener(MouseEvent.ROLL_OUT, selectedItem.out);
-			this.selectedItem.addEventListener(MouseEvent.MOUSE_DOWN, this.onCraftClick);
-			App.info.frees();
-			this.addChild(selectedItem);
+			if (chest[key].c[103] != 7) {
+				this.removeSelectedItem(); 
+				ItemCall(e.target).alpha = 0.6;
+				this.selectedItem = ItemCall.getCall();
+				this.selectedItem.init(chest[key].c[102], chest[key].c[103], chest[key].id);
+				this.selectedItem.x = mcCall(craftGrid[0]).x;
+				this.selectedItem.y = mcCall(craftGrid[0]).y;
+				this.selectedItem.name = key;
+				
+				//show info, and frees info
+				//this.selectedItem.addEventListener(MouseEvent.ROLL_OVER, selectedItem.over);
+				//this.selectedItem.addEventListener(MouseEvent.ROLL_OUT, selectedItem.out);
+				this.selectedItem.addEventListener(MouseEvent.MOUSE_DOWN, this.onCraftClick);
+				App.info.frees();
+				this.addChild(selectedItem);
+			} else {
+				//dialog
+			}
 		}
 		
 		private function onCraftClick(e:MouseEvent):void {
@@ -152,8 +159,10 @@ package artur.display {
 		
 		private function cleareStones():void
 		{
-			for(var key:Object in this.stonesArray) {
+			for (var key:Object in this.stonesArray) {
+				KyzStone(this.stonesArray[key]).removeEventListener(MouseEvent.CLICK, this.onStoneClick);
 				KyzStone(this.stonesArray[key]).frees();
+				KyzStone(this.stonesArray[key]).buttonMode = false;
 				delete(this.stonesArray[key]);
 				delete(this.stonesObj[key]);
 			}
@@ -169,6 +178,8 @@ package artur.display {
 			}
 			if(pos != -1) {
 				var stone:KyzStone = KyzStone.getStone(stoneNum + 1);
+				stone.addEventListener(MouseEvent.CLICK, this.onStoneClick);
+				stone.buttonMode = true;
 				stonesArray[pos] = stone;
 				mcCall(this.craftGrid[6 + pos]).addChild(stone);
 				this.stonesObj[pos] = stoneNum;
@@ -178,6 +189,11 @@ package artur.display {
 			}
 		}
 		
+		private function onStoneClick(e:MouseEvent):void {
+			var stone:KyzStone = KyzStone(e.target);
+			this.removeStoneFromCraft(stone.getId());
+		}
+		
 		public function removeStoneFromCraft(stoneNum:int):void {
 			var key:Object;
 			for(key in stonesObj) {
@@ -185,10 +201,15 @@ package artur.display {
 					break;
 				}
 			}
-			if(key !=null) {
+			if (key != null) {
+				var stone:KyzStone = KyzStone(stonesArray[key]);
+				stone.removeEventListener(MouseEvent.CLICK, this.onStoneClick);
+				stone.buttonMode = false;
 				KyzStone(stonesArray[key]).frees();
 				delete(stonesArray[key]);
 				delete(stonesObj[key]);
+				WinKyz.inst.turnStoneBtn(stoneNum);
+				App.sound.playSound("stone", App.sound.onVoice, 1);
 			} else {
 				App.lock.init("Error!!!!");
 			}

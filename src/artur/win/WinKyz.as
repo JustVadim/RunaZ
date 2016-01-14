@@ -117,10 +117,10 @@ package artur.win {
 			if(BaseButton(e.target).scaleX == 1){
 				if (this.chest.addSoneToCraft(int(e.target.name))) {
 					BaseButton(e.target).scaleX = -1;
+					App.sound.playSound("stone", App.sound.onVoice, 1);
 				}
 			} else {
 				this.chest.removeStoneFromCraft(int(e.target.name));
-				BaseButton(e.target).scaleX = 1;
 			}
 		}
 		
@@ -290,8 +290,13 @@ package artur.win {
 			data.sendData(COMMANDS.CRAFT_ITEM, JSON2.encode(this.chest.getCraftObj()), true);
 		}
 		
+		public function turnStoneBtn(stoneNum:int):void {
+			BaseButton(this.btns_add[stoneNum]).scaleX = 1;
+		}
+		
 		private function onCraftRes(e:DataExchangeEvent):void {
 			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCraftRes);
+			App.sound.playSound("craft", App.sound.onVoice, 1);
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.res != null) {
 				App.lock.frees();

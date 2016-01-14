@@ -15,8 +15,15 @@ package artur.display {
 		private var id:int;
 		
 		public function KyzStone(id:int) {
+			this.tabEnabled = false;
+			this.tabChildren = false;
+			this.mouseChildren = false;
 			this.id = id;
 			this.getImage();
+		}
+		
+		public function getId():int {
+			return this.id - 1;
 		}
 		
 		public function getImage():void {

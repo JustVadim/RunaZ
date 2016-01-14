@@ -158,14 +158,10 @@ package artur.display.battle {
 			
 		}
 		
-		private function onSurrenderRes(e:DataExchangeEvent):void 
-		{
+		private function onSurrenderRes(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(e.type, this.onSurrenderRes);
 			var res:Object = JSON2.decode(e.result);
-			if(res.res) {
-				App.lock.frees();
-			} else {
-				App.lock.init(res.error);
-			}
+			App.lock.frees();
 		}
 		
 		private function isOurStep():Boolean {
