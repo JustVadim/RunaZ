@@ -38,7 +38,6 @@ package artur.win
 	import flash.events.TimerEvent;
 	import flash.text.TextField;
 	import flash.utils.Timer;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -186,10 +185,7 @@ package artur.win
 			}
 		 }
 		 
-		 public function onBattleMassage(e:DataExchangeEvent):void 
-		 {
-			Report.addMassage(e.result);
-			
+		 public function onBattleMassage(e:DataExchangeEvent):void {
 			var obj:Object = JSON2.decode(e.result);
 			WinBattle.anim.push(obj);	
 		 }
@@ -218,7 +214,7 @@ package artur.win
 				this.onUltimateData(obj)
 			} else if (obj.ban != null) {
 				this.useBanochka(obj);
-			} else if(obj.is_w != null) {
+			} else if (obj.is_w != null) {
 				this.endBattle(obj)
 			} else if(obj.bk != null) {
 				this.banochckaUsed(obj);
@@ -515,7 +511,6 @@ package artur.win
 		}
 		 
 		public function setCurrStep():void {
-			Report.addMassage("setCUrrStep")
 			this.ult_clicked = false;
 			WinBattle.sortSpr();
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
@@ -566,7 +561,6 @@ package artur.win
 		}
 		
 		private function showBanochki(cur_unit:Object, cus:Object):void {
-			Report.addMassage("showBanochki " + JSON.stringify(cur_unit.inv));
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) {
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
 				if (cur_unit.inv[i] != null) { 
