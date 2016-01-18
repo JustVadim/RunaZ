@@ -10,6 +10,7 @@ package artur
 	import artur.units.UnitCache;
 	import artur.util.RemindCursors;
 	import artur.util.SoundManager;
+	import artur.win.WinBank;
 	import artur.win.WinManajer;
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -52,7 +53,7 @@ package artur
 		public static var lock:LockSpr = new LockSpr();
 		public static var cursor:RemindCursors = new RemindCursors();
 		public static var topPanel:TopPanel = new TopPanel();
-		
+		public static var winBank:WinBank = new WinBank();
 		public function App(stg:Stage) 
 		{
 			sound.addSound('stone', new s_stone());
@@ -109,6 +110,7 @@ package artur
 			cursor.setButtonCursor('arr', 'hand', stg);	
 			this.tabEnabled = false;
 			this.tabChildren = false;
+			
 		}
 		
 		private function update(e:Event):void 
