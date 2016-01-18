@@ -26,6 +26,7 @@
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
+    <option inline="False" />
     <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
@@ -59,7 +60,6 @@
     <element path="lib\Zadniki.swc" />
     <element path="lib\character.swc" />
     <element path="lib\loader.swc" />
-    <element path="lib\tile1.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -93,6 +93,7 @@
   <options>
     <option showHiddenPaths="True" />
     <option testMovie="Default" />
+    <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->
   <storage />

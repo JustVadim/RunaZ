@@ -95,7 +95,14 @@ package artur.win
 				//App.lock.init("Ожидание боя");
 				//this.goBattle();
 				break;
+			case 'shop':
+				//App.winManajer.swapWin(5);
+				//App.lock.init("Ожидание боя");
+				//this.goBattle();
+				App.winBank.init();
+				break;
 			}
+			
 		}
 		
 		private function goBattle():void {
