@@ -60,6 +60,7 @@
     <element path="lib\Zadniki.swc" />
     <element path="lib\character.swc" />
     <element path="lib\loader.swc" />
+    <element path="lib\tile1.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

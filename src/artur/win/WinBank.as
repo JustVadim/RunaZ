@@ -10,30 +10,30 @@ package artur.win
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	
-	/**
-	 * ...
-	 * @author Som911
-	 */
 	public class WinBank
 	{
 		private var bg:Bitmap = PrepareGr.creatBms(new mcBank())[0];
 		private var close:BaseButton 
 		private var mcBtns:mcBankBtns = new mcBankBtns();
+		private static var f:GlowFilter = new GlowFilter(0xFFFFFF, 1, 3, 3, 2, 1);
+		
 		private var textsGold:Array = 
 		[
 		 'Купить 10 золота за 2 голоса',
 		  'Купить 20 золота за 4 голоса',
 		  'Купить 40 золота за 8 голоса',
 		  'Купить 80 золота за 16 голоса'
-		 ];
-		 private var textsSilver:Array = 
+		];
+		
+		private var textsSilver:Array = 
 		[
 		 'Купить 10 золота за 2 голоса',
 		  'Купить 20 золота за 4 голоса',
 		  'Купить 40 золота за 8 голоса',
 		  'Купить 80 золота за 16 голоса'
-		 ];
-		 private static var f:GlowFilter = new GlowFilter(0xFFFFFF, 1, 3, 3, 2, 1);
+		];
+		
+		
 		public function WinBank()
 		{
 		    for (var i:int = 0; i < 4; i++) 
@@ -46,18 +46,18 @@ package artur.win
 				text1.y = 20;
 				text2.x = 28;
 				text2.y = 20;
-			     mcBtns[String('g' + (i + 1))].addChild(text1);
-				 mcBtns[String('s' + (i + 1))].addChild(text2);
-				 mcBtns[String('s' + (i + 1))].buttonMode = true;
-				 mcBtns[String('g' + (i + 1))].buttonMode = true;
-				 mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.CLICK, onBtn);
-				 mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.CLICK, onBtn);
-				 
-				 mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.ROLL_OVER, onOver);
-				 mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.ROLL_OVER, onOver);
-				 
-				  mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);
-				 mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);
+				mcBtns[String('g' + (i + 1))].addChild(text1);
+				mcBtns[String('s' + (i + 1))].addChild(text2);
+				mcBtns[String('s' + (i + 1))].buttonMode = true;
+				mcBtns[String('g' + (i + 1))].buttonMode = true;
+				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.CLICK, onBtn);
+				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.CLICK, onBtn);
+				
+				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.ROLL_OVER, onOver);
+				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.ROLL_OVER, onOver);
+					
+				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);
+				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);
 				 
 			}
 			
