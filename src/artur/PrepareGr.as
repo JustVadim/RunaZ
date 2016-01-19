@@ -63,6 +63,8 @@ package artur
 		    new BtnCraft(),//42
 		    new BtnStone(),//43
 		    new btnByeStone(),//44
+		    new imgBtnBank(),//45
+		    new imgBtnMap()//46
 		];
 		
 		public static var scaleFactor:Number = 2;
