@@ -92,14 +92,12 @@ package artur.win
 				break;
 			case 'arena':
 				App.winManajer.swapWin(5);
-				//App.lock.init("Ожидание боя");
-				//this.goBattle();
+				break;
+			case 'bank':
+				App.winBank.init();
 				break;
 			case 'shop':
-				//App.winManajer.swapWin(5);
-				//App.lock.init("Ожидание боя");
-				//this.goBattle();
-				App.winBank.init();
+				App.winManajer.swapWin(4);
 				break;
 			}
 			

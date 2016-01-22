@@ -45,7 +45,13 @@ package artur.display
 			this.addEventListener(MouseEvent.ROLL_OUT, out);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, down);
 			this.addEventListener(MouseEvent.MOUSE_UP, up);
+			this.addEventListener(MouseEvent.CLICK, this.onClick);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage)
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			this.filters = [];
 		}
 		
 		private function onRemovedFromStage(e:Event):void 
@@ -56,13 +62,14 @@ package artur.display
 			this.removeEventListener(MouseEvent.ROLL_OUT, out);
 			this.removeEventListener(MouseEvent.MOUSE_DOWN, down);
 			this.removeEventListener(MouseEvent.MOUSE_UP, up);
-
+			this.removeEventListener(MouseEvent.CLICK, this.onClick);
 			
 		}
 		
 		private function up(e:MouseEvent):void {
 			if (this.active) {
 				this.cont.scaleX = this.cont.scaleY = 1;
+				
 			}
 			
 		}

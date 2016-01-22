@@ -55,16 +55,18 @@ package artur.win {
 			
 			for ( i = 0; i < 3; i++) {
 				for (var j:int = 0; j < 5; j++) {
-					var txt:TextField = Maker.getTextField(35, 20, 0xFEEE96, false, false, false, 13);
+					var txt:TextField = Maker.getTextField(35, 20, 0xFDDF35, false, false, false, 13);
 					var btn:BaseButton = new BaseButton(44);
 					txt.x = 30;
-					txt.text = String(10 + i * 5);
+					txt.text = String(2 + i);
 					btn.addChild(txt);
 					btn.x = i * 230 + btn.width/2;
 					btn.y = j * 75 + btn.height/2;
 					btn.name = String(index);
 					btnsInBg[index] = btn;
 					bgPrice.addChild(btn);
+					btn.addEventListener(MouseEvent.ROLL_OVER, this.onMagStoneOver);
+					btn.addEventListener(MouseEvent.ROLL_OUT, this.onMagStoneOut);
 					
 					
 					
@@ -79,6 +81,8 @@ package artur.win {
 					btn.y =  txt.y - 8;
 					btn.name = index.toString();
 					btn.addEventListener(MouseEvent.CLICK, this.onAddBtnClick);
+					btn.addEventListener(MouseEvent.ROLL_OVER, this.onAddBtnOver);
+					btn.addEventListener(MouseEvent.ROLL_OUT, this.onAddBtnOut);
 					btn.visible = false;
 					btns_add[index] = btn;
 					index ++;
@@ -94,9 +98,61 @@ package artur.win {
 			bgPrice.x = 60;
 			bgPrice.y = 20;
 			
-			btnStoneCreat.addEventListener(MouseEvent.CLICK, onCreatStone);
-			btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);
+			this.btnStoneCreat.addEventListener(MouseEvent.CLICK, onCreatStone);
+			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);
 			this.btnCraft.addEventListener(MouseEvent.CLICK, onCraft);
+			this.btnStoneCreat.addEventListener(MouseEvent.ROLL_OVER, this.onBtnOver);
+			this.btnStoneCreat.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
+			this.btnCraft.addEventListener(MouseEvent.ROLL_OVER, this.onBtnOver);
+			this.btnCraft.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
+			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OVER, this.onBtnClosePrice);
+			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
+		}
+		
+		private function onBtnClosePrice(e:MouseEvent):void {
+			var mc:BaseButton = BaseButton(e.target);
+			App.info.init(mc.x - 45, mc.y + 30, { txtInfo_w:70, txtInfo_h:37, txtInfo_t:Lang.getTitle(47), type:0} );
+		}
+		
+		private function onMagStoneOut(e:MouseEvent):void {
+			App.info.frees();
+		}
+		
+		private function onMagStoneOver(e:MouseEvent):void {
+			var mc:BaseButton = BaseButton(e.target);
+			App.info.init(mc.x-90, mc.y + mc.height, { txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(59, int(mc.name)), type:0, title: Lang.getTitle(43, int(mc.name)) } );
+		}
+		
+		private function onAddBtnOut(e:MouseEvent):void 
+		{
+			App.info.frees();
+		}
+		
+		private function onAddBtnOver(e:MouseEvent):void {
+			var mc:BaseButton = BaseButton(e.target);
+			if(mc.scaleX == 1) {
+				App.info.init(mc.x + mc.width + 15, mc.y + mc.height, { txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(54) + "\n" + Lang.getTitle(58, int(mc.name)), type:0, title: Lang.getTitle(43, int(mc.name))} );
+			} else {
+				App.info.init(mc.x + mc.width + 15, mc.y + mc.height, { txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(57) + "\n" + Lang.getTitle(58, int(mc.name)),title:Lang.getTitle(43, int(mc.name)), type:0 } );
+			}
+		}
+		
+		private function onBtnOut(e:MouseEvent):void 
+		{
+			App.info.frees();
+		}
+		
+		private function onBtnOver(e:MouseEvent):void 
+		{
+			var mc:BaseButton = BaseButton(e.target);
+			switch(mc) {
+				case this.btnStoneCreat:
+					App.info.init(mc.x + mc.width - 55, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(52), type:0 } );
+					break;
+				case this.btnCraft:
+					App.info.init(mc.x + mc.width - 35, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(53), type:0 } );
+					break;
+			}
 		}
 		
 		private function onCraft(e:MouseEvent):void {
@@ -104,11 +160,11 @@ package artur.win {
 				if (UserStaticData.hero.gold > 4) {
 					App.byeWin.init("Я хочу улушить", "Вещицу", 5, 0, NaN, 5, 0, NaN);
 				} else {
-					App.closedDialog.init(Lang.getTitle(42), false);
+					App.closedDialog.init(Lang.getTitle(42),false, true, true);
 				}
 				
 			} else {
-				App.closedDialog.init(Lang.getTitle(41), false);
+				App.closedDialog.init(Lang.getTitle(41), true, false, false);
 			}
 		}
 		
@@ -144,7 +200,7 @@ package artur.win {
 			this.onClosePrice();
 			var stoneNum:int = int(e.target.name);
 			if (true) {
-				App.byeWin.init("Я хочу заказать", Lang.getTitle(43, stoneNum), 10 + int(stoneNum/5) * 5, 0, 0, 4, stoneNum);
+				App.byeWin.init("Я хочу заказать", Lang.getTitle(43, stoneNum), 2 + int(stoneNum/5), 0, 0, 4, stoneNum);
 			}
 		}
 		
@@ -266,6 +322,7 @@ package artur.win {
 		
 		public function frees():void
 		{
+			App.info.frees();
 			this.bin = false;
 			this.chest.frees();
 			if(this.timer != null) {
