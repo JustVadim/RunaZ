@@ -108,7 +108,7 @@ package Server
 			Lang.lang_table[47] = ["Закрыть", "", ""];
 			Lang.lang_table[48] = ["Купить за золото", "", ""];
 			Lang.lang_table[49] = ["Купить за серебро", "", ""];
-			Lang.lang_table[50] = ["Продать за золото", "", ""];
+			Lang.lang_table[50] = ["Продать за серебро", "", ""];
 			Lang.lang_table[51] = ["Искать игру", "", ""];
 			Lang.lang_table[52] = ["Заказать каминь", "", ""];
 			Lang.lang_table[53] = ["Улучшить вещь", "", ""];

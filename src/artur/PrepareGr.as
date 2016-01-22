@@ -3,6 +3,7 @@ package artur
 	import artur.display.btnClosedShopExtended;
 	import artur.display.BtnHeroExtend;
 	import artur.display.btnSel1Extend;
+	import artur.display.BtnStoneExtend;
 	import artur.display.MyBitMap;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -61,7 +62,7 @@ package artur
 		    new btnArena1(),//40
 		    new btnAddStone(),//41
 		    new BtnCraft(),//42
-		    new BtnStone(),//43
+		    new BtnStoneExtend(),//43//
 		    new btnByeStone(),//44
 		    new imgBtnBank(),//45
 		    new imgBtnMap()//46

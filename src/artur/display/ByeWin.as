@@ -71,7 +71,7 @@ package artur.display
 					App.info.init(mc.x + mc.width, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(48), type:0 });
 					break;
 				case this.btnSilver:
-					if(byeType != 2) {
+					if(byeType != 2 || byeType != 3) {
 						App.info.init(mc.x + mc.width, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(49), type:0 } );
 					} else {
 						App.info.init(mc.x + mc.width, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(50), type:0 } );
