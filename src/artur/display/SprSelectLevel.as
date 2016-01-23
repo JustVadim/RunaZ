@@ -64,6 +64,10 @@ package artur.display {
 		
 		private function setBattle(d:int):void {
 			App.lock.init();	
+			if(UserStaticData.hero.demo == 2) {
+				UserStaticData.hero.demo = 3;
+				App.tutor.frees();
+			}
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, getRessBattle);
 			var obj:Object = new Object();
@@ -89,8 +93,7 @@ package artur.display {
 			}
 		}
 		
-		public function init(missNum:int, misObj:Object):void {
-			
+		public function init(missNum:int, misObj:Object):void {			
 			this.missNum = missNum + (MapTown.currTownClick*11);
 			App.spr.addChild(this);
 			this.addChild(this.btn);
@@ -110,6 +113,10 @@ package artur.display {
 					}
 					
 				}
+			}
+			
+			if(UserStaticData.hero.demo == 2) {
+				App.tutor.init(11);
 			}
 		}
 		

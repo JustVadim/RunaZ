@@ -100,12 +100,18 @@ package artur.win
 			this.txtGold.text = String(UserStaticData.hero.gold);
 			this.txtSilver.text = String(UserStaticData.hero.silver);
 			App.topPanel.init(this);
+			if(UserStaticData.hero.demo == 2) {
+				App.tutor.init(9);
+			}
 		}
 		
 		private function onTown(e:MouseEvent):void 
 		{
 			var num:int = int(e.currentTarget.name);
 			townList.init(currMap, num , names[currMap][num]);
+			if(UserStaticData.hero.demo == 2) {
+				App.tutor.init(10);
+			}
 		}
 		public function update():void
 		{

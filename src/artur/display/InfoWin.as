@@ -16,7 +16,7 @@ package artur.display
 		private var delay:int = 0;
 		private var infos:Array;
 		private var infos1:Array;
-		public var titleTxtName:TextField = Functions.getTitledTextfield( -46.5, -9, 93, 15, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, true);
+		public var titleTxtName:TextField = Functions.getTitledTextfield( -78, -9, 150, 16, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, true);
 		public var txtInfo:TextField = Functions.getTitledTextfield( -1.5, 0.5, 237, 108.25, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0);
 		public var txtGold:TextField = Functions.getTitledTextfield( 69, 1, 45, 18, new Art().fontName, 12, 0xFFF642, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
 		public var txtSilver:TextField = Functions.getTitledTextfield( 159, 1, 45, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);

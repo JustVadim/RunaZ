@@ -32,6 +32,9 @@ package artur.display
 		private var txtGold:TextField = Functions.getTitledTextfield(345, 242, 52, 17, new Art().fontName, 14, 0, TextFormatAlign.LEFT, "", 0.6, Kerning.OFF, -1, false);
 		private var txtSilver:TextField = Functions.getTitledTextfield(437, 242, 52, 17, new Art().fontName, 14, 0, TextFormatAlign.LEFT, "", 0.6, Kerning.OFF, -1, false);
 		
+		private var g:int;
+		private var s:int;
+		
 		public function ByeWin() {
 			Functions.SetPriteAtributs(this.iconGold, false, false);
 			Functions.SetPriteAtributs(this, true, true);
@@ -41,7 +44,6 @@ package artur.display
 			this.initBtn(this.btnGold = new BaseButton(12), 352.55, 252.55);
 			this.addChild(this.btnEx);
 			this.addChild(this.txt);
-			
 		}
 		
 		
@@ -49,11 +51,40 @@ package artur.display
 			mc.x = xx;
 			mc.y = yy;
 			mc.addEventListener(MouseEvent.CLICK, this.onBtn);
+			mc.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			mc.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
 			Functions.SetPriteAtributs(mc, true, false);
+		}
+		
+		private function onOut(e:MouseEvent):void 
+		{
+			App.info.frees();
+		}
+		
+		private function onOver(e:MouseEvent):void {
+			var mc:BaseButton = BaseButton(e.currentTarget);
+			switch(mc) {
+				case this.btnEx:
+					App.info.init(mc.x + mc.width, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(47), type:0 });
+					break;
+				case this.btnGold:
+					App.info.init(mc.x + mc.width, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(48), type:0 });
+					break;
+				case this.btnSilver:
+					if(byeType != 2 || byeType != 3) {
+						App.info.init(mc.x + mc.width, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(49), type:0 } );
+					} else {
+						App.info.init(mc.x + mc.width, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(50), type:0 } );
+					}
+					break;
+			}
 		}
 		
 		
 		public function init(text1:String = "", text2:String = "", priceGold:int = 0, priceSilver:int = 0, index:int = NaN, byeType:int = 0, itemType:int = NaN, invPlace:int = NaN):void {
+			App.sound.playSound('inventar', App.sound.onVoice, 1);
+			this.g = priceGold;
+			this.s = priceSilver;
 			if (text1 == "") {
 				this.txt.text = Lang.getTitle(4);
 				if (this.iconGold.parent) 	this.removeChild(this.iconGold);
@@ -68,7 +99,7 @@ package artur.display
 				this.byeType = byeType;
 				this.itemType = itemType;
 				this.invPlace = invPlace;
-				if (priceGold != 0 && WinCastle.isGold(priceGold)) {
+				if (priceGold != 0) {
 					this.txtGold.text = String(priceGold);
 					this.addChild(this.btnGold);
 					this.addChild(this.iconGold);
@@ -78,7 +109,7 @@ package artur.display
 					if (this.iconGold.parent) 	this.removeChild(this.iconGold);
 					if (this.txtGold.parent) 	this.removeChild(this.txtGold);
 				}
-				if (priceSilver != 0 && (WinCastle.isSilver(priceSilver) || this.index == 2 || this.index == 3)) {
+				if (priceSilver != 0) {
 					this.txtSilver.text = String(priceSilver);
 					this.addChild(this.btnSilver);
 					this.addChild(this.txtSilver);
@@ -90,6 +121,9 @@ package artur.display
 				}
 			}
 			App.spr.addChild(this);
+			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
+				App.tutor.init(6);
+			}
 		}
 		
 		private function onBtn(e:MouseEvent):void {
@@ -98,26 +132,42 @@ package artur.display
 				case 0:
 					switch(mc) {
 					case this.btnGold:
-						bye(1);
+						if(UserStaticData.hero.gold >= this.g) {
+							this.bye(1);
+						} else {
+							App.closedDialog.init(Lang.getTitle(45), false, false, true);
+						}
 						break;
 					case this.btnSilver:
-						bye(0);
+						if(UserStaticData.hero.silver >= this.s) {
+							this.bye(0);
+						} else {
+							App.closedDialog.init(Lang.getTitle(46), false, false, true);
+						}
 						break;
 					case this.btnEx:
-						frees();
+						this.frees();
 						break;
 				    }
 				 break;
 			 case 1:
 				switch (mc) {
 					case this.btnGold:
-						byeItem(1);
+						if(UserStaticData.hero.gold >= this.g) {
+							this.byeItem(1);
+						} else {
+							App.closedDialog.init(Lang.getTitle(45), false, false, true);
+						}
 						break;
 					case this.btnSilver:
-						byeItem(0);
+						if(UserStaticData.hero.silver >= this.s) {
+							this.byeItem(0);
+						} else {
+							App.closedDialog.init(Lang.getTitle(46), false, false, true);
+						}
 						break;
 					case this.btnEx:
-						frees();
+						this.frees();
 						break;
 				}
 				break;
@@ -151,8 +201,12 @@ package artur.display
 						this.frees();
 						break;
 					case this.btnGold:
-						WinKyz.inst.zakazKamnja(this.itemType);
-						this.frees();
+						if(UserStaticData.hero.gold >= this.g) {
+							WinKyz.inst.zakazKamnja(this.itemType);
+							this.frees();
+						} else {
+							App.closedDialog.init(Lang.getTitle(45), false, true, true);
+						}
 						break;
 				}
 				break;
@@ -172,12 +226,12 @@ package artur.display
 		}
 		
 		public function bye(indexPrice:int):void {
-			frees();
+			this.frees();
 			App.lock.init();
 			var obj:Object = { ns:WinCastle.currSlotClick, hn:index, p:indexPrice };
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);
-			data.sendData(COMMANDS.BYE_UNIT, JSON2.encode(obj),true);
+			data.sendData(COMMANDS.BYE_UNIT, JSON2.encode(obj), true);
 		}
 		
 		public function byeItem(indexPrice:int):void
@@ -206,6 +260,10 @@ package artur.display
 				UserStaticData.hero.units[int(WinCastle.currSlotClick)] = Maker.clone(UserStaticData.magaz_units[index]);
 				WinCastle.getCastle().updateSlots();
 				WinCastle.txtCastle.scroll.visible = false;
+				if(UserStaticData.hero.demo == 0) {
+					UserStaticData.hero.demo++;
+					App.tutor.gotoAndStop(4);
+				}
 			 App.lock.frees();
 			} else {
 				App.lock.init('Error: '+obj.error)
@@ -236,6 +294,10 @@ package artur.display
 				}
 				App.lock.frees();
 				App.sound.playSound('gold', App.sound.onVoice, 1);
+				if(UserStaticData.hero.demo == 1) {
+					UserStaticData.hero.demo++;
+					App.tutor.init(7);
+				}
 			}
 			else {
 				App.lock.init('Error: '+obj.error)
@@ -243,6 +305,7 @@ package artur.display
 		}
 		
 		public function frees():void {
+			App.info.frees();
 			App.spr.removeChild(this);
 		}
 		

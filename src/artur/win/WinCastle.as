@@ -76,6 +76,11 @@ package artur.win {
 			WinCastle.txtCastle.txtGold.text = String(UserStaticData.hero.gold);
 			WinCastle.txtCastle.txtSilver.text = String(UserStaticData.hero.silver);
 			App.topPanel.init(this);
+			if(UserStaticData.hero.demo == 0) {
+				App.tutor.init(2);
+			} else if(UserStaticData.hero.demo == 1) {
+				App.tutor.init(4);
+			}
 		}
 		
 		public function updateSlots():void {

@@ -7,6 +7,7 @@ package artur.display {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import Server.Lang;
 	
 	public class ShopInventar extends mcShopInventar {
 		private var heads:Array           	= 	PrepareGr.creatBms(new Shop_Head(),true)
@@ -39,7 +40,8 @@ package artur.display {
 			frees();
 		}
 		
-		public function init(itemType:int=0, unitType:int=0, invPlace:int = -1):void {
+		public function init(itemType:int = 0, unitType:int = 0, invPlace:int = -1):void {
+			App.sound.playSound('inventar', App.sound.onVoice, 1);
 			App.spr.addChild(this);
 			this.itemType = itemType;
 			this.unitType = unitType;
@@ -71,6 +73,9 @@ package artur.display {
 			}
 			this.scroll.update();
 			this.addChild(btnClosed);
+			if (UserStaticData.hero.demo == 1) {
+				App.tutor.init(5);
+			}
 		}
 		
 		private function getBg():ShopItemBG {
@@ -93,8 +98,8 @@ package artur.display {
 			var _silver:int = UserStaticData.hero.silver;
 			var gold:int = UserStaticData.magazin_items [unitType] [itemType] [item_id].c[101];
 			var silver:int =  UserStaticData.magazin_items [unitType] [itemType] [item_id].c[100];
-			if (!WinCastle.isMoney(gold,silver)) {
-				App.byeWin.init("");
+			if (!WinCastle.isMoney(gold, silver)) {
+				App.closedDialog.init(Lang.getTitle(4), false, true, true);
 			}
 			else {
 				App.byeWin.init("Желаю купить", "hren", gold, silver, item_id, 1, this.itemType, this.invPlace);

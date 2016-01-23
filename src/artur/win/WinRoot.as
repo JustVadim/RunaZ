@@ -92,13 +92,8 @@ package artur.win
 				break;
 			case 'arena':
 				App.winManajer.swapWin(5);
-				//App.lock.init("Ожидание боя");
-				//this.goBattle();
 				break;
 			case 'bank':
-				//App.winManajer.swapWin(5);
-				//App.lock.init("Ожидание боя");
-				//this.goBattle();
 				App.winBank.init();
 				break;
 			case 'shop':
@@ -126,6 +121,9 @@ package artur.win
 			for (var i:int = 0; i < btns.length; i++) {
 				App.spr.addChild(btns[i]);
 			}
+			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
+				App.tutor.init(1);
+			} 
 		}
 		
 		public function updateBar():void {

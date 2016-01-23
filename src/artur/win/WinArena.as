@@ -7,6 +7,7 @@ package artur.win {
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Server.Lang;
 	import Utils.Functions;
 	import Utils.json.JSON2;
 	
@@ -17,6 +18,7 @@ package artur.win {
 		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
+		public static const NEEDED_LVL:int = 2;
 		
 		
 		public function WinArena() {
@@ -31,6 +33,7 @@ package artur.win {
 		}
 		
 		private function onBtnClose(e:MouseEvent):void {
+			App.info.frees();
 			App.lock.init();
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onRes1);
@@ -46,7 +49,8 @@ package artur.win {
 		}
 		
 		private function onBtn(e:MouseEvent):void {
-			if(UserStaticData.hero.level >= 1 && GetServerData.getUserIsReadyToBattle()) {
+			App.info.frees();
+			if(UserStaticData.hero.level >= WinArena.NEEDED_LVL && GetServerData.getUserIsReadyToBattle()) {
 				mcFound.rotation = 0;
 				mcFound.rot.visible = false;
 				mcFound.gotoAndPlay(1);
@@ -60,7 +64,11 @@ package artur.win {
 				App.lock.init()
 				
 			} else {
-				//add dialog
+				if(UserStaticData.hero.level < WinArena.NEEDED_LVL) {
+					App.closedDialog.init(Lang.getTitle(44), false, true, false);
+				} else if(!GetServerData.getUserIsReadyToBattle()) {
+					App.closedDialog.init(Lang.getTitle(36), true, false, false);
+				}
 			}
 		}
 		
@@ -84,6 +92,18 @@ package artur.win {
 			App.topPanel.init(this);
 			btn1.addEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
+			btn1.addEventListener(MouseEvent.ROLL_OVER, this.onBattleOver);
+			btn1.addEventListener(MouseEvent.ROLL_OUT, this.onBattleBtnOut);
+		}
+		
+		private function onBattleBtnOut(e:MouseEvent):void 
+		{
+			App.info.frees();
+		}
+		
+		private function onBattleOver(e:MouseEvent):void {
+			var mc:BaseButton = BaseButton(e.target);
+			App.info.init(mc.x + mc.width - 130, mc.y + mc.height - 25, { txtInfo_w:110, txtInfo_h:37, txtInfo_t:Lang.getTitle(51), type:0 });
 		}
 		public function update():void {
 			if (mcFound.currentFrame == mcFound.totalFrames) {
@@ -94,8 +114,11 @@ package artur.win {
 		}
 		
 		public function frees():void {
+			App.info.frees();
 			btn1.removeEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.removeEventListener(MouseEvent.CLICK, onBtnClose);
+			btn1.removeEventListener(MouseEvent.ROLL_OVER, this.onBattleOver);
+			btn1.removeEventListener(MouseEvent.ROLL_OUT, this.onBattleBtnOut);
 		}
 	}
 

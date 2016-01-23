@@ -181,11 +181,19 @@ package artur.display {
 		}
 		
 		private function onBtnAddUnit():void {
-			WinCastle.txtCastle.scroll.visible = true;
-			WinCastle.currSlotClick = this.name;
-			this.addChild(WinCastle.getCastle().mcCurr);
- 			this.addChild(btnByeUnit);
-			WinCastle.inventar.frees();
+			App.info.frees();
+			if(this.name != WinCastle.currSlotClick) {
+				App.sound.playSound('inventar', App.sound.onVoice, 1);
+				WinCastle.txtCastle.scroll.visible = true;
+				WinCastle.currSlotClick = this.name;
+				this.addChild(WinCastle.getCastle().mcCurr);
+				this.addChild(btnByeUnit);
+				WinCastle.inventar.frees();
+				if(UserStaticData.hero.demo == 0) {
+					App.tutor.init(3);
+				}
+			}
+			
 		}
 		
 		public function frees():void {
