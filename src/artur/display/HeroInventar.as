@@ -164,6 +164,10 @@ package artur.display
 				
 			}
 			App.spr.addChild(this);
+			if(UserStaticData.hero.demo == 1) {
+				
+			}
+
 		}
 		
 		public function calculateUnitStats(chars:Object, unit:Object, fsd:int):void {

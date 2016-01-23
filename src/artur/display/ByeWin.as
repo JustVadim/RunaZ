@@ -262,7 +262,7 @@ package artur.display
 				WinCastle.txtCastle.scroll.visible = false;
 				if(UserStaticData.hero.demo == 0) {
 					UserStaticData.hero.demo++;
-					App.tutor.gotoAndStop(4);
+					App.tutor.init(4);
 				}
 			 App.lock.frees();
 			} else {
