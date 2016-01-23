@@ -10,6 +10,7 @@ package datacalsses
 		public var units:Object = new Object();// units
 		public var level:int = 1;
 		public var exp:int = 1;
+		public var demo:int = 0;
 		public var chest:Object = new Object();//chest
 		public var miss:Object = new Object();
 		public var bat:Number
@@ -37,6 +38,7 @@ package datacalsses
 			this.fs = obj.fs;
 			this.st = obj.st;
 			this.sz = obj.sz;
+			this.demo = obj.demo;
 			/// - crab;
 		}
 	}

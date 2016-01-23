@@ -93,6 +93,7 @@ package artur.display {
 		}
 		
 		public function init(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false):void {
+			App.sound.playSound('inventar', App.sound.onVoice, 1);
 			App.spr.addChild(this);
 			this.txt.text = text;
 			var arr:Array = [showCastle, showBank, showMision];

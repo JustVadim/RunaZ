@@ -82,6 +82,7 @@ package artur.display
 		
 		
 		public function init(text1:String = "", text2:String = "", priceGold:int = 0, priceSilver:int = 0, index:int = NaN, byeType:int = 0, itemType:int = NaN, invPlace:int = NaN):void {
+			App.sound.playSound('inventar', App.sound.onVoice, 1);
 			this.g = priceGold;
 			this.s = priceSilver;
 			if (text1 == "") {
@@ -120,6 +121,9 @@ package artur.display
 				}
 			}
 			App.spr.addChild(this);
+			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
+				App.tutor.init(6);
+			}
 		}
 		
 		private function onBtn(e:MouseEvent):void {
@@ -227,7 +231,7 @@ package artur.display
 			var obj:Object = { ns:WinCastle.currSlotClick, hn:index, p:indexPrice };
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);
-			data.sendData(COMMANDS.BYE_UNIT, JSON2.encode(obj),true);
+			data.sendData(COMMANDS.BYE_UNIT, JSON2.encode(obj), true);
 		}
 		
 		public function byeItem(indexPrice:int):void
@@ -256,6 +260,10 @@ package artur.display
 				UserStaticData.hero.units[int(WinCastle.currSlotClick)] = Maker.clone(UserStaticData.magaz_units[index]);
 				WinCastle.getCastle().updateSlots();
 				WinCastle.txtCastle.scroll.visible = false;
+				if(UserStaticData.hero.demo == 0) {
+					UserStaticData.hero.demo++;
+					App.tutor.gotoAndStop(4);
+				}
 			 App.lock.frees();
 			} else {
 				App.lock.init('Error: '+obj.error)
@@ -286,6 +294,10 @@ package artur.display
 				}
 				App.lock.frees();
 				App.sound.playSound('gold', App.sound.onVoice, 1);
+				if(UserStaticData.hero.demo == 1) {
+					UserStaticData.hero.demo++;
+					App.tutor.init(7);
+				}
 			}
 			else {
 				App.lock.init('Error: '+obj.error)
