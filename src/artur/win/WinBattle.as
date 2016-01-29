@@ -149,6 +149,7 @@ package artur.win
 		
 		public function init():void
 		{
+			App.swapMuz('BatleSong');
 			this.gift_id = 0;
 			this.unitsInWin = [];
 			this.bin = true;

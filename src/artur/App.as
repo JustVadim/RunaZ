@@ -42,6 +42,10 @@ package artur
 		[Embed(source = "../../bin/sounds/GhostAtack.mp3")] private var s_g_atack:Class;
 		[Embed(source = "../../bin/sounds/stone.mp3")] private var s_stone:Class;
 		[Embed(source = "../../bin/sounds/rare.mp3")] private var s_craft:Class;
+		[Embed(source = "../../bin/sounds/BatleSong.mp3")] private var s_BatleSong:Class;
+		[Embed(source = "../../bin/sounds/menuSong.mp3")] private var s_menuSong:Class;
+		[Embed(source = "../../bin/sounds/mapSong.mp3")] private var s_mapSong:Class;
+		
 		public static var sound:SoundManager = SoundManager.getInstance();
 		public static var winManajer:WinManajer;
 		public static var spr:Sprite;
@@ -56,9 +60,14 @@ package artur
 		public static var topPanel:TopPanel = new TopPanel();
 		public static var winBank:WinBank = new WinBank();
 		public static var tutor:Tutor = new Tutor();
+		public static var currMuzPlay:String = 'MenuSong';
 		
 		public function App(stg:Stage) 
 		{
+			sound.addSound('BatleSong', new s_BatleSong());
+			sound.addSound('MenuSong', new s_menuSong());
+			sound.addSound('MapSong', new s_mapSong());
+			
 			sound.addSound('stone', new s_stone());
 			sound.addSound('craft', new s_craft());
 			sound.addSound('gDie', new s_g_die());
@@ -115,7 +124,12 @@ package artur
 			this.tabChildren = false;
 			
 		}
-		
+		public static function swapMuz(str:String):void
+		{
+			sound.stopSound(currMuzPlay);
+			sound.playSound(str, sound.onSound);
+			currMuzPlay = str;
+		}
 		private function update(e:Event):void 
 		{
 			info.update();
