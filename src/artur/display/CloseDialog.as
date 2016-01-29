@@ -42,7 +42,7 @@ package artur.display {
 			this.btnCastl.addEventListener(MouseEvent.ROLL_OUT, onOut);
 			this.btnBanK.addEventListener(MouseEvent.ROLL_OUT, onOut);
 			this.btnMision.addEventListener(MouseEvent.ROLL_OUT, onOut);
-			this.init(Lang.getTitle(46), false, false, false);
+			this.init(Lang.getTitle(46), false, false, false, false);
 			this.frees();
 			
 		}
@@ -92,8 +92,10 @@ package artur.display {
 			
 		}
 		
-		public function init(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false):void {
-			App.sound.playSound('inventar', App.sound.onVoice, 1);
+		public function init(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false, playSoung:Boolean = true):void {
+			if(playSoung) {
+				App.sound.playSound('inventar', App.sound.onVoice, 1);
+			}
 			App.spr.addChild(this);
 			this.txt.text = text;
 			var arr:Array = [showCastle, showBank, showMision];

@@ -56,6 +56,7 @@ package artur
 		public static var topPanel:TopPanel = new TopPanel();
 		public static var winBank:WinBank = new WinBank();
 		public static var tutor:Tutor = new Tutor();
+		//public static var prop:mcprope
 		
 		public function App(stg:Stage) 
 		{
