@@ -73,19 +73,19 @@ package artur.display
 			switch(true)
 			{
 				case(mc == this.mcText.sk_crit):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(5) + "</font>\n<font color=\"#FFFFFF\">наносит в 2 раза больше урона</font>";
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(5) + "</font>\n<font color=\"#FFFFFF\">"+Lang.getTitle(80)+"</font>";
 					break;
 				case(mc == this.mcText.sk_double):
-					descr = "<font color=\"#00FF00\">"+ Lang.getTitle(7) +"</font>\nбьет указанную цель 2 раза";
+					descr = "<font color=\"#00FF00\">"+ Lang.getTitle(7) +"</font>\n<font color=\"#FFFFFF\">" + Lang.getTitle(79) + "</font>";
 					break;
 				case(mc == this.mcText.sk_out):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(8) + "</font>\nнаносит урон врагу игнорируя его броню";
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(8) + "</font>\n<font color=\"#FFFFFF\">"+Lang.getTitle(81)+"</font>";
 					break;
 				case(mc == this.mcText.sk_miss):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(6)+"</font>\nшанс уклониться от удара врага";
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(6) + "</font>\n<font color=\"#FFFFFF\">" + Lang.getTitle(82) + "</font>";
 					break;
 				case(this.mcText.sk_return == mc):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(9) +"</font>\n<font color=\"#FFFFFF\">" + "шанс нанести ответный удар";
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(9) +"</font>\n<font color=\"#FFFFFF\">" + Lang.getTitle(83) + "</font>";
 					break;
 				case (this.mcText.sk_ult == mc):
 					switch(this.index)

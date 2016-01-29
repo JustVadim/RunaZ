@@ -7,6 +7,7 @@ package artur.display
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import Server.Lang;
 	import Utils.Functions;
 	
 	public class ShopItemBG extends bgBlankItemShop
@@ -18,13 +19,13 @@ package artur.display
 		public var txtBtn:TextField = Functions.getTitledTextfield(0, -2, 77, 20, new Art().fontName, 14, 0xC29A4C, TextFormatAlign.CENTER, "Купити", 1, Kerning.AUTO, 0);
 		public var title:TextField = Functions.getTitledTextfield(4, 125, 85, 16, new Art().fontName, 12, 0xFFB119, TextFormatAlign.CENTER, "Купити", 1, Kerning.AUTO, 0);
 		
-		public var txtHp:McInfoInfos = new McInfoInfos("Жизнь");
-		public var txtMp:McInfoInfos = new McInfoInfos("Манна");
-		public var txtDmg:McInfoInfos = new McInfoInfos("Урон");
-		public var txtf_fiz:McInfoInfos = new McInfoInfos("Физ.Защита");
-		public var txtf_mag:McInfoInfos = new McInfoInfos("Маг.Защита");
-		public var txtInc:McInfoInfos = new McInfoInfos("Инициатива");
-		public var txtSpeed:McInfoInfos = new McInfoInfos("Скорость");
+		public var txtHp:McInfoInfos = new McInfoInfos(Lang.getTitle(63));
+		public var txtMp:McInfoInfos = new McInfoInfos(Lang.getTitle(64));
+		public var txtDmg:McInfoInfos = new McInfoInfos(Lang.getTitle(65));
+		public var txtf_fiz:McInfoInfos = new McInfoInfos(Lang.getTitle(66));
+		public var txtf_mag:McInfoInfos = new McInfoInfos(Lang.getTitle(67));
+		public var txtInc:McInfoInfos = new McInfoInfos(Lang.getTitle(69));
+		public var txtSpeed:McInfoInfos = new McInfoInfos(Lang.getTitle(68));
 		
 		
 		public function ShopItemBG() 

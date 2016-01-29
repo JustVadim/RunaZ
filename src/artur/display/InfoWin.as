@@ -9,6 +9,7 @@ package artur.display
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
 	import report.Report;
+	import Server.Lang;
 	import Utils.Functions;
 	
 	public class InfoWin extends mcInfo {
@@ -26,7 +27,7 @@ package artur.display
 			this.mouseEnabled = false;
 			this.title.y = -5;
 			infos1 = [this.hp, this.mp, this.dmg, this.f_fiz, this.f_mag, this.speed, this.inc];
-			this.infos = [addInfo(this.hp, "Жизни"), addInfo(this.mp,"Манна"), addInfo(this.dmg,"Урон"), addInfo(this.f_fiz, "Физ.Защита"), addInfo(this.f_mag, "Маг.Защита"), addInfo(this.speed, "Скорость"), addInfo(this.inc, "Инициатива")];
+			this.infos = [addInfo(this.hp, Lang.getTitle(63)), addInfo(this.mp, Lang.getTitle(64)), addInfo(this.dmg, Lang.getTitle(65)), addInfo(this.f_fiz, Lang.getTitle(66)), addInfo(this.f_mag, Lang.getTitle(67)), addInfo(this.speed, Lang.getTitle(68)), addInfo(this.inc, Lang.getTitle(69))];
 			this.hideAll();
 			this.filters = [new GlowFilter(0x000000, 1, 3, 3)]
 			this.dmg.iconRange.visible = false;

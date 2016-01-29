@@ -5,164 +5,202 @@ package Server
 	import report.Report;
 	public class Lang 
 	{
-		public static var lang:int = 0;
+		public static var lang:int = 1;
 		private static var lang_table:Array = new Array();
 		
 		public static function init():void
 		{
 			Lang.lang_table[0] = new Array();
-			lang_table[0][0] = ["Начало пути", "", "", ""];
-			lang_table[0][1] = ["Зеленая тропа", "", "", ""];
-			lang_table[0][2] = ["В поисках истины", "", "", ""];
-			lang_table[0][3] = ["Туман войны", "", "", ""];
-			lang_table[0][4] = ["Поворот не туда", "", "", ""];
-			lang_table[0][5] = ["Проклятая река", "", "", ""];
-			lang_table[0][6] = ["Верная стража", "", "", ""];
-			lang_table[0][7] = ["Звон монет", "", "", ""];
-			lang_table[0][8] = ["Шепото дракона", "", "", ""];
-			lang_table[0][9] = ["Клыкастая месть", "", "", ""];
-			lang_table[0][10] = ["БОСС", "", "", ""];
-			lang_table[0][11] = ["Земля проклятых", "", "", ""];
-			lang_table[0][12] = ["Шелест листьев", "", "", ""];
-			lang_table[0][13] = ["Две башни", "", "", ""];
-			lang_table[0][14] = ["Лесные шелесты", "", "", ""];
-			lang_table[0][15] = ["Вулканическая пыль", "", "", ""];
-			lang_table[0][16] = ["Крик орков", "", "", ""];
-			lang_table[0][17] = ["Лужайка единорогов", "", "", ""];
-			lang_table[0][18] = ["Сердце кошмара", "", "", ""];
-			lang_table[0][19] = ["Кровавый прибой", "", "", ""];
-			lang_table[0][20] = ["Прах и ярость", "", "", ""];
-			lang_table[0][21] = ["БОСС", "", "", ""];
-			lang_table[0][22] = ["","",""];
+			lang_table[0][0] = ["Начало пути", 			"The beginning of the way",	""];
+			lang_table[0][1] = ["Зеленая тропа", 		"The green trail", 		""];
+			lang_table[0][2] = ["В поисках истины", 	"In search of truth",   ""];
+			lang_table[0][3] = ["Туман войны", 			"Fog of war", 			""];
+			lang_table[0][4] = ["Поворот не туда", 		"Wrong turn",			""];
+			lang_table[0][5] = ["Проклятая река", 		"Cursed river",			""];
+			lang_table[0][6] = ["Верная стража", 		"Faithful guardian",	""];
+			lang_table[0][7] = ["Звон монет", 			"Coins ringing",		""];
+			lang_table[0][8] = ["Шепот дракона", 		"Dragon whisper",		""];
+			lang_table[0][9] = ["Клыкастая месть", 		"Fanged revenge",		""];
+			lang_table[0][10] = ["БОСС", 				"BOSS", 				""];
+			lang_table[0][11] = ["Земля проклятых", 	"Curse land", 			""];
+			lang_table[0][12] = ["Шелест листьев", 		"Rustles of leaves",	""];
+			lang_table[0][13] = ["Две башни", 			"Two towers",			""];
+			lang_table[0][14] = ["Лесные шелесты", 		"Forest rustles",		""];
+			lang_table[0][15] = ["Вулканическая пыль", 	"Volcanic dust",		""];
+			lang_table[0][16] = ["Крик орков", 			"Orcs scream",			""];
+			lang_table[0][17] = ["Лужайка единорогов", 	"Unicorns lawn", 		""];
+			lang_table[0][18] = ["Сердце кошмара", 		"Nightmare heart", 		""];
+			lang_table[0][19] = ["Кровавый прибой", 	"Blood surf",			""];
+			lang_table[0][20] = ["Прах и ярость", 		"Remains and fury", 	""];
+			lang_table[0][21] = ["БОСС", 				"BOSS",					""];
+			lang_table[0][22] = ["Демоническая грань", 	"Demon edge", 			""];
+			lang_table[0][23] = ["Секреты короля", 		"Secrets of the King",	""];
+			lang_table[0][24] = ["Гром богов", 			"Gods thunder", 		""];
+			lang_table[0][25] = ["Дерево мудрости", 	"Wisdom tree", 			""];
+			lang_table[0][26] = ["Песни сирены", 		"Siren songs",			""];
+			lang_table[0][27] = ["Отчаянный союз", 		"Desperate Alliance", 	""];
+			lang_table[0][28] = ["Пустоши", 			"Wasteland", 			""];
+			lang_table[0][29] = ["Падение молота", 		"The Hammer Falls", 	""];
+			lang_table[0][30] = ["Среди руин",			"Among the Ruins",		""];
+			lang_table[0][31] = ["Око за око",			"Eye for an Eye",		""];
+			lang_table[0][32] = ["БОСС",				"BOSS",					""];
+			
 			Lang.lang_table[1] = new Array();
-			Lang.lang_table[1][0] = ["Шлем", "", ""];
-			Lang.lang_table[1][1] = ["Кольчуга", "", ""];
-			Lang.lang_table[1][2] = ["Сапоги", "", ""];
-			Lang.lang_table[1][3] = ["Наплечники", "", ""];
-			Lang.lang_table[1][4] = ["Перчатки", "", ""];
-			Lang.lang_table[1][5] = ["Оружие", "", ""];
-			Lang.lang_table[1][6] = ["Щиты", "", ""];
-			Lang.lang_table[1][7] = ["Инвентарь", "", ""];
-			Lang.lang_table[2] = ["У одного из вашых воинов повысился уровень, зайдите  в замок, чтобы улучшить его.", "", "" ];
-			Lang.lang_table[3] = [["Банк", "", ""], ["Топ", "", ""], ["Замок", "", ""], ["Арена", "", ""], ['Кузница', "", ""], ["Карта", "", ""]];
-			Lang.lang_table[4] = ["У вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "", ""];
-			Lang.lang_table[5] = ["Критический урон", "", ""];
-			Lang.lang_table[6] = ["Уворот", "", ""];
-			Lang.lang_table[7] = ["Двойная атака", "", ""];
-			Lang.lang_table[8] = ["Бешенсво", "", ""];
-			Lang.lang_table[9] = ["Ответный удар", "", ""];
-			Lang.lang_table[10] = ["шанс нанести двойной урон</font>\n Следующий уровень", "", ""];
-			Lang.lang_table[11] = ["шанс уклониться от удара</font>\n Следующий уровень", "", ""];
-			Lang.lang_table[12] = ["шанс атаковать два раза</font>\n Следующий уровень", "", ""];
-			Lang.lang_table[13] = ["шанс атаковать сквозь защиту</font>\n Следующий уровень", "", ""];
-			Lang.lang_table[14] = ["шанс нанести ответный удар</font>\n Следующий уровень", "", ""];
-			Lang.lang_table[15] = ["Ярость", "", ""];
-			Lang.lang_table[16] = ["Лечение", "", ""];
-			Lang.lang_table[17] = ["Огненная стрела", "", ""];
-			Lang.lang_table[18] = ["Молния", "", ""];
-			Lang.lang_table[19] = [" увеличивает урон юнита на ", "", ""];
-			Lang.lang_table[20] = ["на текущий ход", "", ""];
-			Lang.lang_table[21] = [" востанавливает ", "", ""];
-			Lang.lang_table[22] = [" единиц здоровья любому союзному юниту", "", ""];
-			Lang.lang_table[23] = [" Оглушает вражеского юнита огненной стрелой и наносит ", "", ""];
-			Lang.lang_table[24] = [" урона", "", ""];
-			Lang.lang_table[25] = [" Поражает вражеского юнита молнией при этом наносит ему ", "", ""];
-			Lang.lang_table[26] = ["Следующий уровень - ", "", ""];
-			Lang.lang_table[27] = [" единиц", "", ""];
-			Lang.lang_table[28] = ["Стоимость заклинания ", "", ""];
-			Lang.lang_table[29] = [" манны", "", ""];
-			Lang.lang_table[30] = ["Нажмите что бы улучшить!", "", ""];
-			Lang.lang_table[31] = ["Навык", "", ""];
-			Lang.lang_table[32] = ["Я хочу продать", "", ""];
-			Lang.lang_table[33] = ["Нажмите, что бы купить вещь", "", ""];
-			Lang.lang_table[34] = [" Убил: ", "", ""];
-			Lang.lang_table[35] = [" Умер: ", "", ""];
-			Lang.lang_table[36] = ["Вы не сможете победить! Наймите воина. Если у вас уже есть воин - купите ему оружие.", "", ""];
-			Lang.lang_table[37] = ["Миссия еще не доступна, ожидайте ее в скором времени!!", "", ""];
-			Lang.lang_table[38] = [["Варвар", "", ""], ["Омник", "", ""], ["Лучник", "", ""], ["Маг", "", ""]];
-			Lang.lang_table[39] = ["Я хочу нанять", "", ""];
-			Lang.lang_table[40] = [["Новичек","",""], ["Воин","","",],["Стратег","",""],["Царь","",""]];
-			Lang.lang_table[41] = ["Что бы улучшить, надо вещь и как минимум один каминь.", "", ""];
-			Lang.lang_table[42] = ["У Вас недостаточно золота для улучшения. Вы можете купить золото в банке или заработать в миссиях.", "", ""];
+			Lang.lang_table[1][0] = ["Шлем", 		"Helmet", 		""];
+			Lang.lang_table[1][1] = ["Кольчуга", 	"Аrmor", 		""];
+			Lang.lang_table[1][2] = ["Сапоги", 		"Boots", 		""];
+			Lang.lang_table[1][3] = ["Наплечники", 	"Shoulders", 	""];
+			Lang.lang_table[1][4] = ["Перчатки", 	"Gloves", 		""];
+			Lang.lang_table[1][5] = ["Оружие", 		"Weapon", 		""];
+			Lang.lang_table[1][6] = ["Щиты", 		"Shields", 		""];
+			Lang.lang_table[1][7] = ["Инвентарь", 	"Inventory", 	""];
+			Lang.lang_table[2] = ["У одного из вашых юнитов повысился уровень, зайдите  в замок, чтобы улучшить его.", "One of your unit has increased the level, go to the castle to improve it.", "" ];
+			Lang.lang_table[3] = [
+									["Банк", "Bank", ""], 
+									["Доска лидеров", "LeaderBoard", ""], 
+									["Замок", "Castle", ""], 
+									["Арена", "Arena", ""], 
+									["Кузница", "Smithy", ""], 
+									["Миссии", "Missions", ""],
+									["В город","Vilagge",""]
+								];
+			Lang.lang_table[4] = ["У вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "You do not have the resources for this purchase. You can buy the resources at the bank or the earn in missions.", ""];
+			Lang.lang_table[5] = ["Критический урон", "Critical strike", ""];
+			Lang.lang_table[6] = ["Уворот", "Dodge", ""];
+			Lang.lang_table[7] = ["Двойная атака", "Double attack", ""];
+			Lang.lang_table[8] = ["Бешенсво", "Rage", ""];
+			Lang.lang_table[9] = ["Ответный удар", "Counter attack", ""];
+			Lang.lang_table[10] = ["шанс нанести двойной урон</font>\n Следующий уровень", "chance to inflict double damage</font>\n Next level", ""];
+			Lang.lang_table[11] = ["шанс уклониться от удара</font>\n Следующий уровень", "chance to dodge</font>\n Next level", ""];
+			Lang.lang_table[12] = ["шанс атаковать два раза</font>\n Следующий уровень", "chance to attack twice</font>\n Next level", ""];
+			Lang.lang_table[13] = ["шанс атаковать сквозь защиту</font>\n Следующий уровень", "chance to attack through the defense</font>\n Next level", ""];
+			Lang.lang_table[14] = ["шанс нанести ответный удар</font>\n Следующий уровень", "chance to strike back</font>\n Next level", ""];
+			Lang.lang_table[15] = ["Ярость", "Fury", ""];
+			Lang.lang_table[16] = ["Лечение", "Heal", ""];
+			Lang.lang_table[17] = ["Огненная стрела", "Fire arrow", ""];
+			Lang.lang_table[18] = ["Молния", "Lightning", ""];
+			Lang.lang_table[19] = [" увеличивает урон юнита на ", " increases the damage to the unit for ", ""];
+			Lang.lang_table[20] = ["на текущий ход", "for current step", ""];
+			Lang.lang_table[21] = [" востанавливает ", " restores ", ""];
+			Lang.lang_table[22] = [" единиц здоровья любому союзному юниту", " health points for any unit you chose", ""];
+			Lang.lang_table[23] = [" Оглушает вражеского юнита огненной стрелой и наносит ", " Stuns enemy unit Firebolt and deals", ""];
+			Lang.lang_table[24] = [" урона", " damage", ""];
+			Lang.lang_table[25] = [" Поражает вражеского юнита молнией при этом наносит ему ", " Lightning strikes an enemy unit at the same time causing him", ""];
+			Lang.lang_table[26] = ["Следующий уровень - ", "Next level - ", ""];
+			Lang.lang_table[27] = [" единиц", " points", ""];
+			Lang.lang_table[28] = ["Стоимость заклинания ", "Manna cost", ""];
+			Lang.lang_table[29] = [" манны", " mannas", ""];
+			Lang.lang_table[30] = ["Нажмите что бы улучшить!", "Click to improve!", ""];
+			Lang.lang_table[31] = ["Навык", "Skill", ""];
+			Lang.lang_table[32] = ["Я хочу продать", "I want to sell", ""];
+			Lang.lang_table[33] = ["Нажмите, что бы купить вещь", "Press for buy item", ""];
+			Lang.lang_table[34] = [" Убил: ", " Killed:", ""];
+			Lang.lang_table[35] = [" Умер: ", " Died:", ""];
+			Lang.lang_table[36] = ["Вы не сможете победить! Наймите воина. Если у вас уже есть воин - купите ему оружие.", "You can not win! Hire a warrior. If you already have a warrior - buy him a weapon.", ""];
+			Lang.lang_table[37] = ["Миссия еще не доступна, ожидайте ее в скором времени!!", "The mission is not yet available, expect it soon!!", ""];
+			Lang.lang_table[38] = [["Варвар", "Barbarin", ""], ["Омник", "Omnic", ""], ["Лучник", "Archer", ""], ["Маг", "Wizard", ""]];
+			Lang.lang_table[39] = ["Я хочу нанять", "I want to hire", ""];
+			Lang.lang_table[40] = [["Новичек","Beginer",""], ["Воин","Warrior","",],["Стратег","Strategist",""],["Царь","King",""]];
+			Lang.lang_table[41] = ["Что бы улучшить, надо вещь и как минимум один камeнь.", "In order to improve, you have an item and at least one stone", ""];
+			Lang.lang_table[42] = ["У Вас недостаточно золота для улучшения. Вы можете купить золото в банке или заработать в миссиях.", "You do not have gold to improve. You can buy gold in a bank or earn it in the missions.", ""];
 			Lang.lang_table[43] = new Array();
-			Lang.lang_table[43][0] = ["Рубин ур.1", "", ""];
-			Lang.lang_table[43][1] = ["Изумруд ур.1", "", ""];
-			Lang.lang_table[43][2] = ["Аметист ур.1", "", ""];
-			Lang.lang_table[43][3] = ["Сапфир ур.1", "", ""];
-			Lang.lang_table[43][4] = ["Топаз ур.1", "", ""];
+			Lang.lang_table[43][0] = ["Рубин ур.1", "Ruby lvl.1", ""];
+			Lang.lang_table[43][1] = ["Изумруд ур.1", "Emerald lvl.1", ""];
+			Lang.lang_table[43][2] = ["Аметист ур.1", "Amethyst lvl.1", ""];
+			Lang.lang_table[43][3] = ["Сапфир ур.1", "Sapphire lvl.1", ""];
+			Lang.lang_table[43][4] = ["Топаз ур.1", "Topaz lvl.1", ""];
 			
-			Lang.lang_table[43][5] = ["Рубин ур.2", "", ""];
-			Lang.lang_table[43][6] = ["Изумруд ур.2", "", ""];
-			Lang.lang_table[43][7] = ["Аметист ур.2", "", ""];
-			Lang.lang_table[43][8] = ["Сапфир ур.2", "", ""];
-			Lang.lang_table[43][9] = ["Топаз ур.2", "", ""];
+			Lang.lang_table[43][5] = ["Рубин ур.2", "Ruby lvl.1", ""];
+			Lang.lang_table[43][6] = ["Изумруд ур.2", "Emerald lvl.2", ""];
+			Lang.lang_table[43][7] = ["Аметист ур.2", "Amethyst lvl.2", ""];
+			Lang.lang_table[43][8] = ["Сапфир ур.2", "Sapphire lvl.2", ""];
+			Lang.lang_table[43][9] = ["Топаз ур.2", "Topaz lvl.2", ""];
 			
-			Lang.lang_table[43][10] = ["Рубин ур.3", "", ""];
-			Lang.lang_table[43][11] = ["Изумруд ур.3", "", ""];
-			Lang.lang_table[43][12] = ["Аметист ур.3", "", ""];
-			Lang.lang_table[43][13] = ["Сапфир ур.3", "", ""];
-			Lang.lang_table[43][14] = ["Топаз ур.3", "", ""];
+			Lang.lang_table[43][10] = ["Рубин ур.3", "Ruby lvl.3", ""];
+			Lang.lang_table[43][11] = ["Изумруд ур.3", "Emerald lvl.3", ""];
+			Lang.lang_table[43][12] = ["Аметист ур.3", "Amethyst lvl.3", ""];
+			Lang.lang_table[43][13] = ["Сапфир ур.3", "Sapphire lvl.3", ""];
+			Lang.lang_table[43][14] = ["Топаз ур.3", "Topaz lvl.3", ""];
 			
-			Lang.lang_table[44] = ["Что бы участвовать в поединкe нужен уровень " + WinArena.NEEDED_LVL + ". Получить его можно проходя миссии.", "", ""];
-			Lang.lang_table[45] = ["У Вас недостаточно золота для этой покупки. Вы можете купить золото в банке или заработать в миссиях.", "", ""];
-			Lang.lang_table[46] = ["У Вас недостаточно серебра для этой покупки. Вы можете купить серебро в банке или заработать в миссиях.", "", ""];
-			Lang.lang_table[47] = ["Закрыть", "", ""];
-			Lang.lang_table[48] = ["Купить за золото", "", ""];
-			Lang.lang_table[49] = ["Купить за серебро", "", ""];
-			Lang.lang_table[50] = ["Продать за серебро", "", ""];
-			Lang.lang_table[51] = ["Искать игру", "", ""];
-			Lang.lang_table[52] = ["Заказать каминь", "", ""];
-			Lang.lang_table[53] = ["Улучшить вещь", "", ""];
+			Lang.lang_table[44] = ["Что бы участвовать в поединкe нужен уровень " + WinArena.NEEDED_LVL + ". Получить его можно проходя миссии.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""];
+			Lang.lang_table[45] = ["У Вас недостаточно золота для этой покупки. Вы можете купить золото в банке или заработать в миссиях.", "You do not have enough gold for this purchase. You can buy gold in a bank or earn it in the missions.", ""];
+			Lang.lang_table[46] = ["У Вас недостаточно серебра для этой покупки. Вы можете купить серебро в банке или заработать в миссиях.", "You do not have enough silver for this purchase. You can buy enough in a bank or money in the missions.", ""];
+			Lang.lang_table[47] = ["Закрыть", "Close", ""];
+			Lang.lang_table[48] = ["Купить за золото", "Buy for gold", ""];
+			Lang.lang_table[49] = ["Купить за серебро", "Buy for silver", ""];
+			Lang.lang_table[50] = ["Продать за серебро", "Sell for silver", ""];
+			Lang.lang_table[51] = ["Искать игру", "Find game", ""];
+			Lang.lang_table[52] = ["Заказать камeнь", "Order stone", ""];
+			Lang.lang_table[53] = ["Улучшить вещь", "Improve item", ""];
 			Lang.lang_table[54] = ["Добавить в сундук", "", ""];
 			//Lang.lang_table[55] = [" в сундук", "", ""];
 			//Lang.lang_table[56] = ["Забрать ", "", ""];
-			Lang.lang_table[57] = ["Забрать из сундука", "", ""];
+			Lang.lang_table[57] = ["Забрать из сундука", "Pick up from the chest", ""];
 			
 			Lang.lang_table[58] = new Array();
-			Lang.lang_table[58][0] = ["Добавит +1 к здоровью", "", ""];
-			Lang.lang_table[58][1] = ["Добавит +1 к манне", "", ""];
-			Lang.lang_table[58][2] = ["Добавит +1 к урону", "", ""];
-			Lang.lang_table[58][3] = ["Добавит +1 к физ. защите", "", ""];
-			Lang.lang_table[58][4] = ["Добавит +1 к маг. защите", "", ""];
+			Lang.lang_table[58][0] = ["Добавит +1 к здоровью", "Add 1 to health", ""];
+			Lang.lang_table[58][1] = ["Добавит +1 к манне", "Add 1 to manna", ""];
+			Lang.lang_table[58][2] = ["Добавит +1 к урону", "Add 1 to damage", ""];
+			Lang.lang_table[58][3] = ["Добавит +1 к физ. защите", "Add 1 to phys. protection", ""];
+			Lang.lang_table[58][4] = ["Добавит +1 к маг. защите", "Add 1 to mag. protection", ""];
 			
-			Lang.lang_table[58][5] = ["Добавит +2 к здоровью", "", ""];
-			Lang.lang_table[58][6] = ["Добавит +2 к манне", "", ""];
-			Lang.lang_table[58][7] = ["Добавит +2 к урону", "", ""];
-			Lang.lang_table[58][8] = ["Добавит +2 к физ. защите", "", ""];
-			Lang.lang_table[58][9] = ["Добавит +2 к маг. защите", "", ""];
+			Lang.lang_table[58][5] = ["Добавит +2 к здоровью", "Add +2 to health", ""];
+			Lang.lang_table[58][6] = ["Добавит +2 к манне", "Add 2 to manna", ""];
+			Lang.lang_table[58][7] = ["Добавит +2 к урону", "Add 2 to damage", ""];
+			Lang.lang_table[58][8] = ["Добавит +2 к физ. защите", "Add 2 to phys. protection", ""];
+			Lang.lang_table[58][9] = ["Добавит +2 к маг. защите", "Add 2 to to mag. protection", ""];
 			
-			Lang.lang_table[58][10] = ["Добавит +3 к здоровью", "", ""];
-			Lang.lang_table[58][11] = ["Добавит +3 к манне", "", ""];
-			Lang.lang_table[58][12] = ["Добавит +3 к урону", "", ""];
-			Lang.lang_table[58][13] = ["Добавит +3 к физ. защите", "", ""];
-			Lang.lang_table[58][14] = ["Добавит +3 к маг. защите", "", ""];
+			Lang.lang_table[58][10] = ["Добавит +3 к здоровью", "Add 3 to health", ""];
+			Lang.lang_table[58][11] = ["Добавит +3 к манне", "Add 3 to manna", ""];
+			Lang.lang_table[58][12] = ["Добавит +3 к урону", "Add 3 to damage", ""];
+			Lang.lang_table[58][13] = ["Добавит +3 к физ. защите", "Add 3 to phys. protection", ""];
+			Lang.lang_table[58][14] = ["Добавит +3 к маг. защите", "Add 3 to to mag. protection", ""];
 			
 			Lang.lang_table[59] = new Array();
-			Lang.lang_table[59][0] = ["10 камней добавят +1 к здоровью ", "", ""];
-			Lang.lang_table[59][1] = ["10 камней добавят +1 к манне", "", ""];
-			Lang.lang_table[59][2] = ["10 камней добавят +1 к урону", "", ""];
-			Lang.lang_table[59][3] = ["10 камней добавят +1 к физ. защите", "", ""];
-			Lang.lang_table[59][4] = ["10 камней добавят +1 к маг. защите", "", ""];
+			Lang.lang_table[59][0] = ["10 камней добавят +1 к здоровью ", "10 stones add 1 to health ", ""];
+			Lang.lang_table[59][1] = ["10 камней добавят +1 к манне", "10 stones add 1 to manna ", ""];
+			Lang.lang_table[59][2] = ["10 камней добавят +1 к урону", "10 stones add 1 to damage ", ""];
+			Lang.lang_table[59][3] = ["10 камней добавят +1 к физ. защите", "10 stones add 1 to phys. protection ", ""];
+			Lang.lang_table[59][4] = ["10 камней добавят +1 к маг. защите", "10 stones add 1 to mag. protection ", ""];
 			
-			Lang.lang_table[59][5] = ["10 камней добавят +2 к здоровью", "", ""];
-			Lang.lang_table[59][6] = ["10 камней добавят +2 к манне", "", ""];
-			Lang.lang_table[59][7] = ["10 камней добавят +2 к урону", "", ""];
-			Lang.lang_table[59][8] = ["10 камней добавят +2 к физ. защите", "", ""];
-			Lang.lang_table[59][9] = ["10 камней добавят +2 к маг. защите", "", ""];
+			Lang.lang_table[59][5] = ["10 камней добавят +2 к здоровью", "10 stones add 2 to health ", ""];
+			Lang.lang_table[59][6] = ["10 камней добавят +2 к манне", "10 stones add 2 to manna ", ""];
+			Lang.lang_table[59][7] = ["10 камней добавят +2 к урону", "10 stones add 2 to damage ", ""];
+			Lang.lang_table[59][8] = ["10 камней добавят +2 к физ. защите", "10 stones add 2 to phys. protection ", ""];
+			Lang.lang_table[59][9] = ["10 камней добавят +2 к маг. защите", "10 stones add 2 to mag. protection ", ""];
 			
-			Lang.lang_table[59][10] = ["10 камней добавят +3 к здоровью", "", ""];
-			Lang.lang_table[59][11] = ["10 камней добавят +3 к манне", "", ""];
-			Lang.lang_table[59][12] = ["10 камней добавят +3 к урону", "", ""];
-			Lang.lang_table[59][13] = ["10 камней добавят +3 к физ. защите", "", ""];
-			Lang.lang_table[59][14] = ["10 камней добавят +3 к маг. защите", "", ""];
-			
-			
-			
-			
-			
-			
-			
-			
+			Lang.lang_table[59][10] = ["10 камней добавят +3 к здоровью", "10 stones add 3 to health ", ""];
+			Lang.lang_table[59][11] = ["10 камней добавят +3 к манне", "10 stones add 3 to manna ", ""];
+			Lang.lang_table[59][12] = ["10 камней добавят +3 к урону", "10 stones add 3 to damage ", ""];
+			Lang.lang_table[59][13] = ["10 камней добавят +3 к физ. защите", "10 stones add 3 to phys. protection ", ""];
+			Lang.lang_table[59][14] = ["10 камней добавят +3 к маг. защите", "10 stones add 3 to mag. protection ", ""];
+			Lang.lang_table[60] = new Array();
+			Lang.lang_table[60][1] = ["Зайдите в замок что бы нанять юинита и купить ему артефакты", "Go to the castle to hire units and buy him artifacts", ""];
+			Lang.lang_table[60][2] = ["Нажмите что бы открыть таверну с юнитами", "Click to open a tavern with units", ""];
+			Lang.lang_table[60][4] = ["У Вас есть юнит, но ему надо оружие", "You have unit, but he needs weapon", ""];
+			Lang.lang_table[61] = ["Нанять", "Hire", ""];
+			Lang.lang_table[62] = ["Я хочу продать", "I want to sell", ""];
+			Lang.lang_table[63] = ["Жизни", "Health", ""];
+			Lang.lang_table[64] = ["Манна", "Manna", ""];
+			Lang.lang_table[65] = ["Урон", "Damage", ""];
+			Lang.lang_table[66] = ["Физ. Защита", "Phys. prot.", ""];
+			Lang.lang_table[67] = ["Маг. Защита", "Mag. prot.", ""];
+			Lang.lang_table[68] = ["Скорость", "Speed", ""];
+			Lang.lang_table[69] = ["Инициатива", "Initiative", ""];
+			Lang.lang_table[70] = ["Поражение", "Defeat", ""];
+			Lang.lang_table[71] = ["Победа", "Victory", ""];
+			Lang.lang_table[72] = ["Я хочу купить", "I want to buy", ""];
+			Lang.lang_table[73] = ["ПРОДАТЬ", "SELL", ""];
+			Lang.lang_table[74] = ["Я хочу улушить", "I want to improve", ""];
+			Lang.lang_table[75] = ["Я хочу заказать", "I want to order", ""];
+			Lang.lang_table[76] = ["Убил", "Killed", ""];
+			Lang.lang_table[77] = ["Доступно", "Available", ""];
+			Lang.lang_table[78] = ["Заказать", "Order", ""];
+			Lang.lang_table[79] = ["шанс ударить указанную цель 2 раза", "chance to attack target 2 times", ""];
+			Lang.lang_table[80] = ["шанс нанести двойной урон", "chance for double damage", ""];
+			Lang.lang_table[81] = ["шанс нанести урон сквозь броню", "chance to deal damage through armor", ""];
+			Lang.lang_table[82] = ["шанс уклонится от удара", "chance to dodge", ""];
+			Lang.lang_table[83] = ["шанс контр атаки", "the chance to counter-attack", ""];
 			
 			
 		}

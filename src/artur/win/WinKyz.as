@@ -160,7 +160,7 @@ package artur.win {
 		private function onCraft(e:MouseEvent):void {
 			if (this.chest.canCraft()) {
 				if (UserStaticData.hero.gold > 4) {
-					App.byeWin.init("Я хочу улушить", "Вещицу", 5, 0, NaN, 5, 0, NaN);
+					App.byeWin.init(Lang.getTitle(74), "Вещицу", 5, 0, NaN, 5, 0, NaN);
 				} else {
 					App.closedDialog.init(Lang.getTitle(42),false, true, true);
 				}
@@ -202,7 +202,7 @@ package artur.win {
 			this.onClosePrice();
 			var stoneNum:int = int(e.target.name);
 			if (true) {
-				App.byeWin.init("Я хочу заказать", Lang.getTitle(43, stoneNum), 2 + int(stoneNum/5), 0, 0, 4, stoneNum);
+				App.byeWin.init(Lang.getTitle(75), Lang.getTitle(43, stoneNum), 2 + int(stoneNum/5), 0, 0, 4, stoneNum);
 			}
 		}
 		

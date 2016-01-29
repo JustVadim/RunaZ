@@ -6,9 +6,10 @@ package artur.display {
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import Server.Lang;
 	import Utils.Functions;
 	public class McAfterBattleLoseExtend extends mcAfterBattleLose {
-		public var title:TextField = Functions.getTitledTextfield(0, 6, 820, 50, new Art().fontName, 34, 0xD2A055, TextFormatAlign.CENTER, "Поражение", 1, Kerning.AUTO, 0, false);
+		public var title:TextField = Functions.getTitledTextfield(0, 6, 820, 50, new Art().fontName, 34, 0xD2A055, TextFormatAlign.CENTER, Lang.getTitle(70), 1, Kerning.AUTO, 0, false);
 		public var txt1:Array = [];
 		public var txt2:Array = [];
 		public var closeBtn:BaseButton = new BaseButton(15);

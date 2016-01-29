@@ -10,6 +10,7 @@ package artur.display.battle
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import report.Report;
+	import Server.Lang;
 	/**
 	 * ...
 	 * @author Som911
@@ -39,7 +40,7 @@ package artur.display.battle
 			this.x = 400;
 			mcBtns.over.gotoAndStop(1);
 			btns = [mcBtns.btnCastle, mcBtns.btnArena, mcBtns.btnUp, mcBtns.btnMap, mcBtns.btnKyz];
-			txts  = ['Замок',"Арена","В город","Карта","Кузнеца"]
+			txts  = [Lang.getTitle(3,2), Lang.getTitle(3,3), Lang.getTitle(3,6), Lang.getTitle(3, 5), Lang.getTitle(3, 4)];
 		}
 		
 		private function up(e:MouseEvent):void 

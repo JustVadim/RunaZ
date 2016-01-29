@@ -6,6 +6,7 @@ package artur
 	import artur.display.CloseDialog;
 	import artur.display.InfoWin;
 	import artur.display.LockSpr;
+	import artur.display.PropExtended;
 	import artur.display.Tutor;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
@@ -60,7 +61,12 @@ package artur
 		public static var topPanel:TopPanel = new TopPanel();
 		public static var winBank:WinBank = new WinBank();
 		public static var tutor:Tutor = new Tutor();
+<<<<<<< HEAD
 		public static var currMuzPlay:String = 'MenuSong';
+=======
+		public static var prop:PropExtended = new PropExtended();
+		
+>>>>>>> c2f4e6570a436ccd9984fba9adde731816fd9d6a
 		
 		public function App(stg:Stage) 
 		{

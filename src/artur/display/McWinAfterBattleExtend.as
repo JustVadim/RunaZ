@@ -6,9 +6,10 @@ package artur.display {
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import Server.Lang;
 	import Utils.Functions;
 	public class McWinAfterBattleExtend extends mcAfterBattle {
-		public var title:TextField = Functions.getTitledTextfield(0, 6, 820, 50, new Art().fontName, 34, 0xD2A055, TextFormatAlign.CENTER, "Победа", 1, Kerning.AUTO, 0, false);
+		public var title:TextField = Functions.getTitledTextfield(0, 6, 820, 50, new Art().fontName, 34, 0xD2A055, TextFormatAlign.CENTER, Lang.getTitle(71), 1, Kerning.AUTO, 0, false);
 		public var ressTxtGold:TextField = Functions.getTitledTextfield(24, 6, 55, 22.2, new Art().fontName, 17, 0xFFF642, TextFormatAlign.CENTER, "1234", 1, Kerning.OFF, -1, false);
 		public var ressTxtSilver:TextField = Functions.getTitledTextfield(105, 6, 55, 22.2, new Art().fontName, 17, 0xFFFFFF, TextFormatAlign.CENTER, "1234", 1, Kerning.OFF, -1, false);
 		public var txt1:Array = [];
@@ -24,7 +25,7 @@ package artur.display {
 			this.ress.addChild(this.ressTxtSilver);
 			for (var i:int = 0; i < 4; i++) {
 				var blank:mcBlankWinn = this[String("k" + i)];
-				var txt:TextField = Functions.getTitledTextfield(57.15, 0, 100, 14, new Art().fontName, 10, 0xF3F3F3, TextFormatAlign.LEFT, "Убил", 0.7);
+				var txt:TextField = Functions.getTitledTextfield(57.15, 0, 100, 14, new Art().fontName, 10, 0xF3F3F3, TextFormatAlign.LEFT, Lang.getTitle(76), 0.7);
 				txt.filters = filtres;
 				blank.addChild(txt);
 				txt1[i] = txt;

@@ -2,6 +2,7 @@ package artur.display {
 	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import Server.Lang;
 	import Utils.Functions;
 	public class btnClosedShopExtended extends btnClosedShop{
 		
@@ -9,7 +10,7 @@ package artur.display {
 		
 		public function btnClosedShopExtended() {
 			this.addChild(this.title);
-			this.title.text = "Закрыть";
+			this.title.text = Lang.getTitle(47);
 		}
 		
 	}
