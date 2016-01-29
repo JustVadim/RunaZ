@@ -28,6 +28,7 @@ package artur.display
 		}
 		
 		private function onCick(e:MouseEvent):void {
+			
 			var mc:MovieClip = MovieClip(e.target);
 			if (mc.currentFrame == 1) {
 				mc.gotoAndStop(2);
@@ -43,6 +44,17 @@ package artur.display
 					}
 					break;
 				case this.muz:
+					if (mc.currentFrame == 2)
+					{
+					      App.sound.stopSound(App.currMuzPlay);
+						  App.sound.onSound = 0;
+					}
+					else
+					{
+						 App.sound.onSound = 0.4;
+						 App.sound.playSound(App.currMuzPlay, App.sound.onSound);
+					}
+				
 					break;
 				case this.sound:
 					App.sound.onVoice = (mc.currentFrame==2)?0:0.6
