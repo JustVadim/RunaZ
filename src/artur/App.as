@@ -6,6 +6,7 @@ package artur
 	import artur.display.CloseDialog;
 	import artur.display.InfoWin;
 	import artur.display.LockSpr;
+	import artur.display.PropExtended;
 	import artur.display.Tutor;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
@@ -56,7 +57,8 @@ package artur
 		public static var topPanel:TopPanel = new TopPanel();
 		public static var winBank:WinBank = new WinBank();
 		public static var tutor:Tutor = new Tutor();
-		//public static var prop:mcprope
+		public static var prop:PropExtended = new PropExtended();
+		
 		
 		public function App(stg:Stage) 
 		{

@@ -5,7 +5,7 @@ package Server
 	import report.Report;
 	public class Lang 
 	{
-		public static var lang:int = 0;
+		public static var lang:int = 1;
 		private static var lang_table:Array = new Array();
 		
 		public static function init():void
@@ -56,9 +56,13 @@ package Server
 			Lang.lang_table[1][7] = ["Инвентарь", 	"Inventory", 	""];
 			Lang.lang_table[2] = ["У одного из вашых юнитов повысился уровень, зайдите  в замок, чтобы улучшить его.", "One of your unit has increased the level, go to the castle to improve it.", "" ];
 			Lang.lang_table[3] = [
-									["Банк", "Bank", ""], ["Топ", "Top", ""], 
-									["Замок", "Castle", ""], ["Арена", "Arena", ""], 
-									["Кузница", "Smithy", ""], ["Миссии", "Missions", ""]
+									["Банк", "Bank", ""], 
+									["Доска лидеров", "LeaderBoard", ""], 
+									["Замок", "Castle", ""], 
+									["Арена", "Arena", ""], 
+									["Кузница", "Smithy", ""], 
+									["Миссии", "Missions", ""],
+									["В город","Vilagge",""]
 								];
 			Lang.lang_table[4] = ["У вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "You do not have the resources for this purchase. You can buy the resources at the bank or the earn in missions.", ""];
 			Lang.lang_table[5] = ["Критический урон", "Critical strike", ""];
@@ -190,14 +194,13 @@ package Server
 			Lang.lang_table[74] = ["Я хочу улушить", "I want to improve", ""];
 			Lang.lang_table[75] = ["Я хочу заказать", "I want to order", ""];
 			Lang.lang_table[76] = ["Убил", "Killed", ""];
-			
-			
-			
-			
-			
-			
-			
-			
+			Lang.lang_table[77] = ["Доступно", "Available", ""];
+			Lang.lang_table[78] = ["Заказать", "Order", ""];
+			Lang.lang_table[79] = ["шанс ударить указанную цель 2 раза", "chance to attack target 2 times", ""];
+			Lang.lang_table[80] = ["шанс нанести двойной урон", "chance for double damage", ""];
+			Lang.lang_table[81] = ["шанс нанести урон сквозь броню", "chance to deal damage through armor", ""];
+			Lang.lang_table[82] = ["шанс уклонится от удара", "chance to dodge", ""];
+			Lang.lang_table[83] = ["шанс контр атаки", "the chance to counter-attack", ""];
 			
 			
 		}

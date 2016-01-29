@@ -160,7 +160,7 @@ package artur.win {
 		private function onCraft(e:MouseEvent):void {
 			if (this.chest.canCraft()) {
 				if (UserStaticData.hero.gold > 4) {
-					App.byeWin.init(Lang.getTitle(), "Вещицу", 5, 0, NaN, 5, 0, NaN);
+					App.byeWin.init(Lang.getTitle(74), "Вещицу", 5, 0, NaN, 5, 0, NaN);
 				} else {
 					App.closedDialog.init(Lang.getTitle(42),false, true, true);
 				}

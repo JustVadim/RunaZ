@@ -227,7 +227,7 @@ package artur.display
 			this.compareAndSet(this.mcText.txt_sk_out, unit.b[3].l);
 			this.compareAndSet(this.mcText.txt_sk_ult, unit.ult.lvl);
 			
-			this.compareAndSet(this.mcText.txt_available, "Доступно: " + unit.fs);
+			this.compareAndSet(this.mcText.txt_available, Lang.getTitle(77) + ": " + unit.fs);
 		}
 		
 		public function enabledAllEvents(cond:Boolean): void {

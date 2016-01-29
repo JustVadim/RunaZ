@@ -1,5 +1,6 @@
 package Chat 
 {
+	import artur.App;
 	import artur.display.BaseButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -74,6 +75,9 @@ package Chat
 		
 		private function onAddedToStage(e:Event):void {
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
+			App.prop.x = 0;
+			App.prop.y = 0;
+			this.addChild(App.prop);
 			this.updateUserList();
 		}
 		

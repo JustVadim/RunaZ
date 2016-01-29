@@ -163,6 +163,8 @@ package artur.win
 			this.setCurrStep();
 			Main.THIS.chat.visible = false;
 			Main.THIS.stage.addChild(WinBattle.battleChat);
+			WinBattle.battleChat.addChild(App.prop);
+			App.prop.y = -405;
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
 			App.spr.addChild(bigLifeBar);
 		}
@@ -496,6 +498,9 @@ package artur.win
 				}
 			}
 			Main.THIS.chat.visible = true;
+			Main.THIS.chat.addChild(App.prop);
+			App.prop.x = 0;
+			App.prop.y = 0;
 			Main.THIS.stage.removeChild(WinBattle.battleChat);
 			Main.THIS.chat.setFocus();
 		}
