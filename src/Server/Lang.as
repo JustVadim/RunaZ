@@ -201,6 +201,11 @@ package Server
 			Lang.lang_table[81] = ["шанс нанести урон сквозь броню", "chance to deal damage through armor", ""];
 			Lang.lang_table[82] = ["шанс уклонится от удара", "chance to dodge", ""];
 			Lang.lang_table[83] = ["шанс контр атаки", "the chance to counter-attack", ""];
+			Lang.lang_table[84] = ["Купить", "Buy", ""];
+			Lang.lang_table[85] = ["Цена:", "Price:", ""];
+			Lang.lang_table[85] = ["Цена:", "Price:", ""];
+			Lang.lang_table[86] = ["или", "or", ""];
+			Lang.lang_table[87] = ["Нанять юнита","Hire unit",""];
 			
 			
 		}

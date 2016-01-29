@@ -1,5 +1,7 @@
 package artur 
 {
+	import artur.display.bgBlankUnitExtend;
+	import artur.display.BtnAddHeroExtend;
 	import artur.display.btnClosedShopExtended;
 	import artur.display.BtnHeroExtend;
 	import artur.display.btnSel1Extend;
@@ -27,9 +29,9 @@ package artur
 			new btnShop, //5
 			new btnSend,//6
 			new bgCastle1,//7
-			new btnAddHero,//8
+			new BtnAddHeroExtend,//8
 			new BtnHeroExtend,//9
-			new bgBlankUnit,//10;
+			new bgBlankUnitExtend,//10;
 			new btnExit(),//11
 			new btnBye(),//12
 			new mcBgHeroInv(),//13

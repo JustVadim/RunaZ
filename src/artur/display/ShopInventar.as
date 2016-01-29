@@ -102,7 +102,7 @@ package artur.display {
 				App.closedDialog.init(Lang.getTitle(4), false, true, true);
 			}
 			else {
-				App.byeWin.init(Lang.getTitle(72), "hren", gold, silver, item_id, 1, this.itemType, this.invPlace);
+				App.byeWin.init(Lang.getTitle(72), "Вещицу", gold, silver, item_id, 1, this.itemType, this.invPlace);
 			}
 		}
 		

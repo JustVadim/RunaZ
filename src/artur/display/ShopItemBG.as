@@ -16,8 +16,8 @@ package artur.display
 		private var item_image:Sprite = new Sprite();
 		public var txtGold:TextField = Functions.getTitledTextfield(65, 1, 45, 18, new Art().fontName, 12, 0xFFF642, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
 		public var txtSilver:TextField = Functions.getTitledTextfield(155, 1, 45, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
-		public var txtBtn:TextField = Functions.getTitledTextfield(0, -2, 77, 20, new Art().fontName, 14, 0xC29A4C, TextFormatAlign.CENTER, "Купити", 1, Kerning.AUTO, 0);
-		public var title:TextField = Functions.getTitledTextfield(4, 125, 85, 16, new Art().fontName, 12, 0xFFB119, TextFormatAlign.CENTER, "Купити", 1, Kerning.AUTO, 0);
+		public var txtBtn:TextField = Functions.getTitledTextfield(0, -2, 77, 20, new Art().fontName, 14, 0xC29A4C, TextFormatAlign.CENTER, Lang.getTitle(84), 1, Kerning.AUTO, 0);
+		public var title:TextField = Functions.getTitledTextfield(4, 125, 85, 16, new Art().fontName, 12, 0xFFB119, TextFormatAlign.CENTER, "Вещица", 1, Kerning.AUTO, 0);
 		
 		public var txtHp:McInfoInfos = new McInfoInfos(Lang.getTitle(63));
 		public var txtMp:McInfoInfos = new McInfoInfos(Lang.getTitle(64));
