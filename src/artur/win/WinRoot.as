@@ -113,7 +113,9 @@ package artur.win
 			DataExchange(e.target).removeEventListener(e.type, onRes);
 			App.lock.init(e.result);
 		}
-		public function init():void {
+		public function init():void 
+		{
+			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
 			App.spr.addChild(mcTextOld);
 			App.spr.addChild(mcText);
@@ -142,9 +144,12 @@ package artur.win
 			this.mcText.txtVit.text = String(currEn + '/' + maxVit);
 			this.mcTextOld.expBar.gotoAndStop(int(currExp /11* 100) + 1);
 			this.mcTextOld.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
-			if(hero.fs > 0) {
+			if (hero.fs > 0) 
+			{
 				WinRoot.lvlUp.init("Доступно: " + hero.fs) ;
-			} else {
+			} 
+			else 
+			{
 				WinRoot.lvlUp.frees();
 			}
 		}

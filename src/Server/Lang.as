@@ -205,7 +205,7 @@ package Server
 			Lang.lang_table[85] = ["Цена:", "Price:", ""];
 			Lang.lang_table[85] = ["Цена:", "Price:", ""];
 			Lang.lang_table[86] = ["или", "or", ""];
-			Lang.lang_table[87] = ["Нанять юнита","Hire unit",""];
+			Lang.lang_table[87] = ["Нанять юнита","Hire  unit",""];
 			
 			
 		}

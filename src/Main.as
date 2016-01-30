@@ -30,14 +30,14 @@ package  {
 		private var mcOff:mcOffSide = new mcOffSide();
 		public var chat:ChatBasic;
 		
-		public function Main():void {
+		public function Main():void 
+		{
 			if (stage) {
 				this.init();
 			} else {
 				this.addEventListener(Event.ADDED_TO_STAGE, this.init);
 			}
 		}
-		
 		private function init(e:Event = null):void {
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
