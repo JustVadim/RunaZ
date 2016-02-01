@@ -83,7 +83,9 @@ package artur.win {
 			}
 		}
 		
-		public function init():void {
+		public function init():void 
+		{
+			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
 		    App.spr.addChild(btn1);
 			mcFound.gotoAndStop(1);

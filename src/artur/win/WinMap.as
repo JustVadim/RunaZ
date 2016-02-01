@@ -69,6 +69,7 @@ package artur.win
 		
 		public function init():void
 		{
+			App.swapMuz('MenuSong');
 			bg = bgs[currMap];
 			App.spr.addChild(bg);
 			

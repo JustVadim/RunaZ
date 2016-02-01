@@ -62,7 +62,7 @@ package artur
 		public static var winBank:WinBank = new WinBank();
 		public static var tutor:Tutor = new Tutor();
 
-		public static var currMuzPlay:String = 'MenuSong';
+		public static var currMuzPlay:String = 'BatleSong';
 
 		public static var prop:PropExtended = new PropExtended();
 
@@ -131,6 +131,8 @@ package artur
 		}
 		public static function swapMuz(str:String):void
 		{
+			if (str == currMuzPlay)
+			return;
 			sound.stopSound(currMuzPlay);
 			sound.playSound(str, sound.onSound);
 			currMuzPlay = str;
