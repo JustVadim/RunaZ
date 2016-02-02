@@ -177,7 +177,9 @@ package Server
 			Lang.lang_table[60] = new Array();
 			Lang.lang_table[60][1] = ["Зайдите в замок что бы нанять юинита и купить ему артефакты", "Go to the castle to hire units and buy him artifacts", ""];
 			Lang.lang_table[60][2] = ["Нажмите что бы открыть таверну с юнитами", "Click to open a tavern with units", ""];
+			Lang.lang_table[60][3] = ["Наймите юнита", "Hire unit"];
 			Lang.lang_table[60][4] = ["У Вас есть юнит, но ему надо оружие", "You have unit, but he needs weapon", ""];
+			Lang.lang_table[60][7] = ["Время выполнить миссию", "Time to complete mission"];
 			Lang.lang_table[61] = ["Нанять", "Hire", ""];
 			Lang.lang_table[62] = ["Я хочу продать", "I want to sell", ""];
 			Lang.lang_table[63] = ["Жизни", "Health", ""];

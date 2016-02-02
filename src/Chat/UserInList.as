@@ -28,11 +28,10 @@ package Chat
 			this.y = 25 * array_num;
 			this.tabEnabled = false;
 			this.buttonMode = true;
-			this.addChild(this.title = Functions.getTitledTextfield(36, 2, 120, 20, new Art().fontName, 11, 0xFFFFFF, TextFormatAlign.LEFT, "", 1));
-			this.addChild(this.level_textfield = Functions.getTitledTextfield(15, 2, 22, 20, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1));
+			this.addChild(this.title = Functions.getTitledTextfield(38, 1, 120, 20, new Art().fontName, 11, 0xFFFFFF, TextFormatAlign.LEFT, "", 1));
+			this.addChild(this.level_textfield = Functions.getTitledTextfield(14, 1, 22, 20, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1));
 			this.title.filters = [new GlowFilter(0x0, 1, 2, 2)];
 			this.level_textfield.filters = [new GlowFilter(0x0, 1, 2, 2)];
-			
 			/*this.addChild(this.level_textfield = Functions.TitleTextfield(0, 1, "", 11, 1, 0xFFFFFF, true));
 			this.addChild(this.title = Functions.TitleTextfield(0, -2, "", 10, 0.7, 0xFFFFFF, false)); this.title.mouseEnabled = true;*/
 		}

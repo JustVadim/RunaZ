@@ -6,9 +6,9 @@ package artur.display {
 	import Server.Lang;
 	import Utils.Functions;
 	public class Tutor extends mcTutorial {
-		private var txt:TextField = Functions.getTitledTextfield(0,0, 300, 0, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9);
-		private var coordX:Array = [0, 250, 170, 0, 270];
-		private var coordY:Array = [0, 300, 45, 0, 250];
+		private var txt:TextField = Functions.getTitledTextfield(0, 0, 300, 0, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9);
+		private var coordX:Array = [0, 250, 170, 500, 270, 500, 500, 500];
+		private var coordY:Array = [0, 300, 45, 250, 250, 50, 50, 50];
 		
 		public function Tutor() {
 			this.addChild(this.txt);
@@ -22,6 +22,9 @@ package artur.display {
 			this.addFrameScript(3, onFrame);
 			this.addFrameScript(4, onFrame);
 			this.addFrameScript(5, onFrame);
+			this.addFrameScript(6, onFrame);
+			this.addFrameScript(7, onFrame);
+			this.addFrameScript(8, onFrame);
 		}
 		
 		private function onFrame():void 
