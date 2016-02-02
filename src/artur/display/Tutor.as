@@ -12,7 +12,7 @@ package artur.display {
 		
 		public function Tutor() {
 			this.addChild(this.txt);
-			this.txt.borderColor = 0x008040;
+			this.txt.borderColor = 0xFFFFFF;
 			this.txt.border = true;
 			this.txt.height = 20;
 			this.txt.wordWrap = true;
