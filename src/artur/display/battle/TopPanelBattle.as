@@ -12,6 +12,7 @@ package artur.display.battle {
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
+	import Server.Lang;
 	import Utils.json.JSON2;
 	
 	public class TopPanelBattle extends Sprite {
@@ -104,13 +105,13 @@ package artur.display.battle {
 			var tetx:String;
 			switch(mc) {
 				case this.mcBtns.btnHold:
-					tetx = "Удерживание";
+					tetx = Lang.getTitle(94);
 					break;
 				case this.mcBtns.btnAuto:
-					tetx = "Автобой";
+					tetx = Lang.getTitle(95);
 					break;
 				case this.mcBtns.btnFree:
-					tetx = "Сдаться";
+					tetx = Lang.getTitle(96);
 					break;
 			
 			}

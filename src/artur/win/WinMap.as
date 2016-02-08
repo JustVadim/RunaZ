@@ -38,6 +38,7 @@ package artur.win
 		]
 		public var townList:TownList 
 		public static var sprSelLevel:SprSelectLevel = new SprSelectLevel();
+		
 		public function WinMap() 
 		{
 			////

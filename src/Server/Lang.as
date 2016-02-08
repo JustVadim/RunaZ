@@ -88,7 +88,7 @@ package Server
 			Lang.lang_table[25] = [" Поражает вражеского юнита молнией при этом наносит ему ", " Lightning strikes an enemy unit at the same time causing him", ""];
 			Lang.lang_table[26] = ["Следующий уровень - ", "Next level - ", ""];
 			Lang.lang_table[27] = [" единиц", " points", ""];
-			Lang.lang_table[28] = ["Стоимость заклинания ", "Manna cost", ""];
+			Lang.lang_table[28] = ["Стоимость заклинания ", "Manna cost ", ""];
 			Lang.lang_table[29] = [" манны", " mannas", ""];
 			Lang.lang_table[30] = ["Нажмите что бы улучшить!", "Click to improve!", ""];
 			Lang.lang_table[31] = ["Навык", "Skill", ""];
@@ -207,8 +207,16 @@ package Server
 			Lang.lang_table[85] = ["Цена:", "Price:", ""];
 			Lang.lang_table[85] = ["Цена:", "Price:", ""];
 			Lang.lang_table[86] = ["или", "or", ""];
-			Lang.lang_table[87] = ["Нанять юнита","Hire  unit",""];
-			
+			Lang.lang_table[87] = ["Нанять юнита", "Hire  unit", ""];
+			Lang.lang_table[88] = ["Выключить музыку", "Turn off music", ""];
+			Lang.lang_table[89] = ["Включить музыку", "Turn on music", ""];
+			Lang.lang_table[90] = ["Выключить звук", "Turn off sound", ""];
+			Lang.lang_table[91] = ["Включить звук", "Turn on sound", ""];
+			Lang.lang_table[92] = ["Полный екран", "Fullscreen", ""];
+			Lang.lang_table[93] = ["Оконный режим", "Window mode", ""];
+			Lang.lang_table[94] = ["Удерживание", "Hold", ""];
+			Lang.lang_table[95] = ["Автобой", "Autobattle", ""];
+			Lang.lang_table[96] = ["Сдаться", "Surrender", ""];
 			
 		}
 		

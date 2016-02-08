@@ -3,9 +3,11 @@ package artur.display
 	import artur.App;
 	import flash.display.MovieClip;
 	import flash.display.StageDisplayState;
+	import flash.events.FullScreenEvent;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	import report.Report;
+	import Server.Lang;
 	import Utils.Functions;
 	public class PropExtended extends mcProperties {
 		
@@ -14,6 +16,14 @@ package artur.display
 			this.setBtn(this.full);
 			this.setBtn(this.muz);
 			this.setBtn(this.sound);
+			Main.THIS.stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFull);
+		}
+		
+		private function onFull(e:FullScreenEvent):void 
+		{
+			if(stage.displayState == StageDisplayState.NORMAL && this.full.currentFrame != 1){
+				this.full.gotoAndStop(1);
+			}
 		}
 		
 		private function setBtn(mc:MovieClip):void {
@@ -28,13 +38,13 @@ package artur.display
 		}
 		
 		private function onCick(e:MouseEvent):void {
-			
 			var mc:MovieClip = MovieClip(e.target);
 			if (mc.currentFrame == 1) {
 				mc.gotoAndStop(2);
 			} else {
 				mc.gotoAndStop(1);
 			}
+			App.info.frees();
 			switch(mc) {
 				case this.full:
 					if(mc.currentFrame == 2) {
@@ -79,12 +89,42 @@ package artur.display
 			var mc:MovieClip = MovieClip(e.target);
 			mc.scaleX = mc.scaleY = 0.684;
 			this.onUp(e);
-			
+			App.info.frees();
 		}
 		
 		private function onOver(e:MouseEvent):void {
 			var mc:MovieClip = MovieClip(e.target);
 			mc.scaleX = mc.scaleY = 0.75;
+			App.sound.playSound("over1", App.sound.onVoice, 1);
+			var yy:int
+			if(this.y == 0) {
+				yy = mc.y - mc.height;
+			} else {
+				yy = this.y + mc.y + mc.height + 15;
+			}
+			switch(mc) {
+				case this.muz:
+					if(this.muz.currentFrame == 1) {
+						App.info.init(mc.x - 150, yy, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(88), type:0 } );
+					} else {
+						App.info.init(mc.x - 150, yy, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(89), type:0 } );
+					}
+					break;
+				case this.sound:
+					if(this.muz.currentFrame == 1) {
+						App.info.init(mc.x - 150, yy, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(90), type:0 } );
+					} else {
+						App.info.init(mc.x - 150, yy, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(91), type:0 } );
+					}
+					break;
+				case this.full:
+					if(this.muz.currentFrame == 1) {
+						App.info.init(mc.x - 150, yy, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(92), type:0 } );
+					} else {
+						App.info.init(mc.x - 150, yy, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(93), type:0 } );
+					}
+					break;
+			}
 		}
 	}
 
