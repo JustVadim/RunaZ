@@ -3,6 +3,7 @@ package artur.display {
 	import flash.display.Sprite;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -13,23 +14,22 @@ package artur.display {
 			this.updater();
 		}
 		
-		private function updater():void 
-		{
+		private function updater():void {
 			var timer:Timer = new Timer(65000);
-			timer.addEventListener(TimerEvent.TIMER, this.onUpdate);
+			timer.addEventListener(TimerEvent.TIMER, this.updateEnergy);
 			timer.start();
 		}
 		
-		private function onUpdate(e:TimerEvent):void  {
+		public function updateEnergy(e:TimerEvent = null):void  {
 			if (DataExchange.loged) {
 				var data:DataExchange = new DataExchange();
-				data.addEventListener(DataExchangeEvent, onUpdateRes);
-				new DataExchange().sendData("1500", "", false);
+				data.addEventListener(DataExchangeEvent.ON_RESULT, onUpdateRes);
+				data.sendData(COMMANDS.CHECK_ENERGY, "", true);
 			}
 		}
 		
-		private function onUpdateRes(e:DataExchangeEvent):void 
-		{
+		private function onUpdateRes(e:DataExchangeEvent):void {
+			//Report.addMassage(e.result);
 			//update bar if visible;
 			
 		}
