@@ -50,12 +50,19 @@ package Utils {
 			title.width = ww;
 			title.height = hh;
 			title.text = str;
-			//title.border = true;
+			title.border = true;
 			title.alpha = alpha;
 			if (title.text.length > 1) {
 				title.cacheAsBitmap = true;
 			}
 			return title;
+		}
+		
+		public static function compareAndSet(textf:TextField, text:String):void {
+			if(textf.text != text) {
+				textf.text = text;
+				textf.cacheAsBitmap = true;
+			}
 		}
 
 	

@@ -29,11 +29,8 @@ package artur.win
 		public var bg:Bitmap ;
 		private var btns:Array = [];
 		private var mcText:WinRootMcText = new WinRootMcText();
-		private var mcTextOld:mcTextRootWin = new mcTextRootWin();
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
 		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
-		
-			//[btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
 		
 		public function WinRoot() {
 			this.bg = new MyBitMap(App.prepare.cach[0]);
@@ -113,12 +110,11 @@ package artur.win
 			DataExchange(e.target).removeEventListener(e.type, onRes);
 			App.lock.init(e.result);
 		}
-		public function init():void 
-		{
+		public function init():void {
 			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
-			App.spr.addChild(mcTextOld);
 			App.spr.addChild(mcText);
+			App.topMenu.init(false);
 			this.updateBar();
 			for (var i:int = 0; i < btns.length; i++) {
 				App.spr.addChild(btns[i]);
@@ -137,13 +133,8 @@ package artur.win
 			this.mcText.txtEnergy.text = String(hero.skills.vitality);
 			this.mcText.txtDeff.text =   String(hero.skills.defence);
 		    this.mcText.txtMana.text = String (hero.skills.energy);
-		    this.mcText.txtAvatarLevel.text = String(hero.level);
 			this.mcText.txtGold.text = String(hero.gold);
 			this.mcText.txtSilver.text = String(hero.silver);
-			this.mcText.txtExp.text = String(currExp + '/' + 11);
-			this.mcText.txtVit.text = String(currEn + '/' + maxVit);
-			this.mcTextOld.expBar.gotoAndStop(int(currExp /11* 100) + 1);
-			this.mcTextOld.vitBar.gotoAndStop(int(maxVit / currEn * 100) + 1);
 			if (hero.fs > 0) 
 			{
 				WinRoot.lvlUp.init("Доступно: " + hero.fs) ;
