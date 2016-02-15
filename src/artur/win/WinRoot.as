@@ -114,7 +114,7 @@ package artur.win
 			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
 			App.spr.addChild(mcText);
-			App.topMenu.init(false);
+			App.topMenu.init(true, true);
 			this.updateBar();
 			for (var i:int = 0; i < btns.length; i++) {
 				App.spr.addChild(btns[i]);
@@ -133,8 +133,6 @@ package artur.win
 			this.mcText.txtEnergy.text = String(hero.skills.vitality);
 			this.mcText.txtDeff.text =   String(hero.skills.defence);
 		    this.mcText.txtMana.text = String (hero.skills.energy);
-			this.mcText.txtGold.text = String(hero.gold);
-			this.mcText.txtSilver.text = String(hero.silver);
 			if (hero.fs > 0) 
 			{
 				WinRoot.lvlUp.init("Доступно: " + hero.fs) ;

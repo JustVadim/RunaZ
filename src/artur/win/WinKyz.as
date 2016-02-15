@@ -37,8 +37,8 @@ package artur.win {
 		public var timerStone:mcStones = new mcStones();
 		public var timerText:TextField = Functions.getTitledTextfield(35, 4, 100, 25, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.LEFT, "00:00:00", 1, Kerning.ON, 1, true);
 		private var timer:Timer;
-		public var txtGold:TextField = Functions.getTitledTextfield( 585, 8, 75, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
-		public var txtSilver:TextField = Functions.getTitledTextfield( 713, 8, 75, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
+		//public var txtGold:TextField = Functions.getTitledTextfield( 585, 8, 75, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
+		//public var txtSilver:TextField = Functions.getTitledTextfield( 713, 8, 75, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
 		
 		
 		
@@ -209,10 +209,6 @@ package artur.win {
 		public function init():void {
 			this.bin = true;
 			App.spr.addChild(bg);
-			App.spr.addChild(this.txtGold);
-			App.spr.addChild(this.txtSilver);
-			this.txtGold.text = UserStaticData.hero.gold.toString();
-			this.txtSilver.text = UserStaticData.hero.silver.toString();
 			for (var i:int = 0; i < txt_stones.length; i++) {
 				App.spr.addChild(txt_stones[i]);
 				App.spr.addChild(btns_add[i]);
@@ -228,6 +224,7 @@ package artur.win {
 				this.checkStone();
 			}
 			App.spr.addChild(btnCraft);
+			App.topMenu.init(false, true);
 			this.chest.init();
 			App.topPanel.init(this);
 			
@@ -360,7 +357,7 @@ package artur.win {
 			if (obj.res != null) {
 				App.lock.frees();
 				UserStaticData.hero.gold -= 5;
-				this.txtGold.text = UserStaticData.hero.gold.toString();
+				App.topMenu.updateGold();
 				obj = this.chest.getCraftObj();
 				var item:Object = UserStaticData.hero.chest[obj["in"]];
 				for(var key:Object in obj.gems) {
@@ -396,7 +393,7 @@ package artur.win {
 				this.btnStoneCreat.parent.removeChild(this.btnStoneCreat);
 				UserStaticData.hero.sz = res.res;
 				UserStaticData.hero.gold -= (2 + (int(res.res.t) / 5));
-				this.txtGold.text = UserStaticData.hero.gold.toString();
+				App.topMenu.updateGold();
 				this.addTimer();
 			}else {
 				App.lock.init(res.error);

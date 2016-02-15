@@ -5,7 +5,7 @@ package Server
 	import report.Report;
 	public class Lang 
 	{
-		public static var lang:int = 1;
+		public static var lang:int = 0;
 		private static var lang_table:Array = new Array();
 		
 		public static function init():void

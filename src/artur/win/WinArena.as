@@ -92,6 +92,7 @@ package artur.win {
 			mcFound.rotation = 0;
 			mcFound.rot.visible = false;
 			App.topPanel.init(this);
+			App.topMenu.init(true, true);
 			btn1.addEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
 			btn1.addEventListener(MouseEvent.ROLL_OVER, this.onBattleOver);
