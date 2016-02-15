@@ -28,8 +28,8 @@ package artur.win
 		private var sprsXY:Array = [new mcBuildsCoordinate1()];
 		public var bin:Boolean = false;
 		private var bg:Bitmap;
-		public var txtGold:TextField = Functions.getTitledTextfield( 585, 8, 75, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
-		public var txtSilver:TextField = Functions.getTitledTextfield( 713, 8, 75, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
+		//public var txtGold:TextField = Functions.getTitledTextfield( 585, 8, 75, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
+		//public var txtSilver:TextField = Functions.getTitledTextfield( 713, 8, 75, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
 		
 		
 	    private var names:Array =
@@ -38,10 +38,9 @@ package artur.win
 		]
 		public var townList:TownList 
 		public static var sprSelLevel:SprSelectLevel = new SprSelectLevel();
+		
 		public function WinMap() 
 		{
-			////
-			this.txtGold.filters = this.txtSilver.filters = [new GlowFilter(0, 1, 2, 2, 1, 1)];
 			townList = new TownList();
 			for (var j:int = 0; j < bgs.length; j++) 
 			{
@@ -96,11 +95,8 @@ package artur.win
 			}
 			
 			App.spr.addChild(mcRess);
-			this.mcRess.addChild(txtGold);
-			this.mcRess.addChild(txtSilver);
-			this.txtGold.text = String(UserStaticData.hero.gold);
-			this.txtSilver.text = String(UserStaticData.hero.silver);
 			App.topPanel.init(this);
+			App.topMenu.init(true, true);
 			if(UserStaticData.hero.demo == 2) {
 				App.tutor.init(9);
 			}

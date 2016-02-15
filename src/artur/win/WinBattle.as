@@ -504,6 +504,7 @@ package artur.win
 			App.prop.y = 0;
 			Main.THIS.stage.removeChild(WinBattle.battleChat);
 			Main.THIS.chat.setFocus();
+			App.topMenu.updateEnergy();
 		}
 		
 		private function isAlive(ul:Object, user_pos:int):Boolean 

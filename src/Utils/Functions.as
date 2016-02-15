@@ -57,6 +57,13 @@ package Utils {
 			}
 			return title;
 		}
+		
+		public static function compareAndSet(textf:TextField, text:String):void {
+			if(textf.text != text) {
+				textf.text = text;
+				textf.cacheAsBitmap = true;
+			}
+		}
 
 	
 		

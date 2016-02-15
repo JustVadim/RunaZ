@@ -7,6 +7,7 @@ package artur
 	import artur.display.InfoWin;
 	import artur.display.LockSpr;
 	import artur.display.PropExtended;
+	import artur.display.TopMenu;
 	import artur.display.Tutor;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
@@ -61,6 +62,8 @@ package artur
 		public static var topPanel:TopPanel = new TopPanel();
 		public static var winBank:WinBank = new WinBank();
 		public static var tutor:Tutor = new Tutor();
+		public static var topMenu:TopMenu = new TopMenu();
+		//public static var topMenu:
 
 		public static var currMuzPlay:String = 'BatleSong';
 

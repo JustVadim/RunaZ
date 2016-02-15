@@ -9,8 +9,7 @@ package artur.display
 	import report.Report;
 	import Utils.Functions;
 
-	public class MapTown extends Sprite
-	{
+	public class MapTown extends Sprite {
 		public static var HOLD_TOWN:int = 1;
 		public static var OPEN_TOWN:int = 2;
 		public static var CURR_TOWN:int = 3;
@@ -25,38 +24,32 @@ package artur.display
 		
 		public static var currTownClick:int 
 		
-		public function MapTown(baseBtn:BaseButton, nameTown:String) 
-		{
+		public function MapTown(baseBtn:BaseButton, nameTown:String) {
 			this.title.filters = [new GlowFilter(0, 1, 2, 2, 1)];
 			this.town = baseBtn;
 			this.table.addChild(this.title);
 			this.addChild(town);
 			this.addChild(table);
 			table.y = town.height / 2 + table.height / 2 -0.5;
-			updateTable1();
 			this.title.text = nameTown;
 			table.addEventListener(MouseEvent.MOUSE_DOWN, onKlickTable);
 			table.addEventListener(MouseEvent.MOUSE_OVER, town.over);
 			table.addEventListener(MouseEvent.MOUSE_OUT, town.out);
 		}
 		
-		private function out(e:MouseEvent):void 
-		{
+		private function out(e:MouseEvent):void {
 			town.out();
 		}
 		
-		private function onOver(e:MouseEvent):void 
-		{
+		private function onOver(e:MouseEvent):void {
 			town.over();
 		}
 		
-		private function onKlickTable(e:MouseEvent):void 
-		{
+		private function onKlickTable(e:MouseEvent):void {
 			town.down();
 		}
 		
 		public function updateTable1(frame:int = 1):void {
-			Report.addMassage("tableUpdate" + frame);
 			table.gotoAndStop(frame);
 			this.title.textColor = COLORS_TEXT [frame];
 			town.setActive( frame != 1);

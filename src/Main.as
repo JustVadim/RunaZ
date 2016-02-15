@@ -67,7 +67,6 @@ package  {
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
-			this.updater();
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
@@ -97,16 +96,5 @@ package  {
 			}
 		}
 		
-		private function updater():void {
-			var timer:Timer = new Timer(60000);
-			timer.addEventListener(TimerEvent.TIMER, this.onUpdate);
-			timer.start();
-		}
-		
-		private function onUpdate(e:TimerEvent):void  {
-			if(DataExchange.loged) {
-				new DataExchange().sendData("1500", "", false);
-			}
-		}
 	}
 }
