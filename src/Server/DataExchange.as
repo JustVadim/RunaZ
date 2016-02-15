@@ -182,6 +182,9 @@ package Server
 									WinBattle.battleChat.addMassage(JSON2.decode(temp_obj.m));
 								}
 								break;
+							case int(COMMANDS.UPDATE_TASK):
+								UserStaticData.hero.t = JSON2.decode(temp_obj.m);
+								break;
 							}
 						} else {
 							data_evnt = new DataExchangeEvent(DataExchangeEvent.DATA_RECIEVED);
