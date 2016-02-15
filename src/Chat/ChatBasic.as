@@ -60,8 +60,8 @@ package Chat
 			this.is_private.addEventListener(MouseEvent.CLICK, this.onIsPrivateClick);
 			this.addEventListener(KeyboardEvent.KEY_DOWN, this.onKeyDown);
 			this.addChild(this.send_btn = new BaseButton(6));
-			//this.btnQ = new BaseButton(47); btnQ.x = 14.2; btnQ.y = 424.2;
-			//this.addChild(btnQ);
+			this.btnQ = new BaseButton(47); btnQ.x = 14.2; btnQ.y = 424.2;
+			this.addChild(btnQ);
 			this.send_btn.x = 586.7;
 			this.send_btn.y = 582.4;
 			this.send_btn.addEventListener(MouseEvent.CLICK, onSendBtnClick);
