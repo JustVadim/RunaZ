@@ -69,10 +69,27 @@ package Chat
 			this.users_online_scrollbar.tabEnabled = false;
 			this.massages_scrollbar.tabEnabled = false;
 			this.setFocus();
-			if(UserStaticData.hero.t.tn != 0) {
+			if(UserStaticData.hero.t.tn != 0 && UserStaticData.hero.t.tp < UserStaticData.hero.t.pa) {
 				this.addChild(this.btnQ);
 			}
+			this.btnQ.addEventListener(MouseEvent.CLICK, this.onAddedBtnQCLick);
 		}
+		
+		public function addBtn():void {
+			this.addChild(this.btnQ);
+		}
+		
+		public function removeBtn():void {
+			if(this.btnQ.parent) {
+				this.removeChild(this.btnQ);
+			}
+		}
+		
+		private function onAddedBtnQCLick(e:MouseEvent):void 
+		{
+			App.task.init(true);
+		}
+		
 		
 		private function onSendBtnClick(e:MouseEvent):void {
 			this.sendMassage();

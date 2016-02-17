@@ -2,6 +2,7 @@ package artur.win
 {
 	import artur.App;
 	import artur.display.MyBitMap;
+	import artur.display.Task;
 	import flash.display.Bitmap;
 	import report.Report;
 	import Server.Lang;
@@ -78,11 +79,10 @@ package artur.win
 			if(UserStaticData.hero.t.tn != 0) {
 				if (UserStaticData.hero.t.tp == 0 && !WinManajer.taskWasShown) {
 					WinManajer.taskWasShown = true;
-					App.spr.addChild(new mcGvest());
-					//show new task dialog
+					App.task.init();
+					Main.THIS.chat.addBtn();
 				} else if(UserStaticData.hero.t.tp == UserStaticData.hero.t.pa) {
-					//show done dialog
-					//App.spr.addChild(new mcGvest());
+					App.task.init();
 				}
 			}
 		}
