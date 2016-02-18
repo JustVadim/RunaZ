@@ -27,6 +27,10 @@ package Server
 		static public const CHECK_STONE:String = "24";
 		static public const CRAFT_ITEM:String = "25";
 		static public const CHECK_ENERGY:String = "26";
+		static public const UPDATE_TASK:String = "27";
+		static public const TAKE_TASK_GOLD:String = "28";
+		
+		
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;
 		static public var new_user_comes:int = 101;

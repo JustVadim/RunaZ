@@ -7,6 +7,7 @@ package artur
 	import artur.display.InfoWin;
 	import artur.display.LockSpr;
 	import artur.display.PropExtended;
+	import artur.display.Task;
 	import artur.display.TopMenu;
 	import artur.display.Tutor;
 	import artur.units.U_Warwar;
@@ -63,6 +64,7 @@ package artur
 		public static var winBank:WinBank = new WinBank();
 		public static var tutor:Tutor = new Tutor();
 		public static var topMenu:TopMenu = new TopMenu();
+		public static var task:Task;
 		//public static var topMenu:
 
 		public static var currMuzPlay:String = 'BatleSong';
@@ -130,6 +132,7 @@ package artur
 			cursor.setButtonCursor('arr', 'hand', stg);	
 			this.tabEnabled = false;
 			this.tabChildren = false;
+			App.task = new Task();
 			
 		}
 		public static function swapMuz(str:String):void

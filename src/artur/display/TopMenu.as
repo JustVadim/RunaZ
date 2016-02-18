@@ -20,8 +20,8 @@ package artur.display {
 		private var txtAvatarLevel:TextField = Functions.getTitledTextfield(32.5, 77, 31.75, 19.9, new Art().fontName, 15, 0xFBFBFB, TextFormatAlign.CENTER, "99", 1, Kerning.OFF, -1);
 		public var txtExp:TextField;
 		public var txtVit:TextField;
-		public var txtGold:TextField = Functions.getTitledTextfield(40, 12, 72, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
-		public var txtSilver:TextField = Functions.getTitledTextfield(169, 12, 72, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
+		public var txtGold:TextField = Functions.getTitledTextfield(31, 11, 78, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
+		public var txtSilver:TextField = Functions.getTitledTextfield(160, 11, 78, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
 		
 		private var gold:mcRessBar = new mcRessBar();
 		

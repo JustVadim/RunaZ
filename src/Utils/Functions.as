@@ -12,11 +12,10 @@ package Utils {
 			mc.tabChildren = false;
 			mc.mouseEnabled = mouseUnabled;
 			mc.mouseChildren = mouseChildren;
-			if (xx != 0) {
+			if (xx != 0) {1
 				mc.x = xx;
 			}
-			if (yy != 0)
-			{
+			if (yy != 0) {
 				mc.y = yy;
 			}
 		}

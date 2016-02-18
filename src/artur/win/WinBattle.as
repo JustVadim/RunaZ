@@ -571,7 +571,8 @@ package artur.win
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) {
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
 				if (cur_unit.inv[i] != null) { 
-					mc.gotoAndStop(cur_unit.inv[i].id+1);
+					mc.gotoAndStop(cur_unit.inv[i].id + 1);
+					mc.mcBg.visible = false;
 				} else {
 					mc.gotoAndStop(1);
 				}
@@ -609,12 +610,9 @@ package artur.win
 			}
 		}
 		
-		public function disableBanochki():void
-		{
-			for (var i:int = 0; i < inv_btns.length; i++) 
-			{
+		public function disableBanochki():void {
+			for (var i:int = 0; i < inv_btns.length; i++) {
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
-				//mc.gotoAndStop(1);
 				mc.buttonMode = false;
 				mc.removeEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);
 				mc.removeEventListener(MouseEvent.ROLL_OUT, this.onBankaOut);
@@ -622,21 +620,16 @@ package artur.win
 			}
 		}
 		
-		private function updateBanochka(unit:Object, inv_pace:int):void 
-		{
+		private function updateBanochka(unit:Object, inv_pace:int):void {
 			var mc:Panel_Inv = WinBattle.inv_btns[inv_pace];
-			if (unit.inv[inv_pace] != null)
-			{
+			if (unit.inv[inv_pace] != null) {
 				mc.gotoAndStop(unit.inv[inv_pace].id+1);
 				mc.buttonMode = true;
 				mc.addEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);
 				mc.addEventListener(MouseEvent.ROLL_OUT, this.onBankaOut);
 				mc.addEventListener(MouseEvent.CLICK, this.onBankaClick);
-			}
-			else
-			{
-				if (mc.currentFrame != 1)
-				{
+			} else {
+				if (mc.currentFrame != 1) {
 					mc.gotoAndStop(1);
 					mc.buttonMode = false;
 					mc.removeEventListener(MouseEvent.ROLL_OVER, this.onBankaOver);

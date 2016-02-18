@@ -2,6 +2,8 @@ package Server
 {
 	import artur.App;
 	import artur.win.WinBattle;
+	import artur.win.WinManajer;
+	import com.greensock.TweenLite;
 	import datacalsses.Hero;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -182,6 +184,13 @@ package Server
 									WinBattle.battleChat.addMassage(JSON2.decode(temp_obj.m));
 								}
 								break;
+							case int(COMMANDS.UPDATE_TASK):
+								Report.addMassage(temp_obj.m);
+								UserStaticData.hero.t = JSON2.decode(temp_obj.m);
+								if (App.winManajer.currWin != 3 && UserStaticData.hero.t.tp == 0) {
+									TweenLite.to(Main.THIS, 0, { delay:1, onComplete: DataExchange.onShowTask} );
+								}
+								break;
 							}
 						} else {
 							data_evnt = new DataExchangeEvent(DataExchangeEvent.DATA_RECIEVED);
@@ -225,6 +234,12 @@ package Server
 			} catch (err:Error) {
 				Report.addMassage("Error in event-function onSocketDataHandler in class DataExchange: " + err);
 			}
+		}
+		
+		private static function onShowTask():void 
+		{
+			App.task.init();
+			Main.THIS.chat.addBtn();
 		}
 		
 		public function sendData(command:String, command_data:String = "", answer:Boolean = false , is_recconected:Boolean = false):void {

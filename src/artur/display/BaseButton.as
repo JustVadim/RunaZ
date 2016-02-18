@@ -69,7 +69,6 @@ package artur.display
 		private function up(e:MouseEvent):void {
 			if (this.active) {
 				this.cont.scaleX = this.cont.scaleY = 1;
-				
 			}
 			
 		}

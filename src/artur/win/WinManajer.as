@@ -2,6 +2,7 @@ package artur.win
 {
 	import artur.App;
 	import artur.display.MyBitMap;
+	import artur.display.Task;
 	import flash.display.Bitmap;
 	import report.Report;
 	import Server.Lang;
@@ -15,17 +16,18 @@ package artur.win
 	{
 		public var windows:Array = 
 		[
-		new WinRoot(),//0 
-		new WinCastle(), //1
-		new WinMap(), //2
-		new WinBattle(),//3
-		new WinKyz(),//4
-		new WinArena//5
+			new WinRoot(),//0 
+			new WinCastle(), //1
+			new WinMap(), //2
+			new WinBattle(),//3
+			new WinKyz(),//4
+			new WinArena//5
 		];
 		public var currWin:int=0;
 		public var neadWin:int=0;
 		private var brama:mcAnimBrama = new mcAnimBrama();
 		private var swapMode:Boolean = false;
+		public static var taskWasShown:Boolean = false;
 		
 		public function WinManajer() {
 			if (UserStaticData.hero.bat == -1) {
@@ -51,38 +53,45 @@ package artur.win
 			windows[currWin].update();
 			if (swapMode) 
 			{
-				if (brama.currentFrame == 2 || brama.currentFrame == 25)
-				   App.sound.playSound('move', App.sound.onVoice,1);
-				
-				if (brama.currentFrame==20) 
-				{
-					 App.clear();
-				     App.topPanel.frees();
-				 	 windows[currWin].frees();
-					 currWin = neadWin;
-					 windows[currWin].init();
-				     App.spr.addChild(brama);
+				if (brama.currentFrame == 2 || brama.currentFrame == 25) {
+					App.sound.playSound('move', App.sound.onVoice,1);
 				}
-				else if (brama.currentFrame == brama.totalFrames)
-				{
+				if (brama.currentFrame == 20) {
+					App.clear();
+					App.topPanel.frees();
+					windows[currWin].frees();
+					currWin = neadWin;
+					windows[currWin].init();
+					App.spr.addChild(brama);
+				} else if (brama.currentFrame == brama.totalFrames) {
 					App.spr.removeChild(brama);
 					brama.stop();
 					swapMode = false;
-					if (this.currWin < 3)
-					{
+					if (this.currWin != 3) {
 						this.isLevelUp();
+						WinManajer.checkTask();
 					}
+				}
+			}
+		}
+		
+		public static function checkTask():void {
+			if(UserStaticData.hero.t.tn != 0) {
+				if (UserStaticData.hero.t.tp == 0 && !WinManajer.taskWasShown) {
+					WinManajer.taskWasShown = true;
+					App.task.init();
+					Main.THIS.chat.addBtn();
+				} else if(UserStaticData.hero.t.tp == UserStaticData.hero.t.pa) {
+					App.task.init();
 				}
 			}
 		}
 		
 		private function isLevelUp():void 
 		{
-			for (var key:Object in UserStaticData.hero.units)
-			{
+			for (var key:Object in UserStaticData.hero.units) {
 				var unit:Object = UserStaticData.hero.units[key];
-				if (unit.exp >= unit.nle)
-				{
+				if (unit.exp >= unit.nle) {
 					var data:DataExchange = new DataExchange();
 					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onLevelUpRes);
 					data.sendData(COMMANDS.UNIT_LEVEL_UP, key.toString(), true);
