@@ -15,7 +15,7 @@ package artur.display {
 		private var close:BaseButton = new BaseButton(15);
 		private var take:BaseButton = new BaseButton(33);
 		private var progressText:TextField;
-		private var titleText:TextField = Functions.getTitledTextfield(302, 69, 200, 20, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9);
+		private var titleText:TextField = Functions.getTitledTextfield(302, 69, 200, 20, new Art().fontName, 16,0xEFE076, TextFormatAlign.CENTER, "", 0.9);
 		private var textText:TextField = Functions.getTitledTextfield(302, 100, 200, 214, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 0.9);
 		public function Task() {
 			Functions.SetPriteAtributs(this, true, true);
