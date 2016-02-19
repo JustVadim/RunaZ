@@ -2,6 +2,7 @@ package artur.display {
 	import artur.App;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
+	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
 	import report.Report;
@@ -15,20 +16,34 @@ package artur.display {
 		private var close:BaseButton = new BaseButton(15);
 		private var take:BaseButton = new BaseButton(33);
 		private var progressText:TextField;
+<<<<<<< HEAD
 		private var titleText:TextField = Functions.getTitledTextfield(302, 69, 200, 20, new Art().fontName, 16,0xEFE076, TextFormatAlign.CENTER, "", 0.9);
 		private var textText:TextField = Functions.getTitledTextfield(302, 100, 200, 214, new Art().fontName, 12, 0xC2FD97, TextFormatAlign.LEFT, "", 0.9);
+=======
+		private var titleText:TextField = Functions.getTitledTextfield(302, 67, 200, 20, new Art().fontName, 17, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9);
+		private var textText:TextField = Functions.getTitledTextfield(302, 160, 200, 152, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 0.9);
+		private var priceTitle:TextField = Functions.getTitledTextfield(302, 313, 100, 20, new Art().fontName, 14, 0xFFFFFF, TextFormatAlign.LEFT, "", 0.9);
+		private var txtGold:TextField = Functions.getTitledTextfield(420, 314, 50, 20, new Art().fontName, 13, 0xFFF642, TextFormatAlign.RIGHT, "", 1, Kerning.OFF, -1);
+		private var preText:TextField = Functions.getTitledTextfield(302, 95, 200, 60, new Art().fontName, 13, 0x00D900, TextFormatAlign.CENTER, "", 0.9);
+>>>>>>> ec91c397de02e39c0d3a5ec390bf44e89253de59
 		public function Task() {
 			Functions.SetPriteAtributs(this, true, true);
 			this.close.x = this.take.x = 403;
 			this.close.y = this.take.y = 376;
 			
 			this.addChild(this.progressText = Functions.getTitledTextfield(this.progress.x, this.progress.y - 4, 193, 18, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "00000000", 0.9));
-			this.progressText.filters = this.titleText.filters = this.textText.filters = [new GlowFilter(0x0, 1, 2, 2)];
+			this.progressText.filters = this.titleText.filters = this.textText.filters = this.priceTitle.filters = this.txtGold.filters = this.preText.filters = [new GlowFilter(0x0, 1, 2, 2)];
 			Functions.compareAndSet(this.titleText, "Задание");
+			Functions.compareAndSet(this.priceTitle, Lang.getTitle(153));
 			this.textText.wordWrap = true;
 			this.textText.multiline = true;
+			this.preText.wordWrap = true;
+			this.preText.multiline = true;
 			this.addChild(this.titleText);
 			this.addChild(this.textText);
+			this.addChild(this.priceTitle);
+			this.addChild(this.txtGold);
+			this.addChild(this.preText);
 		}
 		
 		public function init(isChat:Boolean = false):void {
@@ -48,15 +63,18 @@ package artur.display {
 				if(UserStaticData.hero.t.tp != UserStaticData.hero.t.pa) {
 					this.addChild(this.close);
 					this.close.addEventListener(MouseEvent.CLICK, this.onClose);
-					Functions.compareAndSet(this.textText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96));
+					Functions.compareAndSet(this.preText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 0));
+					Functions.compareAndSet(this.textText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 1));
 				} else {
 					this.addChild(this.take);
 					this.take.addEventListener(MouseEvent.CLICK, this.onTake);
-					Functions.compareAndSet(this.textText, Lang.getTitle(152));
+					Functions.compareAndSet(this.preText, Lang.getTitle(152));
+					this.textText.text = "";
 					
 				}
-				this.progress.gotoAndStop(1 + (100 * UserStaticData.hero.t.tp) / UserStaticData.hero.t.pa);
+				this.progress.gotoAndStop(1 + int((100 * UserStaticData.hero.t.tp) / UserStaticData.hero.t.pa));
 				Functions.compareAndSet(this.progressText, UserStaticData.hero.t.tp + "/" + UserStaticData.hero.t.pa);
+				Functions.compareAndSet(this.txtGold, UserStaticData.hero.t.pr);
 			} else {
 				this.frees();
 			}
@@ -94,6 +112,10 @@ package artur.display {
 			if(this.close.parent) {
 				this.removeChild(this.close);
 				this.close.removeEventListener(MouseEvent.CLICK, this.onClose);
+			}
+			if(this.take.parent) {
+				this.removeChild(this.take);
+				this.take.removeEventListener(MouseEvent.CLICK, this.onTake);
 			}
 		}
 		
