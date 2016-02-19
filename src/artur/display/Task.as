@@ -16,22 +16,19 @@ package artur.display {
 		private var close:BaseButton = new BaseButton(15);
 		private var take:BaseButton = new BaseButton(33);
 		private var progressText:TextField;
-<<<<<<< HEAD
-		private var titleText:TextField = Functions.getTitledTextfield(302, 69, 200, 20, new Art().fontName, 16,0xEFE076, TextFormatAlign.CENTER, "", 0.9);
-		private var textText:TextField = Functions.getTitledTextfield(302, 100, 200, 214, new Art().fontName, 12, 0xC2FD97, TextFormatAlign.LEFT, "", 0.9);
-=======
-		private var titleText:TextField = Functions.getTitledTextfield(302, 67, 200, 20, new Art().fontName, 17, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9);
+
+		private var titleText:TextField = Functions.getTitledTextfield(302, 67, 200, 20, new Art().fontName, 17, 0xFBF199, TextFormatAlign.CENTER, "", 0.9);
 		private var textText:TextField = Functions.getTitledTextfield(302, 160, 200, 152, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 0.9);
-		private var priceTitle:TextField = Functions.getTitledTextfield(302, 313, 100, 20, new Art().fontName, 14, 0xFFFFFF, TextFormatAlign.LEFT, "", 0.9);
-		private var txtGold:TextField = Functions.getTitledTextfield(420, 314, 50, 20, new Art().fontName, 13, 0xFFF642, TextFormatAlign.RIGHT, "", 1, Kerning.OFF, -1);
-		private var preText:TextField = Functions.getTitledTextfield(302, 95, 200, 60, new Art().fontName, 13, 0x00D900, TextFormatAlign.CENTER, "", 0.9);
->>>>>>> ec91c397de02e39c0d3a5ec390bf44e89253de59
+		private var priceTitle:TextField = Functions.getTitledTextfield(302, 313, 100, 20, new Art().fontName, 14,0xFBF199, TextFormatAlign.LEFT, "", 0.9);
+		private var txtGold:TextField = Functions.getTitledTextfield(420, 314, 50, 20, new Art().fontName, 13, 0xFBF199, TextFormatAlign.RIGHT, "", 1, Kerning.OFF, -1);
+		private var preText:TextField = Functions.getTitledTextfield(302, 95, 200, 60, new Art().fontName, 13, 0x4AFF4A, TextFormatAlign.CENTER, "", 0.9);
+
 		public function Task() {
 			Functions.SetPriteAtributs(this, true, true);
 			this.close.x = this.take.x = 403;
 			this.close.y = this.take.y = 376;
 			
-			this.addChild(this.progressText = Functions.getTitledTextfield(this.progress.x, this.progress.y - 4, 193, 18, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "00000000", 0.9));
+			this.addChild(this.progressText = Functions.getTitledTextfield(this.progress.x, this.progress.y - 4, 193, 18, new Art().fontName, 15, 0x77C1F9, TextFormatAlign.CENTER, "00000000", 0.9));
 			this.progressText.filters = this.titleText.filters = this.textText.filters = this.priceTitle.filters = this.txtGold.filters = this.preText.filters = [new GlowFilter(0x0, 1, 2, 2)];
 			Functions.compareAndSet(this.titleText, "Задание");
 			Functions.compareAndSet(this.priceTitle, Lang.getTitle(153));
