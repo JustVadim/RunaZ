@@ -68,7 +68,7 @@ package artur.display {
 				ava_loader.height = 82;
 				//ava_loader.filters = [new GlowFilter(0x000000, 1, 10, 10, 2, 3, true)]
 				ava_loader.mask = mcAva.avatarMask;
-				mcAva.addChild(ava_loader);
+				addChild(ava_loader);
 			}
 			
 			function onGetAvaError(e:IOErrorEvent):void {
