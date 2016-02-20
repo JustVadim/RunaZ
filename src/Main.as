@@ -48,6 +48,7 @@ package  {
 				this.vkPrepare();
 			}
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
+			Security.allowDomain("*");
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
 		}
@@ -77,7 +78,7 @@ package  {
 			stage.addChild(this.chat);
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
-			stage.addChild(new movieMonitor());
+			///stage.addChild(new movieMonitor());
 			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onPreloader } );
 		}
 		

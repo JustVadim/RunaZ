@@ -11,7 +11,7 @@
 		public static var sig:String = "11111";
 		public static var fname:String = "Laukhin";
 		public static var sname:String = "Vadim";
-		public static var plink:String = "http://" + server_ip +"/graph/ava.gif";
+		public static var plink:String = "http://orig04.deviantart.net/92ae/f/2009/230/4/1/spongebob_9_150x150_png_by_somemilk.png";
 		public static var friend_invited:String = "1";
 		public static var hero:Hero = new Hero();
 		static public var users_info:Object = new Object();
