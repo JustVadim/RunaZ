@@ -3,9 +3,13 @@ package artur.display {
 	import artur.win.WinCastle;
 	import datacalsses.Hero;
 	import flash.display.Bitmap;
+	import flash.display.Loader;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.events.TimerEvent;
 	import flash.filters.GlowFilter;
+	import flash.net.URLRequest;
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
@@ -42,6 +46,36 @@ package artur.display {
 			this.gold.tabChildren = false;
 			this.gold.buttonMode = true;
 			this.updater();
+			this.addAva();
+		}
+		
+		private function addAva():void {
+			var ava_loader:Loader = new Loader();
+			ava_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onGetAva);
+			ava_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
+			ava_loader.load(new URLRequest(UserStaticData.plink));
+			function onGetAva(e:Event):void
+			{
+				ava_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onGetAva);
+				ava_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
+				ava_loader.tabChildren = false;
+				ava_loader.mouseEnabled = false;
+				ava_loader.mouseChildren = false;
+				ava_loader.tabEnabled = false;
+				ava_loader.x = 7;
+				ava_loader.y = 4;
+				ava_loader.width = 85;
+				ava_loader.height = 82;
+				//ava_loader.filters = [new GlowFilter(0x000000, 1, 10, 10, 2, 3, true)]
+				ava_loader.mask = mcAva.avatarMask;
+				mcAva.addChild(ava_loader);
+			}
+			
+			function onGetAvaError(e:IOErrorEvent):void {
+				//ava_loader.load(new URLRequest(UserStaticData.plink));
+				Report.addMassage("]222")
+			}
+
 		}
 		
 		public function init(showAva:Boolean, showGold:Boolean, topPanel:Boolean = false, tpClass:Class = null):void {
