@@ -26,7 +26,7 @@ package artur.display {
 		public var txtVit:TextField;
 		public var txtGold:TextField = Functions.getTitledTextfield(31, 11, 78, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
 		public var txtSilver:TextField = Functions.getTitledTextfield(160, 11, 78, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
-		
+		private var ava_loader:Loader;
 		private var gold:mcRessBar = new mcRessBar();
 		
 		public function TopMenu() {
@@ -50,7 +50,7 @@ package artur.display {
 		}
 		
 		private function addAva():void {
-			var ava_loader:Loader = new Loader();
+			ava_loader = new Loader();
 			ava_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onGetAva);
 			ava_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
 			ava_loader.load(new URLRequest(UserStaticData.plink));
@@ -66,14 +66,11 @@ package artur.display {
 				ava_loader.y = 4;
 				ava_loader.width = 85;
 				ava_loader.height = 82;
-				//ava_loader.filters = [new GlowFilter(0x000000, 1, 10, 10, 2, 3, true)]
 				ava_loader.mask = mcAva.avatarMask;
 				addChild(ava_loader);
 			}
 			
 			function onGetAvaError(e:IOErrorEvent):void {
-				//ava_loader.load(new URLRequest(UserStaticData.plink));
-				Report.addMassage("]222")
 			}
 
 		}
@@ -82,9 +79,11 @@ package artur.display {
 			App.spr.addChild(this);
 			if(showAva) {
 				this.addChild(this.mcAva)
+				this.ava_loader.visible = true;
 			} else {
 				if(this.mcAva.parent) {
 					this.mcAva.parent.removeChild(this.mcAva);
+					this.ava_loader.visible = false;
 				}
 			}
 			if(showGold) {

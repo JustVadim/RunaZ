@@ -1,5 +1,6 @@
 package  {
 	
+	import _SN_vk.APIConnection;
 	import artur.App;
 	
 	import artur.display.McAfterBattleLoseExtend;
@@ -29,6 +30,7 @@ package  {
 		public var app:App;
 		private var mcOff:mcOffSide = new mcOffSide();
 		public var chat:ChatBasic;
+		public static var VK:APIConnection;
 		
 		public function Main():void 
 		{
@@ -54,6 +56,7 @@ package  {
 		}
 		
 		private function vkPrepare():void {
+			Main.VK = new APIConnection(UserStaticData.flash_vars);
 			var api_res:Object = JSON2.decode(UserStaticData.flash_vars.api_result);
 			UserStaticData.from = "v";
 			UserStaticData.fname = api_res.response[0].first_name;

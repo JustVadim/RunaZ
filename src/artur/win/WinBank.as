@@ -5,10 +5,12 @@ package artur.win
 	import artur.PrepareGr;
 	import artur.util.Maker;
 	import flash.display.Bitmap;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
+	import report.Report;
 	
 	public class WinBank
 	{
@@ -36,6 +38,7 @@ package artur.win
 		
 		public function WinBank()
 		{
+			
 		    for (var i:int = 0; i < 4; i++) 
 			{
 				var text1:TextField = Maker.getTextField(190, 60, 0xF7E29B, false, false, true,15,0xF7E29B,0xF7E29B,1);
@@ -50,6 +53,8 @@ package artur.win
 				mcBtns[String('s' + (i + 1))].addChild(text2);
 				mcBtns[String('s' + (i + 1))].buttonMode = true;
 				mcBtns[String('g' + (i + 1))].buttonMode = true;
+				//MovieClip(mcBtns["g" + String(i + 1)]).name = i.toString();
+				//MovieClip(mcBtns["s" + String(i + 1)]).name = (4 + i).toString();
 				
 				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.CLICK, onBtn);
 				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.CLICK, onBtn);
@@ -62,29 +67,32 @@ package artur.win
 			}
 	   }
 	   
-	   private function onOut(e:MouseEvent):void 
-	   {
+	   private function onOut(e:MouseEvent):void {
 		    Sprite(e.currentTarget).filters = [];
 	   }
 	   
-	   private function onOver(e:MouseEvent):void 
-	   {
+	   private function onOver(e:MouseEvent):void {
 		   Sprite(e.currentTarget).filters = [f];
 	   }
 	   
-	   private function onBtn(e:MouseEvent):void 
-	   {
-		   
-	   }
-		private function onClose(e:MouseEvent):void 
-		{
+		private function onBtn(e:MouseEvent):void {
+			var mc:MovieClip = MovieClip(e.target);
+			if(UserStaticData.from == "v") {
+					Report.addMassage(mc.name);
+					var params:Object =	{
+											type: 'item',
+											item: 0
+										};k
+					Main.VK.callMethod('showOrderBox', params);
+			}
+		}
+		
+		private function onClose(e:MouseEvent):void {
 			frees();
 		}
 		
-		public function init():void
-		{
-			if (!close)
-			{
+		public function init():void {
+			if (!close) {
 				close = new BaseButton(15);
 				close.addEventListener(MouseEvent.CLICK, onClose);
 				close.x = 410;
@@ -95,8 +103,7 @@ package artur.win
 			App.spr.addChild(mcBtns);
 		}
 		
-		public function frees():void
-		{
+		public function frees():void {
 		      App.spr.removeChild(bg);
 			  App.spr.removeChild(close);
 			  App.spr.removeChild(mcBtns);
