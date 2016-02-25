@@ -82,7 +82,7 @@ package artur.win
 					var params:Object =	{
 											type: 'item',
 											item: 0
-										};k
+										};
 					Main.VK.callMethod('showOrderBox', params);
 			}
 		}
