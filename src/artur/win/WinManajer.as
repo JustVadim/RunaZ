@@ -62,6 +62,7 @@ package artur.win
 					windows[currWin].frees();
 					currWin = neadWin;
 					windows[currWin].init();
+					
 					App.spr.addChild(brama);
 				} else if (brama.currentFrame == brama.totalFrames) {
 					App.spr.removeChild(brama);

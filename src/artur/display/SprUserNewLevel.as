@@ -3,7 +3,6 @@ package artur.display {
 	import artur.win.WinRoot;
 	import datacalsses.Hero;
 	import flash.events.MouseEvent;
-	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -41,7 +40,6 @@ package artur.display {
 				var hero:Hero = UserStaticData.hero;
 				hero.cur_vitality = res.res;
 				hero.fs -= 1;
-				Report.addMassage(hero.fs);
 				switch(pushedBtn) {
 					case "0":
 						hero.skills.attack++;
@@ -65,7 +63,6 @@ package artur.display {
 		}
 		
 		public function init(text:String):void {
-			//this.txt.text = text;
 			if(!this.parent) {
 				App.spr.addChild(this);
 			}

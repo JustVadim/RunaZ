@@ -93,30 +93,42 @@ package artur.display {
 			}
 		}
 		
-		public function init(missNum:int, misObj:Object):void {			
-			this.missNum = missNum + (MapTown.currTownClick*11);
-			App.spr.addChild(this);
-			this.addChild(this.btn);
-			this.btn.addEventListener(MouseEvent.CLICK, onBtn);
-			for (var i:int = 0; i < 4; i++) {
-				if(misObj.st[i]==1) {
-					this["s" + i].visible = true;
-					this.addChild(this["b" + String(i + 1)]);
-					this["b" + String(i + 1)].addEventListener(MouseEvent.CLICK, onBtn);
-				} else {
-					if(i == 0) {
-						this.addChild(this["b" + String(i + 1)]);
-						this["b" + String(i + 1)].addEventListener(MouseEvent.CLICK, onBtn);
-					} else if (misObj.st[i - 1] == 1) {	
-						this.addChild(this["b" + String(i + 1)]);
-						this["b" + String(i + 1)].addEventListener(MouseEvent.CLICK, onBtn);
-					}
-					
-				}
+		public function init(missNum:int, misObj:Object):void {
+			if(UserStaticData.hero.cur_vitality <10) {
+				App.closedDialog.init(Lang.getTitle(154), false, false, false, false);
+				return;
 			}
-			
-			if(UserStaticData.hero.demo == 2) {
-				App.tutor.init(11);
+			if(misObj == null) {
+				App.closedDialog.init("Данная миссия недоступна для вас еще. Надо пройти предыдущие миссии.", false, false, false, false);
+				return;
+			}
+			if(misObj != null) {
+				this.missNum = missNum + (MapTown.currTownClick*11);
+				App.spr.addChild(this);
+				this.addChild(this.btn);
+				this.btn.addEventListener(MouseEvent.CLICK, onBtn);
+				for (var i:int = 0; i < 4; i++) {
+					if(misObj.st[i]==1) {
+						this["s" + i].visible = true;
+						this.addChild(this["b" + String(i + 1)]);
+						this["b" + String(i + 1)].addEventListener(MouseEvent.CLICK, onBtn);
+					} else {
+						if(i == 0) {
+							this.addChild(this["b" + String(i + 1)]);
+							this["b" + String(i + 1)].addEventListener(MouseEvent.CLICK, onBtn);
+						} else if (misObj.st[i - 1] == 1) {	
+							this.addChild(this["b" + String(i + 1)]);
+							this["b" + String(i + 1)].addEventListener(MouseEvent.CLICK, onBtn);
+						}
+						
+					}
+				}
+				
+				if(UserStaticData.hero.demo == 2) {
+					App.tutor.init(11);
+				}
+			} else {
+				
 			}
 		}
 		

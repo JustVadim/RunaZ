@@ -1,11 +1,15 @@
 package artur.display {
+	import artur.App;
+	import artur.win.WinMap;
 	import com.greensock.TweenLite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import report.Report;
 	import Server.Lang;
 	import Utils.Functions;
 	public class McAfterBattleLoseExtend extends mcAfterBattleLose {
@@ -13,6 +17,9 @@ package artur.display {
 		public var txt1:Array = [];
 		public var txt2:Array = [];
 		public var closeBtn:BaseButton = new BaseButton(15);
+		private var nextMiss:BaseButton;
+		private var thisMiss:BaseButton;
+		
 		
 		public function McAfterBattleLoseExtend() {
 			this.addChild(this.title);
@@ -33,19 +40,88 @@ package artur.display {
 			this.addChild(this.closeBtn);
 			this.closeBtn.x = 419.5;
 			this.closeBtn.y = 408.2;
+			this.nextMiss = new BaseButton(48);
+			this.thisMiss = new BaseButton(49);
+			this.nextMiss.x = 675;
+			this.nextMiss.y = 340;
+			this.thisMiss.x = 600;
+			this.thisMiss.y = 340;
 			
 		}	
 		
 		private function onAddedToStage(e:Event):void {
 			this.title.alpha = 0;
 			TweenLite.to(this.title, 2, { alpha:1 } );	
-			this.closeBtn.scaleX = this.closeBtn.scaleY = 0
-			TweenLite.to(this.title,2, { alpha:1, onComplete:this.addBtn } );
+			this.closeBtn.scaleX = this.closeBtn.scaleY = 0;
+			this.closeBtn.mouseEnabled = false;
+			TweenLite.to(this.title, 2, { alpha:1, onComplete:this.addBtn } );
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
 		}
 		
-		private function addBtn():void 
+		private function addBtn():void {
+			TweenLite.to(this.closeBtn, 0.5, { scaleX:1, scaleY:1, onComplete:endBatton } );
+			if (String(UserStaticData.hero.mbat.ids[1]).substr(0, 3) == "bot") {	
+				this.addChild(this.thisMiss);
+				this.thisMiss.addEventListener(MouseEvent.CLICK, this.onThisMissClick);
+				this.thisMiss.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+				this.thisMiss.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+				
+				this.addChild(this.nextMiss);
+				this.nextMiss.addEventListener(MouseEvent.CLICK, this.onNextClick);
+				this.nextMiss.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+				this.nextMiss.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			}
+		}
+		
+		private function endBatton():void {
+			this.closeBtn.mouseEnabled = true;
+		}
+		
+		private function onRemovedFromStage(e:Event):void {
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
+			if(this.thisMiss.parent) {
+				this.removeChild(this.thisMiss);
+				this.removeChild(this.nextMiss);
+				this.nextMiss.removeEventListener(MouseEvent.CLICK, this.onNextClick);
+				this.nextMiss.removeEventListener(MouseEvent.ROLL_OVER, this.onOver);
+				this.nextMiss.removeEventListener(MouseEvent.ROLL_OUT, this.onOut);
+				this.thisMiss.removeEventListener(MouseEvent.CLICK, this.onThisMissClick);
+				this.thisMiss.removeEventListener(MouseEvent.ROLL_OVER, this.onOver);
+				this.thisMiss.removeEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			}
+			
+		}
+		
+		private function onOut(e:MouseEvent):void 
 		{
-			TweenLite.to(this.closeBtn, 0.5, { scaleX:1, scaleY:1} );
+			App.info.frees();
+		}
+		
+		private function onOver(e:MouseEvent):void {
+			var btn:BaseButton = BaseButton(e.target);
+			if(btn == this.thisMiss) {
+				App.info.init( e.currentTarget.x - 90, e.currentTarget.y - 50, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:"Повторить миссию", type:0 } );
+			} else {
+				App.info.init( e.currentTarget.x - 90, e.currentTarget.y - 50, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:"Следующая миссия", type:0 } );
+			}
+		}
+		
+		private function onThisMissClick(e:MouseEvent):void {
+			McWinAfterBattleExtend.rebattleUse = true;
+			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substr(3)) % 11;
+			WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
+		}
+		
+		private function onNextClick(e:MouseEvent):void {
+			McWinAfterBattleExtend.rebattleUse = true;
+			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substr(3)) % 11;
+			if (missNum != 0 && (missNum + 1) % 11 == 0) {
+				MapTown.currTownClick++;
+				WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[0]);
+			} else {
+				WinMap.sprSelLevel.init(missNum + 1, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum + 1]);
+			}
+			
 		}
 	}
 

@@ -38,6 +38,7 @@ package artur.win
 	import flash.events.TimerEvent;
 	import flash.text.TextField;
 	import flash.utils.Timer;
+	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -149,6 +150,7 @@ package artur.win
 		
 		public function init():void
 		{
+			Report.addMassage("battle inited");
 			App.swapMuz('BatleSong');
 			this.gift_id = 0;
 			this.unitsInWin = [];
@@ -415,6 +417,7 @@ package artur.win
 		private function endBattle(obj:Object):void {
 			WinBattle.bat.is_end = true;
 			App.info.frees();
+			UserStaticData.hero.cur_vitality -= 10;
 			this.grid.clearNodesControl();
 			var mc:MovieClip;
 			if (obj.is_w) {
@@ -463,6 +466,7 @@ package artur.win
 			} else {
 				mc = WinBattle.looseAfterBattle;
 			}
+			
 			mc.gotoAndPlay(1);
 			App.spr.addChild(mc);
 			var all_units:Object = bat.u[WinBattle.myTeam];
@@ -504,7 +508,6 @@ package artur.win
 			App.prop.y = 0;
 			Main.THIS.stage.removeChild(WinBattle.battleChat);
 			Main.THIS.chat.setFocus();
-			App.topMenu.updateEnergy();
 		}
 		
 		private function isAlive(ul:Object, user_pos:int):Boolean 
@@ -722,6 +725,7 @@ package artur.win
 		}
 		
 		public function frees():void {
+			Report.addMassage("battle freeeesss");
 			DataExchange.socket.removeEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
 			this.freeUnits(units[0]);
 			this.freeUnits(units[1]);
@@ -733,8 +737,11 @@ package artur.win
 			this.mover.unit = null;
 			this.mover.cur_obj = null;
 			WinBattle.currUnit = null;
-			UserStaticData.hero.bat = -1;
-			UserStaticData.hero.mbat = null;
+			if(McWinAfterBattleExtend.rebattleUse == false) {
+				UserStaticData.hero.mbat = null;
+				UserStaticData.hero.bat = -1;
+			}
+			McWinAfterBattleExtend.rebattleUse = false;
 			effManajer.frees();
 			for (var i:int = 0; i < unitsInWin.length; i++) {
 				unitsInWin[i].frees();
