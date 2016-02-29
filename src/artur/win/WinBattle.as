@@ -111,8 +111,7 @@ package artur.win
 			BaseEff(EffManajer.getEff("base"));
 		}
 		
-		private function onCloseWin(e:MouseEvent):void 
-		{
+		private function onCloseWin(e:MouseEvent):void {
 			if (this.gift_id == 0) {
 				App.winManajer.swapWin(2);
 			} else {
@@ -122,35 +121,31 @@ package artur.win
 			}
 		}
 		
-		private function checkCLick(e:MouseEvent):void 
-		{
-			if (MovieClip(e.currentTarget).currentFrame == 1)
-			{
+		private function checkCLick(e:MouseEvent):void {
+			if (MovieClip(e.currentTarget).currentFrame == 1) {
 				e.currentTarget.gotoAndStop(2);
-				if (e.currentTarget is CheckLife) {this.lifeManajer.showLB(true);}
-				else if(bat['set'][bat.cus].t == myTeam) {Node(this.grid.nodes[0][0]).sendStep();}
-				
-			}
-			else
-			{
+				if (e.currentTarget is CheckLife) {
+					this.lifeManajer.showLB(true);
+				} else if (bat['set'][bat.cus].t == myTeam) {
+					Node(this.grid.nodes[0][0]).sendStep();
+				}
+			} else {
 				e.currentTarget.gotoAndStop(1);
-				if (e.currentTarget is CheckLife) {this.lifeManajer.hideLb();}
+				if (e.currentTarget is CheckLife) {
+					this.lifeManajer.hideLb();
+				}
 			}
 		}
 		
-		private function outCheck(e:MouseEvent):void 
-		{
+		private function outCheck(e:MouseEvent):void {
 			e.currentTarget.bg.alpha = 0.0;
 		}
 		
-		private function overCheck(e:MouseEvent):void 
-		{
+		private function overCheck(e:MouseEvent):void {
 			e.currentTarget.bg.alpha = 0.5;
 		}
 		
-		public function init():void
-		{
-			Report.addMassage("battle inited");
+		public function init():void {
 			App.swapMuz('BatleSong');
 			this.gift_id = 0;
 			this.unitsInWin = [];
@@ -172,18 +167,14 @@ package artur.win
 			App.spr.addChild(bigLifeBar);
 		}
 		 
-		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void 
-		 {
-			if (is_add)
-			{
+		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void {
+			if (is_add) {
 				mc.gotoAndStop(frame);
 				mc.addEventListener(MouseEvent.MOUSE_OVER, overCheck);
 				mc.addEventListener(MouseEvent.MOUSE_OUT, outCheck);
 				mc.addEventListener(MouseEvent.CLICK, checkCLick);
 				App.spr.addChild(mc);
-			}
-			else
-			{
+			} else {
 				mc.removeEventListener(MouseEvent.MOUSE_OVER, overCheck);
 				mc.removeEventListener(MouseEvent.MOUSE_OUT, outCheck);
 				mc.removeEventListener(MouseEvent.CLICK, checkCLick);	
@@ -238,7 +229,6 @@ package artur.win
 		private function useBanochka(obj:Object):void {
 			mover.bin = true;
 			mover.otherAnim = true
-			
 			var hps:Object = WinBattle.bat.hps[obj.tu.t];
 			var mps:Object = WinBattle.bat.mps[obj.tu.t];
 			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
@@ -250,7 +240,6 @@ package artur.win
 			var tim:Timer = new Timer(1500, 1);
 			tim.addEventListener(TimerEvent.TIMER_COMPLETE, onBanochkaUseTim);
 			tim.start();
-		
 			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
 			    App.sound.playSound("botl", App.sound.onVoice, 1);
 				if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA) {
@@ -548,19 +537,20 @@ package artur.win
 				var r:int = cur_unit.sp;
 				var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
 				WinBattle.ult_btn.gotoAndStop(cur_unit.t + 2);
-				if(WinBattle.ult_btn.currentFrame!=1){
+				if(WinBattle.ult_btn.currentFrame!=1) {
 					WinBattle.ult_btn.mcBg.visible = false;
 				}
-				if (WinBattle.anim.length == 0) {
+				//if (WinBattle.anim.length == 0) {
 					if (this.topPanel.isAuto() == false) {
 						this.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
 						this.makeUltimate(cur_unit, cus);
 						this.makeBanochki(cur_unit, cus);
 						this.topPanel.setDefence(true);
+						
 					} else {
 						Node(this.grid.nodes[0][0]).sendStep();
 					}
-				}
+				//}
 			} else {
 				WinBattle.ult_btn.gotoAndStop(1);
 				WinBattle.ult_btn.mc.visible = false;
@@ -761,17 +751,17 @@ package artur.win
 			}
 		}
 		 
-		private function getMyTeam():void
-		{
+		private function getMyTeam():void {
 			myTeam = - 1;
 			var id:String = UserStaticData.from + UserStaticData.id;
 			if (UserStaticData.hero.bat > -1) {
 				WinBattle.bat= UserStaticData.hero.mbat; 
 			}
-			if (WinBattle.bat.ids[0] == id)
-			{myTeam = 0;}
-			else if (WinBattle.bat.ids[1] == id)
-			{myTeam = 1;}
+			if (WinBattle.bat.ids[0] == id) {
+				myTeam = 0;
+			} else if (WinBattle.bat.ids[1] == id) {
+				myTeam = 1;
+			}
 		}
 		
 		public static function showCurrUnit(team_n:int):void {
