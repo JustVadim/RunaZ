@@ -546,7 +546,9 @@ package artur.win
 						this.makeUltimate(cur_unit, cus);
 						this.makeBanochki(cur_unit, cus);
 						this.topPanel.setDefence(true);
-						
+						if(UserStaticData.hero.demo == 3) {
+							//App.spr.addChild(new mcba
+						}
 					} else {
 						Node(this.grid.nodes[0][0]).sendStep();
 					}
