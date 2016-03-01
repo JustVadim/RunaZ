@@ -100,9 +100,9 @@ package artur.display {
 		private function onOver(e:MouseEvent):void {
 			var btn:BaseButton = BaseButton(e.target);
 			if(btn == this.thisMiss) {
-				App.info.init( e.currentTarget.x - 90, e.currentTarget.y - 50, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:"Повторить миссию", type:0 } );
+				App.info.init( e.currentTarget.x - 90, e.currentTarget.y - 50, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:Lang.getTitle(155), type:0 } );
 			} else {
-				App.info.init( e.currentTarget.x - 90, e.currentTarget.y - 50, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:"Следующая миссия", type:0 } );
+				App.info.init( e.currentTarget.x - 90, e.currentTarget.y - 50, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:Lang.getTitle(156), type:0 } );
 			}
 		}
 		

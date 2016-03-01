@@ -155,6 +155,7 @@ package artur.display.battle
 				for (var j:int = 0; j < hg; j++) 
 					Node(nodes[i][j]).clearControl()
 		}
+		
 		public static function getDistance(x1:int, y1:int, x2:int, y2:int):int
 		{
 			var dx:int = x2 - x1 - Math.floor(y2 / 2) + Math.floor(y1 / 2);

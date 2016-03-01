@@ -181,10 +181,16 @@ package artur.display.battle
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);
 			var str:String;
-			if (obj != null) str = JSON2.encode(obj);
-			else str = "";
+			if (obj != null) {
+				str = JSON2.encode(obj);
+			} else {
+				str = "";
+			}
 			if (UserStaticData.hero.bat > -1) {
 				data.sendData(COMMANDS.BATTLE_STEP, str, true);
+			}
+			if(WinBattle.tutor!=null) {
+				WinBattle.tutor.frees();
 			}
 		}
 		

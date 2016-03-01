@@ -14,6 +14,7 @@ package artur.win
 	import artur.display.battle.MoveUnit;
 	import artur.display.battle.Node;
 	import artur.display.battle.TopPanelBattle;
+	import artur.display.BattleTotorExtended;
 	import artur.display.GiftDialog;
 	import artur.display.HeroInventar;
 	import artur.display.McAfterBattleLoseExtend;
@@ -77,6 +78,7 @@ package artur.win
 		private var gift_id:int = 0;
 		public var topPanel:TopPanelBattle;
 		public var bigLifeBar:mcBigLifeBarExtend = new mcBigLifeBarExtend();
+		public static var tutor:BattleTotorExtended;
 		
 		
 		public function WinBattle() 
@@ -540,19 +542,26 @@ package artur.win
 				if(WinBattle.ult_btn.currentFrame!=1) {
 					WinBattle.ult_btn.mcBg.visible = false;
 				}
-				//if (WinBattle.anim.length == 0) {
-					if (this.topPanel.isAuto() == false) {
-						this.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
-						this.makeUltimate(cur_unit, cus);
-						this.makeBanochki(cur_unit, cus);
-						this.topPanel.setDefence(true);
-						if(UserStaticData.hero.demo == 3) {
-							//App.spr.addChild(new mcba
+				if (this.topPanel.isAuto() == false) {
+					this.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+					this.makeUltimate(cur_unit, cus);
+					this.makeBanochki(cur_unit, cus);
+					this.topPanel.setDefence(true);
+					if (UserStaticData.hero.demo == 3 || UserStaticData.hero.demo == 4 || UserStaticData.hero.demo == 5) {
+						if(WinBattle.tutor == null) {
+							WinBattle.tutor = new BattleTotorExtended();	
 						}
-					} else {
-						Node(this.grid.nodes[0][0]).sendStep();
-					}
-				//}
+						if (UserStaticData.hero.demo == 3) {
+							WinBattle.tutor.init(currUnit.x + 15, currUnit.y -40, 0);
+							UserStaticData.hero.demo++;
+						} else if (UserStaticData.hero.demo == 4 && this.isHeroRange(loc, (r+1))) {
+							WinBattle.tutor.init(currUnit.x + 15, currUnit.y -40, 1);
+							UserStaticData.hero.demo++;
+						}
+					} 
+				} else {
+					Node(this.grid.nodes[0][0]).sendStep();
+				}
 			} else {
 				WinBattle.ult_btn.gotoAndStop(1);
 				WinBattle.ult_btn.mc.visible = false;
@@ -560,6 +569,17 @@ package artur.win
 				this.removeUltEvents();
 			}
 			
+		}
+		
+		private function isHeroRange(loc:Object, r:int):Boolean {
+			for(var key:Object in WinBattle.bat.locs[1]) {
+				var loc1:Object = WinBattle.bat.locs[1][key];
+				Report.addMassage(BattleGrid.getDistance(loc.x, loc.y, loc1.x, loc1.y) + "   " + r + " diff");
+				if(BattleGrid.getDistance(loc.x, loc.y, loc1.x, loc1.y)<=r) {
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		private function showBanochki(cur_unit:Object, cus:Object):void {
