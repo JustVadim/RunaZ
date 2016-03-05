@@ -1,8 +1,6 @@
 package  {
-	
 	import _SN_vk.APIConnection;
 	import artur.App;
-	
 	import artur.display.McAfterBattleLoseExtend;
 	import artur.display.McWinAfterBattleExtend;
 	import artur.display.WinRootMcText;
