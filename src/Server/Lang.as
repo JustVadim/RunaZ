@@ -245,6 +245,9 @@ package Server
 			Lang.lang_table[156] = ["Следующая миссия", "", ""];
 			Lang.lang_table[157] = ["Вы можете походить в любую выделенную ячейку. Вам необходимо дойти к монстру и ударить его.", "", ""];
 			Lang.lang_table[158] = ["Наведя курсор на монстра, правым кликом вы можете ударить его. Что бы выиграть надо его убить.", "", ""];
+			Lang.lang_table[159] = ["На Ваш счет было зачислено ", "", ""];
+			Lang.lang_table[160] = [" серебренных монет", "", ""];
+			Lang.lang_table[161] = [" золотых монет", "", ""];
 			
 			
 			
@@ -278,6 +281,17 @@ package Server
 				else
 					return "";
 			}
+		}
+		
+		static public function getPaymentText(res:*):String {
+			if(Lang.lang == 0) {
+				return Lang.getTitle(159) + String(res.q) + Lang.getTitle(160 + int(res.v));
+			} else if(Lang.lang == 1) {
+				return "";
+			} else if(Lang.lang == 2) {
+				return "";
+			}
+			return "";
 		}
 	}
 }

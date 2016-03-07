@@ -29,12 +29,14 @@ package Server
 		static public const CHECK_ENERGY:String = "26";
 		static public const UPDATE_TASK:String = "27";
 		static public const TAKE_TASK_GOLD:String = "28";
-		
+		static public const BYE_COINS:String = "29";
+		static public const BUY_ENERGY:String = "30";
 		
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;
 		static public var new_user_comes:int = 101;
 		static public var user_gone:int = 102;
+		
 		
 	}
 }

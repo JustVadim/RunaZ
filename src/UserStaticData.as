@@ -3,15 +3,11 @@
 	import datacalsses.Hero;
 	
 	public class UserStaticData {
-		//public static const server_ip:String = "192.168.1.198";
-		public static const server_ip:String = "151.80.10.33";
+		public static const server_ip:String = "192.168.1.198";
+		//public static const server_ip:String = "151.80.10.33";
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
-<<<<<<< HEAD
-		public static var id:String = "1";
-=======
-		public static var id:String = "29x6";
->>>>>>> 19435705909c3252da7170647db21399d7077b59
+		public static var id:String = "5656";
 		public static var sig:String = "11111";
 		public static var fname:String = "Laukhin";
 		public static var sname:String = "Vadim";

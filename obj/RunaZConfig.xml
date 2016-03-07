@@ -16,11 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-<<<<<<< HEAD
-      <value>'04.03.2016'</value>
-=======
-      <value>'05.03.2016'</value>
->>>>>>> 19435705909c3252da7170647db21399d7077b59
+      <value>'07.03.2016'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -36,20 +32,20 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>D:\RunaZ\src</path-element>
-      <path-element>D:\RunaZ\source</path-element>
+      <path-element>D:\Working\AS3Projects\RunaZ\src</path-element>
+      <path-element>D:\Working\AS3Projects\RunaZ\source</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>D:\RunaZ\lib\dolls.swc</path-element>
-      <path-element>D:\RunaZ\lib\Zadniki.swc</path-element>
-      <path-element>D:\RunaZ\lib\character.swc</path-element>
-      <path-element>D:\RunaZ\lib\loader.swc</path-element>
-      <path-element>D:\RunaZ\lib\tile1.swc</path-element>
+      <path-element>D:\Working\AS3Projects\RunaZ\lib\dolls.swc</path-element>
+      <path-element>D:\Working\AS3Projects\RunaZ\lib\Zadniki.swc</path-element>
+      <path-element>D:\Working\AS3Projects\RunaZ\lib\character.swc</path-element>
+      <path-element>D:\Working\AS3Projects\RunaZ\lib\loader.swc</path-element>
+      <path-element>D:\Working\AS3Projects\RunaZ\lib\tile1.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\RunaZ\src\Main.as</path-element>
+    <path-element>D:\Working\AS3Projects\RunaZ\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#000000</default-background-color>
   <default-frame-rate>30</default-frame-rate>

@@ -14,6 +14,7 @@ package artur.display {
 		private var btnCastl:BaseButton;
 		private var btnMision:BaseButton;
 		private var btnBanK:BaseButton;
+		private var btnEnergy:
 		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 0, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false, 2);
 		private var spr:Sprite = new Sprite();
 		private var btns:Array
