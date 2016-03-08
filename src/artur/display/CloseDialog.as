@@ -14,6 +14,7 @@ package artur.display {
 		private var btnCastl:BaseButton;
 		private var btnMision:BaseButton;
 		private var btnBanK:BaseButton;
+		private var btnEnergy:BaseButton;
 		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 0, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false, 2);
 		private var spr:Sprite = new Sprite();
 		private var btns:Array
@@ -22,13 +23,14 @@ package artur.display {
 			btnCastl = new BaseButton(32);
 			btnBanK = new BaseButton(45);
 			btnMision = new BaseButton(46);
+			btnEnergy = new BaseButton(50);
 			iconGold.visible = false
 			iconSilver.visible = false;
 			this.txt.wordWrap = true;
 			this.addChild(btnEx);
 			this.addChild(this.txt);
 			this.txt.y += 0;
-			this.btns = [btnCastl, btnBanK, btnMision];
+			this.btns = [btnCastl, btnBanK, btnMision,btnEnergy];
 			this.spr.y = 310;
 			this.btnEx.addEventListener(MouseEvent.CLICK, onBtn);
 			this.btnCastl.addEventListener(MouseEvent.CLICK, onBtn);
