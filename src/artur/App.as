@@ -48,7 +48,7 @@ package artur
 		[Embed(source = "../../bin/sounds/BatleSong.mp3")] private var s_BatleSong:Class;
 		[Embed(source = "../../bin/sounds/menuSong.mp3")] private var s_menuSong:Class;
 		[Embed(source = "../../bin/sounds/mapSong.mp3")] private var s_mapSong:Class;
-		
+		[Embed(source = "../../bin/sounds/onLose.mp3")] private var s_onLose:Class;
 		public static var sound:SoundManager = SoundManager.getInstance();
 		public static var winManajer:WinManajer;
 		public static var spr:Sprite;
@@ -74,6 +74,7 @@ package artur
 		
 		public function App(stg:Stage) 
 		{
+			sound.addSound('onLose', new s_onLose());
 			sound.addSound('BatleSong', new s_BatleSong());
 			sound.addSound('MenuSong', new s_menuSong());
 			sound.addSound('MapSong', new s_mapSong());
