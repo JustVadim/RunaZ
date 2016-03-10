@@ -191,6 +191,17 @@ package Server
 									TweenLite.to(Main.THIS, 0, { delay:1, onComplete: DataExchange.onShowTask} );
 								}
 								break;
+							case int(COMMANDS.BYE_COINS):
+								var res:Object = JSON2.decode(temp_obj.m);
+								App.closedDialog.init(Lang.getPaymentText(res), false, false, false, false);
+								App.sound.playSound("gold", App.sound.onVoice, 1);
+								if(res.v == 0) {
+									UserStaticData.hero.silver += res.q;
+								} else {
+									UserStaticData.hero.gold += res.q;
+								}
+								App.topMenu.updateGold();
+								break;
 							}
 						} else {
 							data_evnt = new DataExchangeEvent(DataExchangeEvent.DATA_RECIEVED);

@@ -1,12 +1,15 @@
 package artur.display {	
+	import Server.Lang;
 	import artur.App;
 	import artur.win.WinCastle;
 	import datacalsses.Hero;
 	import flash.display.Bitmap;
 	import flash.display.Loader;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.filters.GlowFilter;
 	import flash.net.URLRequest;
@@ -120,8 +123,32 @@ package artur.display {
 				this.mcAva.expBar.gotoAndStop(int(currExp / 11 * 100) + 1);
 				if(currEn < 10) {
 					this.mcAva.vitBar.buttonMode = true;
+					this.mcAva.vitBar.mouseEnabled = true;
+					this.mcAva.vitBar.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+					this.mcAva.vitBar.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+					this.mcAva.vitBar.addEventListener(MouseEvent.CLICK, this.onClick);
+					
+				} else {
+					this.mcAva.vitBar.buttonMode = false;
+					this.mcAva.vitBar.mouseEnabled = false;
+					this.mcAva.vitBar.removeEventListener(MouseEvent.ROLL_OVER, this.onOver);
+					this.mcAva.vitBar.removeEventListener(MouseEvent.ROLL_OUT, this.onOut);
+					this.mcAva.vitBar.removeEventListener(MouseEvent.CLICK, this.onClick);
 				}
 			}
+		}
+		
+		private function onClick(e:MouseEvent):void {
+			App.byeWin.init("Я хочу пополнить", " энергию", 10, 0, NaN, 6);
+		}
+		
+		private function onOut(e:MouseEvent):void {
+			App.info.frees();	
+		}
+		
+		private function onOver(e:MouseEvent):void {
+			var mc:MovieClip = MovieClip(e.target);
+			App.info.init( mc.x + 100, mc.y + 30, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:Lang.getTitle(155), type:0 });
 		}
 		
 		private function updater():void {
@@ -139,6 +166,28 @@ package artur.display {
 		}
 		public function updateBar():void {
 			
+		}
+		
+		public function buyEnergy():void {
+			App.lock.init();
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onEnergyBuyResult);
+			data.sendData(COMMANDS.BUY_ENERGY, "", true);
+		}
+		
+		private function onEnergyBuyResult(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(e.type, this.onEnergyBuyResult);
+			Report.addMassage(e.result);
+			var obj:Object = JSON2.decode(e.result);
+			if (obj.res != null) {
+				App.sound.playSound('gold', App.sound.onVoice, 1);
+				UserStaticData.hero.cur_vitality = obj.res
+				UserStaticData.hero.gold -= 10;
+				this.updateAva();
+				App.lock.frees();
+			} else {
+				App.lock.init(obj.error);
+			}
 		}
 		
 		private function onUpdateRes(e:DataExchangeEvent):void {

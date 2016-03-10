@@ -1,8 +1,7 @@
 package  {
-	
 	import _SN_vk.APIConnection;
+	import _SN_vk.events.CustomEvent;
 	import artur.App;
-	
 	import artur.display.McAfterBattleLoseExtend;
 	import artur.display.McWinAfterBattleExtend;
 	import artur.display.WinRootMcText;
@@ -64,6 +63,12 @@ package  {
 			UserStaticData.plink = api_res.response[0].photo_100;
 			UserStaticData.id = api_res.response[0].uid;
 			UserStaticData.friend_invited = UserStaticData.flash_vars.user_id;
+			Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);
+			//Main.VK.addEventListener('onSettingsChanged', Main.down_menu.onSettingsChanged);
+		}
+		
+		private static function onVkPayment(e:CustomEvent):void {
+			new DataExchange().sendData(COMMANDS.BYE_COINS, String(e.params[0]), false);
 		}
 		
 		private function onLogin(e:DataExchangeEvent = null):void {

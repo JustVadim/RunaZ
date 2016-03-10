@@ -70,9 +70,6 @@ package _SN_vk {
       sendingLC.send("_in_" + connectionName, "initConnection");
     }
     
-    /*
-     * Public methods
-     */
 	public function callMethod(...params):void {
 	  var paramsArr: Array = params as Array;
 	  paramsArr.unshift("callMethod");

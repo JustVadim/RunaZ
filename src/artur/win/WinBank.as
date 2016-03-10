@@ -1,6 +1,8 @@
-package artur.win
-{
+package artur.win {
+	import Server.COMMANDS;
+	import Server.DataExchange;
 	import artur.App;
+	import artur.McTextCastleWinExtend;
 	import artur.display.BaseButton;
 	import artur.PrepareGr;
 	import artur.util.Maker;
@@ -12,35 +14,31 @@ package artur.win
 	import flash.text.TextField;
 	import report.Report;
 	
-	public class WinBank
-	{
+	public class WinBank {
 		private var bg:Bitmap = PrepareGr.creatBms(new mcBank())[0];
-		private var close:BaseButton 
+		private var close:BaseButton;
 		private var mcBtns:mcBankBtns = new mcBankBtns();
 		private static var f:GlowFilter = new GlowFilter(0xFFFFFF, 1, 3, 3, 2, 1);
 		
 		private var textsGold:Array = 
 		[
-			'Купить 10 золота за 2 голоса',
-			'Купить 20 золота за 4 голоса',
-			'Купить 40 золота за 8 голоса',
-			'Купить 80 золота за 16 голоса'
+			'Купить 25 золота за 2 голоса',
+			'Купить 60 золота за 4 голоса',
+			'Купить 150 золота за 8 голоса',
+			'Купить 400 золота за 16 голоса'
 		];
 		
 		private var textsSilver:Array = 
 		[
-			'Купить 10 золота за 2 голоса',
-			'Купить 20 золота за 4 голоса',
-			'Купить 40 золота за 8 голоса',
-			'Купить 80 золота за 16 голоса'
+			'Купить 500 серебра за 2 голоса',
+			'Купить 1200 золота за 4 голоса',
+			'Купить 3000 золота за 8 голоса',
+			'Купить 8000 золота за 16 голоса'
 		];
 		
 		
-		public function WinBank()
-		{
-			
-		    for (var i:int = 0; i < 4; i++) 
-			{
+		public function WinBank() {
+		    for (var i:int = 0; i < 4; i++) {
 				var text1:TextField = Maker.getTextField(190, 60, 0xF7E29B, false, false, true,15,0xF7E29B,0xF7E29B,1);
 				var text2:TextField = Maker.getTextField(190, 60, 0xFFFFFF, false, false, true);
 				text1.text = textsGold[i];
@@ -53,15 +51,13 @@ package artur.win
 				mcBtns[String('s' + (i + 1))].addChild(text2);
 				mcBtns[String('s' + (i + 1))].buttonMode = true;
 				mcBtns[String('g' + (i + 1))].buttonMode = true;
-				//MovieClip(mcBtns["g" + String(i + 1)]).name = i.toString();
-				//MovieClip(mcBtns["s" + String(i + 1)]).name = (4 + i).toString();
 				
 				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.CLICK, onBtn);
 				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.CLICK, onBtn);
 				
 				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.ROLL_OVER, onOver);
 				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.ROLL_OVER, onOver);
-					
+				
 				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);
 				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);	 
 			}
@@ -76,15 +72,30 @@ package artur.win
 	   }
 	   
 		private function onBtn(e:MouseEvent):void {
+			this.frees();
 			var mc:MovieClip = MovieClip(e.target);
+			var num:int = this.getNum(mc);
 			if(UserStaticData.from == "v") {
-					Report.addMassage(mc.name);
 					var params:Object =	{
 											type: 'item',
-											item: 0
+											item: this.getNum(mc)
 										};
 					Main.VK.callMethod('showOrderBox', params);
+			} else if (UserStaticData.from == "c") {
+				new DataExchange().sendData(COMMANDS.BYE_COINS, String(this.getNum(mc)), false);
 			}
+		}
+		
+		private function getNum(mc:MovieClip):int {
+			var res:int = 0;
+			for (var i:int = 0; i < 4; i++) { 
+				if(mc == mcBtns["s" + String(i + 1)]) {
+					res = 1 + i * 2;
+				} else if(mc == mcBtns["g" + String(i + 1)]) {
+					res = i * 2 + 2;
+				}
+			}
+			return res;
 		}
 		
 		private function onClose(e:MouseEvent):void {

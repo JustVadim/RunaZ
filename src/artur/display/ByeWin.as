@@ -221,6 +221,21 @@ package artur.display
 						break;
 				}
 				break;
+			case 6:
+				switch(mc) {
+					case this.btnEx:
+						this.frees();
+						break;
+					case this.btnGold:
+						if (UserStaticData.hero.gold < 10) {
+							App.closedDialog.init(Lang.getTitle(45), false, false, true);
+						} else {
+							App.topMenu.buyEnergy();
+						}
+						this.frees();
+						break;
+				}
+				break;	
 			}
 			
 		}
