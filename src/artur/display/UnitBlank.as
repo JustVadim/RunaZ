@@ -121,7 +121,7 @@ package artur.display
 			if (WinCastle.isMoney(g,s)) {
 				App.byeWin.init(Lang.getTitle(39), Lang.getTitle(38, index), g, s,index);
 			} else {
-				App.closedDialog.init(Lang.getTitle(4), false, true, true);
+				App.closedDialog.init1(Lang.getTitle(4), false, true, true);
 			}
 		}
 		

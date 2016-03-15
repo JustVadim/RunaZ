@@ -18,7 +18,7 @@ package artur.display {
 		private var progressText:TextField;
 
 		private var titleText:TextField   = Functions.getTitledTextfield(302, 67, 200, 20, new Art().fontName, 17, 0xFBF199, TextFormatAlign.CENTER, "", 0.9);
-		private var textText:TextField   = Functions.getTitledTextfield(302, 160, 200, 152, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 0.9);
+		private var textText:TextField   = Functions.getTitledTextfield(302, 160, 200, 152, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9);
 		private var priceTitle:TextField  = Functions.getTitledTextfield(302, 313, 100, 20, new Art().fontName, 14,0xFBF199, TextFormatAlign.LEFT, "", 0.9);
 		private var txtGold:TextField    = Functions.getTitledTextfield(420, 314, 50, 20, new Art().fontName, 13, 0xFBF199, TextFormatAlign.RIGHT, "", 1, Kerning.OFF, -1);
 		private var preText:TextField    = Functions.getTitledTextfield(302, 95, 200, 60, new Art().fontName, 13, 0x4AFF4A, TextFormatAlign.CENTER, "", 0.9);

@@ -152,7 +152,7 @@ package artur.display {
 		}
 		
 		private function updater():void {
-			var timer:Timer = new Timer(65000);
+			var timer:Timer = new Timer(30000);
 			timer.addEventListener(TimerEvent.TIMER, this.updateEnergy);
 			timer.start();
 		}

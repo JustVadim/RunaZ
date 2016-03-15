@@ -1,6 +1,7 @@
 package artur.display {
 	import artur.App;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
@@ -17,34 +18,25 @@ package artur.display {
 		private var btnEnergy:BaseButton;
 		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 0, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false, 2);
 		private var spr:Sprite = new Sprite();
-		private var btns:Array
+		private var btns:Array;
+		
 		public function CloseDialog() {
-			btnEx = new BaseButton(11); btnEx.x = 507.9; btnEx.y = 258.75 - 100;
-			btnCastl = new BaseButton(32);
-			btnBanK = new BaseButton(45);
-			btnMision = new BaseButton(46);
-			btnEnergy = new BaseButton(50);
-			iconGold.visible = false
-			iconSilver.visible = false;
+			
+			this.btnEx = new BaseButton(11); btnEx.x = 507.9; btnEx.y = 258.75 - 100;
+			this.btnCastl = new BaseButton(32);
+			this.btnBanK = new BaseButton(45);
+			this.btnMision = new BaseButton(46);
+			this.btnEnergy = new BaseButton(50);
+			this.iconGold.visible = false
+			this.iconSilver.visible = false;
 			this.txt.wordWrap = true;
 			this.addChild(btnEx);
 			this.addChild(this.txt);
 			this.txt.y += 0;
-			this.btns = [btnCastl, btnBanK, btnMision,btnEnergy];
+			this.btns = [this.btnCastl, this.btnBanK, this.btnMision, this.btnEnergy];
 			this.spr.y = 310;
-			this.btnEx.addEventListener(MouseEvent.CLICK, onBtn);
-			this.btnCastl.addEventListener(MouseEvent.CLICK, onBtn);
-			this.btnBanK.addEventListener(MouseEvent.CLICK, onBtn);
-			this.btnMision.addEventListener(MouseEvent.CLICK, onBtn);
-			this.btnEx.addEventListener(MouseEvent.ROLL_OVER, onBtnOver);
-			this.btnCastl.addEventListener(MouseEvent.ROLL_OVER, onBtnOver);
-			this.btnBanK.addEventListener(MouseEvent.ROLL_OVER, onBtnOver);
-			this.btnMision.addEventListener(MouseEvent.ROLL_OVER, onBtnOver);
-			this.btnEx.addEventListener(MouseEvent.ROLL_OUT, onOut);
-			this.btnCastl.addEventListener(MouseEvent.ROLL_OUT, onOut);
-			this.btnBanK.addEventListener(MouseEvent.ROLL_OUT, onOut);
-			this.btnMision.addEventListener(MouseEvent.ROLL_OUT, onOut);
-			this.init(Lang.getTitle(46), false, false, false, false);
+			this.addChild(this.spr);
+			this.init1(Lang.getTitle(46), false, false, false, false, false);
 			this.frees();
 			
 		}
@@ -69,6 +61,9 @@ package artur.display {
 				case btnMision:
 					App.info.init(mc.x + mc.width + spr.x, mc.y + mc.height + spr.y, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(3,5), type:0 });
 					break;
+				case btnEnergy:
+					App.info.init(mc.x + mc.width + spr.x, mc.y + mc.height + spr.y, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(162), type:0 });
+					break;
 			}
 		}
 		
@@ -90,24 +85,29 @@ package artur.display {
 					App.winManajer.swapWin(2);
 					this.frees();
 					break;
+				case btnEnergy:
+					App.byeWin.init("Я хочу пополнить", " энергию", 10, 0, NaN, 6);
+					this.frees();
+					break;
 			}
 			
 		}
 		
-		public function init(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false, playSoung:Boolean = true):void {
+		public function init1(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false, showEnergy:Boolean = false, playSoung:Boolean = true):void {
 			if(playSoung) {
 				App.sound.playSound('inventar', App.sound.onVoice, 1);
 			}
-			App.spr.addChild(this);
-			this.txt.text = text;
-			var arr:Array = [showCastle, showBank, showMision];
 			while (spr.numChildren > 0) {
 				spr.removeChildAt(0);
 			}
+			Functions.compareAndSet(this.txt, text);
+			var arr:Array = [showCastle, showBank, showMision, showEnergy];
+			this.addBtnsEvents(this.btnEx);
 			var count:int = 0;
 			for (var i:int = 0; i < arr.length; i++) {
 				if (arr[i] == true) {
 					spr.addChild(btns[i]);
+					this.addBtnsEvents(this.btns[i]);
 					btns[i].x = 57 / 2 + count * 60;
 					count++;
 				}
@@ -115,11 +115,38 @@ package artur.display {
 			this.txt.height = 18 * this.txt.numLines;
 			this.txt.y = 163 + (110 - this.txt.height) / 2;
 			spr.x = 410 - spr.width / 2;
-			this.addChild(spr);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
+			App.spr.addChild(this);
+		}
+		
+		private function addBtnsEvents(mc:BaseButton):void {
+			mc.addEventListener(MouseEvent.CLICK, onBtn);
+			mc.addEventListener(MouseEvent.ROLL_OVER, onBtnOver);
+			mc.addEventListener(MouseEvent.ROLL_OUT, onOut);
+		}
+		
+		private function onRemovedFromStage(e:Event):void {
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
+		}
+		
+		private function removeBtnsEvents(mc:BaseButton):void {
+			Report.addMassage("sdfsdf");
+			mc.removeEventListener(MouseEvent.CLICK, onBtn);
+			mc.removeEventListener(MouseEvent.ROLL_OVER, onBtnOver);
+			mc.removeEventListener(MouseEvent.ROLL_OUT, onOut);
 		}
 		
 		private function frees():void {
-			if (parent) parent.removeChild(this);
+			if (parent) {
+				parent.removeChild(this);
+				this.removeBtnsEvents(this.btnEx);
+				for (var i:int = 0; i < this.btns.length; i++) {
+					if(BaseButton(this.btns[i]).parent !=null) {
+						this.removeBtnsEvents(BaseButton(this.btns[i]));
+					}
+				}
+				App.info.frees();
+			}
         }
 		
 	}

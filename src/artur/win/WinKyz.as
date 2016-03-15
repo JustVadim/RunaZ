@@ -162,11 +162,11 @@ package artur.win {
 				if (UserStaticData.hero.gold > 4) {
 					App.byeWin.init(Lang.getTitle(74), "Вещицу", 5, 0, NaN, 5, 0, NaN);
 				} else {
-					App.closedDialog.init(Lang.getTitle(42),false, true, true);
+					App.closedDialog.init1(Lang.getTitle(42),false, true, true);
 				}
 				
 			} else {
-				App.closedDialog.init(Lang.getTitle(41), true, false, false);
+				App.closedDialog.init1(Lang.getTitle(41), true, false, false);
 			}
 		}
 		

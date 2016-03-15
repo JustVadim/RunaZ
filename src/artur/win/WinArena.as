@@ -65,9 +65,9 @@ package artur.win {
 				
 			} else {
 				if(UserStaticData.hero.level < WinArena.NEEDED_LVL) {
-					App.closedDialog.init(Lang.getTitle(44), false, true, false);
+					App.closedDialog.init1(Lang.getTitle(44), false, true);
 				} else if(!GetServerData.getUserIsReadyToBattle()) {
-					App.closedDialog.init(Lang.getTitle(36), true, false, false);
+					App.closedDialog.init1(Lang.getTitle(36), true);
 				}
 			}
 		}

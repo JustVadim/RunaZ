@@ -135,14 +135,14 @@ package artur.display
 						if(UserStaticData.hero.gold >= this.g) {
 							this.bye(1);
 						} else {
-							App.closedDialog.init(Lang.getTitle(45), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(45), false, false, true);
 						}
 						break;
 					case this.btnSilver:
 						if(UserStaticData.hero.silver >= this.s) {
 							this.bye(0);
 						} else {
-							App.closedDialog.init(Lang.getTitle(46), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(46), false, false, true);
 						}
 						break;
 					case this.btnEx:
@@ -156,14 +156,14 @@ package artur.display
 						if(UserStaticData.hero.gold >= this.g) {
 							this.byeItem(1);
 						} else {
-							App.closedDialog.init(Lang.getTitle(45), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(45), false, false, true);
 						}
 						break;
 					case this.btnSilver:
 						if(UserStaticData.hero.silver >= this.s) {
 							this.byeItem(0);
 						} else {
-							App.closedDialog.init(Lang.getTitle(46), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(46), false, false, true);
 						}
 						break;
 					case this.btnEx:
@@ -205,7 +205,7 @@ package artur.display
 							WinKyz.inst.zakazKamnja(this.itemType);
 							this.frees();
 						} else {
-							App.closedDialog.init(Lang.getTitle(45), false, true, true);
+							App.closedDialog.init1(Lang.getTitle(45), false, true, true);
 						}
 						break;
 				}
@@ -228,7 +228,7 @@ package artur.display
 						break;
 					case this.btnGold:
 						if (UserStaticData.hero.gold < 10) {
-							App.closedDialog.init(Lang.getTitle(45), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(45), false, false, true);
 						} else {
 							App.topMenu.buyEnergy();
 						}
