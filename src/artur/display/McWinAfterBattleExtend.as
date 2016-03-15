@@ -55,6 +55,7 @@ package artur.display {
 		}
 		
 		private function onAddedToStage(e:Event):void {
+			App.sound.stopSound("BatleSong");
 			this.title.alpha = 0;
 			this.closeBtn.scaleX = this.closeBtn.scaleY = 0;
 			this.closeBtn.mouseEnabled = false;

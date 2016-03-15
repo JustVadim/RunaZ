@@ -717,13 +717,15 @@ package artur.win
 			}
 		}
 		 
-		private function onUltOut(e:MouseEvent):void {
+		private function onUltOut(e:MouseEvent):void 
+		{
 			if(WinBattle.ult_btn.currentFrame > 1) {
 				WinBattle.ult_btn.mcBg.visible = false;
 			}
 		}
 		 
-		private function onUltOver(e:MouseEvent):void {
+		private function onUltOver(e:MouseEvent):void 
+		{
 			if(WinBattle.ult_btn.currentFrame > 1) {
 				WinBattle.ult_btn.mcBg.visible = true;
 			}
