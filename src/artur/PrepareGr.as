@@ -71,7 +71,12 @@ package artur
 			new btnQvest(),//47
 		    new btnMapNext(),//48
 		    new btnMapRes(),//49
-			new imgBtnEnergy()//50
+			new imgBtnEnergy(),//50
+		    new btnTop1(),//51
+		    new btnTop2(),//52
+		    new btnTop3(),//53
+		    new btnTop4(),//54
+		    new btnTop5()//55
 		];
 		
 		public static var scaleFactor:Number = 2;

@@ -30,7 +30,7 @@ package  {
 		private var mcOff:mcOffSide = new mcOffSide();
 		public var chat:ChatBasic;
 		public static var VK:APIConnection;
-		
+		public static var spr:Sprite
 		public function Main():void 
 		{
 			if (stage) {
@@ -40,6 +40,7 @@ package  {
 			}
 		}
 		private function init(e:Event = null):void {
+			spr  = Sprite(this);
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			Main.THIS = this;
@@ -76,6 +77,10 @@ package  {
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
+			
+			//this.addChild(topMenu);
+			app.y = 44;
+			
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
