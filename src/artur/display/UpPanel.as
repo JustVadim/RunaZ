@@ -25,8 +25,8 @@ package artur.display
 				btns[i].y  = 38;
 				this.addChild(btns[i])
 			}
-
 		}
+
 		
 	}
 
