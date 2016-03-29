@@ -10,6 +10,7 @@ package artur
 	import artur.display.Task;
 	import artur.display.TopMenu;
 	import artur.display.Tutor;
+	import artur.display.UpPanel;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
 	import artur.util.RemindCursors;
@@ -71,7 +72,7 @@ package artur
 
 		public static var prop:PropExtended = new PropExtended();
 
-		
+		public var topMenu:UpPanel
 		public function App(stg:Stage) 
 		{
 			sound.addSound('onLose', new s_onLose());
@@ -134,7 +135,7 @@ package artur
 			this.tabEnabled = false;
 			this.tabChildren = false;
 			App.task = new Task();
-			
+			Main.THIS.addChild(new UpPanel());
 		}
 		public static function swapMuz(str:String):void
 		{
