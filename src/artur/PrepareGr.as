@@ -1,5 +1,6 @@
 package artur 
 {
+	import artur.display.BtnArena;
 	import artur.display.bgBlankUnitExtend;
 	import artur.display.BtnAddHeroExtend;
 	import artur.display.btnClosedShopExtended;
@@ -61,7 +62,7 @@ package artur
 			new btnSel1Extend(Lang.getTitle(40, 2)),//37
 			new btnSel1Extend(Lang.getTitle(40, 3)),//38
 		    new mcArena(),//39,
-		    new btnArena1(),//40
+		    new BtnArena(),//40
 		    new btnAddStone(),//41
 		    new BtnCraft(),//42
 		    new BtnStoneExtend(),//43//
@@ -72,6 +73,7 @@ package artur
 		    new btnMapNext(),//48
 		    new btnMapRes(),//49
 			new imgBtnEnergy()//50
+			
 		];
 		
 		public static var scaleFactor:Number = 2;

@@ -231,11 +231,11 @@ package Server
 									];
 			Lang.lang_table[100] = 	[ 
 										["Использовать 2 раза свиток атаки.", "", ""], 
-										["", "", ""]
+										["Свиток атаки повысит вам на один ход атаку юнита. Что бы получить награду используйте свиток атаки 2 раза.", "", ""]
 									];
 			Lang.lang_table[101] = 	[ 
 										["Использовать 2 раза свиток защиты.", "", ""], 
-										["", "", ""]
+										["Свиток защиты повысит вам на один ход защиту юнита. Что бы получить награду используйте свиток защиты 2 раза.", "", ""]
 									];
 			///
 			Lang.lang_table[152] = ["Задание выполнено!!!\nВы можете забрать награду.", "", ""];
@@ -244,43 +244,40 @@ package Server
 			Lang.lang_table[155] = ["Повторить миссию", "", ""];
 			Lang.lang_table[156] = ["Следующая миссия", "", ""];
 			Lang.lang_table[157] = ["Вы можете походить в любую выделенную ячейку. Вам необходимо дойти к монстру и ударить его.", "", ""];
-			Lang.lang_table[158] = ["Наведя курсор на монстра, правым кликом вы можете ударить его. Что бы выиграть надо его убить.", "", ""];
+			Lang.lang_table[158] = ["Наведя курсор на монстра, правым кликом вы можете ударить его. Что бы выиграть бой - надо его убить.", "", ""];
 			Lang.lang_table[159] = ["На Ваш счет было зачислено ", "", ""];
 			Lang.lang_table[160] = [" серебренных монет", "", ""];
 			Lang.lang_table[161] = [" золотых монет", "", ""];
-			Lang.lang_table[162] = ["Купить энергию","",""]
+			Lang.lang_table[162] = ["Купить энергию", "", ""];
+			Lang.lang_table[163] = ["В Арену", "", ""];
 			
 			
 			
 		}
 		
-		public function Lang()
-		{
+		public function Lang() {
 			
 		}
 		
-		public static function getTitle(id1:int, id2:int = -1, id3:int = -1):String
-		{
-			if (id3 > -1)
-			{
-				if (Lang.lang_table[id1] != null && Lang.lang_table[id1][id2] != null && Lang.lang_table[id1][id2][id3] != null && Lang.lang_table[id1][id2][id3][Lang.lang] != null)
+		public static function getTitle(id1:int, id2:int = -1, id3:int = -1):String {
+			if (id3 > -1) {
+				if (Lang.lang_table[id1] != null && Lang.lang_table[id1][id2] != null && Lang.lang_table[id1][id2][id3] != null && Lang.lang_table[id1][id2][id3][Lang.lang] != null) {
 					return Lang.lang_table[id1][id2][id3][Lang.lang];
-				else
+				} else {
 					return "";
-			}
-			else if (id2 > -1)
-			{
-				if (Lang.lang_table[id1] != null && Lang.lang_table[id1][id2] != null && Lang.lang_table[id1][id2][Lang.lang] != null)
+				}
+			} else if (id2 > -1) {
+				if (Lang.lang_table[id1] != null && Lang.lang_table[id1][id2] != null && Lang.lang_table[id1][id2][Lang.lang] != null) {
 					return Lang.lang_table[id1][id2][Lang.lang];
-				else
+				} else {
 					return "";
-			}
-			else
-			{
-				if (Lang.lang_table[id1] != null && Lang.lang_table[id1][Lang.lang] != null)
+				}
+			} else {
+				if (Lang.lang_table[id1] != null && Lang.lang_table[id1][Lang.lang] != null) {
 					return Lang.lang_table[id1][Lang.lang];
-				else
+				} else {
 					return "";
+				}
 			}
 		}
 		

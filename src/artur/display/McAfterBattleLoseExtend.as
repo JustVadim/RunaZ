@@ -56,6 +56,7 @@ package artur.display {
 			this.closeBtn.mouseEnabled = false;
 			TweenLite.to(this.title, 2, { alpha:1, onComplete:this.addBtn } );
 			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
+			App.sound.stopSound("BatleSong");
 			App.sound.playSound('onLose', App.sound.onVoice, 1);
 		}
 		

@@ -27,8 +27,8 @@ package artur.win {
 		public var bin:Boolean = false;
 		private var bg:Bitmap;
 	    private var names:Array =	[
-										['Арагон', 'Бригас', 'Наом', 'Тамкар', 'Травинкал', 'Апром', 'Мигор', 'Квонг', 'Сагос', 'Неаро', 'Валка', 'Валес']
-									]
+										                ['Арагон', 'Бригас', 'Наом', 'Тамкар', 'Травинкал', 'Апром', 'Мигор', 'Квонг', 'Сагос', 'Неаро', 'Валка', 'Валес']
+									                ]
 		public var townList:TownList;
 		public static var sprSelLevel:SprSelectLevel = new SprSelectLevel();
 		

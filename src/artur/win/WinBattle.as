@@ -717,13 +717,15 @@ package artur.win
 			}
 		}
 		 
-		private function onUltOut(e:MouseEvent):void {
+		private function onUltOut(e:MouseEvent):void 
+		{
 			if(WinBattle.ult_btn.currentFrame > 1) {
 				WinBattle.ult_btn.mcBg.visible = false;
 			}
 		}
 		 
-		private function onUltOver(e:MouseEvent):void {
+		private function onUltOver(e:MouseEvent):void 
+		{
 			if(WinBattle.ult_btn.currentFrame > 1) {
 				WinBattle.ult_btn.mcBg.visible = true;
 			}
@@ -757,6 +759,10 @@ package artur.win
 			effManajer.frees();
 			for (var i:int = 0; i < unitsInWin.length; i++) {
 				unitsInWin[i].frees();
+			}
+			for (var j:int = 0; j < sortArr.length; j++) 
+			{
+				sortArr[j].frees()
 			}
 			sortArr.splice(0, sortArr.length);
 		}
