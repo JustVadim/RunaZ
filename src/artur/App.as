@@ -136,7 +136,8 @@ package artur
 			this.tabChildren = false;
 			App.task = new Task();
 			topMenu = new UpPanel();
-			Main.spr.addChild(topMenu)
+			App.spr.y = 44; 
+			Main.spr.addChild(topMenu);
 		}
 		public static function swapMuz(str:String):void
 		{

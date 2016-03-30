@@ -78,8 +78,7 @@ package  {
 			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
 			
-			//this.addChild(topMenu);
-			app.y = 44;
+			
 			
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
