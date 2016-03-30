@@ -78,12 +78,7 @@ package  {
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
-<<<<<<< HEAD
-			
-			
-			
-=======
->>>>>>> c9b514a490d685a3428b34044834f4cc752a5d62
+
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
