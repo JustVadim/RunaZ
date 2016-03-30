@@ -12,20 +12,20 @@ package Server
 		{
 			Lang.lang_table[0] = new Array();
 			lang_table[0][0] = ["Начало пути", 			"The beginning of the way",	""];
-			lang_table[0][1] = ["Зеленая тропа", 		"The green trail", 		""];
+			lang_table[0][1] = ["Зелёная тропа", 		"The green trail", 		""];
 			lang_table[0][2] = ["В поисках истины", 	"In search of truth",   ""];
 			lang_table[0][3] = ["Туман войны", 			"Fog of war", 			""];
 			lang_table[0][4] = ["Поворот не туда", 		"Wrong turn",			""];
 			lang_table[0][5] = ["Проклятая река", 		"Cursed river",			""];
 			lang_table[0][6] = ["Верная стража", 		"Faithful guardian",	""];
 			lang_table[0][7] = ["Звон монет", 			"Coins ringing",		""];
-			lang_table[0][8] = ["Шепот дракона", 		"Dragon whisper",		""];
+			lang_table[0][8] = ["Шёпот дракона", 		"Dragon whisper",		""];
 			lang_table[0][9] = ["Клыкастая месть", 		"Fanged revenge",		""];
 			lang_table[0][10] = ["БОСС", 				"BOSS", 				""];
 			lang_table[0][11] = ["Земля проклятых", 	"Curse land", 			""];
 			lang_table[0][12] = ["Шелест листьев", 		"Rustles of leaves",	""];
 			lang_table[0][13] = ["Две башни", 			"Two towers",			""];
-			lang_table[0][14] = ["Лесные шелесты", 		"Forest rustles",		""];
+			lang_table[0][14] = ["Лесные ветра", 		"Forest wings",		""];
 			lang_table[0][15] = ["Вулканическая пыль", 	"Volcanic dust",		""];
 			lang_table[0][16] = ["Крик орков", 			"Orcs scream",			""];
 			lang_table[0][17] = ["Лужайка единорогов", 	"Unicorns lawn", 		""];
