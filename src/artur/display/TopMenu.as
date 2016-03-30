@@ -51,6 +51,22 @@ package artur.display {
 			this.gold.buttonMode = true;
 			this.updater();
 			this.addAva();
+			this.gold.addEventListener(MouseEvent.CLICK, this.onResClick);
+			this.gold.addEventListener(MouseEvent.ROLL_OVER, this.onRollOver);
+			this.gold.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+		}
+		
+		private function onRollOut(e:MouseEvent):void {
+			this.gold.filters = [];
+		}
+		
+		private function onRollOver(e:MouseEvent):void {
+			this.gold.filters = [new GlowFilter(0xFFFFFF)];
+			App.sound.playSound("over1", App.sound.onVoice, 1);
+		}
+		
+		private function onResClick(e:MouseEvent):void {
+			App.winBank.init();
 		}
 		
 		private function addAva():void {
@@ -152,7 +168,7 @@ package artur.display {
 		}
 		
 		private function updater():void {
-			var timer:Timer = new Timer(65000);
+			var timer:Timer = new Timer(30000);
 			timer.addEventListener(TimerEvent.TIMER, this.updateEnergy);
 			timer.start();
 		}

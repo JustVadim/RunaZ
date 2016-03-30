@@ -86,7 +86,7 @@ package artur.display {
 			} else {
 				if (obj.error == 1) {
 					App.lock.frees();
-					App.closedDialog.init(Lang.getTitle(37), false);
+					App.closedDialog.init1(Lang.getTitle(37), false);
 				} else {
 					App.lock.init('Error: ' + obj.error)
 				}
@@ -94,15 +94,16 @@ package artur.display {
 		}
 		
 		public function init(missNum:int, misObj:Object):void {
-			if(UserStaticData.hero.cur_vitality <10) {
-				App.closedDialog.init(Lang.getTitle(154), false, false, false, false);
+			if(UserStaticData.hero.cur_vitality < 10) {
+				App.closedDialog.init1(Lang.getTitle(154), false,false,false, true, true);
 				return;
 			}
 			if(misObj == null) {
-				App.closedDialog.init("Данная миссия недоступна для вас еще. Надо пройти предыдущие миссии.", false, false, false, false);
+				App.closedDialog.init1("Данная миссия недоступна для вас еще. Надо пройти предыдущие миссии.");
 				return;
 			}
-			if(misObj != null) {
+			if (misObj != null) {
+				Report.addMassage("MissNum: " + missNum + "  map: " + MapTown.currTownClick);
 				this.missNum = missNum + (MapTown.currTownClick*11);
 				App.spr.addChild(this);
 				this.addChild(this.btn);

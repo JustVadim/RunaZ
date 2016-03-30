@@ -111,7 +111,7 @@ package artur.win
 				unit.lvl = obj.lvl;
 				unit.nle = obj.nle;
 				unit.fs = obj.fs;
-				App.closedDialog.init(Lang.getTitle(2), true);
+				App.closedDialog.init1(Lang.getTitle(2), true);
 				
 			}
 			else

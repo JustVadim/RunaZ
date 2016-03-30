@@ -99,7 +99,7 @@ package artur.display {
 			var gold:int = UserStaticData.magazin_items [unitType] [itemType] [item_id].c[101];
 			var silver:int =  UserStaticData.magazin_items [unitType] [itemType] [item_id].c[100];
 			if (!WinCastle.isMoney(gold, silver)) {
-				App.closedDialog.init(Lang.getTitle(4), false, true, true);
+				App.closedDialog.init1(Lang.getTitle(4), false, true, true);
 			}
 			else {
 				App.byeWin.init(Lang.getTitle(72), "Вещицу", gold, silver, item_id, 1, this.itemType, this.invPlace);

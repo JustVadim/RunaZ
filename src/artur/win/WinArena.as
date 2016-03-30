@@ -10,23 +10,24 @@ package artur.win {
 	import Server.Lang;
 	import Utils.Functions;
 	import Utils.json.JSON2;
+	import flash.text.TextField;
 	
 	public class WinArena {
-		
 		public var bin:Boolean = false;
 		private var bg:MyBitMap;
 		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
 		public static const NEEDED_LVL:int = 2;
+		private var btn1Title:TextField;
 		
 		
 		public function WinArena() {
 			bg = new MyBitMap(App.prepare.cach[39]);
 			btn1 = new BaseButton(40);
-			btnClose = new BaseButton(31);
 			btn1.x = 400;
 			btn1.y = 100;
+			btnClose = new BaseButton(31);
 			mcFound.x = 400;
 			mcFound.y = 250;
 			mcFound.gotoAndStop(1);
@@ -40,8 +41,7 @@ package artur.win {
 			data.sendData(COMMANDS.FIND_BATTLE, "", true);
 		}
 		
-		private function onRes1(e:DataExchangeEvent):void 
-		{
+		private function onRes1(e:DataExchangeEvent):void {
 			App.spr.removeChild(mcFound);
 			mcFound.gotoAndStop(1);
 			App.spr.removeChild(btnClose);
@@ -61,13 +61,13 @@ package artur.win {
 				var data:DataExchange = new DataExchange();
 				data.addEventListener(DataExchangeEvent.ON_RESULT, this.onRes);
 				data.sendData(COMMANDS.FIND_BATTLE, "", true);
-				App.lock.init()
+				App.lock.init();
 				
 			} else {
 				if(UserStaticData.hero.level < WinArena.NEEDED_LVL) {
-					App.closedDialog.init(Lang.getTitle(44), false, true, false);
+					App.closedDialog.init1(Lang.getTitle(44), false, true);
 				} else if(!GetServerData.getUserIsReadyToBattle()) {
-					App.closedDialog.init(Lang.getTitle(36), true, false, false);
+					App.closedDialog.init1(Lang.getTitle(36), true);
 				}
 			}
 		}
@@ -83,8 +83,7 @@ package artur.win {
 			}
 		}
 		
-		public function init():void 
-		{
+		public function init():void {
 			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
 		    App.spr.addChild(btn1);
@@ -99,8 +98,7 @@ package artur.win {
 			btn1.addEventListener(MouseEvent.ROLL_OUT, this.onBattleBtnOut);
 		}
 		
-		private function onBattleBtnOut(e:MouseEvent):void 
-		{
+		private function onBattleBtnOut(e:MouseEvent):void {
 			App.info.frees();
 		}
 		
@@ -108,6 +106,7 @@ package artur.win {
 			var mc:BaseButton = BaseButton(e.target);
 			App.info.init(mc.x + mc.width - 130, mc.y + mc.height - 25, { txtInfo_w:110, txtInfo_h:37, txtInfo_t:Lang.getTitle(51), type:0 });
 		}
+		
 		public function update():void {
 			if (mcFound.currentFrame == mcFound.totalFrames) {
 				mcFound.rotation += 2;

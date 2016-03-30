@@ -68,7 +68,7 @@ package artur.display
 				var missNum:int = int(e.currentTarget.name)
 				WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
 			} else {
-				App.closedDialog.init(Lang.getTitle(36) , true);
+				App.closedDialog.init1(Lang.getTitle(36) , true);
 			}
 		}
 		
@@ -86,7 +86,7 @@ package artur.display
 			{
 				if (obj.error == 1) {
 					App.lock.frees();
-					App.closedDialog.init(Lang.getTitle(37), false);
+					App.closedDialog.init1(Lang.getTitle(37));
 				} else {
 					App.lock.init('Error: ' + obj.error)
 				}
