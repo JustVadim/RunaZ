@@ -67,12 +67,11 @@ package artur
 		public static var topMenu:TopMenu = new TopMenu();
 		public static var task:Task;
 		//public static var topMenu:
-
 		public static var currMuzPlay:String = 'BatleSong';
-
 		public static var prop:PropExtended = new PropExtended();
-
-		public var topMenu:UpPanel
+		public static var upPanel:UpPanel;
+		
+		
 		public function App(stg:Stage) 
 		{
 			sound.addSound('onLose', new s_onLose());
@@ -136,7 +135,11 @@ package artur
 			this.tabChildren = false;
 			App.task = new Task();
 
-			Main.THIS.addChild(new UpPanel());
+			Main.THIS.addChild(App.upPanel = new UpPanel());
+			if(UserStaticData.from == "v") {
+				Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);
+				Main.VK.addEventListener('onSettingsChanged', App.upPanel.onVKSettingsChange);
+			}
 
 		}
 		public static function swapMuz(str:String):void

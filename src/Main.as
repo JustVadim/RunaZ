@@ -45,11 +45,12 @@ package  {
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			Main.THIS = this;
-			this.stage.addChild(rep = new Report());
 			UserStaticData.flash_vars = this.stage.loaderInfo.parameters as Object;
+			this.stage.addChild(rep = new Report());
 			if (UserStaticData.flash_vars['api_id']) {
 				this.vkPrepare();
 			}
+			
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
@@ -57,6 +58,7 @@ package  {
 		}
 		
 		private function vkPrepare():void {
+			Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
 			Main.VK = new APIConnection(UserStaticData.flash_vars);
 			var api_res:Object = JSON2.decode(UserStaticData.flash_vars.api_result);
 			UserStaticData.from = "v";
@@ -65,11 +67,9 @@ package  {
 			UserStaticData.plink = api_res.response[0].photo_100;
 			UserStaticData.id = api_res.response[0].uid;
 			UserStaticData.friend_invited = UserStaticData.flash_vars.user_id;
-			Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);
-			//Main.VK.addEventListener('onSettingsChanged', Main.down_menu.onSettingsChanged);
 		}
 		
-		private static function onVkPayment(e:CustomEvent):void {
+		public static function onVkPayment(e:CustomEvent):void {
 			new DataExchange().sendData(COMMANDS.BYE_COINS, String(e.params[0]), false);
 		}
 		
@@ -78,7 +78,6 @@ package  {
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
-
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}

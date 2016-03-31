@@ -108,7 +108,7 @@ package artur.display
 		public function setActive(val:Boolean ):void {
 			active = val;
 			this.buttonMode = val;
-			this.mouseChildren = val;
+			//this.mouseChildren = val;
 			this.mouseEnabled = val;
 			this.scaleX = 1;
 			this.scaleY = 1;
