@@ -135,7 +135,9 @@ package artur
 			this.tabEnabled = false;
 			this.tabChildren = false;
 			App.task = new Task();
+
 			Main.THIS.addChild(new UpPanel());
+
 		}
 		public static function swapMuz(str:String):void
 		{

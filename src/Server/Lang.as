@@ -37,7 +37,7 @@ package Server
 			lang_table[0][23] = ["Секреты короля", 		"Secrets of the King",	""];
 			lang_table[0][24] = ["Гром богов", 			"Gods thunder", 		""];
 			lang_table[0][25] = ["Дерево мудрости", 	"Wisdom tree", 			""];
-			lang_table[0][26] = ["Песни сирены", 		"Siren songs",			""];
+			lang_table[0][26] = ["Песня сирены", 		"Siren song",			""];
 			lang_table[0][27] = ["Отчаянный союз", 		"Desperate Alliance", 	""];
 			lang_table[0][28] = ["Пустоши", 			"Wasteland", 			""];
 			lang_table[0][29] = ["Падение молота", 		"The Hammer Falls", 	""];
@@ -54,7 +54,7 @@ package Server
 			Lang.lang_table[1][5] = ["Оружие", 		"Weapon", 		""];
 			Lang.lang_table[1][6] = ["Щиты", 		"Shields", 		""];
 			Lang.lang_table[1][7] = ["Инвентарь", 	"Inventory", 	""];
-			Lang.lang_table[2] = ["У одного из вашых юнитов повысился уровень, зайдите  в замок, чтобы улучшить его.", "One of your unit has increased the level, go to the castle to improve it.", "" ];
+			Lang.lang_table[2] = ["У одного из Ваших юнитов повысился уровень, зайдите  в замок, чтобы улучшить его.", "One of your unit has increased the level, go to the castle to improve it.", "" ];
 			Lang.lang_table[3] = [
 									["Банк", "Bank", ""], 
 									["Доска лидеров", "LeaderBoard", ""], 
@@ -64,7 +64,7 @@ package Server
 									["Миссии", "Missions", ""],
 									["В город","Vilagge",""]
 								];
-			Lang.lang_table[4] = ["У вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "You do not have the resources for this purchase. You can buy the resources at the bank or the earn in missions.", ""];
+			Lang.lang_table[4] = ["У Вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "You do not have the resources for this purchase. You can buy the resources at the bank or the earn in missions.", ""];
 			Lang.lang_table[5] = ["Критический урон", "Critical strike", ""];
 			Lang.lang_table[6] = ["Уворот", "Dodge", ""];
 			Lang.lang_table[7] = ["Двойная атака", "Double attack", ""];
@@ -72,7 +72,7 @@ package Server
 			Lang.lang_table[9] = ["Ответный удар", "Counter attack", ""];
 			Lang.lang_table[10] = ["шанс нанести двойной урон</font>\n Следующий уровень", "chance to inflict double damage</font>\n Next level", ""];
 			Lang.lang_table[11] = ["шанс уклониться от удара</font>\n Следующий уровень", "chance to dodge</font>\n Next level", ""];
-			Lang.lang_table[12] = ["шанс атаковать два раза</font>\n Следующий уровень", "chance to attack twice</font>\n Next level", ""];
+			Lang.lang_table[12] = ["шанс атаковать дважды</font>\n Следующий уровень", "chance to attack twice</font>\n Next level", ""];
 			Lang.lang_table[13] = ["шанс атаковать сквозь защиту</font>\n Следующий уровень", "chance to attack through the defense</font>\n Next level", ""];
 			Lang.lang_table[14] = ["шанс нанести ответный удар</font>\n Следующий уровень", "chance to strike back</font>\n Next level", ""];
 			Lang.lang_table[15] = ["Ярость", "Fury", ""];
@@ -90,17 +90,17 @@ package Server
 			Lang.lang_table[27] = [" единиц", " points", ""];
 			Lang.lang_table[28] = ["Стоимость заклинания ", "Manna cost ", ""];
 			Lang.lang_table[29] = [" манны", " mannas", ""];
-			Lang.lang_table[30] = ["Нажмите что бы улучшить!", "Click to improve!", ""];
+			Lang.lang_table[30] = ["Нажмите, что бы улучшить!", "Click to improve!", ""];
 			Lang.lang_table[31] = ["Навык", "Skill", ""];
 			Lang.lang_table[32] = ["Я хочу продать", "I want to sell", ""];
 			Lang.lang_table[33] = ["Нажмите, что бы купить вещь", "Press for buy item", ""];
 			Lang.lang_table[34] = [" Убил: ", " Killed:", ""];
 			Lang.lang_table[35] = [" Умер: ", " Died:", ""];
 			Lang.lang_table[36] = ["Вы не сможете победить! Наймите воина. Если у вас уже есть воин - купите ему оружие.", "You can not win! Hire a warrior. If you already have a warrior - buy him a weapon.", ""];
-			Lang.lang_table[37] = ["Миссия еще не доступна, ожидайте ее в скором времени!!", "The mission is not yet available, expect it soon!!", ""];
+			Lang.lang_table[37] = ["Миссия еще не доступна, ожидайте её в скором времени!!", "The mission is not yet available, expect it soon!!", ""];
 			Lang.lang_table[38] = [["Варвар", "Barbarin", ""], ["Омник", "Omnic", ""], ["Лучник", "Archer", ""], ["Маг", "Wizard", ""]];
 			Lang.lang_table[39] = ["Я хочу нанять", "I want to hire", ""];
-			Lang.lang_table[40] = [["Новичек","Beginer",""], ["Воин","Warrior","",],["Стратег","Strategist",""],["Царь","King",""]];
+			Lang.lang_table[40] = [["Новичок","Beginer",""], ["Воин","Warrior","",],["Стратег","Strategist",""],["Царь","King",""]];
 			Lang.lang_table[41] = ["Что бы улучшить, надо вещь и как минимум один камeнь.", "In order to improve, you have an item and at least one stone", ""];
 			Lang.lang_table[42] = ["У Вас недостаточно золота для улучшения. Вы можете купить золото в банке или заработать в миссиях.", "You do not have gold to improve. You can buy gold in a bank or earn it in the missions.", ""];
 			Lang.lang_table[43] = new Array();
@@ -122,7 +122,7 @@ package Server
 			Lang.lang_table[43][13] = ["Сапфир ур.3", "Sapphire lvl.3", ""];
 			Lang.lang_table[43][14] = ["Топаз ур.3", "Topaz lvl.3", ""];
 			
-			Lang.lang_table[44] = ["Что бы участвовать в поединкe нужен уровень " + WinArena.NEEDED_LVL + ". Получить его можно проходя миссии.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""];
+			Lang.lang_table[44] = ["Что бы участвовать в поединкe нужен уровень " + WinArena.NEEDED_LVL + ". Уровень Вы можете заработать в миссиях.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""];
 			Lang.lang_table[45] = ["У Вас недостаточно золота для этой покупки. Вы можете купить золото в банке или заработать в миссиях.", "You do not have enough gold for this purchase. You can buy gold in a bank or earn it in the missions.", ""];
 			Lang.lang_table[46] = ["У Вас недостаточно серебра для этой покупки. Вы можете купить серебро в банке или заработать в миссиях.", "You do not have enough silver for this purchase. You can buy enough in a bank or money in the missions.", ""];
 			Lang.lang_table[47] = ["Закрыть", "Close", ""];
@@ -175,8 +175,8 @@ package Server
 			Lang.lang_table[59][13] = ["10 камней добавят +3 к физ. защите", "10 stones add 3 to phys. protection ", ""];
 			Lang.lang_table[59][14] = ["10 камней добавят +3 к маг. защите", "10 stones add 3 to mag. protection ", ""];
 			Lang.lang_table[60] = new Array();
-			Lang.lang_table[60][1] = ["Зайдите в замок что бы нанять юинита и купить ему артефакты", "Go to the castle to hire units and buy him artifacts", ""];
-			Lang.lang_table[60][2] = ["Нажмите что бы открыть таверну с юнитами", "Click to open a tavern with units", ""];
+			Lang.lang_table[60][1] = ["Зайдите в замок, что бы нанять юинита и купить ему артефакты", "Go to the castle to hire units and buy him artifacts", ""];
+			Lang.lang_table[60][2] = ["Нажмите, что бы открыть таверну с юнитами", "Click to open a tavern with units", ""];
 			Lang.lang_table[60][3] = ["Наймите юнита", "Hire unit"];
 			Lang.lang_table[60][4] = ["У Вас есть юнит, но ему надо оружие", "You have unit, but he needs weapon", ""];
 			Lang.lang_table[60][7] = ["Время выполнить миссию", "Time to complete mission"];
@@ -193,7 +193,7 @@ package Server
 			Lang.lang_table[71] = ["Победа", "Victory", ""];
 			Lang.lang_table[72] = ["Я хочу купить", "I want to buy", ""];
 			Lang.lang_table[73] = ["ПРОДАТЬ", "SELL", ""];
-			Lang.lang_table[74] = ["Я хочу улушить", "I want to improve", ""];
+			Lang.lang_table[74] = ["Я хочу улучшить", "I want to improve", ""];
 			Lang.lang_table[75] = ["Я хочу заказать", "I want to order", ""];
 			Lang.lang_table[76] = ["Убил", "Killed", ""];
 			Lang.lang_table[77] = ["Доступно", "Available", ""];
@@ -205,7 +205,6 @@ package Server
 			Lang.lang_table[83] = ["шанс контр атаки", "the chance to counter-attack", ""];
 			Lang.lang_table[84] = ["Купить", "Buy", ""];
 			Lang.lang_table[85] = ["Цена:", "Price:", ""];
-			Lang.lang_table[85] = ["Цена:", "Price:", ""];
 			Lang.lang_table[86] = ["или", "or", ""];
 			Lang.lang_table[87] = ["Нанять юнита", "Hire  unit", ""];
 			Lang.lang_table[88] = ["Выключить музыку", "Turn off music", ""];
@@ -214,12 +213,12 @@ package Server
 			Lang.lang_table[91] = ["Включить звук", "Turn on sound", ""];
 			Lang.lang_table[92] = ["Полный екран", "Fullscreen", ""];
 			Lang.lang_table[93] = ["Оконный режим", "Window mode", ""];
-			Lang.lang_table[94] = ["Удерживание", "Hold", ""];
+			Lang.lang_table[94] = ["Удержание", "Hold", ""];
 			Lang.lang_table[95] = ["Автобой", "Autobattle", ""];
 			Lang.lang_table[96] = ["Сдаться", "Surrender", ""];
 			Lang.lang_table[97] = 	[ 
 										["Использовать 4 раза магию.", "", ""], 
-										["Для этого вам надо зайти в карту миссий или в арену и начать бой. В бою любым юнитом надо использовать его магию, которая находится в правом нижнем углу. Проделав это 4 раза вы получите награду.", "", ""]
+										["Для этого Вам надо зайти в карту миссий или в арену и начать бой. В бою любым юнитом надо использовать его магию, которая находится в правом нижнем углу. Проделав это 4 раза вы получите награду.", "", ""]
 									];
 			Lang.lang_table[98] = 	[ 
 										["Использовать 3 раза баночку востановления здоровья.", "", ""], 
@@ -240,13 +239,13 @@ package Server
 			///
 			Lang.lang_table[152] = ["Задание выполнено!!!\nВы можете забрать награду.", "", ""];
 			Lang.lang_table[153] = ["Награда:", "", ""];
-			Lang.lang_table[154] = ["У вас недостаточно енергии для входа в миссию. Вы можете купить ее или со временем она востановится.", "", ""];
+			Lang.lang_table[154] = ["У вас недостаточно энергии для входа в миссию. Вы можете купить её или со временем она восстановится.", "", ""];
 			Lang.lang_table[155] = ["Повторить миссию", "", ""];
 			Lang.lang_table[156] = ["Следующая миссия", "", ""];
 			Lang.lang_table[157] = ["Вы можете походить в любую выделенную ячейку. Вам необходимо дойти к монстру и ударить его.", "", ""];
 			Lang.lang_table[158] = ["Наведя курсор на монстра, правым кликом вы можете ударить его. Что бы выиграть бой - надо его убить.", "", ""];
 			Lang.lang_table[159] = ["На Ваш счет было зачислено ", "", ""];
-			Lang.lang_table[160] = [" серебренных монет", "", ""];
+			Lang.lang_table[160] = [" серебряных монет", "", ""];
 			Lang.lang_table[161] = [" золотых монет", "", ""];
 			Lang.lang_table[162] = ["Купить энергию", "", ""];
 			Lang.lang_table[163] = ["В Арену", "", ""];
