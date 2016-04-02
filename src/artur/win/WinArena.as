@@ -2,12 +2,21 @@ package artur.win {
 	import artur.App;
 	import artur.display.BaseButton;
 	import artur.display.MyBitMap;
+	import artur.units.U_Lyk;
+	import artur.units.U_Mag;
+	import artur.units.U_Paladin;
+	import artur.units.U_Warwar;
+	import artur.units.UnitCache;
 	import artur.util.GetServerData;
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Server.Lang;
+
+	
+	
 	import Utils.Functions;
 	import Utils.json.JSON2;
 	import flash.text.TextField;
@@ -20,8 +29,11 @@ package artur.win {
 		private var mcFound:mcFounMovie = new mcFounMovie();
 		public static const NEEDED_LVL:int = 2;
 		private var btn1Title:TextField;
-		
-		
+		private var dell1:int
+		private var dell2:int
+		private var char1:Object;
+		private var char2:Object;
+		private var types:Array = [U_Lyk,U_Mag,U_Paladin,U_Warwar,U_Lyk,U_Mag,U_Paladin,U_Warwar];
 		public function WinArena() {
 			bg = new MyBitMap(App.prepare.cach[39]);
 			btn1 = new BaseButton(40);
@@ -84,6 +96,9 @@ package artur.win {
 		}
 		
 		public function init():void {
+			dell1 =40;
+			dell2 = 60;
+			
 			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
 		    App.spr.addChild(btn1);
@@ -92,6 +107,17 @@ package artur.win {
 			mcFound.rot.visible = false;
 			App.topPanel.init(this);
 			App.topMenu.init(true, true);
+			char1 = UnitCache.getUnit('Barbarian');
+			char1.x = 290;
+			char1.y = 380;
+			char2 = UnitCache.getUnit('Paladin');
+			char2.x = 800 - 290;
+			char2.y = 380;
+			char2.itemUpdate([RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5)]);
+			char1.itemUpdate([RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5)]);
+			char2.scaleX = -1;
+			App.spr.addChild(Sprite(char2));
+			App.spr.addChild(Sprite(char1));
 			btn1.addEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
 			btn1.addEventListener(MouseEvent.ROLL_OVER, this.onBattleOver);
@@ -113,15 +139,41 @@ package artur.win {
 				mcFound.rot.visible = true;
 				mcFound.rot.rotation = -mcFound.rotation; 
 			}
+			char1.update();
+			char2.update();
+			if (dell1-- < 0)
+			{
+				dell1 = 80;
+			     char1.gotoAndPlay('atack1' )
+			}
+			if (dell2-- <0)
+			{
+				dell2 =  60;
+				char2.gotoAndPlay('atack1' );
+			}
 		}
 		
 		public function frees():void {
+			char1.frees();
+			char2.frees();
 			App.info.frees();
 			btn1.removeEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.removeEventListener(MouseEvent.CLICK, onBtnClose);
 			btn1.removeEventListener(MouseEvent.ROLL_OVER, this.onBattleOver);
 			btn1.removeEventListener(MouseEvent.ROLL_OUT, this.onBattleBtnOut);
 		}
+		
+		static public function Random(clow:Number, chigh:Number):Number
+	    {
+	       return Math.round(Math.random() * (chigh - clow)) + clow;
+	    }
+ 
+	    //Получить целое случайное число из диапазона clow..chigh
+	     static public function RandomInt(clow:int, chigh:int):int
+	    {
+	       return Math.round(Random(clow,chigh));
+	    }
 	}
+	  
 
 }
