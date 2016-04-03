@@ -78,8 +78,8 @@ package artur
 		    new btnTop2(),//52
 		    new btnTop3(),//53
 		    new btnTop4(),//54
-		    new btnTop5()//55
-
+		    new btnTop5(),//55
+		    new btnArrow()//56
 		];
 		
 		public static var scaleFactor:Number = 2;
