@@ -211,7 +211,7 @@ package Server
 			Lang.lang_table[89] = ["Включить музыку", "Turn on music", ""];
 			Lang.lang_table[90] = ["Выключить звук", "Turn off sound", ""];
 			Lang.lang_table[91] = ["Включить звук", "Turn on sound", ""];
-			Lang.lang_table[92] = ["Полный екран", "Fullscreen", ""];
+			Lang.lang_table[92] = ["Полный экран", "Fullscreen", ""];
 			Lang.lang_table[93] = ["Оконный режим", "Window mode", ""];
 			Lang.lang_table[94] = ["Удержание", "Hold", ""];
 			Lang.lang_table[95] = ["Автобой", "Autobattle", ""];
@@ -249,6 +249,8 @@ package Server
 			Lang.lang_table[161] = [" золотых монет", "", ""];
 			Lang.lang_table[162] = ["Купить энергию", "", ""];
 			Lang.lang_table[163] = ["В Арену", "", ""];
+			Lang.lang_table[164] = ["БОНУС\nЛИДЕР", "", ""];
+			Lang.lang_table[165] = ["За выполнение всех условий получения бонуса \"Лидер\" вы получаете 5 золотых монет и 50 энергии.\n\nВ следующий раз бонус вы сможете получить через 24 часа.", "",""];
 			
 			
 			

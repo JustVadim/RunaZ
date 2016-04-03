@@ -14,7 +14,7 @@ package artur.units {
 		private var parts:Array ;
 		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
 		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 }, { id:'pall_hurt', frame:75 },{id:'blade1',frame:78},{id:'pall_death',frame:81}];
-		 
+		public static var onSound:Boolean = true;
 		public function U_Paladin() {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
@@ -36,7 +36,8 @@ package artur.units {
 			this.filters = [App.btnOverFilter];
 		}
 		
-		public function init(parr:DisplayObjectContainer = null,lvl:int=0):void {
+		public function init(parr:DisplayObjectContainer = null, lvl:int = 0):void {
+			onSound = true
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
@@ -54,6 +55,8 @@ package artur.units {
 				this.filters = [];
 			}
 			
+			if (!onSound)
+			return;
 			for (var i:int = 0; i < sounds.length; i++) {
 				if (sounds[i].frame == currentFrame) {
 					App.sound.playSound(sounds[i].id, App.sound.onVoice, 1);

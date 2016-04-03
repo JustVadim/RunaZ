@@ -27,7 +27,7 @@ package artur.win {
 		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
-		public static const NEEDED_LVL:int = 1;
+		public static const NEEDED_LVL:int = 5;
 		private var btn1Title:TextField;
 		private var dell1:int
 		private var dell2:int
@@ -116,6 +116,8 @@ package artur.win {
 			char2.itemUpdate([RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5)]);
 			char1.itemUpdate([RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5)]);
 			char2.scaleX = -1;
+			U_Warwar.onSound = false;
+			U_Paladin.onSound = false;
 			App.spr.addChild(Sprite(char2));
 			App.spr.addChild(Sprite(char1));
 			btn1.addEventListener(MouseEvent.CLICK, onBtn);

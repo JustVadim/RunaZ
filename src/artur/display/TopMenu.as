@@ -167,7 +167,7 @@ package artur.display {
 		
 		private function onOver(e:MouseEvent):void {
 			var mc:MovieClip = MovieClip(e.target);
-			App.info.init( mc.x + 100, mc.y + 30, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:Lang.getTitle(155), type:0 });
+			App.info.init( mc.x + 100, mc.y + 30, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:Lang.getTitle(162), type:0 });
 		}
 		
 		private function updater():void {
@@ -181,13 +181,18 @@ package artur.display {
 				var data:DataExchange = new DataExchange();
 				data.addEventListener(DataExchangeEvent.ON_RESULT, onUpdateRes);
 				data.sendData(COMMANDS.CHECK_ENERGY, "", true);
-				if (this.groupCounter == 0) {
+				if (this.groupCounter == 3) {
 					if(UserStaticData.from == "v") {
 						App.upPanel.checkVKGroup();
 					}
 					this.groupCounter = 0;
 				} else {
 					this.groupCounter++;
+				}
+				if(this.bonusCounter == 10) {
+					
+				} else {
+					this.bonusCounter++;
 				}
 			}
 		}

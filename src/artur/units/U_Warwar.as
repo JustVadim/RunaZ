@@ -18,7 +18,7 @@ package artur.units {
 		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
 		private static var sounds:Array = [ { id:'war_hurt', frame:85 }, { id:'blade2', frame:83 }, { id:'blade2', frame:94 }, { id:'fow2', frame:67 }, { id:'bot1_fs1', frame:47 }, { id:'bot1_fs2', frame:56 }, { id:'pall_death', frame:93 } ];
 		public var buffs:Array = PrepareGr.creatBms(new mcBaff, true);
-		
+		public static var onSound:Boolean = true;
 		public function U_Warwar() {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
@@ -55,7 +55,8 @@ package artur.units {
 			this.filters = [App.btnOverFilter];
 		}
 	
-		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void {
+		public function init(parr:DisplayObjectContainer = null, lvl:int = 0):void {
+			onSound = true;
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
@@ -71,6 +72,9 @@ package artur.units {
 				TweenLite.to(this, 0.25, { scaleX:1, scaleY:1 } );
 				this.filters = [];
 			}
+			if (!onSound)
+			return;
+			
 			for (var i:int = 0; i < sounds.length; i++) {
 				if (sounds[i].frame == currentFrame) {
 					App.sound.playSound(sounds[i].id, App.sound.onVoice, 1);

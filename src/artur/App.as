@@ -1,6 +1,7 @@
 package artur 
 {
 	import artur.display.BaseButton;
+	import artur.display.BonusDialog;
 	import artur.display.battle.TopPanel;
 	import artur.display.ByeWin;
 	import artur.display.CloseDialog;
@@ -70,6 +71,7 @@ package artur
 		public static var currMuzPlay:String = 'BatleSong';
 		public static var prop:PropExtended = new PropExtended();
 		public static var upPanel:UpPanel;
+		public static var bomusDialog:BonusDialog;
 		
 		
 		public function App(stg:Stage) 
@@ -134,6 +136,7 @@ package artur
 			this.tabEnabled = false;
 			this.tabChildren = false;
 			App.task = new Task();
+			App.bomusDialog = new BonusDialog();
 
 			Main.THIS.addChild(App.upPanel = new UpPanel());
 			if(UserStaticData.from == "v") {
@@ -151,8 +154,7 @@ package artur
 			currMuzPlay = str;
 		}
 		
-		private function update(e:Event):void 
-		{
+		private function update(e:Event):void {
 			info.update();
 			winManajer.update();
 			UnitCache.update();

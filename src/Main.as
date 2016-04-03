@@ -51,6 +51,7 @@ package  {
 				this.vkPrepare();
 			} 
 			
+			Report.checkDoShow();
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);

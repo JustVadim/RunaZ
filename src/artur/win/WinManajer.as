@@ -4,6 +4,7 @@ package artur.win
 	import artur.display.MyBitMap;
 	import artur.display.Task;
 	import flash.display.Bitmap;
+	import flash.events.Event;
 	import report.Report;
 	import Server.Lang;
 	
@@ -28,6 +29,7 @@ package artur.win
 		private var brama:mcAnimBrama = new mcAnimBrama();
 		private var swapMode:Boolean = false;
 		public static var taskWasShown:Boolean = false;
+		private var is_fb_checked:Boolean = false;
 		
 		public function WinManajer() {
 			if (UserStaticData.hero.bat == -1) {
@@ -71,10 +73,21 @@ package artur.win
 					if (this.currWin != 3) {
 						this.isLevelUp();
 						WinManajer.checkTask();
+						if(!this.is_fb_checked) {
+							this.checkFriendBonus();
+						}
 					}
 				}
 			}
 		}
+		
+		private function checkFriendBonus():void {
+			this.is_fb_checked = true;
+			if(UserStaticData.hero.sett.app_i == 1 && UserStaticData.hero.sett.app_m == 1 && UserStaticData.hero.sett.app_g && UserStaticData.hero.sett.app_fq > 9) {
+				new DataExchange().sendData(COMMANDS.CHECK_FRIENDS_BONUS, "", false);
+			}
+		}
+		
 		
 		public static function checkTask():void {
 			if(UserStaticData.hero.t.tn != 0) {
@@ -96,6 +109,7 @@ package artur.win
 					var data:DataExchange = new DataExchange();
 					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onLevelUpRes);
 					data.sendData(COMMANDS.UNIT_LEVEL_UP, key.toString(), true);
+					//break;
 				}
 			}
 		}
