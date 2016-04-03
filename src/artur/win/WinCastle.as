@@ -7,6 +7,7 @@ package artur.win {
 	import artur.display.MyBitMap;
 	import artur.display.ShopInventar;
 	import artur.display.Slot;
+	import artur.display.Swaper;
 	import artur.display.UnitBlank;
 	import artur.display.WinSellExtend;
 	import artur.McTextCastleWinExtend;
@@ -27,7 +28,7 @@ package artur.win {
 		public static var shopInventar:ShopInventar
 		public static var chest:Chest = new Chest();
 		public static var mcSell:WinSellExtend = new WinSellExtend();
-		
+		public var swaper:Swaper 
 		
 		public function WinCastle() {
 			mcSell.gotoAndStop(1); 
@@ -53,7 +54,7 @@ package artur.win {
 			}
 			txtCastle.scroll.source = spr_units;
 			txtCastle.scroll.update();
-			
+			swaper = new Swaper();
 		}
 		
 		private function outSell(e:MouseEvent):void {
@@ -81,6 +82,7 @@ package artur.win {
 			} else if(UserStaticData.hero.demo == 1) {
 				App.tutor.init(4);
 			}
+			swaper.init();
 		}
 		
 		public function updateSlots():void {
