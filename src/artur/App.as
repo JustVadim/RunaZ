@@ -142,14 +142,15 @@ package artur
 			}
 
 		}
-		public static function swapMuz(str:String):void
-		{
+		
+		public static function swapMuz(str:String):void {
 			if (str == currMuzPlay)
-			return;
+				return;
 			sound.stopSound(currMuzPlay);
 			sound.playSound(str, sound.onSound);
 			currMuzPlay = str;
 		}
+		
 		private function update(e:Event):void 
 		{
 			info.update();

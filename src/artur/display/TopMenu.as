@@ -34,6 +34,7 @@ package artur.display {
 		private var gold:mcRessBar = new mcRessBar();
 		
 		private var groupCounter:int = 0;
+		private var bonusCounter:int = 0;
 		
 		public function TopMenu() {
 			this.tabEnabled = false;
@@ -175,7 +176,7 @@ package artur.display {
 			timer.start();
 		}
 		
-		private function updateEnergy(e:TimerEvent = null):void  {
+		private function updateEnergy(e:TimerEvent):void  {
 			if (DataExchange.loged) {
 				var data:DataExchange = new DataExchange();
 				data.addEventListener(DataExchangeEvent.ON_RESULT, onUpdateRes);
@@ -188,9 +189,9 @@ package artur.display {
 				} else {
 					this.groupCounter++;
 				}
-				
 			}
 		}
+		
 		public function updateBar():void {
 			
 		}

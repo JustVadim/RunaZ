@@ -133,6 +133,7 @@ package artur.display.battle
 			
 			this.addChild(mcBtns);
 		}
+		
 		public function frees():void
 		{
 			if (parent) parent.removeChild(this);
