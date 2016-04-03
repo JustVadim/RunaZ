@@ -13,6 +13,7 @@ package artur.display {
 			///this.addChild(mc);
 			this.addChild(RasterClip.raster(mc, mc.width, mc.height));
 			this.y = -30;
+			this.scaleX = this.scaleY = 0.6;
 		}
 		
 		public static function getGalochka(parr:Sprite, xx:Number):ButtonGalochka {

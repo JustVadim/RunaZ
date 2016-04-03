@@ -33,6 +33,8 @@ package artur.display {
 		private var ava_loader:Loader;
 		private var gold:mcRessBar = new mcRessBar();
 		
+		private var groupCounter:int = 0;
+		
 		public function TopMenu() {
 			this.tabEnabled = false;
 			this.tabChildren = false;
@@ -113,7 +115,7 @@ package artur.display {
 					this.removeChild(this.gold);
 				}
 			}
-			this.updateEnergy();
+			//this.updateEnergy();
 			this.updateAva();
 			this.updateGold();
 		}
@@ -178,6 +180,15 @@ package artur.display {
 				var data:DataExchange = new DataExchange();
 				data.addEventListener(DataExchangeEvent.ON_RESULT, onUpdateRes);
 				data.sendData(COMMANDS.CHECK_ENERGY, "", true);
+				if (this.groupCounter == 0) {
+					if(UserStaticData.from == "v") {
+						App.upPanel.checkVKGroup();
+					}
+					this.groupCounter = 0;
+				} else {
+					this.groupCounter++;
+				}
+				
 			}
 		}
 		public function updateBar():void {

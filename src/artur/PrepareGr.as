@@ -137,6 +137,7 @@ package artur
 				bmd.draw(drawSpr, mtx);
 				drawSpr.removeChild(clip);
 				bm = new Bitmap(bmd, PixelSnapping.AUTO, true);
+				bm.smoothing = true;
 				bm.width /= scaleFactor; 
 				bm.height /= scaleFactor;
 				bm.x -= mtx.tx/scaleFactor;

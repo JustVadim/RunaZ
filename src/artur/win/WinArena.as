@@ -18,7 +18,7 @@ package artur.win {
 		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
-		public static const NEEDED_LVL:int = 5;
+		public static const NEEDED_LVL:int = 1;
 		private var btn1Title:TextField;
 		
 		
