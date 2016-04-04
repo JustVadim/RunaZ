@@ -116,7 +116,6 @@ package artur.display {
 					this.removeChild(this.gold);
 				}
 			}
-			//this.updateEnergy();
 			this.updateAva();
 			this.updateGold();
 		}

@@ -11,10 +11,8 @@ package artur.display.battle
 	import flash.events.MouseEvent;
 	import report.Report;
 	import Server.Lang;
-	/**
-	 * ...
-	 * @author Som911
-	 */
+	
+	
 	public class TopPanel extends Sprite
 	{
 		private var bg:Bitmap  = PrepareGr.creatBms(new mcBgTopPanel(), false)[0];

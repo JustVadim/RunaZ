@@ -84,7 +84,7 @@ package artur.display.battle
 		
 		public function onOut1(e:MouseEvent = null):void 
 		{
-			WinBattle.hero_inv.frees();
+			WinBattle.hero_inv.frees1();
 			if (Node.unit_info_timer.running)
 			{
 				Node.unit_info_timer.stop();

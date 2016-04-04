@@ -543,7 +543,7 @@ package artur.win
 					WinBattle.ult_btn.mcBg.visible = false;
 				}
 				if (this.topPanel.isAuto() == false) {
-					this.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+					this.grid.showAvailableCells(loc.x, loc.y, r, is_arr, cur_unit.it[5] != null);
 					this.makeUltimate(cur_unit, cus);
 					this.makeBanochki(cur_unit, cus);
 					this.topPanel.setDefence(true);
@@ -830,18 +830,15 @@ package artur.win
 			}
 		}
 		
-		private function getControlAfterUlt(is_ult_btn:Boolean):void
-		{
+		private function getControlAfterUlt(is_ult_btn:Boolean):void {
 			WinBattle.inst.grid.lightUnits(bat.locs[0], bat.hps[0], 0);
 			WinBattle.inst.grid.lightUnits(bat.locs[1], bat.hps[1], 1);
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
-			var r:int;
-			var is_arr:int;
 			var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
+			var is_arr:int = cur_unit.t_d;
+			var r:int = cur_unit.sp;
 			var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
-			r = cur_unit.sp;
-			is_arr = cur_unit.t_d;
-			WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+			WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr, cur_unit.it[5] != null);
 			WinBattle.ult_btn.mc.visible = !is_ult_btn;
 		}
 		

@@ -235,9 +235,42 @@ package artur.display
 						this.frees();
 						break;
 				}
-				break;	
+				break;
+			case 7:
+				switch(mc) {
+					case this.btnEx:
+						this.frees();
+						break;
+					case this.btnSilver:
+						this.frees();
+						this.soldHero();
+						break;
+				}
+				break;
 			}
 			
+		}
+		
+		private function soldHero():void {
+			App.lock.init();
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onSoldHero);
+			data.sendData(COMMANDS.SOLD_HERO, WinCastle.currSlotClick, true);
+		}
+		
+		private function onSoldHero(e:DataExchangeEvent):void {
+			var res:Object = JSON2.decode(e.result);
+			if (res.res != null) {
+				delete(UserStaticData.hero.units[WinCastle.currSlotClick]);
+				UserStaticData.hero.silver += 800;
+				App.sound.playSound('gold', App.sound.onVoice, 1);
+				App.topMenu.updateGold();
+				Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).init();
+				WinCastle.getCastle().selectSlot(int(WinCastle.currSlotClick));
+				App.lock.frees();
+			} else {
+				App.lock.init(res.error);
+			}
 		}
 		
 		public function bye(indexPrice:int):void {
@@ -249,8 +282,7 @@ package artur.display
 			data.sendData(COMMANDS.BYE_UNIT, JSON2.encode(obj), true);
 		}
 		
-		public function byeItem(indexPrice:int):void
-		{
+		public function byeItem(indexPrice:int):void {
 			 frees();
 			 App.lock.init();
 			 WinCastle.shopInventar.frees();
@@ -267,13 +299,15 @@ package artur.display
 			if (obj.error == null) {
 				if (obj.s != null) {
 					UserStaticData.hero.silver = int(obj.s);
-					WinCastle.txtCastle.txtSilver.text = String(obj.s);
+					App.topMenu.updateGold();
 				} else {
 					UserStaticData.hero.gold = int(obj.g);
-					WinCastle.txtCastle.txtGold.text = String(obj.g);
+					App.topMenu.updateGold();
 				}
 				UserStaticData.hero.units[int(WinCastle.currSlotClick)] = Maker.clone(UserStaticData.magaz_units[index]);
-				WinCastle.getCastle().updateSlots();
+				Slot(WinCastle.getCastle().slots[WinCastle.currSlotClick]).init();
+				WinCastle.getCastle().selectSlot(int(WinCastle.currSlotClick));
+				
 				WinCastle.txtCastle.scroll.visible = false;
 				if(UserStaticData.hero.demo == 0) {
 					UserStaticData.hero.demo++;
@@ -283,7 +317,6 @@ package artur.display
 			} else {
 				App.lock.init('Error: '+obj.error)
 			}
-			//unlock crab
 		}
 		
 		private function getRess2(e:DataExchangeEvent):void {
@@ -292,10 +325,10 @@ package artur.display
 			if (obj.error == null) {
 				if (obj.s != null) {
 					UserStaticData.hero.silver = int(obj.s);
-					WinCastle.txtCastle.txtSilver.text = String(obj.s);
+					App.topMenu.updateGold();
 				} else {
 					UserStaticData.hero.gold = int(obj.g);
-					WinCastle.txtCastle.txtGold.text = String(obj.g);
+					App.topMenu.updateGold();
 				}
 				var unit:Object = UserStaticData.hero.units[int(WinCastle.currSlotClick)];
 				if(this.invPlace == -1) {

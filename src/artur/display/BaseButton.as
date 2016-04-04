@@ -38,24 +38,21 @@ package artur.display
 			this.addChild(this.cont);
 		}
 		
-		private function onAddedToStage(e:Event):void 
-		{
+		private function onAddedToStage(e:Event):void {
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			this.addEventListener(MouseEvent.ROLL_OVER, over);
 			this.addEventListener(MouseEvent.ROLL_OUT, out);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, down);
 			this.addEventListener(MouseEvent.MOUSE_UP, up);
 			this.addEventListener(MouseEvent.CLICK, this.onClick);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage)
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
 		}
 		
-		private function onClick(e:MouseEvent):void 
-		{
-			this.filters = [];
+		private function onClick(e:MouseEvent):void {
+			
 		}
 		
-		private function onRemovedFromStage(e:Event):void 
-		{
+		private function onRemovedFromStage(e:Event):void {
 			this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			this.removeEventListener(MouseEvent.ROLL_OVER, over);
@@ -63,7 +60,7 @@ package artur.display
 			this.removeEventListener(MouseEvent.MOUSE_DOWN, down);
 			this.removeEventListener(MouseEvent.MOUSE_UP, up);
 			this.removeEventListener(MouseEvent.CLICK, this.onClick);
-			
+			this.filters = [];
 		}
 		
 		private function up(e:MouseEvent):void {
@@ -98,17 +95,15 @@ package artur.display
 			}
 		}
 		
-		public function swap(index:int):void
-		{
+		public function swap(index:int):void {
 			//bm.bitmapData = BmdFrames(Main.prepare.cach[10]).frames[index];
 			//bm.x = - bm.width / 2;
 			//bm.y = -bm.height / 2;
 		}
 		
 		public function setActive(val:Boolean ):void {
-			active = val;
+			this.active = val;
 			this.buttonMode = val;
-			//this.mouseChildren = val;
 			this.mouseEnabled = val;
 			this.scaleX = 1;
 			this.scaleY = 1;

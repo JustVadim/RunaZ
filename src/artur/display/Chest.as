@@ -350,7 +350,7 @@ package artur.display
 			var obj:Object = JSON2.decode(e.result);
 			if (!obj.error) {
 				UserStaticData.hero.silver = obj.s;
-				WinCastle.txtCastle.txtSilver.text = String(obj.s);
+				App.topMenu.updateGold();
 				var ww:int = this.uppedItemObj.c[104];
 				var hh:int = this.uppedItemObj.c[105];
 				var cell_y:int = upped_item_num / this.wd;

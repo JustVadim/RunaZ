@@ -14,6 +14,7 @@ package artur.win {
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Server.Lang;
+	import report.Report;
 
 	
 	
@@ -27,7 +28,7 @@ package artur.win {
 		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
-		public static const NEEDED_LVL:int = 5;
+		public static const NEEDED_LVL:int = 1;
 		private var btn1Title:TextField;
 		private var dell1:int
 		private var dell2:int
@@ -62,7 +63,7 @@ package artur.win {
 		
 		private function onBtn(e:MouseEvent):void {
 			App.info.frees();
-			if(UserStaticData.hero.level >= WinArena.NEEDED_LVL && GetServerData.getUserIsReadyToBattle()) {
+			if(UserStaticData.hero.level >= WinArena.NEEDED_LVL && GetServerData.getUserIsReadyToBattle() && UserStaticData.hero.cur_vitality > 9) {
 				mcFound.rotation = 0;
 				mcFound.rot.visible = false;
 				mcFound.gotoAndPlay(1);
@@ -80,6 +81,8 @@ package artur.win {
 					App.closedDialog.init1(Lang.getTitle(44), false, true);
 				} else if(!GetServerData.getUserIsReadyToBattle()) {
 					App.closedDialog.init1(Lang.getTitle(36), true);
+				} else if(UserStaticData.hero.cur_vitality < 10) {
+					App.closedDialog.init1(Lang.getTitle(170), false, false, false, true);
 				}
 			}
 		}
@@ -96,9 +99,10 @@ package artur.win {
 		}
 		
 		public function init():void {
-			dell1 =40;
-			dell2 = 60;
+			Report.addMassage(UserStaticData.hero.rat);
 			
+			dell1 = 80;
+			dell2 = 120;
 			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
 		    App.spr.addChild(btn1);
