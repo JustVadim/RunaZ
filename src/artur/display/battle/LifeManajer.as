@@ -1,5 +1,6 @@
 package artur.display.battle 
 {
+	import Utils.Functions;
 	import artur.App;
 	import artur.win.WinBattle;
 	import flash.display.MovieClip;
@@ -39,10 +40,8 @@ package artur.display.battle
 			}
 		}
 		
-		public function showLB(is_bar:Boolean):void
-		{
-			if (!bin)
-			{
+		public function showLB(is_bar:Boolean):void {
+			if (!bin) {
 				LifeManajer.bin = true;
 				this.redraw();
 				if (is_bar)
@@ -57,8 +56,7 @@ package artur.display.battle
 			}
 		}
 		
-		public function hideLb():void
-		{
+		public function hideLb():void {
 			bin = false;
 			for (var i:int = 0; i < 2; i++) 
 			{
@@ -77,8 +75,7 @@ package artur.display.battle
 			Main.THIS.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		}
 		
-		public static function unpateCurrMove(t:int, p:int):void
-		{
+		public static function unpateCurrMove(t:int, p:int):void {
 			var unit:MovieClip = un_Data[t][p].unit;
 			var bar:mcBar = un_Data[t][p].bar;
 			bar.x = unit.x;
@@ -95,7 +92,7 @@ package artur.display.battle
 			else
 			{
 				LifeManajer.un_Data[t][p] = null;
-				var bar:mcBar = unit.bar;
+				var bar:mcBarExteds = unit.bar;
 				delete(unit.bar);
 				bar.parent.removeChild(bar);
 				bar.alpha = 0;
@@ -110,41 +107,35 @@ package artur.display.battle
 			
 		}
 		
-		public function redraw():void
-		{
-			for (var i:int = 0; i < 2; i++) 
-			{
-				for (var j:Object in un_Data[i]) 
-				{
-					if (un_Data[i][j] != null)
-					{
+		public function redraw():void {
+			for (var i:int = 0; i < 2; i++) {
+				for (var j:Object in un_Data[i])  {
+					if (un_Data[i][j] != null) {
 						var obj:Object = un_Data[i][j];
-						if (obj.currLife > 0 )
-						{
-							var bar:mcBar = getBar();
+						if (obj.currLife > 0 ) {
+							var bar:mcBarExteds = getBar();
 							bar.x = obj.unit.x;
 							bar.y = obj.unit.y + (obj.unit._head.y*obj.unit.normScale) - obj.unit._head.height/3; 
 							obj.bar = bar;
 							goToBar(obj);
+							bar.setText(WinBattle.inst.showHP.selected);
 							App.spr.addChild(bar);
 						}
-						else
-						{
+						else {
 							un_Data[i][j] = null;
 						}
 					}
 				}
 			}
 		}
+		
 		public function update():void
 		{
 			
 		}
 		
-		public function frees():void
-		{
-			if (LifeManajer.bin)
-			{
+		public function frees():void {
+			if (LifeManajer.bin) {
 				this.freeUnData(LifeManajer.un_Data[0]);
 				this.freeUnData(LifeManajer.un_Data[1]);
 				LifeManajer.un_Data = [[], []];
@@ -154,11 +145,9 @@ package artur.display.battle
 		private function freeUnData(un:Object):void 
 		{
 			LifeManajer.bin = false;
-			for (var key:Object in un)
-			{
-				if (un[key] != null)
-				{
-					var bar:mcBar = un[key].bar;
+			for (var key:Object in un) {
+				if (un[key] != null) {
+					var bar:mcBarExteds = un[key].bar;
 					delete(un[key].bar);
 					bar.alpha = 0;
 				}
@@ -166,18 +155,16 @@ package artur.display.battle
 			}
 		}
 		
-		public function getBar():mcBar
+		public function getBar():mcBarExteds
 		{
-			for (var i:int = 0; i < pool.length; i++) 
-			{
-				if (pool[i].alpha == 0) 
-				{
+			for (var i:int = 0; i < pool.length; i++) {
+				if (pool[i].alpha == 0) {
 					pool[i].alpha = 0.8;
 					return pool[i]; 
 				}
 			}
 			
-			var mc:mcBar = new mcBar();
+			var mc:mcBarExteds = new mcBarExteds();
 			pool.push(mc);
 			mc.alpha = 0.8;
 			return mc;
@@ -185,11 +172,13 @@ package artur.display.battle
 		
 		public static function goToBar(unit:Object):void
 		{
-			var bar:mcBar = unit.bar;
+			var bar:mcBarExteds = unit.bar;
 			if (unit.currLife != 0)
 			{
 				var percent:int = 1 + unit.currLife / unit.maxLife * 100;
 				bar.life.gotoAndStop(percent);
+				Functions.compareAndSet(bar.title, unit.currLife + "/" + unit.maxLife);
+				//bar.title.text = ;
 				percent = 1 + unit.currMana / unit.maxMana * 100;
 				bar.mana.gotoAndStop(percent);
 			}

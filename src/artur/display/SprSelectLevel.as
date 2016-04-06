@@ -80,12 +80,12 @@ package artur.display {
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.error==null) {
 				UserStaticData.hero.mbat = obj.res;
-				UserStaticData.hero.bat = obj.res.id;
+					UserStaticData.hero.bat = obj.res.id;
 				App.lock.frees();
 				App.winManajer.swapWin(3);
 			} else {
 				if (obj.error == 1) {
-					App.lock.frees();
+					App.lock.frees();	
 					App.closedDialog.init1(Lang.getTitle(37), false);
 				} else {
 					App.lock.init('Error: ' + obj.error)

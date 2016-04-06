@@ -101,9 +101,11 @@ package artur.display
 				mc.name = String(name.toString());
 			}
 			this.addChild(progresEXP);
-			this.addChild(this.removeHeroBtn = new BaseButton(31));
-			this.removeHeroBtn.x = 30;
-			this.removeHeroBtn.y = 250;
+			if(!this.battle_init) {
+				this.addChild(this.removeHeroBtn = new BaseButton(31));
+				this.removeHeroBtn.x = 30;
+				this.removeHeroBtn.y = 250;
+			}
 		}
 		
 		private function setBuffsBtnsProperties():void {
@@ -170,10 +172,11 @@ package artur.display
 		}
 		
 		private function initRemoveBtn():void {
-			this.removeHeroBtn.addEventListener(MouseEvent.CLICK, this.onRemoveClick);
-			this.removeHeroBtn.addEventListener(MouseEvent.ROLL_OVER, this.onRemoveOver);
-			this.removeHeroBtn.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
-			
+			if(this.removeHeroBtn != null) {
+				this.removeHeroBtn.addEventListener(MouseEvent.CLICK, this.onRemoveClick);
+				this.removeHeroBtn.addEventListener(MouseEvent.ROLL_OVER, this.onRemoveOver);
+				this.removeHeroBtn.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			}
 		}
 		
 		private function onRollOut(e:MouseEvent):void {
@@ -467,11 +470,13 @@ package artur.display
 		private function onItemUp(e:MouseEvent):void {
 			if (e.target.name == "sell") {
 				this.afterPut();
+				var item:Object;
 				if (this.invPlace == -1) {
-					App.byeWin.init(Lang.getTitle(32), "Вещицу", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
-				} else
-				{
-					App.byeWin.init(Lang.getTitle(32), "Вещицу", 0, int(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace].c[100]) / 2 , NaN, 3, NaN, this.invPlace);
+					item = UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[itemType];
+					App.byeWin.init(Lang.getTitle(32), Lang.getItemTitle(item.c[103], item.id, item.c[102]), 0, int(item.c[100]) / 2 , NaN, 3, NaN, this.invPlace);
+				} else {
+					item = UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace];
+					App.byeWin.init(Lang.getTitle(32), Lang.getItemTitle(item.c[103], item.id, item.c[102]), 0, int(item.c[100]) / 2 , NaN, 3, NaN, this.invPlace);
 				}
 			} else if (e.target is mcCall) { 
 				this.afterPut();
@@ -586,12 +591,15 @@ package artur.display
 			if (bat.currentFrame == 1) {
 				App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, {title:Lang.getTitle(1, itemId), txtInfo_w:200, txtInfo_h:37,txtInfo_t:Lang.getTitle(33),type:0} )
 			} else {
+				var item:Object;
 				switch(true) {
 					case (int(bat.name) < 5):
-						App.info.init(bat.x + this.x - 236 - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Вещица", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false } )
+						item = UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)];
+						App.info.init(bat.x + this.x - 236 - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:2, chars:item.c, bye:false } )
 						break;
 					case (int(bat.name) == 5 || int(bat.name) == 6):
-						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:"Вещица", type:2, chars:UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)].c, bye:false} )	
+						item = UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)];
+						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:2, chars:item.c, bye:false} )	
 						break;
 					case (int(bat.name) == 7):
 						break;

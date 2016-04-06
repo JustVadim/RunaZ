@@ -135,7 +135,7 @@ package artur.display
 			} else if (e.target.name == "sell") {
 				Mouse.show();
 				this.afterPut();
-				App.byeWin.init(Lang.getTitle(62), "Вещь", 0, int(this.uppedItemObj.c[100]/2) ,NaN,2,NaN);
+				App.byeWin.init(Lang.getTitle(62), Lang.getItemTitle(this.uppedItemObj.c[103], upped_item_id, this.uppedItemObj.c[102]), 0, int(this.uppedItemObj.c[100]/2) ,NaN,2,NaN);
 			} else if("yRect" in e.target) {
 				var mc:MovieClip = MovieClip(e.target);
 				if (mc.yRect.visible) {

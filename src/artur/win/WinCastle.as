@@ -95,6 +95,7 @@ package artur.win {
 				}
 				WinCastle.txtCastle.scroll.visible = true;
 			} else {
+				WinCastle.inventar.frees1();
 				WinCastle.txtCastle.scroll.visible = false;
 				WinCastle.currSlotClick = String(i);
 				WinCastle.inventar.init1(UserStaticData.hero.units[i], anim);

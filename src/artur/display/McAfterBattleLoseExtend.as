@@ -110,13 +110,15 @@ package artur.display {
 		
 		private function onThisMissClick(e:MouseEvent):void {
 			McWinAfterBattleExtend.rebattleUse = true;
-			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substr(3)) % 11;
+			Report.addMassage(String(UserStaticData.hero.mbat.ids[1]).substring(3)+ " " + UserStaticData.hero.mbat.ids[1]);
+			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substring(3)) % 11;
 			WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
 		}
 		
 		private function onNextClick(e:MouseEvent):void {
 			McWinAfterBattleExtend.rebattleUse = true;
-			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substr(3));
+			Report.addMassage(String(UserStaticData.hero.mbat.ids[1]).substring(3)+ " " + UserStaticData.hero.mbat.ids[1]);
+			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substring(3));
 			if (missNum != 0 && (missNum + 1) % 11 == 0) {
 				MapTown.currTownClick++;
 				WinMap.sprSelLevel.init(0, UserStaticData.hero.miss[MapTown.currTownClick].mn[0]);

@@ -1,9 +1,11 @@
 package artur.win 
 {
+	import Server.Lang;
 	import artur.App;
 	import artur.display.battle.AttackNode;
 	import artur.display.battle.BattleChat;
 	import artur.display.battle.BattleGrid;
+	import artur.display.battle.BattleTimer;
 	import artur.display.battle.eff.BaseEff;
 	import artur.display.battle.eff.BotleManaEff;
 	import artur.display.battle.eff.EffManajer;
@@ -31,6 +33,7 @@ package artur.win
 	import com.greensock.events.LoaderEvent;
 	import datacalsses.Hero;
 	import Enums.Items;
+	import fl.controls.CheckBox;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -79,7 +82,9 @@ package artur.win
 		public var topPanel:TopPanelBattle;
 		public var bigLifeBar:mcBigLifeBarExtend = new mcBigLifeBarExtend();
 		public static var tutor:BattleTotorExtended;
-		
+		public static var timer:BattleTimer = new BattleTimer();
+		private var is_bot:Boolean = false;
+		public var showHP:CheckBox = new CheckBox();
 		
 		public function WinBattle() 
 		{
@@ -111,6 +116,11 @@ package artur.win
 			this.topPanel = new TopPanelBattle(this);
 			BaseEff(EffManajer.getEff("base"));
 			BaseEff(EffManajer.getEff("base"));
+			this.showHP.x = -2;
+			this.showHP.y = 13;
+			this.showHP.width = 150;
+			this.showHP.label = Lang.getTitle(173);
+			this.showHP.selected = true;
 		}
 		
 		private function onCloseWin(e:MouseEvent):void {
@@ -167,6 +177,19 @@ package artur.win
 			App.prop.y = -405;
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
 			App.spr.addChild(bigLifeBar);
+			this.is_bot = String(WinBattle.bat.ids[1]).substr(0, 3) == "bot";
+			if(!this.is_bot) {
+				WinBattle.timer.init();
+			}
+			App.spr.addChild(this.showHP);
+			this.showHP.addEventListener(MouseEvent.CLICK, this.onCheckDigitClick);
+		}
+		
+		private function onCheckDigitClick(e:MouseEvent):void {
+			if(LifeManajer.bin) {
+				lifeManajer.hideLb();
+				lifeManajer.showLB(false);
+			}
 		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void {
@@ -513,6 +536,9 @@ package artur.win
 		 
 		public function setCurrStep():void {
 			this.ult_clicked = false;
+			if(!this.is_bot) {
+				WinBattle.timer.setTimer(30);
+			}
 			WinBattle.sortSpr();
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
 			if (currUnit != null) {
@@ -765,6 +791,7 @@ package artur.win
 				sortArr[j].frees()
 			}
 			sortArr.splice(0, sortArr.length);
+			WinBattle.timer.frees();
 		}
 		
 		private function freeUnits(unit:Object):void 

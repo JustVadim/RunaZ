@@ -1,5 +1,6 @@
 package artur.display 
 {
+	import Server.Lang;
 	import adobe.utils.CustomActions;
 	import artur.App;
 	import artur.RasterClip;
@@ -29,8 +30,7 @@ package artur.display
 			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
 		]
 		
-		public function ItemCall() 
-		{
+		public function ItemCall() {
 			this.tabEnabled = this.tabChildren = this.mouseChildren = false;
 			this.buttonMode = true;
 		}
@@ -47,23 +47,21 @@ package artur.display
 			Main.THIS.stage.addChild(this);
 		}
 		
-		public function out(e:MouseEvent=null):void 
-		{
+		public function out(e:MouseEvent=null):void {
 			this.scaleX = 1;
 			this.scaleY = 1;
 			this.filters = [];
 			App.info.frees();
 		}
 		
-		public function over(e:MouseEvent):void 
-		{
+		public function over(e:MouseEvent):void {
 			this.filters = [App.btnOverFilter];
-			App.info.init(this.x+WinCastle.chest.x- 236,this.y+WinCastle.chest.y+this.height, { title:"Шмотка", type:2, chars:UserStaticData.hero.chest[int(e.currentTarget.name)].c, bye:false } )
+			var item:Object = UserStaticData.hero.chest[int(e.currentTarget.name)];
+			App.info.init(this.x+WinCastle.chest.x- 236,this.y+WinCastle.chest.y+this.height, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:2, chars:item.c, bye:false } )
 		}
 		
 		
 		public function frees():void {
-			
 			Report.addMassage("freeesss");
 			free = true;
 			this.itemImage.free = true;

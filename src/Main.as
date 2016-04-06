@@ -56,6 +56,7 @@ package  {
 			Security.allowDomain("*");
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
+			
 		}
 		
 		private function vkPrepare():void {
