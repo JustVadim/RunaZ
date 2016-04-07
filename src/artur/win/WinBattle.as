@@ -267,18 +267,25 @@ package artur.win
 			tim.start();
 			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
 			    App.sound.playSound("botl", App.sound.onVoice, 1);
+				var res:int;
 				if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA) {
-					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
+					res = unit.hp * banka.c[Items.BANOCHKATYPe_QTY] / 100;
+					res = (int(banka.c[Items.BANOCHKATYPe_QTY]) > res) ? int(banka.c[Items.BANOCHKATYPe_QTY]):res;
+					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + res, unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
 					EffManajer.effBotleHill.init(node.x, node.y);
+					TextEff(EffManajer.getEff('text')).init(node.x, node.y - 60, String("+" + res), 0x00FD40);
 					this.bigLifeBar.txtHP.text = hps[obj.tu.p] + "/" + unit.hp;
 					this.bigLifeBar.mcLife.gotoAndStop(int(1 + hps[obj.tu.p] / unit.hp * 100))
 				} else {
-					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
+					res = unit.mp * banka.c[Items.BANOCHKATYPe_QTY] / 100;
+					res = (int(banka.c[Items.BANOCHKATYPe_QTY]) > res) ? int(banka.c[Items.BANOCHKATYPe_QTY]):res;
+					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + res, unit.mp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
 					BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
 					this.bigLifeBar.txtMp.text = mps[obj.tu.p] + "/" + unit.mp;
 					this.bigLifeBar.mcMana.gotoAndStop(int(1 + mps[obj.tu.p] / unit.mp * 100));
+					TextEff(EffManajer.getEff('text')).init(node.x, node.y - 60, String("+" + res), 0x2DBBFF);
 					if (!this.topPanel.isAuto() && WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam) {
 						this.makeUltimate(unit, WinBattle.bat['set'][WinBattle.bat.cus]);
 					}
