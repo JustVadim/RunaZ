@@ -14,6 +14,9 @@ package artur.win {
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Server.Lang;
+	import flash.filters.GlowFilter;
+	import flash.text.TextFormatAlign;
+	import report.Report;
 
 	
 	
@@ -27,13 +30,17 @@ package artur.win {
 		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
-		public static const NEEDED_LVL:int = 2;
+		public static const NEEDED_LVL:int = 3;
 		private var btn1Title:TextField;
 		private var dell1:int
 		private var dell2:int
 		private var char1:Object;
 		private var char2:Object;
-		private var types:Array = [U_Lyk,U_Mag,U_Paladin,U_Warwar,U_Lyk,U_Mag,U_Paladin,U_Warwar];
+		private var types:Array = [U_Lyk, U_Mag, U_Paladin, U_Warwar, U_Lyk, U_Mag, U_Paladin, U_Warwar];
+		private var ratText:TextField = Functions.getTitledTextfield(298, 165, 200, 20, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "1111", 0.9);
+		
+		
+		
 		public function WinArena() {
 			bg = new MyBitMap(App.prepare.cach[39]);
 			btn1 = new BaseButton(40);
@@ -43,6 +50,7 @@ package artur.win {
 			mcFound.x = 400;
 			mcFound.y = 250;
 			mcFound.gotoAndStop(1);
+			this.ratText.filters = [new GlowFilter(0x0, 1, 2, 2)];
 		}
 		
 		private function onBtnClose(e:MouseEvent):void {
@@ -62,7 +70,7 @@ package artur.win {
 		
 		private function onBtn(e:MouseEvent):void {
 			App.info.frees();
-			if(UserStaticData.hero.level >= WinArena.NEEDED_LVL && GetServerData.getUserIsReadyToBattle()) {
+			if(UserStaticData.hero.level >= WinArena.NEEDED_LVL && GetServerData.getUserIsReadyToBattle() && UserStaticData.hero.cur_vitality > 9) {
 				mcFound.rotation = 0;
 				mcFound.rot.visible = false;
 				mcFound.gotoAndPlay(1);
@@ -80,6 +88,8 @@ package artur.win {
 					App.closedDialog.init1(Lang.getTitle(44), false, true);
 				} else if(!GetServerData.getUserIsReadyToBattle()) {
 					App.closedDialog.init1(Lang.getTitle(36), true);
+				} else if(UserStaticData.hero.cur_vitality < 10) {
+					App.closedDialog.init1(Lang.getTitle(170), false, false, false, true);
 				}
 			}
 		}
@@ -96,9 +106,10 @@ package artur.win {
 		}
 		
 		public function init():void {
-			dell1 =40;
-			dell2 = 60;
-			
+			//Report.addMassage(UserStaticData.hero.rat);
+			this.ratText.text = Lang.getTitle(171) + UserStaticData.hero.rat;
+			dell1 = 80;
+			dell2 = 120;
 			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
 		    App.spr.addChild(btn1);
@@ -120,6 +131,7 @@ package artur.win {
 			U_Paladin.onSound = false;
 			App.spr.addChild(Sprite(char2));
 			App.spr.addChild(Sprite(char1));
+			App.spr.addChild(this.ratText);
 			btn1.addEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
 			btn1.addEventListener(MouseEvent.ROLL_OVER, this.onBattleOver);

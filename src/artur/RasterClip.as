@@ -26,8 +26,10 @@ package artur
 			bmd = new BitmapData(wd*scaleFactor, hg*scaleFactor, true, 0);
 			bmd.draw(drawSpr);
 			bm = new Bitmap(bmd, PixelSnapping.AUTO, true);
+			bm.smoothing = true;
 			bm.scaleX = 1 / scaleFactor;
 			bm.scaleY = 1 / scaleFactor;
+			drawSpr.removeChild(clip);
 			clip = null;
 			return bm;
 		}

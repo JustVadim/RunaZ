@@ -1,4 +1,5 @@
 package artur.display {
+	import Utils.Functions;
 	import artur.App;
 	import artur.units.UnitCache;
 	import artur.win.WinCastle;
@@ -26,8 +27,9 @@ package artur.display {
 		namesUnit[104] = 'BotGhost';
 		namesUnit[105] = 'BotGhost2';
 		
-		public function Slot() {
-			this.tabEnabled = this.tabChildren = this.mouseChildren = false;
+		public function Slot(i:int) {
+			Functions.SetPriteAtributs(this, true, false, 73.1, 68.25 + i * 95);
+			this.name = String(i);
 			btnByeUnit = new BaseButton(8, 0.9, 5, 'click1', 'over1', 0x000000);
 			this.addEventListener(MouseEvent.CLICK, onSlotClick);
 			this.addEventListener(MouseEvent.ROLL_OVER, over);
@@ -91,43 +93,30 @@ package artur.display {
 		}
 		
 		public function init():void {
-			 if (UserStaticData.hero.units[int(name)] == null) {
-				if (this.unit != null && this.contains(MovieClip(this.unit)))
-				{
-					this.removeChild(this.lvl_star);
-					this.unit.frees();
-				}
+			this.frees();
+			App.spr.addChildAt(this, 0);
+			if (UserStaticData.hero.units[int(name)] == null) {
 				this.addChild(btnByeUnit);
-			 }
-			 else
-			 { 
-				if (!WinCastle.getCastle().mcCurr.parent)
-				{
+			} else { 
+				/*var mcCurr:mcCurrSlot = WinCastle.getCastle().mcCurr;
+				if (!mcCurr.parent) {
 					WinCastle.currSlotClick = this.name;
-					this.addChild(WinCastle.getCastle().mcCurr);
-					WinCastle.getCastle().mcCurr.x = -7;
+					this.addChild(mcCurr);
 					WinCastle.inventar.init1(UserStaticData.hero.units[this.name]);
-				}
-				else
-				{
-					if (WinCastle.getCastle().mcCurr.parent == this)
-					{
-						WinCastle.inventar.init1(UserStaticData.hero.units[this.name],false);
+				} else {
+					if (WinCastle.getCastle().mcCurr.parent == this) {
+						WinCastle.inventar.init1(UserStaticData.hero.units[this.name], false);
 					}
-				}
-				if (this.contains(this.btnByeUnit))
-					this.removeChild(this.btnByeUnit);
-				if (unit == null)
-				{
-					this.unit = UnitCache.getUnit(namesUnit[UserStaticData.hero.units[int(this.name)].t]);
-					unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[this.name]));
-					this.unit.init(this);
-					this.unit.x = 0; this.unit.y = 0;	     
-				}
-				this.addChild(MovieClip(unit));	 
+				}*/
+				
+				this.unit = UnitCache.getUnit(namesUnit[UserStaticData.hero.units[int(this.name)].t]);
+				this.unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[this.name]));
+				this.unit.init(this);
+				this.unit.x = 0; this.unit.y = 0;
+				this.unit.y = 39;
+				this.addChild(MovieClip(unit));
 				this.addChild(this.lvl_star);
 				this.higlightLvlStar();
-				MovieClip(unit).y = 39;
 			}
 		}
 		
@@ -175,7 +164,7 @@ package artur.display {
 				WinCastle.currSlotClick = this.name;
 				this.addChild(MovieClip(unit));
 				WinCastle.txtCastle.scroll.visible = false;
-				WinCastle.inventar.frees();
+				WinCastle.inventar.frees1();
 				WinCastle.inventar.init1(UserStaticData.hero.units[this.name])
 			}
 		}
@@ -188,7 +177,7 @@ package artur.display {
 				WinCastle.currSlotClick = this.name;
 				this.addChild(WinCastle.getCastle().mcCurr);
 				this.addChild(btnByeUnit);
-				WinCastle.inventar.frees();
+				WinCastle.inventar.frees1();
 				if(UserStaticData.hero.demo == 0) {
 					App.tutor.init(3);
 				}
@@ -200,10 +189,14 @@ package artur.display {
 			if ( this.contains(WinCastle.getCastle().mcCurr) ) {
 				this.removeChild(WinCastle.getCastle().mcCurr);
 			}
-			if (unit) {
+			if (unit != null) {
+				this.lvl_star.parent.removeChild(this.lvl_star);
 				unit.frees();
 				Sprite(unit).removeEventListener(MouseEvent.CLICK, clickUnit);
 				unit = null;
+			}
+			if(this.btnByeUnit.parent != null) {
+				this.btnByeUnit.parent.removeChild(this.btnByeUnit);
 			}
 		}
 	}

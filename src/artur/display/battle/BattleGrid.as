@@ -90,70 +90,65 @@ package artur.display.battle
 			}
 		}
 		
-		public function showAvailableCells(s_x:int, s_y:int, range:int, is_arr:int):void
-		{
+		public function showAvailableCells(s_x:int, s_y:int, range:int, is_arr:int, has_weapon:Boolean):void {
 			var node:Node;
 			var dist:int;
 			var arr:Array;
 			var can_attack:Boolean = true;
-			for (var i:int = 0; i < wd; i++) 
-				for (var j:int = 0; j < hg; j++) 
-				{
+			for (var i:int = 0; i < wd; i++) {
+				for (var j:int = 0; j < hg; j++) {
 					dist = BattleGrid.getDistance(i, j, s_x, s_y);
-					if (dist <= range)
-					{
+					if (dist <= range) {
 						arr = this.findPath(nodes[s_x][s_y], nodes[i][j]);
-						if (arr != null && arr.length <= range + 1)
-						{
+						if (arr != null && arr.length <= range + 1) {
 							node = nodes[i][j];
-							if (node.walcable == 0)
+							if (node.walcable == 0) {
 								node.setMove();
+							}
 						}
 					}
 				}
-			;
+			}
 			
 			var team:int = WinBattle.inverseTeam(WinBattle.myTeam);
 			var enemy_locs:Object = WinBattle.bat.locs[team];
 			var enemy_hp:Object = WinBattle.bat.hps[team];
-			if (is_arr == 1)
-			{
-				for (var key1:Object in enemy_locs)
-				{
-					if (enemy_hp[key1] != 0)
-					{
+			if (is_arr == 1) {
+				for (var key1:Object in enemy_locs) {
+					if (enemy_hp[key1] != 0) {
 						dist = BattleGrid.getDistance(enemy_locs[key1].x, enemy_locs[key1].y, s_x, s_y);
-						if (dist == 1)
-						{
+						if (dist == 1) {
 							can_attack = false;
 							break;
 						}
 					}
 				}
 			}
-			for (var key:Object in enemy_locs)
-				if (enemy_hp[key] > 0)
-				{
+			
+			for (var key:Object in enemy_locs) {
+				if (enemy_hp[key] > 0) {
 					node = Node(nodes[enemy_locs[key].x][enemy_locs[key].y]);
-					if (is_arr == 1)
-					{
-						if(can_attack)
+					if (is_arr == 1) {
+						if(can_attack && has_weapon) {
 							node.setAttack();
-					}
-					else
-					{
+						}
+					} else {
 						dist = BattleGrid.getDistance(node.xp, node.yp, s_x, s_y);
-						if (dist <= range + 1)
+						if (dist <= range + 1 && has_weapon) {
 							node.setAttack();
+						}
 					}
 				}
-				
+			}	
 		}
+		
 		public function clearNodesControl():void
 		{
-			for (var i:int = 0; i < wd; i++) 
-				for (var j:int = 0; j < hg; j++) 
-					Node(nodes[i][j]).clearControl()
+			for (var i:int = 0; i < wd; i++) {
+				for (var j:int = 0; j < hg; j++) {
+					Node(nodes[i][j]).clearControl();
+				}
+			}
 		}
 		
 		public static function getDistance(x1:int, y1:int, x2:int, y2:int):int

@@ -17,7 +17,7 @@ package artur.display
 		public var txtGold:TextField = Functions.getTitledTextfield(65, 1, 45, 18, new Art().fontName, 12, 0xFFF642, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
 		public var txtSilver:TextField = Functions.getTitledTextfield(155, 1, 45, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
 		public var txtBtn:TextField = Functions.getTitledTextfield(0, -2, 77, 20, new Art().fontName, 14, 0xC29A4C, TextFormatAlign.CENTER, Lang.getTitle(84), 1, Kerning.AUTO, 0);
-		public var title:TextField = Functions.getTitledTextfield(4, 125, 85, 16, new Art().fontName, 12, 0xFFB119, TextFormatAlign.CENTER, "Вещица", 1, Kerning.AUTO, 0);
+		public var title:TextField = Functions.getTitledTextfield(4, 125, 85, 16, new Art().fontName, 9, 0xFFB119, TextFormatAlign.CENTER, "Вещица", 1, Kerning.AUTO, 0);
 		
 		public var txtHp:McInfoInfos = new McInfoInfos(Lang.getTitle(63));
 		public var txtMp:McInfoInfos = new McInfoInfos(Lang.getTitle(64));
@@ -26,6 +26,8 @@ package artur.display
 		public var txtf_mag:McInfoInfos = new McInfoInfos(Lang.getTitle(67));
 		public var txtInc:McInfoInfos = new McInfoInfos(Lang.getTitle(69));
 		public var txtSpeed:McInfoInfos = new McInfoInfos(Lang.getTitle(68));
+		
+		public var descr:TextField = Functions.getTitledTextfield(95, 5, 280, 105, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9, Kerning.AUTO, 0);
 		
 		
 		public function ShopItemBG() 
@@ -50,13 +52,13 @@ package artur.display
 			this.speed.addChild(this.txtSpeed);
 			this.addChild(this.title);
 			
-			
-			//this.hp.txt1.text = "1";
 			this.buttonMode = true;
 			this.cacheAsBitmap = true;
 			this.dmg.iconRange.visible = false;
 			this.price.addChild(this.txtGold);
 			this.price.addChild(this.txtSilver);
+			this.descr.multiline = true;
+			this.descr.wordWrap = true;
 		}	
 		
 		private function makeInvisiblePlussAndNumber(info:McInfoInfos):void {
@@ -65,8 +67,7 @@ package artur.display
 			
 		}
 		
-		public function init(par:Sprite, image:Sprite, item_obj:Object, str:String):void
-		{
+		public function init(par:Sprite, image:Sprite, item_obj:Object):void {
 			//size logic
 			this.gotoAndStop(1);
 			this.name = item_obj.id;
@@ -74,12 +75,20 @@ package artur.display
 			this.item_image.addChild(image);
 			par.addChild(this);
 			var i:int = 0;
-			if (this.showChars(0, i, item_obj, this.hp, txtHp)) i++;
-			if (this.showChars(1, i, item_obj, this.mp, txtMp)) i++;
-			if (this.showChars(2, i, item_obj, this.dmg, txtDmg)) i++;
-			if (this.showChars(3, i, item_obj, this.f_fiz,txtf_fiz)) i++;
-			if (this.showChars(4, i, item_obj, this.f_mag,txtf_mag)) i++;
-			if (this.showChars(5, i, item_obj, this.speed,txtSpeed)) i++;
+			
+				if (this.showChars(0, i, item_obj, this.hp, txtHp)) i++;
+				if (this.showChars(1, i, item_obj, this.mp, txtMp)) i++;
+				if (this.showChars(2, i, item_obj, this.dmg, txtDmg)) i++;
+				if (this.showChars(3, i, item_obj, this.f_fiz,txtf_fiz)) i++;
+				if (this.showChars(4, i, item_obj, this.f_mag,txtf_mag)) i++;
+				if (this.showChars(5, i, item_obj, this.speed, txtSpeed)) i++;
+				
+			this.title.text = Lang.getItemTitle(item_obj.c[103], item_obj.id, item_obj.c[102]);
+			if(item_obj.c[103] == 7) {
+				this.descr.text = Lang.getTitle(172, item_obj.id);
+				this.addChild(this.descr);	
+			}
+			
 			this.txtGold.text = item_obj.c[101];
 			this.txtSilver.text = item_obj.c[100];
 			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
@@ -115,8 +124,12 @@ package artur.display
 		{
 			this.free = true;
 			this.parent.removeChild(this);
-			while (this.item_image.numChildren > 0)
+			while (this.item_image.numChildren > 0) {
 				this.item_image.removeChildAt(0);
+			}
+			if(this.descr.parent) {
+				this.descr.parent.removeChild(this.descr);
+			}
 		}
 	}
 }

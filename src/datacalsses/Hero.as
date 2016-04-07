@@ -19,6 +19,8 @@ package datacalsses
 		public var st:Object
 		public var sz:Object;
 		public var t:Object;
+		public var sett:Object;
+		public var rat:int;
 		
 		public function setHero(obj:Object):void
 		{
@@ -32,6 +34,7 @@ package datacalsses
 			this.units = obj.u;
 			this.chest = obj.ch
 			this.bat = obj.bat;
+			this.rat = obj.rat;
 			//// - crab;
 			this.level = obj.lvl;
 			this.exp = obj.exp;
@@ -41,6 +44,7 @@ package datacalsses
 			this.sz = obj.sz;
 			this.demo = obj.demo;
 			this.t = obj.t;
+			this.sett = obj.fbs;
 			/// - crab;
 		}
 	}

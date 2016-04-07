@@ -33,6 +33,9 @@ package artur.display {
 		private var ava_loader:Loader;
 		private var gold:mcRessBar = new mcRessBar();
 		
+		private var groupCounter:int = 0;
+		private var bonusCounter:int = 0;
+		
 		public function TopMenu() {
 			this.tabEnabled = false;
 			this.tabChildren = false;
@@ -41,6 +44,8 @@ package artur.display {
 			this.mcAva.addChild(txtAvatarLevel);
 			this.mcAva.expBar.addChild(this.txtExp = Functions.getTitledTextfield(0, -3, this.mcAva.expBar.width, 17, new Art().fontName, 14, 0xFFFFFF, TextFormatAlign.CENTER, "00/00", 1, Kerning.OFF, -1));
 			this.mcAva.vitBar.addChild(this.txtVit = Functions.getTitledTextfield(0, -3, this.mcAva.expBar.width, 17, new Art().fontName, 14, 0xFFFFFF, TextFormatAlign.CENTER, "00/00", 1, Kerning.OFF, -1));
+			this.mcAva.vitBar.buttonMode = true;
+			this.mcAva.expBar.buttonMode = true;
 			this.txtAvatarLevel.filters = this.txtExp.filters = this.txtGold.filters = this.txtSilver.filters = this.txtVit.filters = [new GlowFilter(0x0, 1, 2, 2, 2, 1, false, false)];
 			this.gold.x = 800 - this.gold.width+7;
 			this.gold.addChild(this.txtGold);
@@ -51,22 +56,74 @@ package artur.display {
 			this.gold.buttonMode = true;
 			this.updater();
 			this.addAva();
-			this.gold.addEventListener(MouseEvent.CLICK, this.onResClick);
-			this.gold.addEventListener(MouseEvent.ROLL_OVER, this.onRollOver);
-			this.gold.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			this.addEventListener(Event.ADDED_TO_STAGE, this.onAdded);
+		}
+		
+		private function onAdded(e:Event):void {
+			this.removeEventListener(Event.ADDED_TO_STAGE, this.onAdded);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemoved);
+			this.addBtnEvents(this.gold);	
+			this.addBtnEvents(this.mcAva.vitBar);
+			this.addBtnEvents(this.mcAva.expBar);
+		}
+		
+		private function onRemoved(e:Event):void {
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemoved);
+			this.addEventListener(Event.ADDED_TO_STAGE, this.onAdded);
+			this.removeBtnEvents(this.gold);
+			this.removeBtnEvents(this.mcAva.expBar);
+			this.removeBtnEvents(this.mcAva.vitBar);
+		}
+		
+		private function addBtnEvents(mc:Sprite):void {
+			mc.addEventListener(MouseEvent.CLICK, this.onResClick);
+			mc.addEventListener(MouseEvent.ROLL_OVER, this.onRollOver);
+			mc.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+		}
+		
+		private function removeBtnEvents(mc:Sprite):void {
+			mc.removeEventListener(MouseEvent.CLICK, this.onResClick);
+			mc.removeEventListener(MouseEvent.ROLL_OVER, this.onRollOver);
+			mc.removeEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
 		}
 		
 		private function onRollOut(e:MouseEvent):void {
-			this.gold.filters = [];
+			var mc:Sprite = Sprite(e.target);
+			switch(mc) {
+				case this.gold:
+					this.gold.filters = [];
+					break;
+			}
+			App.info.frees();
 		}
 		
 		private function onRollOver(e:MouseEvent):void {
-			this.gold.filters = [new GlowFilter(0xFFFFFF)];
-			App.sound.playSound("over1", App.sound.onVoice, 1);
+			var mc:Sprite = Sprite(e.target);
+			switch(mc) {
+				case this.gold:
+					this.gold.filters = [new GlowFilter(0xFFFFFF)];
+					App.sound.playSound("over1", App.sound.onVoice, 1);
+					App.info.init( mc.x - 60, mc.y + 80, { title:Lang.getTitle(180), txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(181), type:0 });
+					break;
+				case this.mcAva.vitBar:
+					App.sound.playSound("over1", App.sound.onVoice, 1);
+					App.info.init( mc.x - 25, mc.y + 55, { title:Lang.getTitle(182), txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(183), type:0 });
+					break;
+				case this.mcAva.expBar:
+					App.sound.playSound("over1", App.sound.onVoice, 1);
+					App.info.init( mc.x - 25, mc.y + 55, { title:Lang.getTitle(184), txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(185), type:0 });
+					break;
+			}
 		}
 		
 		private function onResClick(e:MouseEvent):void {
-			App.winBank.init();
+			var mc:Sprite = Sprite(e.target);
+			switch(mc) {
+				case this.gold:
+					App.winBank.init();
+					break;
+			}
+			
 		}
 		
 		private function addAva():void {
@@ -113,7 +170,6 @@ package artur.display {
 					this.removeChild(this.gold);
 				}
 			}
-			this.updateEnergy();
 			this.updateAva();
 			this.updateGold();
 		}
@@ -137,7 +193,9 @@ package artur.display {
 				Functions.compareAndSet(this.txtVit, String(currEn + '/' + maxVit));
 				this.mcAva.vitBar.gotoAndStop(int(currEn  / maxVit * 100) + 1);
 				this.mcAva.expBar.gotoAndStop(int(currExp / 11 * 100) + 1);
-				if(currEn < 10) {
+				
+				
+				/*if(currEn < 10) {
 					this.mcAva.vitBar.buttonMode = true;
 					this.mcAva.vitBar.mouseEnabled = true;
 					this.mcAva.vitBar.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
@@ -150,7 +208,7 @@ package artur.display {
 					this.mcAva.vitBar.removeEventListener(MouseEvent.ROLL_OVER, this.onOver);
 					this.mcAva.vitBar.removeEventListener(MouseEvent.ROLL_OUT, this.onOut);
 					this.mcAva.vitBar.removeEventListener(MouseEvent.CLICK, this.onClick);
-				}
+				}*/
 			}
 		}
 		
@@ -164,7 +222,7 @@ package artur.display {
 		
 		private function onOver(e:MouseEvent):void {
 			var mc:MovieClip = MovieClip(e.target);
-			App.info.init( mc.x + 100, mc.y + 30, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:Lang.getTitle(155), type:0 });
+			App.info.init( mc.x + 100, mc.y + 30, { txtInfo_w:180, txtInfo_h:37, txtInfo_t:Lang.getTitle(162), type:0 });
 		}
 		
 		private function updater():void {
@@ -173,13 +231,22 @@ package artur.display {
 			timer.start();
 		}
 		
-		private function updateEnergy(e:TimerEvent = null):void  {
+		private function updateEnergy(e:TimerEvent):void  {
 			if (DataExchange.loged) {
 				var data:DataExchange = new DataExchange();
 				data.addEventListener(DataExchangeEvent.ON_RESULT, onUpdateRes);
 				data.sendData(COMMANDS.CHECK_ENERGY, "", true);
+				if (this.groupCounter == 3) {
+					if(UserStaticData.from == "v") {
+						App.upPanel.checkVKGroup();
+					}
+					this.groupCounter = 0;
+					return
+				}
+				this.groupCounter++;
 			}
 		}
+		
 		public function updateBar():void {
 			
 		}
@@ -193,21 +260,20 @@ package artur.display {
 		
 		private function onEnergyBuyResult(e:DataExchangeEvent):void {
 			DataExchange(e.target).removeEventListener(e.type, this.onEnergyBuyResult);
-			Report.addMassage(e.result);
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.res != null) {
 				App.sound.playSound('gold', App.sound.onVoice, 1);
 				UserStaticData.hero.cur_vitality = obj.res
 				UserStaticData.hero.gold -= 10;
 				this.updateAva();
+				this.updateGold();
 				App.lock.frees();
-			} else {
-				App.lock.init(obj.error);
-			}
+				return
+			} 
+			App.lock.init(obj.error);
 		}
 		
 		private function onUpdateRes(e:DataExchangeEvent):void {
-			Report.addMassage(e.result);
 			var obj:Object = JSON2.decode(e.result);
 			if(obj.res != null) {
 				UserStaticData.hero.cur_vitality = int(obj.res);

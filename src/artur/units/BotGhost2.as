@@ -29,7 +29,7 @@ package artur.units
 		 private var parts_of_parts:Array;
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
 		 private static var sounds:Array = [{id:'gAtack',frame:55},{id:'gHurt',frame:62},{id:'blade2',frame:59},{id:'gDie',frame:74},{id:'blade1',frame:71}];
-		 private static var normalScales:Array = [1,1.5, 1, 1, 1, 1, 1, 1];
+		 private static var normalScales:Array = [1, 1.5, 1, 1, 1, 1, 1, 1];
 		 private var lvl:int=1;
 		public function BotGhost2() 
 		{
@@ -73,9 +73,9 @@ package artur.units
 			App.btnOverFilter.color = 0xFFFFFF;
 			this.filters = [App.btnOverFilter];
 		}
-		public function init(parr:DisplayObjectContainer=null,lvl:int=1):void
+		public function init(parr:DisplayObjectContainer=null, lvl:int=1):void
 		{
-			this.lvl = 1;
+			this.lvl = lvl;
 			normScale = normalScales[this.lvl - 1];
 			scaleX = normScale;
 			scaleY = normScale;
@@ -87,6 +87,7 @@ package artur.units
 				parr.addChild(this);
 			}
 		}
+		
 		public function update():void
 		{
 			if (!isOver && this.scaleX == 1.3)

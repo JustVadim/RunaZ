@@ -135,7 +135,7 @@ package artur.display
 			} else if (e.target.name == "sell") {
 				Mouse.show();
 				this.afterPut();
-				App.byeWin.init(Lang.getTitle(62), "Вещь", 0, int(this.uppedItemObj.c[100]/2) ,NaN,2,NaN);
+				App.byeWin.init(Lang.getTitle(62), Lang.getItemTitle(this.uppedItemObj.c[103], upped_item_id, this.uppedItemObj.c[102]), 0, int(this.uppedItemObj.c[100]/2) ,NaN,2,NaN);
 			} else if("yRect" in e.target) {
 				var mc:MovieClip = MovieClip(e.target);
 				if (mc.yRect.visible) {
@@ -350,7 +350,7 @@ package artur.display
 			var obj:Object = JSON2.decode(e.result);
 			if (!obj.error) {
 				UserStaticData.hero.silver = obj.s;
-				WinCastle.txtCastle.txtSilver.text = String(obj.s);
+				App.topMenu.updateGold();
 				var ww:int = this.uppedItemObj.c[104];
 				var hh:int = this.uppedItemObj.c[105];
 				var cell_y:int = upped_item_num / this.wd;

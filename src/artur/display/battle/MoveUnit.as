@@ -56,7 +56,7 @@ package artur.display.battle {
 			WinBattle.inst.grid.clearNodesControl();
 			WinBattle.inst.removeUltEvents();
 			this.path = path;
-			unit.onWalk();
+			//unit.onWalk();
 			if (this.path.length >= 2) {
 				unit.gotoAndPlay('run');
 			}
@@ -75,8 +75,9 @@ package artur.display.battle {
 						if (is_run) {
 							this.unit.x = this.path[0].x;
 							this.unit.y = this.path[0].y + 10;
-							if(LifeManajer.bin)
+							if (LifeManajer.bin) {
 								LifeManajer.unpateCurrMove(cur_obj.m.u.t, cur_obj.m.u.p);
+							}
 						}
 						if (this.cur_obj.a == null) {
 							this.frees();
@@ -105,20 +106,14 @@ package artur.display.battle {
 			}
 		}
 		
-		private function attackAnim():void 
-		{
-			if (this.arrow_anim == 0)
-			{
+		private function attackAnim():void {
+			if (this.arrow_anim == 0) {
 				this.unit.nextFrame();
-				
 				this.magEffect();
-				if (this.unit.currentFrame == 1)
-				{
+				if (this.unit.currentFrame == 1) {
 					unit.rotation = 0;
-					if (this.is_range)
-					{
-						if (this.type == 2||this.type == 103)
-						{
+					if (this.is_range) {
+						if (this.type == 2 || this.type == 103) {
 							var attack_unit:Object = WinBattle.units[cur_obj.m.u.t][cur_obj.m.u.p];
 							var hurt_unit1:MovieClip  = WinBattle.units[cur_obj.a.u.t][cur_obj.a.u.p];
 							WinBattle.spr.addChild(this.arrow);
@@ -129,27 +124,18 @@ package artur.display.battle {
 							this.arrow_anim = int(unit_dist / MoveUnit.arrow_speed);
 							this.speedX = arrow_speed *  Math.cos(Amath.toRadians(arrow.rotation));
 							this.speedY = arrow_speed * Math.sin(Amath.toRadians(arrow.rotation));
-						}
-						else if(this.type == 3)
-						{
+						} else if(this.type == 3) {
 							this.arrow_anim = 2;
 						}
-					}
-					else
-					{
-						if (this.cur_obj.a.b[2] != null)
-						{
+					} else {
+						if (this.cur_obj.a.b[2] != null) {
 							this.cur_obj.a = this.cur_obj.a.b[2];
-						}
-						else if (this.temp_attack != null)
-						{
+						} else if (this.temp_attack != null) {
 							this.unit = WinBattle.units[this.cur_obj.a.u.t][this.cur_obj.a.u.p];
 							this.cur_obj.a = temp_attack;
 							TextEff(EffManajer.getEff('text')).init(this.unit.x, this.unit.y - 60, String("Отдача"), 0x00FF40);
 							this.temp_attack = null;
-						}
-						else
-						{
+						} else {
 							this.frees();
 						}
 					}
@@ -224,10 +210,8 @@ package artur.display.battle {
 			}
 		}
 		
-		private function onUnitMove(is_run:Boolean):void 
-		{
-			if (is_run)
-			{
+		private function onUnitMove(is_run:Boolean):void {
+			if (is_run) {
 				unit.x += speedX;
 				unit.y += speedY;
 				if(LifeManajer.bin)

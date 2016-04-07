@@ -202,6 +202,9 @@ package Server
 								}
 								App.topMenu.updateGold();
 								break;
+							case int(COMMANDS.CHECK_FRIENDS_BONUS):
+								App.bomusDialog.init(0);
+								break;
 							}
 						} else {
 							data_evnt = new DataExchangeEvent(DataExchangeEvent.DATA_RECIEVED);

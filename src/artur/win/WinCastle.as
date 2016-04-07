@@ -16,45 +16,43 @@ package artur.win {
 	import flash.events.MouseEvent;
 	
 	public class WinCastle {
-		public var bin:Boolean = false;
 		private var bg:MyBitMap;
-		public var slots:Array = [];
-		public static var txtCastle:McTextCastleWinExtend = new McTextCastleWinExtend();
 		private var spr_units:Sprite = new Sprite();
-		public static var currSlotClick:String;
-		private static var inst:WinCastle;
+		public var bin:Boolean = false;
+		public var slots:Array = [];
+		public var swappers:Array = [];
 		public var mcCurr:mcCurrSlot = new mcCurrSlot();
+		
+		
+		public static var txtCastle:McTextCastleWinExtend = new McTextCastleWinExtend();
 		public static var inventar:HeroInventar
 		public static var shopInventar:ShopInventar
 		public static var chest:Chest = new Chest();
 		public static var mcSell:WinSellExtend = new WinSellExtend();
-		public var swaper:Swaper 
+		public static var currSlotClick:String;
+		public static var inst:WinCastle;
 		
 		public function WinCastle() {
-			mcSell.gotoAndStop(1); 
-			mcSell.name = 'sell';
-			mcSell.mouseChildren = false;
-			inst = this;
-			bg = new MyBitMap(App.prepare.cach[7]);
-			inventar = new HeroInventar();
-			shopInventar = new ShopInventar();
+			WinCastle.inst = this;
+			WinCastle.mcSell.gotoAndStop(1); 
+			WinCastle.mcSell.name = 'sell';
+			WinCastle.mcSell.mouseChildren = false;
+			WinCastle.inventar = new HeroInventar();
+			WinCastle.shopInventar = new ShopInventar();
+			WinCastle.txtCastle.scroll.source = this.spr_units;
+			this.mcCurr.x = -7;
+			this.bg = new MyBitMap(App.prepare.cach[7]);
 			for (var i:int = 0; i < 4; i++) {
-				var slot:Slot = new Slot();
-				slot.x = 73.1;
-				slot.y = 68.25 + i * 95;
-				slot.name = String(i);
-				slots.push(slot);
+				this.slots.push(new Slot(i));
+				this.swappers.push(new Swaper(i));
 			}
-			
 			for (var key:Object in UserStaticData.magaz_units) {
 				var blank:UnitBlank = new UnitBlank(int(key), Slot.namesUnit[key], UserStaticData.magaz_units[key]);
 				blank.y = int(key) * 148;
 				blank.init();
-				spr_units.addChild(blank);
+				this.spr_units.addChild(blank);
 			}
-			txtCastle.scroll.source = spr_units;
-			txtCastle.scroll.update();
-			swaper = new Swaper();
+			WinCastle.txtCastle.scroll.update();
 		}
 		
 		private function outSell(e:MouseEvent):void {
@@ -70,19 +68,39 @@ package artur.win {
 			App.spr.addChild(txtCastle);
 			WinCastle.chest.init();
 			for (var i:int = 0; i < slots.length; i++) {
-				App.spr.addChildAt(slots[i], 0);
-				slots[i].init();
+				Slot(slots[i]).init();
+				Swaper(swappers[i]).init();
+				if(UserStaticData.hero.units[i] != null && this.mcCurr.parent == null) {
+					this.selectSlot(i);
+				}
 			}
-			WinCastle.txtCastle.scroll.visible = false;
-			WinCastle.txtCastle.txtGold.text = String(UserStaticData.hero.gold);
-			WinCastle.txtCastle.txtSilver.text = String(UserStaticData.hero.silver);
+			if(this.mcCurr.parent == null) {
+				this.selectSlot(0);
+			}
+			App.topMenu.updateGold();
+			App.topMenu.init(false, true, false);
 			App.topPanel.init(this);
 			if(UserStaticData.hero.demo == 0) {
 				App.tutor.init(2);
 			} else if(UserStaticData.hero.demo == 1) {
 				App.tutor.init(4);
 			}
-			swaper.init();
+			
+		}
+		
+		public function selectSlot(i:int, anim:Boolean = true):void {
+			if(UserStaticData.hero.units[i] == null) {
+				if(WinCastle.inventar.parent) {
+					WinCastle.inventar.frees1();
+				}
+				WinCastle.txtCastle.scroll.visible = true;
+			} else {
+				WinCastle.inventar.frees1();
+				WinCastle.txtCastle.scroll.visible = false;
+				WinCastle.currSlotClick = String(i);
+				WinCastle.inventar.init1(UserStaticData.hero.units[i], anim);
+			}
+			Slot(this.slots[i]).addChildAt(this.mcCurr, 1);
 		}
 		
 		public function updateSlots():void {
@@ -100,7 +118,7 @@ package artur.win {
 			for (var i:int = 0; i < slots.length; i++) {
 				slots[i].frees();
 			}
-			WinCastle.inventar.frees();
+			WinCastle.inventar.frees1();
 			WinCastle.chest.frees();
 		}
 		
@@ -122,6 +140,11 @@ package artur.win {
 		
 		public static function isSilver(gold:int):Boolean {
 			return gold <= UserStaticData.hero.silver;
+		}
+		
+		public function updateSwapSlots(sd:Object):void {
+			Slot(this.slots[sd.t]).init();
+			Slot(this.slots[sd.f]).init();
 		}
 	}
 

@@ -1,9 +1,11 @@
 package artur.win 
 {
+	import Server.Lang;
 	import artur.App;
 	import artur.display.battle.AttackNode;
 	import artur.display.battle.BattleChat;
 	import artur.display.battle.BattleGrid;
+	import artur.display.battle.BattleTimer;
 	import artur.display.battle.eff.BaseEff;
 	import artur.display.battle.eff.BotleManaEff;
 	import artur.display.battle.eff.EffManajer;
@@ -31,6 +33,7 @@ package artur.win
 	import com.greensock.events.LoaderEvent;
 	import datacalsses.Hero;
 	import Enums.Items;
+	import fl.controls.CheckBox;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -79,7 +82,9 @@ package artur.win
 		public var topPanel:TopPanelBattle;
 		public var bigLifeBar:mcBigLifeBarExtend = new mcBigLifeBarExtend();
 		public static var tutor:BattleTotorExtended;
-		
+		public static var timer:BattleTimer = new BattleTimer();
+		private var is_bot:Boolean = false;
+		public var showHP:CheckBox = new CheckBox();
 		
 		public function WinBattle() 
 		{
@@ -111,6 +116,11 @@ package artur.win
 			this.topPanel = new TopPanelBattle(this);
 			BaseEff(EffManajer.getEff("base"));
 			BaseEff(EffManajer.getEff("base"));
+			this.showHP.x = -2;
+			this.showHP.y = 13;
+			this.showHP.width = 150;
+			this.showHP.label = Lang.getTitle(173);
+			this.showHP.selected = true;
 		}
 		
 		private function onCloseWin(e:MouseEvent):void {
@@ -167,6 +177,19 @@ package artur.win
 			App.prop.y = -405;
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
 			App.spr.addChild(bigLifeBar);
+			this.is_bot = String(WinBattle.bat.ids[1]).substr(0, 3) == "bot";
+			if(!this.is_bot) {
+				WinBattle.timer.init();
+			}
+			App.spr.addChild(this.showHP);
+			this.showHP.addEventListener(MouseEvent.CLICK, this.onCheckDigitClick);
+		}
+		
+		private function onCheckDigitClick(e:MouseEvent):void {
+			if(LifeManajer.bin) {
+				lifeManajer.hideLb();
+				lifeManajer.showLB(false);
+			}
 		}
 		 
 		 private function addListenersToChekboks(mc:MovieClip, frame:int, is_add:Boolean = true):void {
@@ -244,18 +267,25 @@ package artur.win
 			tim.start();
 			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA || banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_MPBANKA) {
 			    App.sound.playSound("botl", App.sound.onVoice, 1);
+				var res:int;
 				if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_HPBANKA) {
-					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.hp);
+					res = unit.hp * banka.c[Items.BANOCHKATYPe_QTY] / 100;
+					res = (int(banka.c[Items.BANOCHKATYPe_QTY]) > res) ? int(banka.c[Items.BANOCHKATYPe_QTY]):res;
+					hps[obj.tu.p] = Math.min(hps[obj.tu.p] + res, unit.hp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currLife = hps[obj.tu.p];
 					EffManajer.effBotleHill.init(node.x, node.y);
+					TextEff(EffManajer.getEff('text')).init(node.x, node.y - 60, String("+" + res), 0x00FD40);
 					this.bigLifeBar.txtHP.text = hps[obj.tu.p] + "/" + unit.hp;
 					this.bigLifeBar.mcLife.gotoAndStop(int(1 + hps[obj.tu.p] / unit.hp * 100))
 				} else {
-					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + banka.c[Items.BANOCHKATYPe_QTY], unit.mp);
+					res = unit.mp * banka.c[Items.BANOCHKATYPe_QTY] / 100;
+					res = (int(banka.c[Items.BANOCHKATYPe_QTY]) > res) ? int(banka.c[Items.BANOCHKATYPe_QTY]):res;
+					mps[obj.tu.p] = Math.min(mps[obj.tu.p] + res, unit.mp);
 					LifeManajer.un_Data[obj.tu.t][obj.tu.p].currMana = mps[obj.tu.p];
 					BotleManaEff(EffManajer.getEff('manaHill')).init(node.x, node.y)
 					this.bigLifeBar.txtMp.text = mps[obj.tu.p] + "/" + unit.mp;
 					this.bigLifeBar.mcMana.gotoAndStop(int(1 + mps[obj.tu.p] / unit.mp * 100));
+					TextEff(EffManajer.getEff('text')).init(node.x, node.y - 60, String("+" + res), 0x2DBBFF);
 					if (!this.topPanel.isAuto() && WinBattle.bat['set'][WinBattle.bat.cus].t == WinBattle.myTeam) {
 						this.makeUltimate(unit, WinBattle.bat['set'][WinBattle.bat.cus]);
 					}
@@ -513,6 +543,9 @@ package artur.win
 		 
 		public function setCurrStep():void {
 			this.ult_clicked = false;
+			if(!this.is_bot) {
+				WinBattle.timer.setTimer(30);
+			}
 			WinBattle.sortSpr();
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
 			if (currUnit != null) {
@@ -543,7 +576,7 @@ package artur.win
 					WinBattle.ult_btn.mcBg.visible = false;
 				}
 				if (this.topPanel.isAuto() == false) {
-					this.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+					this.grid.showAvailableCells(loc.x, loc.y, r, is_arr, cur_unit.it[5] != null);
 					this.makeUltimate(cur_unit, cus);
 					this.makeBanochki(cur_unit, cus);
 					this.topPanel.setDefence(true);
@@ -765,6 +798,7 @@ package artur.win
 				sortArr[j].frees()
 			}
 			sortArr.splice(0, sortArr.length);
+			WinBattle.timer.frees();
 		}
 		
 		private function freeUnits(unit:Object):void 
@@ -830,18 +864,15 @@ package artur.win
 			}
 		}
 		
-		private function getControlAfterUlt(is_ult_btn:Boolean):void
-		{
+		private function getControlAfterUlt(is_ult_btn:Boolean):void {
 			WinBattle.inst.grid.lightUnits(bat.locs[0], bat.hps[0], 0);
 			WinBattle.inst.grid.lightUnits(bat.locs[1], bat.hps[1], 1);
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
-			var r:int;
-			var is_arr:int;
 			var cur_unit:Object = WinBattle.bat.u[myTeam][cus.p];
+			var is_arr:int = cur_unit.t_d;
+			var r:int = cur_unit.sp;
 			var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
-			r = cur_unit.sp;
-			is_arr = cur_unit.t_d;
-			WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr);
+			WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr, cur_unit.it[5] != null);
 			WinBattle.ult_btn.mc.visible = !is_ult_btn;
 		}
 		

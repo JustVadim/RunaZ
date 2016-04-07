@@ -3,6 +3,7 @@ package artur.display {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
@@ -36,6 +37,7 @@ package artur.display {
 			this.btns = [this.btnCastl, this.btnBanK, this.btnMision, this.btnEnergy];
 			this.spr.y = 310;
 			this.addChild(this.spr);
+			this.txt.filters = [new GlowFilter(0x0, 1, 2, 2)];
 			this.init1(Lang.getTitle(46), false, false, false, false, false);
 			this.frees();
 			

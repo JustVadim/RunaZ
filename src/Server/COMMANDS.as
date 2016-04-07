@@ -31,6 +31,10 @@ package Server
 		static public const TAKE_TASK_GOLD:String = "28";
 		static public const BYE_COINS:String = "29";
 		static public const BUY_ENERGY:String = "30";
+		static public const CHANGE_SETTINGS:String = "31";
+		static public const CHECK_FRIENDS_BONUS:String = "32";
+		static public const SWAP_UNITS:String = "33";
+		static public const SOLD_HERO:String = "34";
 		
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;

@@ -58,15 +58,19 @@ package report
 		
 		static public function addMassage(mass:Object):void
 		{
-			if (count)
-			{
-				rep_textfield.htmlText += "<font color=\"FF8000\">" + String(mass) + "</font>" + "<br>";
-				count = false;
+			if(show_report.visible) {
+				if (count) {
+					rep_textfield.htmlText += "<font color=\"FF8000\">" + String(mass) + "</font>" + "<br>";
+				} else {
+					rep_textfield.htmlText += "<font color = \"E80074\">" + String(mass) + "</font>" + "<br>";
+				}
+				count = !count;
 			}
-			else
-			{
-				rep_textfield.htmlText += "<font color = \"E80074\">" + String(mass) + "</font>" + "<br>";
-				count = true;
+		}
+		
+		static public function checkDoShow():void {
+			if(UserStaticData.from == "v" && (UserStaticData.id != "259039640" || UserStaticData.id != "6128467")) {
+				show_report.visible = false;
 			}
 		}
 		

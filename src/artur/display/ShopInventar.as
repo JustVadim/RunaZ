@@ -66,7 +66,7 @@ package artur.display {
 				var it_obj:Object = UserStaticData.magazin_items[this.unitType][this.itemType][i];	
 				if(it_obj !=null) {
 					var mov:ShopItemBG = this.getBg();
-					mov.init(this.scroll_sprite, Sprite(currPart[i-1]), it_obj, "Вещица");
+					mov.init(this.scroll_sprite, Sprite(currPart[i-1]), it_obj);
 					mov.y = h;
 					h += mov.height;
 				}
@@ -102,7 +102,7 @@ package artur.display {
 				App.closedDialog.init1(Lang.getTitle(4), false, true, true);
 			}
 			else {
-				App.byeWin.init(Lang.getTitle(72), "Вещицу", gold, silver, item_id, 1, this.itemType, this.invPlace);
+				App.byeWin.init(Lang.getTitle(72), Lang.getItemTitle(this.itemType, item_id, this.unitType), gold, silver, item_id, 1, this.itemType, this.invPlace);
 			}
 		}
 		

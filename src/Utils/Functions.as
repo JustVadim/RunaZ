@@ -65,7 +65,12 @@ package Utils {
 			}
 		}
 
-	
+		public static function compareAndSetHTML(textf:TextField, text:String):void {
+			if(textf.htmlText != text) {
+				textf.htmlText= text;
+				textf.cacheAsBitmap = true;
+			}
+		}
 		
 		
 	}

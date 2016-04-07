@@ -1,6 +1,7 @@
 package artur 
 {
 	import artur.display.BaseButton;
+	import artur.display.BonusDialog;
 	import artur.display.battle.TopPanel;
 	import artur.display.ByeWin;
 	import artur.display.CloseDialog;
@@ -67,12 +68,12 @@ package artur
 		public static var topMenu:TopMenu = new TopMenu();
 		public static var task:Task;
 		//public static var topMenu:
-
 		public static var currMuzPlay:String = 'BatleSong';
-
 		public static var prop:PropExtended = new PropExtended();
-
-		public var topMenu:UpPanel
+		public static var upPanel:UpPanel;
+		public static var bomusDialog:BonusDialog;
+		
+		
 		public function App(stg:Stage) 
 		{
 			sound.addSound('onLose', new s_onLose());
@@ -135,20 +136,25 @@ package artur
 			this.tabEnabled = false;
 			this.tabChildren = false;
 			App.task = new Task();
+			App.bomusDialog = new BonusDialog();
 
-			Main.THIS.addChild(new UpPanel());
+			Main.THIS.addChild(App.upPanel = new UpPanel());
+			if(UserStaticData.from == "v") {
+				Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);
+				Main.VK.addEventListener('onSettingsChanged', App.upPanel.onVKSettingsChange);
+			}
 
 		}
-		public static function swapMuz(str:String):void
-		{
+		
+		public static function swapMuz(str:String):void {
 			if (str == currMuzPlay)
-			return;
+				return;
 			sound.stopSound(currMuzPlay);
 			sound.playSound(str, sound.onSound);
 			currMuzPlay = str;
 		}
-		private function update(e:Event):void 
-		{
+		
+		private function update(e:Event):void {
 			info.update();
 			winManajer.update();
 			UnitCache.update();

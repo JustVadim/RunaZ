@@ -33,6 +33,7 @@ package artur.display
 			this.dmg.iconRange.visible = false;
 			this.title.addChild(this.titleTxtName);
 			this.titleTxtName.filters = [new DropShadowFilter(1, 42, 0xFFFFFF, 1, 1, 1, 0.5, 1, true), new DropShadowFilter(1, 234, 0xFFCC99, 1, 1, 1, 0.5, 1, true), new GlowFilter(0x0, 1, 3, 3, 1, 1)];
+			this.txtInfo.filters = [new GlowFilter(0x0, 0.2, 1)];
 			this.txtInfo.multiline = true;
 			this.txtInfo.wordWrap = true;
 			this.addChild(this.txtInfo);
@@ -81,9 +82,9 @@ package artur.display
 					this.txtInfo.width = data.txtInfo_w;
 					this.txtInfo.htmlText = data.txtInfo_t;
 					this.txtInfo.height = txtInfo.numLines * 18;
-					this.txtInfo.x = this.bg.x;
+					this.txtInfo.x = this.bg.x+2;
 					this.txtInfo.y = cur_Y;
-					this.bg.width = data.txtInfo_w;
+					this.bg.width = data.txtInfo_w+4;
 					this.bg.height = txtInfo.height + cur_Y + 8;
 					break;
 				case(1):
