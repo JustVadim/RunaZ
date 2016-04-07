@@ -48,7 +48,7 @@ package artur.win
 
 	public class WinBattle 
 	{
-		private var bgs:Array = [RasterClip.raster(new Bg_Battle_1(),820,600)];
+		private var bgs:Array = [RasterClip.raster(new Bg_Battle_1(),820,600),RasterClip.raster(new Bg_Battle_2(),820,600)];
 		public var grid:BattleGrid = new BattleGrid();
 		public static var units:Array;
 		public static var myTeam:int;
@@ -154,7 +154,7 @@ package artur.win
 			this.bin = true;
 			WinBattle.units = [[], []];
 			this.getMyTeam();
-			App.spr.addChild(bgs[0]);
+			App.spr.addChild(bgs[1]);
 			App.spr.addChild(spr);
 			this.addListenersToChekboks(this.chekLifeBar, 2);
 			this.grid.init();
