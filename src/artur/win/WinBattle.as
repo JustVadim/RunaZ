@@ -164,7 +164,7 @@ package artur.win
 			this.bin = true;
 			WinBattle.units = [[], []];
 			this.getMyTeam();
-			App.spr.addChild(bgs[1]);
+			App.spr.addChild(bgs[0]);
 			App.spr.addChild(spr);
 			this.addListenersToChekboks(this.chekLifeBar, 2);
 			this.grid.init();

@@ -25,6 +25,7 @@ package artur.win {
 			'Купить 25 золота за 2 голоса',
 			'Купить 60 золота за 4 голоса',
 			'Купить 150 золота за 8 голоса',
+			'Купить 400 золота за 16 голоса',
 			'Купить 400 золота за 16 голоса'
 		];
 		
@@ -33,16 +34,21 @@ package artur.win {
 			'Купить 500 серебра за 2 голоса',
 			'Купить 1200 золота за 4 голоса',
 			'Купить 3000 золота за 8 голоса',
+			'Купить 8000 золота за 16 голоса',
 			'Купить 8000 золота за 16 голоса'
 		];
 		
 		
 		public function WinBank() {
-		    for (var i:int = 0; i < 4; i++) {
+			var f:GlowFilter   = new GlowFilter(0, 1, 2, 2, 6, 3);
+		    for (var i:int = 0; i < 5; i++) {
 				var text1:TextField = Maker.getTextField(190, 60, 0xF7E29B, false, false, true,15,0xF7E29B,0xF7E29B,1);
 				var text2:TextField = Maker.getTextField(190, 60, 0xFFFFFF, false, false, true);
 				text1.text = textsGold[i];
 				text2.text = textsSilver[i];
+				
+				text1.filters  = [f];
+				text2.filters   = [f];
 				text1.x = 28;
 				text1.y = 20;
 				text2.x = 28;
@@ -61,6 +67,8 @@ package artur.win {
 				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);
 				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);	 
 			}
+			mcBtns.icons.mouseChildren = false;
+			mcBtns.icons.mouseEnabled  = true;
 	   }
 	   
 	   private function onOut(e:MouseEvent):void {
