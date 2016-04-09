@@ -1,5 +1,6 @@
 package artur.display {
 	import artur.App;
+	import artur.win.WinManajer;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	import flash.text.engine.Kerning;
@@ -84,6 +85,7 @@ package artur.display {
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onTakeGold);
 			data.sendData(COMMANDS.TAKE_TASK_GOLD, "", true);
+			WinManajer.taskWasShown = false;
 		}
 		
 		private function onTakeGold(e:DataExchangeEvent):void {

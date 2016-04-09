@@ -62,7 +62,7 @@ package artur.display
 		
 		
 		public function frees():void {
-			Report.addMassage("freeesss");
+			//Report.addMassage("freeesss");
 			free = true;
 			this.itemImage.free = true;
 			if (this.itemImage.parent) {

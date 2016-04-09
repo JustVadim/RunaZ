@@ -42,7 +42,7 @@ package artur.display {
 			Functions.SetPriteAtributs(this, false, true, 0, 0);
 			this.addChild(this.mcAva);
 			this.mcAva.addChild(txtAvatarLevel);
-			this.mcAva.expBar.addChild(this.txtExp = Functions.getTitledTextfield(0, -3, this.mcAva.expBar.width, 17, new Art().fontName, 14, 0xFFFFFF, TextFormatAlign.CENTER, "00/00", 1, Kerning.OFF, -1));
+			this.mcAva.expBar.addChild(this.txtExp = Functions.getTitledTextfield(0, -2, this.mcAva.expBar.width, 14, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "00/00", 1, Kerning.OFF, -1));
 			this.mcAva.vitBar.addChild(this.txtVit = Functions.getTitledTextfield(0, -3, this.mcAva.expBar.width, 17, new Art().fontName, 14, 0xFFFFFF, TextFormatAlign.CENTER, "00/00", 1, Kerning.OFF, -1));
 			this.mcAva.vitBar.buttonMode = true;
 			this.mcAva.expBar.buttonMode = true;
@@ -122,6 +122,9 @@ package artur.display {
 				case this.gold:
 					App.winBank.init();
 					break;
+				case this.mcAva.vitBar:
+					App.byeWin.init("Я хочу пополнить", " энергию", 10, 0, NaN, 6);
+					break;
 			}
 			
 		}
@@ -189,10 +192,11 @@ package artur.display {
 				var currEn:int = hero.cur_vitality;
 				var currExp:int = hero.exp;
 				Functions.compareAndSet(this.txtAvatarLevel, hero.level.toString());
-				Functions.compareAndSet(this.txtExp, String(currExp + '/' + 11));
+				Functions.compareAndSet(this.txtExp, String(currExp + '/' + UserStaticData.hero.nle));
 				Functions.compareAndSet(this.txtVit, String(currEn + '/' + maxVit));
+				
 				this.mcAva.vitBar.gotoAndStop(int(currEn  / maxVit * 100) + 1);
-				this.mcAva.expBar.gotoAndStop(int(currExp / 11 * 100) + 1);
+				this.mcAva.expBar.gotoAndStop(int(currExp / UserStaticData.hero.nle * 100) + 1);
 				
 				
 				/*if(currEn < 10) {
@@ -213,7 +217,7 @@ package artur.display {
 		}
 		
 		private function onClick(e:MouseEvent):void {
-			App.byeWin.init("Я хочу пополнить", " энергию", 10, 0, NaN, 6);
+			
 		}
 		
 		private function onOut(e:MouseEvent):void {

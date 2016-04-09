@@ -21,9 +21,9 @@ package datacalsses
 		public var t:Object;
 		public var sett:Object;
 		public var rat:int;
+		public var nle:int;
 		
-		public function setHero(obj:Object):void
-		{
+		public function setHero(obj:Object):void {
 			this.silver = obj.s;
 			this.gold = obj.g;
 			this.cur_vitality = obj.cv;
@@ -35,6 +35,7 @@ package datacalsses
 			this.chest = obj.ch
 			this.bat = obj.bat;
 			this.rat = obj.rat;
+			this.nle = obj.nle;
 			//// - crab;
 			this.level = obj.lvl;
 			this.exp = obj.exp;
@@ -46,6 +47,39 @@ package datacalsses
 			this.t = obj.t;
 			this.sett = obj.fbs;
 			/// - crab;
+		}
+		
+		public function addAndCheckExp(exp:int):void {
+			this.exp += exp;
+			if(this.exp >= this.nle) {
+				this.exp = 0;
+				this.level++;
+				this.fs++;
+				this.nle = UserStaticData.levels[this.level];
+			}
+		}
+		
+		public function checkLevelUp():Boolean {
+			for(var key:Object in this.units) {
+				if (this.units[key].fs > 0) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public function addAndCheckUnitExp(exp:int, ul:Object):void {
+			for (var key:Object in ul) {	
+				Report.addMassage("Unit alive: " + ul[key] + "exp: " + exp);
+				var unit:Object = this.units[ul[key]];
+				unit.exp += exp;
+				if(unit.exp >= unit.nle) {
+					unit.lvl++;
+					unit.fs += 2;
+					unit.exp = 0;
+					unit.nle = UserStaticData.levels[unit.lvl];
+				}
+			}
 		}
 	}
 }

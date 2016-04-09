@@ -20,7 +20,7 @@ package artur.display
 		public const wd:int = 5;
 		public const hg:int  = 8;
 		private var grid:Array = new Array();
-		private var items:Array = new Array();
+		private var items_obj:Object = new Object();
 		public var upped_item_num:int;
 		public var upped_item_id:int;
 		private var invP:int = -1;
@@ -68,7 +68,7 @@ package artur.display
 							item_call.addEventListener(MouseEvent.ROLL_OVER, item_call.over);
 							item_call.addEventListener(MouseEvent.ROLL_OUT, item_call.out);
 							this.addChild(item_call);
-							items.push(item_call);
+							items_obj[key] = item_call;
 						}
 						break;
 				}
@@ -182,22 +182,25 @@ package artur.display
 		}
 		
 		private function removeFromArray(upped_item_call:ItemCall):void {
-			for (var i:int = 0; i < items.length; i++) {
+			delete(this.items_obj[this.upped_item_call.name]);
+			/*for (var i:int = 0; i < items.length; i++) {
 				if(this.items[i] == this.upped_item_call) {
 					this.items.splice(i, 1);
 				}
-			}
+			}*/
 		}
 		
 		
 		
 		public function initPutItemEvents(item:Object):void {
-			Report.addMassage(JSON2.encode(item));
 			this.uppedItemObj = item;
-			for (var i:int = 0; i < items.length; i++) {
-				ItemCall(items[i]).mouseEnabled = false;
+			for(var key:Object in items_obj) {
+				ItemCall(items_obj[key]).mouseEnabled = false;
 			}
-			for (i = 0; i < this.grid.length; i++ ) {
+			/*for (var i:int = 0; i < items.length; i++) {
+				ItemCall(items[i]).mouseEnabled = false;
+			}*/
+			for (var i:int = 0; i < this.grid.length; i++ ) {
 				var mcC:mcCall = this.grid[i];
 				mcC.addEventListener(MouseEvent.ROLL_OVER, this.onPutOver);
 				mcC.addEventListener(MouseEvent.ROLL_OUT, this.onPutOut);
@@ -265,12 +268,14 @@ package artur.display
 			else {return false;}
 		}
 		
-		public function removePutEvents():void 
-		{
-			for (var i:int = 0; i < items.length; i++) {
-				ItemCall(items[i]).mouseEnabled = true;
+		public function removePutEvents():void {
+			for(var key:Object in items_obj) {
+				ItemCall(items_obj[key]).mouseEnabled = true;
 			}
-			for (i = 0; i < this.grid.length; i++ ) {
+			/*for (var i:int = 0; i < items.length; i++) {
+				ItemCall(items[i]).mouseEnabled = true;
+			}*/
+			for (var i:int = 0; i < this.grid.length; i++ ) {
 				var mcC:mcCall = this.grid[i];
 				mcC.removeEventListener(MouseEvent.ROLL_OVER, this.onPutOver);
 				mcC.removeEventListener(MouseEvent.ROLL_OUT, this.onPutOut);
@@ -279,14 +284,15 @@ package artur.display
 		}
 		
 		public function frees():void {
-			for (var i:Object in items) {
-				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
-				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OVER, items[i].over);
-				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OUT, items[i].out);
-				ItemCall(items[i]).frees();
-				delete(items[i]);
+			for(var key:Object in items_obj) {
+				var itemCall:ItemCall = items_obj[key];
+				itemCall.removeEventListener(MouseEvent.MOUSE_DOWN, this.onItemInChestMouserDown);
+				itemCall.removeEventListener(MouseEvent.MOUSE_OVER, itemCall.over);
+				itemCall.removeEventListener(MouseEvent.MOUSE_OUT, itemCall.out);
+				itemCall.frees();
+				delete(items_obj[key]);
+				
 			}
-			this.items = new Array();
 		}
 		
 		private function onDragMove(e:MouseEvent):void 
@@ -314,24 +320,21 @@ package artur.display
 			this.upped_item_call.addEventListener(MouseEvent.MOUSE_OVER, this.upped_item_call.over);
 			this.upped_item_call.addEventListener(MouseEvent.MOUSE_OUT, this.upped_item_call.out);
 			this.upped_item_call.mouseEnabled = true;
-			this.items.push(this.upped_item_call);
+			this.items_obj[this.upped_item_call.name] = this.upped_item_call;
 			this.addChild(this.upped_item_call);
 		}
 		
 		private function onFromChestToChestRes(e:DataExchangeEvent):void {
 			DataExchange(e.currentTarget).removeEventListener(e.type, onFromChestToChestRes);
 			var obj:Object = JSON2.decode(e.result);
-			if (!obj.error)
-			{
+			if (!obj.error) {
 				App.sound.playSound(ItemCall.sounds[UserStaticData.hero.chest[this.upped_item_num].c[103]][this.upped_item_id-1],App.sound.onVoice,1 );
 				UserStaticData.hero.chest = obj.res;
 				delete(obj.ch);
 				this.frees();
 				this.init();
 				App.lock.frees();
-			}
-			else
-			{
+			} else {
 				App.lock.init('Error: ' + obj.error);
 				this.putItemOnOldPlace();
 			}
@@ -373,8 +376,7 @@ package artur.display
 			}
 		}
 		
-		private function fromChestToUnitRes(e:DataExchangeEvent):void 
-		{
+		private function fromChestToUnitRes(e:DataExchangeEvent):void {
 			DataExchange(e.currentTarget).removeEventListener(e.type, fromChestToUnitRes);
 			var obj:Object = JSON2.decode(e.result);
 			if (!obj.error) {

@@ -6,6 +6,7 @@ package  {
 	import artur.display.McWinAfterBattleExtend;
 	import artur.display.WinRootMcText;
 	import Chat.ChatBasic;
+	import artur.util.Numbs1;
 	import com.greensock.TweenLite;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
@@ -20,6 +21,7 @@ package  {
 	import Server.Lang;
 	import Utils.json.JSON2;
 	import flash.ui.Mouse;
+	
 	[Frame(factoryClass = "Preloader")]
 	
 	public class Main extends Sprite {
@@ -51,12 +53,11 @@ package  {
 				this.vkPrepare();
 			} 
 			
-			Report.checkDoShow();
+			//Report.checkDoShow();
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
-			
 		}
 		
 		private function vkPrepare():void {
