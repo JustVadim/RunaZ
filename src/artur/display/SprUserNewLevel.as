@@ -1,4 +1,5 @@
 package artur.display {
+	import Utils.Functions;
 	import artur.App;
 	import artur.win.WinRoot;
 	import datacalsses.Hero;
@@ -7,17 +8,27 @@ package artur.display {
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
+	import flash.filters.GlowFilter;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
+	import flash.text.engine.Kerning;
+	import report.Report;
 	
 	public class SprUserNewLevel extends mcLvlUp {
 		private var btns:Array = [];
 		private var pushedBtn:String;
+		private var titel:TextField = Functions.getTitledTextfield(81, 218, 153, 21, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "12", 0.7, Kerning.OFF, -1);
 		
 		public function SprUserNewLevel() {
+			Functions.SetPriteAtributs(this, false, true, 0, 0);
+			this.removeChildAt(1);
+			this.addChild(this.titel);
+			this.titel.filters = [new GlowFilter(0x0, 0.8, 3, 3, 3)];
 			var yp:Array = [130.3, 154, 177.6, 201.4];
 			for (var i:int = 0; i < 4; i++) {
 				var btn:BaseButton = new BaseButton(34);
 				btn.x = 88;
-				btn.y = yp[i];
+				btn.y = 157 + (i - 1) * (btn.height - 3);
 				this.addChild(btn);
 				btn.name = String(i);
 				btn.addEventListener(MouseEvent.CLICK, onBtn);
@@ -66,6 +77,7 @@ package artur.display {
 			if(!this.parent) {
 				App.spr.addChild(this);
 			}
+			Functions.compareAndSet(this.titel, text);
 		}
 		
 		public function frees():void {

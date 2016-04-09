@@ -7,6 +7,7 @@ package  {
 	import artur.display.WinRootMcText;
 	import Chat.ChatBasic;
 	import artur.util.Numbs1;
+	import artur.win.WinBattle;
 	import com.greensock.TweenLite;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
@@ -105,9 +106,13 @@ package  {
 			while (this.numChildren > 0) {
 				this.removeChildAt(0);
 			}
-			if(this.chat.parent){
+			if (this.chat.parent != null){
 				this.chat.parent.removeChild(this.chat);
+			} 
+			if(WinBattle.battleChat.parent != null) {
+				WinBattle.battleChat.parent.removeChild(WinBattle.battleChat);
 			}
+			App.lock.init("Connection was closed. Reload application please.")
 		}
 		
 	}

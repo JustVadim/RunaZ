@@ -227,7 +227,7 @@ package artur.display
 						this.frees();
 						break;
 					case this.btnGold:
-						if (UserStaticData.hero.gold < 10) {
+						if (UserStaticData.hero.gold < GameVars.ENERGY_PRICE) {
 							App.closedDialog.init1(Lang.getTitle(45), false, false, true);
 						} else {
 							App.topMenu.buyEnergy();

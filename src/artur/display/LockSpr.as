@@ -7,7 +7,7 @@ package artur.display {
 	import Utils.Functions;
 	
 	public class LockSpr extends Block { 
-		private var txt:TextField = Functions.getTitledTextfield(254.1, 203.75, 388, 111, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false);
+		private var txt:TextField = Functions.getTitledTextfield(0, 250, 800, 111, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false);
 		public function LockSpr() {
 			
 		}

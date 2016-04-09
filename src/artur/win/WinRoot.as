@@ -133,18 +133,18 @@ package artur.win
 			this.mcText.txtEnergy.text = String(hero.skills.vitality);
 			this.mcText.txtDeff.text =   String(hero.skills.defence);
 		    this.mcText.txtMana.text = String (hero.skills.energy);
-			if (hero.fs > 0) 
-			{
+			App.topMenu.updateAva();
+			if (hero.fs > 0) {
 				WinRoot.lvlUp.init("Доступно: " + hero.fs) ;
-			} 
-			else 
-			{
+			} else {
 				WinRoot.lvlUp.frees();
 			}
 		}
+		
 		public function update():void {
 			
 		}
+		
 		public function frees():void {
 			
 		}

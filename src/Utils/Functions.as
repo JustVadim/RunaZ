@@ -50,7 +50,7 @@ package Utils {
 			title.height = hh;
 			title.text = str;
 			//title.border = true;
-			//title.borderColor = 0xFFFFFF;
+			title.borderColor = 0xFFFFFF;
 			title.alpha = alpha;
 			if (title.text.length > 1) {
 				title.cacheAsBitmap = true;

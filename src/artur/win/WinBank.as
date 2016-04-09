@@ -1,6 +1,7 @@
 package artur.win {
 	import Server.COMMANDS;
 	import Server.DataExchange;
+	import Utils.Functions;
 	import artur.App;
 	import artur.McTextCastleWinExtend;
 	import artur.display.BaseButton;
@@ -12,6 +13,7 @@ package artur.win {
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
 	import report.Report;
 	
 	public class WinBank {
@@ -22,31 +24,40 @@ package artur.win {
 		
 		private var textsGold:Array = 
 		[
-			'Купить 25 золота за 2 голоса',
-			'Купить 60 золота за 4 голоса',
-			'Купить 150 золота за 8 голоса',
-			'Купить 400 золота за 16 голоса'
+			"Купить 60 золота\nза 5 голосов",
+			'Купить 130 золота\nза 10 голосов',
+			'Купить 700 золота\nза 50 голосов',
+			'Купить 3000 золота\nза 200 голосов',
+			'Купить 8200 золота\nза 500 голосов'
 		];
 		
 		private var textsSilver:Array = 
 		[
-			'Купить 500 серебра за 2 голоса',
-			'Купить 1200 золота за 4 голоса',
-			'Купить 3000 золота за 8 голоса',
-			'Купить 8000 золота за 16 голоса'
+			'Купить 720 серебра\nза 5 голосов',
+			'Купить 1560 серебра\nза 10 голосов',
+			'Купить 8400 серебра\nза 50 голосов',
+			'Купить 36000 серебра\nза 200 голосов',
+			'Купить 100000 серебра\nза 500 голосов'
 		];
 		
+		//Report.addMassage("Bank Economy btn: " + String(Number(500 /5)/Number(8200/ 60)));
+		/*Report.addMassage("Bank Economy btn" + i + ": " + )
+		Report.addMassage("Bank Economy btn" + i + ": " + )
+		Report.addMassage("Bank Economy btn" + i + ": " + )
+		Report.addMassage("Bank Economy btn" + i + ": " + )*/
 		
 		public function WinBank() {
-		    for (var i:int = 0; i < 4; i++) {
-				var text1:TextField = Maker.getTextField(190, 60, 0xF7E29B, false, false, true,15,0xF7E29B,0xF7E29B,1);
-				var text2:TextField = Maker.getTextField(190, 60, 0xFFFFFF, false, false, true);
+			var f:GlowFilter   = new GlowFilter(0, 1, 2, 2, 6, 3);
+		    for (var i:int = 0; i < 5; i++) {
+				var text1:TextField = Functions.getTitledTextfield(0, 22, 233, 36, new Art().fontName, 13, 0xFFF642, TextFormatAlign.CENTER, "", 1);
+				var text2:TextField = Functions.getTitledTextfield(0, 22, 233, 36, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9);
 				text1.text = textsGold[i];
 				text2.text = textsSilver[i];
-				text1.x = 28;
-				text1.y = 20;
-				text2.x = 28;
-				text2.y = 20;
+				
+				
+				text1.filters  = [f];
+				text2.filters   = [f];
+				
 				mcBtns[String('g' + (i + 1))].addChild(text1);
 				mcBtns[String('s' + (i + 1))].addChild(text2);
 				mcBtns[String('s' + (i + 1))].buttonMode = true;
@@ -61,6 +72,8 @@ package artur.win {
 				mcBtns[String('s' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);
 				mcBtns[String('g' + (i + 1))].addEventListener(MouseEvent.ROLL_OUT, onOut);	 
 			}
+			mcBtns.icons.mouseChildren = false;
+			mcBtns.icons.mouseEnabled  = true;
 	   }
 	   
 	   private function onOut(e:MouseEvent):void {
@@ -74,7 +87,7 @@ package artur.win {
 		private function onBtn(e:MouseEvent):void {
 			this.frees();
 			var mc:MovieClip = MovieClip(e.target);
-			var num:int = this.getNum(mc);
+			//var num:int = this.getNum(mc);
 			if(UserStaticData.from == "v") {
 					var params:Object =	{
 											type: 'item',
@@ -88,7 +101,7 @@ package artur.win {
 		
 		private function getNum(mc:MovieClip):int {
 			var res:int = 0;
-			for (var i:int = 0; i < 4; i++) { 
+			for (var i:int = 0; i < 5; i++) { 
 				if(mc == mcBtns["s" + String(i + 1)]) {
 					res = 1 + i * 2;
 				} else if(mc == mcBtns["g" + String(i + 1)]) {
