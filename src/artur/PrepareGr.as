@@ -79,7 +79,8 @@ package artur
 		    new btnTop3(),//53
 		    new btnTop4(),//54
 		    new btnTop5(),//55
-		    new btnArrow()//56
+		    new btnArrow(),//56
+			new btnVideoAds()// 57
 		];
 		
 		public static var scaleFactor:Number = 2;
