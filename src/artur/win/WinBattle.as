@@ -544,9 +544,14 @@ package artur.win
 			Main.THIS.chat.setFocus();
 			if (hero.checkLevelUp()) {
 				App.closedDialog.init1(Lang.getTitle(2), true);
+			} else if(UserStaticData.hero.t.tp == UserStaticData.hero.t.pa) {
+				TweenLite.to(this, 0, {delay:1, onComplete:this.onShowTask});	
 			}
 			WinBattle.bat = null;
-			Report.addMassage("Animation length: " + WinBattle.anim.length);
+		}
+		
+		private function onShowTask():void {
+			DataExchange.onShowTask();
 		}
 		
 		private function isAlive(ul:Object, user_pos:int):Boolean 

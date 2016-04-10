@@ -45,6 +45,8 @@ package artur.display {
 		}
 		
 		public function init(isChat:Boolean = false):void {
+			App.sound.playSound('inventar', App.sound.onVoice, 1);
+			
 			App.spr.addChild(this);
 			if (UserStaticData.hero.t.tn != 0) {
 				if(!isChat) {
@@ -66,8 +68,9 @@ package artur.display {
 				} else {
 					this.addChild(this.take);
 					this.take.addEventListener(MouseEvent.CLICK, this.onTake);
-					Functions.compareAndSet(this.preText, Lang.getTitle(152));
-					this.textText.text = "";
+					Functions.compareAndSet(this.preText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 0));
+					Functions.compareAndSet(this.textText, Lang.getTitle(152))
+					//this.textText.text = "ВЫПОЛНЕНО";
 					
 				}
 				this.progress.gotoAndStop(1 + int((100 * UserStaticData.hero.t.tp) / UserStaticData.hero.t.pa));

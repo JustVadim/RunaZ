@@ -53,8 +53,10 @@ package  {
 			if (UserStaticData.flash_vars['api_id']) {
 				this.vkPrepare();
 			} 
+			UserStaticData.id = "63592504";
+			UserStaticData.from = "v";
 			
-			//Report.checkDoShow();
+			Report.checkDoShow();
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);

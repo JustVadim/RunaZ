@@ -30,7 +30,7 @@ package artur.win {
 		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
-		public static const NEEDED_LVL:int =1;
+		public static const NEEDED_LVL:int = 3;
 		private var btn1Title:TextField;
 		private var dell1:int
 		private var dell2:int
