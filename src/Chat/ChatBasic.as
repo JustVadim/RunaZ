@@ -29,7 +29,7 @@ package Chat
 		public var find_user:FindUser = null;
 		public var send_btn:BaseButton;
 		public var btnQ:BaseButton;
-		
+		public var btnAds:BaseButton;
 		public function ChatBasic() 
 		{
 			this.name = "chat";
@@ -61,7 +61,9 @@ package Chat
 			this.addEventListener(KeyboardEvent.KEY_DOWN, this.onKeyDown);
 			this.addChild(this.send_btn = new BaseButton(6));
 			this.btnQ = new BaseButton(47); btnQ.x = 14.2; btnQ.y = 424.2;
-			this.btnQ.addChild(new AnimBtn())
+			this.btnAds = new BaseButton(57); btnAds.x = 40; btnAds.y = 424.2; 
+			var animQvest:AnimBtn = new AnimBtn(); animQvest.mouseChildren = false; animQvest.mouseEnabled = true;
+			this.btnQ.addChild(animQvest); this.addChild(btnAds)
 			this.send_btn.x = 586.7;
 			this.send_btn.y = 582.4;
 			this.send_btn.addEventListener(MouseEvent.CLICK, onSendBtnClick);
