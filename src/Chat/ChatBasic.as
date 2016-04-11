@@ -77,7 +77,8 @@ package Chat
 			this.btnQ.addEventListener(MouseEvent.CLICK, this.onAddedBtnQCLick);
 		}
 		
-		public function addBtn():void {
+		public function addBtn():void 
+		{
 			this.addChild(this.btnQ);
 		}
 		
