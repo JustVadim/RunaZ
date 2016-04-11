@@ -1,5 +1,6 @@
 package artur.display
 {
+	import Utils.BuffsVars;
 	import artur.App;
 	import artur.ProgressBarExtended;
 	import artur.win.WinBattle;
@@ -302,19 +303,19 @@ package artur.display
 			switch(true)
 			{
 				case(mc == this.mcText.sk_crit):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(5) +"</font>\n<font color=\"#FFFFFF\">" + bc[0][ub[0].l] + "% "+ Lang.getTitle(10) + " - " + bc[0][ub[0].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(5) +"</font>\n<font color=\"#FFFFFF\">" + bc[0][ub[0].l] + "% " + Lang.getTitle(10) + " - " + bc[0][ub[0].l + 1] + "%";
 					break;
 				case(this.mcText.sk_miss == mc):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(6) +"</font>\n<font color=\"#FFFFFF\">" + bc[1][ub[1].l] + "% "+ Lang.getTitle(11)+" - " + bc[1][ub[1].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(6) +"</font>\n<font color=\"#FFFFFF\">" + bc[1][ub[1].l] + "% " + Lang.getTitle(11)+" - " + bc[1][ub[1].l + 1] + "%";
 					break;
 				case(this.mcText.sk_double == mc):
-					descr = "<font color=\"#00FF00\">"+ Lang.getTitle(7)+"</font>\n<font color=\"#FFFFFF\">" + bc[2][ub[2].l] + "% "+ Lang.getTitle(12)+" - " + bc[2][ub[2].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">"+ Lang.getTitle(7)+"</font>\n<font color=\"#FFFFFF\">" + bc[2][ub[2].l] + "% " + Lang.getTitle(12)+" - " + bc[2][ub[2].l + 1] + "%";
 					break;
 				case(this.mcText.sk_out == mc):
-					descr = "<font color=\"#00FF00\">"+Lang.getTitle(8)+"</font>\n<font color=\"#FFFFFF\">" + bc[3][ub[3].l] + "% "+ Lang.getTitle(13)+" - " + bc[3][ub[3].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">"+Lang.getTitle(8)+"</font>\n<font color=\"#FFFFFF\">" + bc[3][ub[3].l] + "% " + Lang.getTitle(13)+" - " + bc[3][ub[3].l + 1] + "%";
 					break;
 				case(this.mcText.sk_return == mc):
-					descr = "<font color=\"#00FF00\">" +Lang.getTitle(9) +"</font>\n<font color=\"#FFFFFF\">" + bc[4][ub[4].l] + "% "+Lang.getTitle(14)+" - " + bc[4][ub[4].l + 1] + "%";
+					descr = "<font color=\"#00FF00\">" +Lang.getTitle(9) +"</font>\n<font color=\"#FFFFFF\">" + bc[4][ub[4].l] + "% " + Lang.getTitle(14)+" - " + bc[4][ub[4].l + 1] + "%";
 					break;
 				case (this.mcText.sk_ult == mc):
 					switch(UserStaticData.hero.units[WinCastle.currSlotClick].t)
@@ -380,12 +381,18 @@ package artur.display
 					skill_num = 5
 					break;
 			}
-			var obj:Object = new Object();
-			obj.un = WinCastle.currSlotClick;
-			obj.sn = skill_num;
-			var data:DataExchange = new DataExchange();
-			data.addEventListener(DataExchangeEvent.ON_RESULT, onBuffUpdateRes);
-			data.sendData(COMMANDS.UPDATE_SKILL, JSON2.encode(obj), true);			
+			var unit_buff:Object = (skill_num < 5)? UserStaticData.hero.units[WinCastle.currSlotClick].b[skill_num]:UserStaticData.hero.units[WinCastle.currSlotClick].ult;
+			if (unit_buff.l < 24) {
+				App.lock.init();
+				var obj:Object = new Object();
+				obj.un = WinCastle.currSlotClick;
+				obj.sn = skill_num;
+				var data:DataExchange = new DataExchange();
+				data.addEventListener(DataExchangeEvent.ON_RESULT, onBuffUpdateRes);
+				data.sendData(COMMANDS.UPDATE_SKILL, JSON2.encode(obj), true);
+			} else {
+				App.closedDialog.init1("");
+			}
 			
 			function onBuffUpdateRes(evn:DataExchangeEvent = null):void {
 				data.removeEventListener(evn.type, onBuffUpdateRes);
