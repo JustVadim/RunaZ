@@ -88,7 +88,7 @@ package artur.display {
 					this.frees();
 					break;
 				case btnEnergy:
-					App.byeWin.init("Я хочу пополнить", " энергию", 10, 0, NaN, 6);
+					App.byeWin.init("Я хочу пополнить", "энергию", GameVars.ENERGY_PRICE, 0, NaN, 6);
 					this.frees();
 					break;
 			}

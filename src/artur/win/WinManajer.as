@@ -13,6 +13,7 @@ package artur.win
 	import Server.DataExchangeEvent;
 	import Utils.json.JSON2;
 	
+	
 	public class WinManajer 
 	{
 		public var windows:Array = 
@@ -71,7 +72,7 @@ package artur.win
 					brama.stop();
 					swapMode = false;
 					if (this.currWin != 3) {
-						this.isLevelUp();
+						//this.isLevelUp();
 						WinManajer.checkTask();
 						if(!this.is_fb_checked) {
 							this.checkFriendBonus();
@@ -101,8 +102,7 @@ package artur.win
 			}
 		}
 		
-		private function isLevelUp():void 
-		{
+		private function isLevelUp():void {
 			for (var key:Object in UserStaticData.hero.units) {
 				var unit:Object = UserStaticData.hero.units[key];
 				if (unit.exp >= unit.nle) {
@@ -125,7 +125,6 @@ package artur.win
 				unit.lvl = obj.lvl;
 				unit.nle = obj.nle;
 				unit.fs = obj.fs;
-				App.closedDialog.init1(Lang.getTitle(2), true);
 				
 			}
 			else

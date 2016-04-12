@@ -12,21 +12,21 @@ package Server
 		public static function init():void
 		{
 			Lang.lang_table[0] = new Array();
-			lang_table[0][0] = ["Начало пути", 			"The beginning of the way",	""];
-			lang_table[0][1] = ["Зелёная тропа", 		"The green trail", 		""];
-			lang_table[0][2] = ["В поисках истины", 	"In search of truth",   ""];
-			lang_table[0][3] = ["Туман войны", 			"Fog of war", 			""];
-			lang_table[0][4] = ["Поворот не туда", 		"Wrong turn",			""];
-			lang_table[0][5] = ["Проклятая река", 		"Cursed river",			""];
-			lang_table[0][6] = ["Верная стража", 		"Faithful guardian",	""];
-			lang_table[0][7] = ["Звон монет", 			"Coins ringing",		""];
-			lang_table[0][8] = ["Шёпот дракона", 		"Dragon whisper",		""];
-			lang_table[0][9] = ["Клыкастая месть", 		"Fanged revenge",		""];
+			lang_table[0][0]  = ["Начало пути", 		"The beginning of the way",	""];
+			lang_table[0][1]  = ["Зелёная тропа", 		"The green trail", 		""];
+			lang_table[0][2]  = ["В поисках истины", 	"In search of truth",   ""];
+			lang_table[0][3]  = ["Туман войны", 		"Fog of war", 			""];
+			lang_table[0][4]  = ["Поворот не туда", 	"Wrong turn",			""];
+			lang_table[0][5]  = ["Проклятая река", 		"Cursed river",			""];
+			lang_table[0][6]  = ["Верная стража", 		"Faithful guardian",	""];
+			lang_table[0][7]  = ["Звон монет", 			"Coins ringing",		""];
+			lang_table[0][8]  = ["Шёпот дракона", 		"Dragon whisper",		""];
+			lang_table[0][9]  = ["Клыкастая месть", 	"Fanged revenge",		""];
 			lang_table[0][10] = ["БОСС", 				"BOSS", 				""];
 			lang_table[0][11] = ["Земля проклятых", 	"Curse land", 			""];
 			lang_table[0][12] = ["Шелест листьев", 		"Rustles of leaves",	""];
 			lang_table[0][13] = ["Две башни", 			"Two towers",			""];
-			lang_table[0][14] = ["Лесные ветра", 		"Forest wings",		""];
+			lang_table[0][14] = ["Лесные ветра", 		"Forest wings",			""];
 			lang_table[0][15] = ["Вулканическая пыль", 	"Volcanic dust",		""];
 			lang_table[0][16] = ["Крик орков", 			"Orcs scream",			""];
 			lang_table[0][17] = ["Лужайка единорогов", 	"Unicorns lawn", 		""];
@@ -45,6 +45,19 @@ package Server
 			lang_table[0][30] = ["Среди руин",			"Among the Ruins",		""];
 			lang_table[0][31] = ["Око за око",			"Eye for an Eye",		""];
 			lang_table[0][32] = ["БОСС",				"BOSS",					""];
+			lang_table[0][33] = ["Верхние земли",		"Higher Ground",		""];
+			lang_table[0][34] = ["Во тьму",				"Into the Darkness",	""];
+			lang_table[0][35] = ["Глаз шторма",			"",						""];
+			lang_table[0][36] = ["Подземелья и дьяволы","Dungeons and Devils",	""];
+			lang_table[0][37] = ["Отголоски войны",		"Spoils of War",		""];
+			lang_table[0][38] = ["Испорченное cолнце",	"Tainted Sun",			""];
+			lang_table[0][39] = ["Забытая башня",		"The Forgotten Tower",	""];
+			lang_table[0][40] = ["Демоны из ада",		"",						""];
+			lang_table[0][41] = ["Вторжение",			"BOSS",					""];
+			lang_table[0][42] = ["Вождь клана",			"BOSS",					""];
+			lang_table[0][43] = ["БОСС",				"BOSS",					""];
+			
+			
 			
 			Lang.lang_table[1] = new Array();
 			Lang.lang_table[1][0] = ["Шлем", 		"Helmet", 		""];
@@ -236,6 +249,18 @@ package Server
 			Lang.lang_table[101] = 	[ 
 										["Использовать 2 раза свиток защиты.", "", ""], 
 										["Свиток защиты повысит вам на один ход защиту юнита. Что бы получить награду используйте свиток защиты 2 раза.", "", ""]
+									];
+			Lang.lang_table[102] = 	[ 
+										["Купить второго юнита.", "", ""], 
+										["Что бы быть сильнее в бою, зайдите в замок и наймите еще одного юнита. Внимательно присмотритесь какой тип юнита вам подойдет лучше.", "", ""]
+									];
+			Lang.lang_table[103] = 	[ 
+										["Выиграйте 5 миссий на уровне сложности \"Воин\".", "", ""], 
+										["Что бы выполнить это задание Вам нужно повторно пройти миссию но уже на уровне сложности \"Воин\". Выиграйте 5 раз на уровне сложности \"Воин\" и награда Ваша.", "", ""]
+									];
+			Lang.lang_table[104] = 	[ 
+										["Закажите 5 раз драгоценный камень.", "", ""], 
+										["Зайдите в кузницу и закажите 5 раз драгоценный камень. Каждый камень имеет свое время добывания. Заказывать камни можно только по очереди.", "", ""]
 									];
 			///
 			Lang.lang_table[152] = ["Задание выполнено!!!\nВы можете забрать награду.", "", ""];

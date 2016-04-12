@@ -187,9 +187,9 @@ package Server
 							case int(COMMANDS.UPDATE_TASK):
 								Report.addMassage(temp_obj.m);
 								UserStaticData.hero.t = JSON2.decode(temp_obj.m);
-								if (App.winManajer.currWin != 3 && UserStaticData.hero.t.tp == 0) {
-									TweenLite.to(Main.THIS, 0, { delay:1, onComplete: DataExchange.onShowTask} );
-								}
+								if ( (UserStaticData.hero.t.tp == 0 && UserStaticData.hero.t.tn !=1) || (UserStaticData.hero.t.tp == UserStaticData.hero.t.pa && UserStaticData.hero.t.tn == 6)) {
+									TweenLite.to(Main.THIS, 0, { delay:0.2, onComplete: DataExchange.onShowTask} );
+								} 
 								break;
 							case int(COMMANDS.BYE_COINS):
 								var res:Object = JSON2.decode(temp_obj.m);
@@ -250,10 +250,10 @@ package Server
 			}
 		}
 		
-		private static function onShowTask():void 
-		{
-			App.task.init();
+		public static function onShowTask():void {
+			App.task.init(false);
 			Main.THIS.chat.addBtn();
+			WinManajer.taskWasShown = true;
 		}
 		
 		public function sendData(command:String, command_data:String = "", answer:Boolean = false , is_recconected:Boolean = false):void {

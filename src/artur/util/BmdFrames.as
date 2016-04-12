@@ -58,8 +58,8 @@ package util {
 					     for (var l:int = 0; l < objectsPerFrameBlood; l++) 
 					     {
 						     var partBlood:MovieClip = new PartBlood();
-							 partBlood.gotoAndStop(Numbs.RandomInt(1,4))
-							 partBlood.scaleX = Numbs.Random(0.3, 1);
+							 partBlood.gotoAndStop(Numbs1.RandomInt(1,4))
+							 partBlood.scaleX = Numbs1.Random(0.3, 1);
 							 
 							 partBlood.scaleY = partBlood.scaleX;
 							 partsBood.push(partBlood);

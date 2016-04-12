@@ -28,8 +28,8 @@ package artur.display {
 		private var txtAvatarLevel:TextField = Functions.getTitledTextfield(32.5, 77, 31.75, 19.9, new Art().fontName, 15, 0xFBFBFB, TextFormatAlign.CENTER, "99", 1, Kerning.OFF, -1);
 		public var txtExp:TextField;
 		public var txtVit:TextField;
-		public var txtGold:TextField = Functions.getTitledTextfield(31, 11, 78, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
-		public var txtSilver:TextField = Functions.getTitledTextfield(160, 11, 78, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
+		public var txtGold:TextField = Functions.getTitledTextfield(31, 11, 78, 22, new Art().fontName, 15, 0xFFF642, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
+		public var txtSilver:TextField = Functions.getTitledTextfield(160, 11, 78, 22, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
 		private var ava_loader:Loader;
 		private var gold:mcRessBar = new mcRessBar();
 		
@@ -42,12 +42,12 @@ package artur.display {
 			Functions.SetPriteAtributs(this, false, true, 0, 0);
 			this.addChild(this.mcAva);
 			this.mcAva.addChild(txtAvatarLevel);
-			this.mcAva.expBar.addChild(this.txtExp = Functions.getTitledTextfield(0, -3, this.mcAva.expBar.width, 17, new Art().fontName, 14, 0xFFFFFF, TextFormatAlign.CENTER, "00/00", 1, Kerning.OFF, -1));
+			this.mcAva.expBar.addChild(this.txtExp = Functions.getTitledTextfield(0, -2, this.mcAva.expBar.width, 14, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "00/00", 1, Kerning.OFF, -1));
 			this.mcAva.vitBar.addChild(this.txtVit = Functions.getTitledTextfield(0, -3, this.mcAva.expBar.width, 17, new Art().fontName, 14, 0xFFFFFF, TextFormatAlign.CENTER, "00/00", 1, Kerning.OFF, -1));
 			this.mcAva.vitBar.buttonMode = true;
 			this.mcAva.expBar.buttonMode = true;
 			this.txtAvatarLevel.filters = this.txtExp.filters = this.txtGold.filters = this.txtSilver.filters = this.txtVit.filters = [new GlowFilter(0x0, 1, 2, 2, 2, 1, false, false)];
-			this.gold.x = 800 - this.gold.width+7;
+			this.gold.x = 800 - this.gold.width + 7;
 			this.gold.addChild(this.txtGold);
 			this.gold.addChild(this.txtSilver);
 			this.gold.mouseChildren = false;
@@ -122,6 +122,9 @@ package artur.display {
 				case this.gold:
 					App.winBank.init();
 					break;
+				case this.mcAva.vitBar:
+					App.byeWin.init("Я хочу пополнить", " энергию", GameVars.ENERGY_PRICE, 0, NaN, 6);
+					break;
 			}
 			
 		}
@@ -189,10 +192,11 @@ package artur.display {
 				var currEn:int = hero.cur_vitality;
 				var currExp:int = hero.exp;
 				Functions.compareAndSet(this.txtAvatarLevel, hero.level.toString());
-				Functions.compareAndSet(this.txtExp, String(currExp + '/' + 11));
+				Functions.compareAndSet(this.txtExp, String(currExp + '/' + UserStaticData.hero.nle));
 				Functions.compareAndSet(this.txtVit, String(currEn + '/' + maxVit));
+				
 				this.mcAva.vitBar.gotoAndStop(int(currEn  / maxVit * 100) + 1);
-				this.mcAva.expBar.gotoAndStop(int(currExp / 11 * 100) + 1);
+				this.mcAva.expBar.gotoAndStop(int(currExp / UserStaticData.hero.nle * 100) + 1);
 				
 				
 				/*if(currEn < 10) {
@@ -213,7 +217,7 @@ package artur.display {
 		}
 		
 		private function onClick(e:MouseEvent):void {
-			App.byeWin.init("Я хочу пополнить", " энергию", 10, 0, NaN, 6);
+			
 		}
 		
 		private function onOut(e:MouseEvent):void {
@@ -247,10 +251,6 @@ package artur.display {
 			}
 		}
 		
-		public function updateBar():void {
-			
-		}
-		
 		public function buyEnergy():void {
 			App.lock.init();
 			var data:DataExchange = new DataExchange();
@@ -264,7 +264,7 @@ package artur.display {
 			if (obj.res != null) {
 				App.sound.playSound('gold', App.sound.onVoice, 1);
 				UserStaticData.hero.cur_vitality = obj.res
-				UserStaticData.hero.gold -= 10;
+				UserStaticData.hero.gold -= GameVars.ENERGY_PRICE;
 				this.updateAva();
 				this.updateGold();
 				App.lock.frees();

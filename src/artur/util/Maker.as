@@ -38,8 +38,7 @@ package artur.util
 			 txt.width  = wd
 			 txt.height = hg
 			 txt.textColor = color
-			 if (border) 
-			 {
+			 if (border) {
 				  txt.border = border;
 				  txt.borderColor = borderColor
 				  txt.background = true;

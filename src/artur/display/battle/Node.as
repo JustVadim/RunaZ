@@ -173,24 +173,27 @@ package artur.display.battle
 		}
 		
 		public function sendStep(obj:Object = null):void {
-			WinBattle.inst.topPanel.setDefence(false);
-			WinBattle.arrow.visible = false; WinBattle.arrow.stop();
-			WinBattle.inst.grid.clearNodesControl();
-			WinBattle.inst.disableBanochki();
-			App.lock.init();
-			var data:DataExchange = new DataExchange();
-			data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);
-			var str:String;
-			if (obj != null) {
-				str = JSON2.encode(obj);
-			} else {
-				str = "";
-			}
-			if (UserStaticData.hero.bat > -1) {
-				data.sendData(COMMANDS.BATTLE_STEP, str, true);
-			}
-			if(WinBattle.tutor!=null) {
-				WinBattle.tutor.frees();
+			Report.addMassage("sendStep" + WinBattle.bat.is_end);
+			if(!WinBattle.bat.is_end) {
+				WinBattle.inst.topPanel.setDefence(false);
+				WinBattle.arrow.visible = false; WinBattle.arrow.stop();
+				WinBattle.inst.grid.clearNodesControl();
+				WinBattle.inst.disableBanochki();
+				App.lock.init();
+				var data:DataExchange = new DataExchange();
+				data.addEventListener(DataExchangeEvent.ON_RESULT, getRess);
+				var str:String;
+				if (obj != null) {
+					str = JSON2.encode(obj);
+				} else {
+					str = "";
+				}
+				if (UserStaticData.hero.bat > -1) {
+					data.sendData(COMMANDS.BATTLE_STEP, str, true);
+				}
+				if(WinBattle.tutor!=null) {
+					WinBattle.tutor.frees();
+				}
 			}
 		}
 		

@@ -100,15 +100,20 @@ package artur.win {
 			bgPrice.x = 60;
 			bgPrice.y = 20;
 			
-			this.btnStoneCreat.addEventListener(MouseEvent.CLICK, onCreatStone);
-			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);
-			this.btnCraft.addEventListener(MouseEvent.CLICK, onCraft);
-			this.btnStoneCreat.addEventListener(MouseEvent.ROLL_OVER, this.onBtnOver);
-			this.btnStoneCreat.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
+			
 			this.btnCraft.addEventListener(MouseEvent.ROLL_OVER, this.onBtnOver);
 			this.btnCraft.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
+			this.btnCraft.addEventListener(MouseEvent.CLICK, onCraft);
+			
+			
+			this.btnStoneCreat.addEventListener(MouseEvent.CLICK, onCreatStone);
+			
+			this.btnStoneCreat.addEventListener(MouseEvent.ROLL_OVER, this.onBtnOver);
+			this.btnStoneCreat.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
+			
 			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OVER, this.onBtnClosePrice);
 			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
+			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);
 		}
 		
 		private function onBtnClosePrice(e:MouseEvent):void {
@@ -392,7 +397,7 @@ package artur.win {
 				App.lock.frees();
 				this.btnStoneCreat.parent.removeChild(this.btnStoneCreat);
 				UserStaticData.hero.sz = res.res;
-				UserStaticData.hero.gold -= (2 + (int(res.res.t) / 5));
+				UserStaticData.hero.gold -= (2 + (int(res.res.t / 5)));
 				App.topMenu.updateGold();
 				this.addTimer();
 			}else {
