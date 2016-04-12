@@ -16,8 +16,7 @@ package Chat
 	import Server.DataExchange;
 	import Utils.json.JSON2;
 	
-	public class ChatBasic extends mcChat
-	{
+	public class ChatBasic extends mcChat {
 		public var users_online_sprite:Sprite = new Sprite();
 		public var massages_sprite:Sprite = new Sprite();
 		public var enter_massage:TextField = new TextField();
@@ -26,15 +25,15 @@ package Chat
 		private var sended_massage:Boolean = true;
 		private var last_mass_YY:int = 0;
 		public var is_battle:Boolean = false;
-		public var find_user:FindUser = null;
+		public var find_user:FindUser;
 		public var send_btn:BaseButton;
 		public var btnQ:BaseButton;
 		public var btnAds:BaseButton;
-		public function ChatBasic() 
-		{
+		public static var userDialog:UserInListDialog = new UserInListDialog();
+		
+		
+		public function ChatBasic() {
 			this.name = "chat";
-			//this.visible = false;
-			
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			this.tabEnabled = false;
 			this.massages_scrollbar.addEventListener(MouseEvent.CLICK, setFocus);
@@ -43,13 +42,16 @@ package Chat
 			this.clear_nickname_btn.buttonMode = true;
 			this.users_online_scrollbar.source = users_online_sprite;
 			this.massages_scrollbar.source = massages_sprite;
+			
 			this.enter_massage.tabEnabled = true;
 			this.enter_massage.y = 573.10;
 			this.enter_massage.x = 172.45;
-			this.enter_massage.width = 427.45;
-			this.enter_massage.height = 22;
+			this.enter_massage.width = 392;
+			this.enter_massage.height = 19;
 			this.enter_massage.textColor = 0xFFFFFF;
 			this.enter_massage.type = "input";
+			this.enter_massage.maxChars = 150;
+			this.enter_massage.border = true;
 			this.enter_massage.addEventListener(FocusEvent.FOCUS_IN, onEnterMassFocusIn);
 			this.enter_massage.addEventListener(FocusEvent.FOCUS_OUT, onEnterMassFocusOut);
 			this.addChild(enter_massage);
@@ -62,14 +64,16 @@ package Chat
 			this.addChild(this.send_btn = new BaseButton(6));
 			this.btnQ = new BaseButton(47); btnQ.x = 14.2; btnQ.y = 424.2;
 			this.btnAds = new BaseButton(57); btnAds.x = 40; btnAds.y = 424.2; 
-			var animQvest:AnimBtn = new AnimBtn(); animQvest.mouseChildren = false; animQvest.mouseEnabled = true;
-			this.btnQ.addChild(animQvest); this.addChild(btnAds)
+			//var animQvest:AnimBtn = new AnimBtn(); animQvest.mouseChildren = false; animQvest.mouseEnabled = true;
+			//this.btnQ.addChild(animQvest); 
+			this.addChild(btnAds)
 			this.send_btn.x = 586.7;
 			this.send_btn.y = 582.4;
 			this.send_btn.addEventListener(MouseEvent.CLICK, onSendBtnClick);
 			this.send_btn.tabEnabled = false;
 			this.users_online_scrollbar.tabEnabled = false;
 			this.massages_scrollbar.tabEnabled = false;
+			this.massages_sprite.mouseChildren = true;
 			this.setFocus();
 			if(UserStaticData.hero.t.tn != 0 && UserStaticData.hero.t.tp < UserStaticData.hero.t.pa) {
 				this.addChild(this.btnQ);
@@ -128,14 +132,14 @@ package Chat
 					this.users_array[this.users_array.length] = new UserInList(this.users_array.length);
 				}
 				for (cc=0; cc < temp_array.length; cc++) {
-					users_array[cc].update(temp_array[cc]["id"]);
+					UserInList(users_array[cc]).update(temp_array[cc]["id"]);
 				}
 			} else {
 				for (cc = 0; cc < temp_array.length; cc++) {
-					users_array[cc].update(temp_array[cc]["id"]);
+					UserInList(users_array[cc]).update(temp_array[cc]["id"]);
 				}
 				for (cc = temp_array.length; cc < users_array.length; cc++) {
-					this.users_array[cc].remove();
+					UserInList(this.users_array[cc]).remove();
 				}
 			}
 			this.users_online_scrollbar.update();
@@ -196,33 +200,29 @@ package Chat
 			var new_massage:TextField = new TextField();
 			new_massage.selectable = new_massage.tabEnabled = new_massage.background = false;
 			new_massage.multiline = new_massage.wordWrap = true;
-			new_massage.width = 569;
+			new_massage.width = 580;
 			var textf:TextFormat = new TextFormat();
-			textf.font = new Art().fontName;
-			textf.size = 12;
+			textf.size = 11;
 			textf.color = 0xFFFFFF;
-			new_massage.embedFonts = true;
+			textf.font = new Art().fontName;
 			new_massage.defaultTextFormat = textf;
-			new_massage.filters = [new GlowFilter(0x0, 1, 3, 3,1)];
-			if (temp_obj.f == UserStaticData.my_info.id) {
-				new_massage.text = temp_obj.d + " " + "<font size = \"12\"><u><a href = 'event:'>"+UserStaticData.my_info.sn+ " "+ UserStaticData.my_info.fn + "";
-			} else {
-				new_massage.text = temp_obj.d + " " + "<font size = \"12\"><u><a href = 'event:"+String(temp_obj.f)+"'>"+UserStaticData.users_info[temp_obj.f].sn + " " + UserStaticData.users_info[temp_obj.f].fn + "";
-			}
+			new_massage.alpha = 0.9;
+			new_massage.filters = [new GlowFilter(0x0, 0.8, 3, 3, 1)];
+			new_massage.text = temp_obj.d + " " + "<font size = \"12\"><u><a href = 'event:" + String(temp_obj.f) + "'>" + UserStaticData.users_info[temp_obj.f].fn + " " + UserStaticData.users_info[temp_obj.f].sn + "";
+			//new_massage.border = true;
 			if (temp_obj.t == "0") {
 				new_massage.appendText("</a></u><b>:</b> " + temp_obj.m); 
 			} else {
-				if (temp_obj.t == UserStaticData.my_info.id) {
-					new_massage.appendText("</a></u><b> -></b> <u><a href='event:'>" + UserStaticData.my_info.sn+ " "+ UserStaticData.my_info.fn + "</a></u><b>:</b> " + temp_obj.m); 
-				} else {
-					new_massage.appendText("</a></u><b> -></b> <u><a href='event:" + temp_obj.t + "'>" + UserStaticData.users_info[temp_obj.t].sn + " " + UserStaticData.users_info[temp_obj.t].fn + "</a></u><b>:</b> " + temp_obj.m); 
+				new_massage.appendText("</a></u><b> -></b> <u><a href='event:" + temp_obj.t + "'>" + UserStaticData.users_info[temp_obj.t].fn + " " + UserStaticData.users_info[temp_obj.t].sn + "</a></u><b>:</b> " + temp_obj.m); 
+				if (temp_obj.t == UserStaticData.allId) {
+					new_massage.text = "<font color=\"#B0FFB0\">" + new_massage.text + "</font>";
 				}
 			}
 			
 			new_massage.htmlText = new_massage.text;
 			new_massage.height = new_massage.numLines * 19;
-			new_massage.textColor = 0xFFFFFF;
 			new_massage.alpha = 0.8;
+			
 			new_massage.addEventListener(TextEvent.LINK, this.onTextLink);
 			if (!temp_obj.b) {
 				new_massage.y = last_mass_YY;
@@ -238,8 +238,8 @@ package Chat
 		}
 		
 		private function onTextLink(e:TextEvent):void {
-			if (e.text.length > 0){
-				this.addChild(new UserInListDialog(e.text));
+			if (e.text.length > 0) {
+				ChatBasic.userDialog.init(stage.mouseX - 12, stage.mouseY + 5, e.text, -1);
 			}
 		}
 	}

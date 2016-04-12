@@ -82,7 +82,7 @@ package Server
 			Lang.lang_table[5] = ["Критический урон", "Critical strike", ""];
 			Lang.lang_table[6] = ["Уворот", "Dodge", ""];
 			Lang.lang_table[7] = ["Двойная атака", "Double attack", ""];
-			Lang.lang_table[8] = ["Бешенсво", "Rage", ""];
+			Lang.lang_table[8] = ["Бешенство", "Rage", ""];
 			Lang.lang_table[9] = ["Ответный удар", "Counter attack", ""];
 			Lang.lang_table[10] = ["шанс нанести двойной урон</font>\n Следующий уровень", "chance to inflict double damage</font>\n Next level", ""];
 			Lang.lang_table[11] = ["шанс уклониться от удара</font>\n Следующий уровень", "chance to dodge</font>\n Next level", ""];
@@ -482,6 +482,10 @@ package Server
 			Lang.lang_table[183] = ["Ваша энергия. Вовстанавливается 1 единица в минуту.","",""];
 			Lang.lang_table[184] = ["Опыт", "", ""];
 			Lang.lang_table[185] = ["Ваш опыт. Увеличивается по мере прохождения миссий.", "", ""];
+			Lang.lang_table[186] = ["Сообщение", "", ""];
+			Lang.lang_table[187] = ["Прив. сообщ.", "", ""];
+			Lang.lang_table[188] = ["Профиль", "", ""];
+			
 			
 		}
 		

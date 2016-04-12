@@ -1,6 +1,7 @@
 package artur 
 {
 	import artur.display.BtnArena;
+	import artur.display.BtnChatDialogExtends;
 	import artur.display.bgBlankUnitExtend;
 	import artur.display.BtnAddHeroExtend;
 	import artur.display.btnClosedShopExtended;
@@ -22,57 +23,56 @@ package artur
 		public var cach:Array = [];
 		public  var clips:Array = 
 		[
-			new bg1Root(), //0
-			new btnBank,//1
-			new btnTop,//2
-			new btnCastle,//3
-			new btnArena,//4
-			new btnShop, //5
-			new btnSend,//6
-			new bgCastle1,//7
-			new BtnAddHeroExtend,//8
-			new BtnHeroExtend,//9
-			new bgBlankUnitExtend,//10;
-			new btnExit(),//11
-			new btnBye(),//12
-			new mcBgHeroInv(),//13
-			new btnTown(),//14
-			new btnClosedShopExtended(),//15
-			new mcBrmPart(),//16
-			new t1(), // 17
-			new t2(), // 18
-			new t3(), //19
-			new t4(), //20
-			new t5(),//21
-			new t6(),//22
-			new t7(),//23
-			new t8(),//24
-			new t9(),//25
-			new t10(),//26
-			new t11(),//27
-			new t12(),//28
-			new btnMap(),//29
-			new btnToBatle(),//30
-			new btnCloseList(),//31
-			new imgBtnCastle(),//32
-			new btnTakes(),//33
-			new btnPlus(),//34
-			new btnSel1Extend(Lang.getTitle(40, 0)),//35
-			new btnSel1Extend(Lang.getTitle(40, 1)),//36
-			new btnSel1Extend(Lang.getTitle(40, 2)),//37
-			new btnSel1Extend(Lang.getTitle(40, 3)),//38
-		    new mcArena(),//39,
-		    new BtnArena(),//40
-		    new btnAddStone(),//41
-		    new BtnCraft(),//42
-		    new BtnStoneExtend(),//43//
-		    new btnByeStone(),//44
-		    new imgBtnBank(),//45
-		    new imgBtnMap(),//46
-			new btnQvest(),//47
-		    new btnMapNext(),//48
-		    new btnMapRes(),//49
-
+			/*0*/new bg1Root(),
+			/*2*/new btnBank,
+			/**/new btnTop,//2
+			/**/new btnCastle,//3
+			/**/new btnArena,//4
+			/**/new btnShop, //5
+			/**/new btnSend,//6
+			/**/new bgCastle1,//7
+			/**/new BtnAddHeroExtend,//8
+			/**/new BtnHeroExtend,//9
+			/**/new bgBlankUnitExtend,//10;
+			/**/new btnExit(),//11
+			/**/new btnBye(),//12
+			/**/new mcBgHeroInv(),//13
+			/**/new btnTown(),//14
+			/**/new btnClosedShopExtended(),//15
+			/**/new mcBrmPart(),//16
+			/**/new t1(), // 17
+			/**/new t2(), // 18
+			/**/new t3(), //19
+			/**/new t4(), //20
+			/**/new t5(),//21
+			/**/new t6(),//22
+			/**/new t7(),//23
+			/**/new t8(),//24
+			/**/new t9(),//25
+			/**/new t10(),//26
+			/**/new t11(),//27
+			/**/new t12(),//28
+			/**/new btnMap(),//29
+			/**/new btnToBatle(),//30
+			/**/new btnCloseList(),//31
+			/**/new imgBtnCastle(),//32
+			/**/new btnTakes(),//33
+			/**/new btnPlus(),//34
+			/**/new btnSel1Extend(Lang.getTitle(40, 0)),//35
+			/**/new btnSel1Extend(Lang.getTitle(40, 1)),//36
+			/**/new btnSel1Extend(Lang.getTitle(40, 2)),//37
+			/**/new btnSel1Extend(Lang.getTitle(40, 3)),//38
+		    /**/new mcArena(),//39,
+		    /**/new BtnArena(),//40
+		    /**/new btnAddStone(),//41
+		    /**/new BtnCraft(),//42
+		    /**/new BtnStoneExtend(),//43//
+		    /**/new btnByeStone(),//44
+		    /**/new imgBtnBank(),//45
+		    /**/new imgBtnMap(),//46
+			/**/new btnQvest(),//47
+		    /**/new btnMapNext(),//48
+		    /**/new btnMapRes(),//49
 			new imgBtnEnergy(),//50
 		    new btnTop1(),//51
 		    new btnTop2(),//52
@@ -80,7 +80,11 @@ package artur
 		    new btnTop4(),//54
 		    new btnTop5(),//55
 		    new btnArrow(),//56
-			new btnVideoAds()// 57
+			new btnVideoAds(),// 57
+			/*58*/ new BtnChatDialogExtends(Lang.getTitle(186)),
+			/*59*/ new BtnChatDialogExtends(Lang.getTitle(187)),
+			/*60*/ new BtnChatDialogExtends(Lang.getTitle(188))
+			
 		];
 		
 		public static var scaleFactor:Number = 2;

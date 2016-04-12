@@ -7,7 +7,7 @@
 		//public static const server_ip:String = "151.80.10.33";
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
-		public static var id:String = "43";
+		public static var id:String = "44";
 		public static var sig:String = "11111";
 		public static var fname:String = "Laukhin2";
 		public static var sname:String = "Vadim2";
@@ -22,6 +22,7 @@
 		static public var buffs_chances:Array = new Array();
 		static public var flash_vars:Object;
 		static public var lang:int = 0;
+		static public var allId:String;
 		
 	}
 }

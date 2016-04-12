@@ -1,4 +1,6 @@
 package  {
+	import Chat.UserInList;
+	import Chat.UserInListDialog;
 	import _SN_vk.APIConnection;
 	import _SN_vk.events.CustomEvent;
 	import artur.App;
@@ -26,7 +28,6 @@ package  {
 	[Frame(factoryClass = "Preloader")]
 	
 	public class Main extends Sprite {
-		
 		public static var THIS:Main;
 		public static var rep:Report;
 		public var app:App;
@@ -53,6 +54,7 @@ package  {
 			if (UserStaticData.flash_vars['api_id']) {
 				this.vkPrepare();
 			} 
+			UserStaticData.allId = UserStaticData.from + UserStaticData.id;
 			Report.checkDoShow();
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
@@ -79,8 +81,8 @@ package  {
 		private function onLogin(e:DataExchangeEvent = null):void {
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
-			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
+			this.chat = new ChatBasic();
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
