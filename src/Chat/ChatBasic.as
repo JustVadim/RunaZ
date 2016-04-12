@@ -85,7 +85,7 @@ package Chat
 		
 		private function onAdds(e:MouseEvent):void {
 			if(UserStaticData.from == "v" && VKAdds.vkContainer!=null) {
-				VKAdds.vkContainer.init("5367058", Main.THIS.stage);
+				VKAdds.vkContainer.init(UserStaticData.flash_vars['api_id'], Main.THIS.stage);
 			}
 		}
 		

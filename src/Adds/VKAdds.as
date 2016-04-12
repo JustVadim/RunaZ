@@ -31,7 +31,7 @@ package Adds
 			VKAdds.vkContainer.mouseEnabled = true;
 			Main.THIS.stage.addChild(VKAdds.vkContainer as DisplayObject);
 			VKAdds.onResize();
-			/*VKAdds.vkContainer.addEventListener("adReady", onEvent);
+			VKAdds.vkContainer.addEventListener("adReady", onEvent);
             VKAdds.vkContainer.addEventListener("adLoadFailed", onEvent);
             VKAdds.vkContainer.addEventListener("adError", onEvent);
             VKAdds.vkContainer.addEventListener("adInitFailed", onEvent);
@@ -40,7 +40,9 @@ package Adds
             VKAdds.vkContainer.addEventListener("adPaused", onEvent);
             VKAdds.vkContainer.addEventListener("adResumed", onEvent);
             VKAdds.vkContainer.addEventListener("adCompleted", onEvent);
-            VKAdds.vkContainer.addEventListener("adClicked", onEvent);*/
+            VKAdds.vkContainer.addEventListener("adClicked", onEvent);
+			
+			
             VKAdds.vkContainer.addEventListener("adBannerStarted", onStart);
             VKAdds.vkContainer.addEventListener("adBannerStopped", onEnd);
             VKAdds.vkContainer.addEventListener("adBannerCompleted", onEnd);

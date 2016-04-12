@@ -58,9 +58,11 @@ package  {
 			this.stage.addChild(rep = new Report());
 			if (UserStaticData.flash_vars['api_id']) {
 				this.vkPrepare();	
+				Report.addMassage(UserStaticData.flash_vars['api_id']);
 			}
 			UserStaticData.allId = UserStaticData.from + UserStaticData.id;
 			//Report.checkDoShow();
+			
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
 			Security.allowInsecureDomain("*");
