@@ -38,10 +38,12 @@ package artur.units {
 		
 		public function init(parr:DisplayObjectContainer = null, lvl:int = 0):void {
 			onSound = true
-			scaleX = normScale;
-			scaleY = normScale;
-			filters = [];
-			free = false;
+			this.scaleX = normScale;
+			this.scaleY = normScale;
+			this.filters = [];
+			this.free = false;
+			this.x = 0;
+			this.y = 0;
 			this.gotoAndPlay('idle');
 			if (parr) {
 				parr.addChild(this);
@@ -75,7 +77,6 @@ package artur.units {
 					item.frees();
 				}
 			}
-			
 		}
 		
 		public function itemUpdate(obj:Object):void {

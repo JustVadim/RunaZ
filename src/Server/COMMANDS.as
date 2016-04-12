@@ -35,6 +35,7 @@ package Server
 		static public const CHECK_FRIENDS_BONUS:String = "32";
 		static public const SWAP_UNITS:String = "33";
 		static public const SOLD_HERO:String = "34";
+		static public const GET_HERO:String = "35";
 		
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;

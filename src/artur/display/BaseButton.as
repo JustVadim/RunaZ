@@ -18,7 +18,7 @@ package artur.display
 		private var glowPawer:Number = 1;
 		private var cont:Sprite = new Sprite();
 		
-		public function BaseButton(index:int,scaleClick:Number= 1.05,glowPawer:Number=5,soundCLick:String='click1',soundOver:String ='over1',color:uint = 0xFFFFFF ) 
+		public function BaseButton(index:int, scaleClick:Number = 1.05, glowPawer:Number = 5, soundCLick:String = 'click1', soundOver:String = 'over1', color:uint = 0xFFFFFF ) 
 		{
 			this.glowPawer = glowPawer;
 			this.scaleClick = scaleClick;

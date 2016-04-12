@@ -1,4 +1,7 @@
 package  {
+	import Adds.VKAdds;
+	import Chat.UserInList;
+	import Chat.UserInListDialog;
 	import _SN_vk.APIConnection;
 	import _SN_vk.events.CustomEvent;
 	import artur.App;
@@ -9,10 +12,17 @@ package  {
 	import artur.util.Numbs1;
 	import artur.win.WinBattle;
 	import com.greensock.TweenLite;
+	import flash.display.DisplayObject;
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLVariables;
+	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
 	import flash.system.Security;
 	import flash.utils.Timer;
 	import report.Report;
@@ -26,17 +36,14 @@ package  {
 	[Frame(factoryClass = "Preloader")]
 	
 	public class Main extends Sprite {
-		
 		public static var THIS:Main;
 		public static var rep:Report;
 		public var app:App;
 		private var mcOff:mcOffSide = new mcOffSide();
 		public var chat:ChatBasic;
 		public static var VK:APIConnection;
-		//public static var spr:Sprite
 		
-		public function Main():void 
-		{
+		public function Main():void {
 			if (stage) {
 				this.init();
 			} else {
@@ -44,21 +51,23 @@ package  {
 			}
 		}
 		private function init(e:Event = null):void {
-			//spr  = Sprite(this);
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			Main.THIS = this;
 			UserStaticData.flash_vars = this.stage.loaderInfo.parameters as Object;
 			this.stage.addChild(rep = new Report());
 			if (UserStaticData.flash_vars['api_id']) {
-				this.vkPrepare();
-			} 
-			Report.checkDoShow();
+				this.vkPrepare();	
+			}
+			UserStaticData.allId = UserStaticData.from + UserStaticData.id;
+			//Report.checkDoShow();
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
+			Security.allowInsecureDomain("*");
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
 		}
+		
 		
 		private function vkPrepare():void {
 			Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
@@ -69,7 +78,8 @@ package  {
 			UserStaticData.sname = api_res.response[0].last_name;
 			UserStaticData.plink = api_res.response[0].photo_100;
 			UserStaticData.id = api_res.response[0].uid;
-			UserStaticData.friend_invited = UserStaticData.flash_vars.user_id;
+			UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
+			VKAdds.init();
 		}
 		
 		public static function onVkPayment(e:CustomEvent):void {
@@ -79,8 +89,8 @@ package  {
 		private function onLogin(e:DataExchangeEvent = null):void {
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
-			this.chat = new ChatBasic();
 			this.app = new App(this.stage);
+			this.chat = new ChatBasic();
 			if(Preloader.loader!=null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
@@ -88,7 +98,7 @@ package  {
 		}
 		
 		private function onHalfPreloader():void {
-			stage.addChild(this.chat);
+			stage.addChildAt(this.chat, 1);
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
 			///stage.addChild(new movieMonitor());

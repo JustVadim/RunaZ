@@ -1,5 +1,6 @@
 package artur.win 
 {
+	import Chat.UserInListDialog;
 	import artur.App;
 	import artur.display.BaseButton;
 	import artur.display.battle.eff.EffManajer;
@@ -121,7 +122,7 @@ package artur.win
 			}
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
-			} 
+			}
 		}
 		
 		public function updateBar():void {

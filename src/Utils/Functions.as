@@ -12,7 +12,7 @@ package Utils {
 			mc.tabChildren = false;
 			mc.mouseEnabled = mouseUnabled;
 			mc.mouseChildren = mouseChildren;
-			if (xx != 0) {1
+			if (xx != 0) {
 				mc.x = xx;
 			}
 			if (yy != 0) {
@@ -22,6 +22,11 @@ package Utils {
 		
 		public static function GetHeroChars():Array {
 			var chars:Array = [0, UserStaticData.hero.skills.energy * 10 , UserStaticData.hero.skills.attack, UserStaticData.hero.skills.defence, UserStaticData.hero.skills.defence];
+			return chars;
+		}
+		
+		public static function GetOtherHeroChars(hero:Object):Array {
+			var chars:Array = [0, hero.sk.en * 10, hero.sk.a, hero.sk.d, hero.sk.d];
 			return chars;
 		}
 		
@@ -37,7 +42,7 @@ package Utils {
 			textf.leading = leading;
 			var title:TextField = new TextField();
 			title.embedFonts = true;
-			title.antiAliasType = AntiAliasType.ADVANCED
+			//title.antiAliasType = AntiAliasType.ADVANCED
 			title.defaultTextFormat = textf;
 			title.x = xx;
 			title.y = yy;
@@ -50,7 +55,7 @@ package Utils {
 			title.height = hh;
 			title.text = str;
 			//title.border = true;
-			title.borderColor = 0xFFFFFF;
+			//title.borderColor = 0xFFFFFF;
 			title.alpha = alpha;
 			if (title.text.length > 1) {
 				title.cacheAsBitmap = true;
