@@ -2,6 +2,7 @@ package artur
 {
 	import artur.display.BaseButton;
 	import artur.display.BonusDialog;
+	import artur.display.Profile;
 	import artur.display.battle.TopPanel;
 	import artur.display.ByeWin;
 	import artur.display.CloseDialog;
@@ -72,6 +73,7 @@ package artur
 		public static var prop:PropExtended = new PropExtended();
 		public static var upPanel:UpPanel;
 		public static var bomusDialog:BonusDialog;
+		public static var profile:Profile;
 		
 		
 		public function App(stg:Stage) 
@@ -137,7 +139,7 @@ package artur
 			this.tabChildren = false;
 			App.task = new Task();
 			App.bomusDialog = new BonusDialog();
-
+			App.profile = new Profile();
 			Main.THIS.addChild(App.upPanel = new UpPanel());
 			if(UserStaticData.from == "v") {
 				Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);

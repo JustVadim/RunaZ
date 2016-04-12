@@ -34,10 +34,8 @@ package  {
 		private var mcOff:mcOffSide = new mcOffSide();
 		public var chat:ChatBasic;
 		public static var VK:APIConnection;
-		//public static var spr:Sprite
 		
-		public function Main():void 
-		{
+		public function Main():void {
 			if (stage) {
 				this.init();
 			} else {
@@ -45,7 +43,6 @@ package  {
 			}
 		}
 		private function init(e:Event = null):void {
-			//spr  = Sprite(this);
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);
 			Main.THIS = this;
@@ -71,7 +68,7 @@ package  {
 			UserStaticData.sname = api_res.response[0].last_name;
 			UserStaticData.plink = api_res.response[0].photo_100;
 			UserStaticData.id = api_res.response[0].uid;
-			UserStaticData.friend_invited = UserStaticData.flash_vars.user_id;
+			UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
 		}
 		
 		public static function onVkPayment(e:CustomEvent):void {

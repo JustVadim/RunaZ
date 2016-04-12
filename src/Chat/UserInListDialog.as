@@ -77,7 +77,7 @@ package Chat
 					Main.THIS.stage.focus = Main.THIS.chat.enter_massage;
 					break;
 				case this.btns[2]:
-					
+					App.profile.init(this.user_id);
 					break;
 			}
 		}
