@@ -358,7 +358,6 @@ package artur.display
 		}
 		
 		private function onBuffClick(e:MouseEvent):void {
-			App.lock.init();
 			var skill_num:int = -1;
 			var mc:MovieClip = MovieClip(e.currentTarget);
 			switch(true) {
@@ -381,8 +380,8 @@ package artur.display
 					skill_num = 5
 					break;
 			}
-			var unit_buff:Object = (skill_num < 5)? UserStaticData.hero.units[WinCastle.currSlotClick].b[skill_num]:UserStaticData.hero.units[WinCastle.currSlotClick].ult;
-			if (unit_buff.l < 24) {
+			var lvl:int = (skill_num < 5)? UserStaticData.hero.units[WinCastle.currSlotClick].b[skill_num].l:UserStaticData.hero.units[WinCastle.currSlotClick].ult.lvl;
+			if (lvl < 24) {
 				App.lock.init();
 				var obj:Object = new Object();
 				obj.un = WinCastle.currSlotClick;
@@ -391,7 +390,7 @@ package artur.display
 				data.addEventListener(DataExchangeEvent.ON_RESULT, onBuffUpdateRes);
 				data.sendData(COMMANDS.UPDATE_SKILL, JSON2.encode(obj), true);
 			} else {
-				App.closedDialog.init1("");
+				App.closedDialog.init1("Максимальный уровень любого навыка - 24. Ваш навык имеет максимальную прокачку.");
 			}
 			
 			function onBuffUpdateRes(evn:DataExchangeEvent = null):void {
