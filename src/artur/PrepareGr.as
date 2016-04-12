@@ -84,7 +84,7 @@ package artur
 			/*58  */ new BtnChatDialogExtends(Lang.getTitle(186)),
 			/*59  */ new BtnChatDialogExtends(Lang.getTitle(187)),
 			/*60  */ new BtnChatDialogExtends(Lang.getTitle(188)), 
-			/*61  */ 
+			/*61  */ new btnClsoeDialog(),
 			
 			
 		];

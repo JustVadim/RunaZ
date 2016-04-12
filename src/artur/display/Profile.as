@@ -15,7 +15,7 @@ package artur.display {
 		private var units:Array;
 		private var ava_loader:Loader;
 		public var lvl_star:LvlStar = new LvlStar();
-		
+		public var btnClose:BaseButton = new BaseButton(61);
 		public function Profile() {
 			this.units = new Array();
 			for (var i:int = 0; i < 4; i++) {
@@ -26,7 +26,9 @@ package artur.display {
 			this.lvl_star.y = 15;
 			this.lvl_star.star.gotoAndStop(1);
 			this.mcAva.addChild(lvl_star);
-			
+			this.addChild(btnClose);
+			btnClose.x = 650.45;
+			btnClose.y = 92.65;
 		}
 		
 		public function init(userId:String):void {
