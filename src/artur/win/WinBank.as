@@ -117,7 +117,7 @@ package artur.win {
 		
 		public function init():void {
 			if (!close) {
-				close = new BaseButton(15);
+				close = new BaseButton(61);
 				close.addEventListener(MouseEvent.CLICK, onClose);
 				close.x = 410;
 				close.y = 400;
