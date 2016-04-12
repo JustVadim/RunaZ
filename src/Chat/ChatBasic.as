@@ -1,5 +1,6 @@
 package Chat 
 {
+	import Adds.VKAdds;
 	import artur.App;
 	import artur.display.BaseButton;
 	import flash.display.Sprite;
@@ -79,6 +80,13 @@ package Chat
 				this.addChild(this.btnQ);
 			}
 			this.btnQ.addEventListener(MouseEvent.CLICK, this.onAddedBtnQCLick);
+			this.btnAds.addEventListener(MouseEvent.CLICK, this.onAdds);
+		}
+		
+		private function onAdds(e:MouseEvent):void {
+			if(UserStaticData.from == "v" && VKAdds.vkContainer!=null) {
+				VKAdds.vkContainer.init("5367058", Main.THIS.stage);
+			}
 		}
 		
 		public function addBtn():void 

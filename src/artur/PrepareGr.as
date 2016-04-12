@@ -73,17 +73,19 @@ package artur
 			/**/new btnQvest(),//47
 		    /**/new btnMapNext(),//48
 		    /**/new btnMapRes(),//49
-			new imgBtnEnergy(),//50
-		    new btnTop1(),//51
-		    new btnTop2(),//52
-		    new btnTop3(),//53
-		    new btnTop4(),//54
-		    new btnTop5(),//55
-		    new btnArrow(),//56
-			new btnVideoAds(),// 57
-			/*58*/ new BtnChatDialogExtends(Lang.getTitle(186)),
-			/*59*/ new BtnChatDialogExtends(Lang.getTitle(187)),
-			/*60*/ new BtnChatDialogExtends(Lang.getTitle(188))
+			/*50  */new imgBtnEnergy(),
+		    /*51  */new btnTop1(),
+		    /*52  */new btnTop2(),
+		    /*53  */new btnTop3(),
+		    /*54  */new btnTop4(),
+		    /*55  */new btnTop5(),
+		    /*56  */new btnArrow(),
+			/*57  */new btnVideoAds(),
+			/*58  */ new BtnChatDialogExtends(Lang.getTitle(186)),
+			/*59  */ new BtnChatDialogExtends(Lang.getTitle(187)),
+			/*60  */ new BtnChatDialogExtends(Lang.getTitle(188)), 
+			/*61  */ 
+			
 			
 		];
 		

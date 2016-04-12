@@ -28,7 +28,10 @@ package artur.display {
 			
 			for (var i:int = 0; i < btns.length; i++) {
 				var btn:BaseButtonWithGalochka = btns[i];
-				btn.x  = xps[i]; btn.y  = 38;
+				btn.tabEnabled = false;
+				btn.tabChildren = false;
+				btn.x  = xps[i]; 
+				btn.y  = 38;
 				this.addChild(btn);
 				btn.addEventListener(MouseEvent.CLICK, this.onBtnClick);
 			}
@@ -57,7 +60,6 @@ package artur.display {
 		
 		private function checkBonus():void {
 			var temp:int = UserStaticData.hero.sett.app_i + UserStaticData.hero.sett.app_g + UserStaticData.hero.sett.app_m;
-			Report.addMassage("tttteeeempp: " + temp);
 			if(temp==3 && UserStaticData.hero.sett.app_fq > 9) {
 				BaseButtonWithGalochka(btns[4]).addGalochka();
 			} else {

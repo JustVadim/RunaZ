@@ -17,6 +17,7 @@ package artur.display
 		private var txtSpeed:McInfoInfos = new McInfoInfos();
 		private var bg:bgBlankUnitProfile = new bgBlankUnitProfile();
 		private var unit:Object;
+		public var lvl_star:LvlStar = new LvlStar();
 		
 		public function ProfileUnitText(xx:Number, yy:Number) {
 			this.x = xx;
@@ -31,6 +32,9 @@ package artur.display
 			this.txtMagDeff.y = 66;
 			this.txtInic.y = 83;
 			this.txtSpeed.y = 100;
+			this.lvl_star.x = 8;
+			this.lvl_star.y = 12;
+			this.lvl_star.star.gotoAndStop(2);
 			
 			
 			this.txtLife.txt1.text = "10";
@@ -42,6 +46,7 @@ package artur.display
 			this.addChild(this.txtMagDeff);
 			this.addChild(this.txtInic);
 			this.addChild(this.txtSpeed);
+			this.addChild(this.lvl_star);
 		}
 		
 		public function init(hero:Object, num:int):void {
@@ -70,10 +75,11 @@ package artur.display
 				Functions.compareAndSet(this.txtInic.txt2, "0");
 				Functions.compareAndSet(this.txtSpeed.txt1, unit.sp);
 				Functions.compareAndSet(this.txtSpeed.txt2, "0");
+				Functions.compareAndSet(this.lvl_star.txt, unit.lvl);
 				this.unit = UnitCache.getUnit(Slot.namesUnit[unit.t]);
 				this.unit.itemUpdate(Slot.getUnitItemsArray(unit));
 				this.unit.init(this);
-				this.unit.y = 95;
+				this.unit.y = 105;
 				this.unit.x = 45;
 				this.unit.scaleX = this.unit.scaleY = 1.2;
 			}

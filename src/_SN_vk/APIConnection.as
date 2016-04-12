@@ -1,5 +1,6 @@
 package _SN_vk {
   import _SN_vk.events.CustomEvent;
+  import flash.display.DisplayObject;
   import flash.net.LocalConnection;
   import flash.external.ExternalInterface;
   import flash.events.*;
@@ -19,8 +20,8 @@ package _SN_vk {
 	
 	private var apiCallId: Number = 0;
 	private var apiCalls: Object = new Object();
-	
 	private var dp: DataProvider;
+	public static var vkAdsCont:Object;
     
     public function APIConnection(...params) {
 	  var connectionName: String;

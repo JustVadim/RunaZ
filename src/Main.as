@@ -1,4 +1,5 @@
 package  {
+	import Adds.VKAdds;
 	import Chat.UserInList;
 	import Chat.UserInListDialog;
 	import _SN_vk.APIConnection;
@@ -11,10 +12,17 @@ package  {
 	import artur.util.Numbs1;
 	import artur.win.WinBattle;
 	import com.greensock.TweenLite;
+	import flash.display.DisplayObject;
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLVariables;
+	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
 	import flash.system.Security;
 	import flash.utils.Timer;
 	import report.Report;
@@ -49,15 +57,17 @@ package  {
 			UserStaticData.flash_vars = this.stage.loaderInfo.parameters as Object;
 			this.stage.addChild(rep = new Report());
 			if (UserStaticData.flash_vars['api_id']) {
-				this.vkPrepare();
-			} 
+				this.vkPrepare();	
+			}
 			UserStaticData.allId = UserStaticData.from + UserStaticData.id;
-			Report.checkDoShow();
+			//Report.checkDoShow();
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
+			Security.allowInsecureDomain("*");
 			DataExchange.socket.addEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.setConnection();
 		}
+		
 		
 		private function vkPrepare():void {
 			Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
@@ -69,6 +79,7 @@ package  {
 			UserStaticData.plink = api_res.response[0].photo_100;
 			UserStaticData.id = api_res.response[0].uid;
 			UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
+			VKAdds.init();
 		}
 		
 		public static function onVkPayment(e:CustomEvent):void {
@@ -87,7 +98,7 @@ package  {
 		}
 		
 		private function onHalfPreloader():void {
-			stage.addChild(this.chat);
+			stage.addChildAt(this.chat, 1);
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
 			///stage.addChild(new movieMonitor());
