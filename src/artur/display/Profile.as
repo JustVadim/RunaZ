@@ -1,4 +1,8 @@
 package artur.display {
+	import flash.display.Sprite;
+	import flash.filters.GlowFilter;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
 	import Server.COMMANDS;
 	import Server.DataExchange;
 	import Server.DataExchangeEvent;
@@ -18,11 +22,12 @@ package artur.display {
 		public var lvl_star:LvlStar = new LvlStar();
 		public var btnClose:BaseButton = new BaseButton(61);
 		private var userId:String
+		private var txts:Object = { };
 		public function Profile() {
 			this.units = new Array();
 			for (var i:int = 0; i < 4; i++) {
 				this.units[i] = new ProfileUnitText(223 + (i%2)*230, 144 + int((i/2))*125);
-				this.addChildAt(units[i],1);
+				this.addChild(units[i]);
 			}
 			this.lvl_star.x = 15;
 			this.lvl_star.y = 15;
@@ -30,7 +35,15 @@ package artur.display {
 			this.mcAva.addChild(lvl_star);
 			this.addChild(this.btnClose = new BaseButton(61));
 			btnClose.x = 580;
-			btnClose.y = 70;
+			btnClose.y = 101;
+			creatText();
+			
+			txts.txtName1.text = 'Артур';
+			txts.txtName2.text = 'Лаухин';
+			txts.txtGold.text = '100';
+			txts.txtSilver.text = '30000';
+			txts.txtLvl.text = '27';
+			txts.txtOther.text = 'Рейтинг: 1029  Винрейт: 55%  200/110'
 		}
 		
 		public function init(userId:String):void {
@@ -109,6 +122,21 @@ package artur.display {
 				}
 				this.btnClose.removeEventListener(MouseEvent.CLICK, this.onCloseClick);
 			}
+		}
+		private function creatText():void
+		{
+			var clip:mcTextProfile = new mcTextProfile();
+			var f:GlowFilter = new GlowFilter(0, 1, 3, 3, 2, 1);
+			for (var i:int = 0; i < clip.numChildren; i++) 
+			{
+				var child:Object = clip.getChildAt(i) as Object; 
+				var txt:TextField = Functions.getTitledTextfield(child.x, child.y, child.width, child.height, new Art().fontName, child.size, child.color, child.align , "Asdadasdasdsadsadsad", 1);
+				this.addChild(txt);
+				txt.filters = [f];
+				txt.alpha = 1;
+				txts[child.name] = txt;
+			}
+			clip = null;
 		}
 	}
 }
