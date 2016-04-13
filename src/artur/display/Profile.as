@@ -38,10 +38,10 @@ package artur.display {
 			btnClose.y = 101;
 			creatText();
 			
-			txts.txtName1.text = 'Артур';
-			txts.txtName2.text = 'Лаухин';
-			txts.txtGold.text = '100';
-			txts.txtSilver.text = '30000';
+			txts.txtName1.text = 'Артур Лаухин';
+			//txts.txtName2.text = 'Лаухин';
+			txts.txtGold.text =   '1000000';
+			txts.txtSilver.text = '3000000';
 			txts.txtLvl.text = '27';
 			txts.txtOther.text = 'Рейтинг: 1029  Винрейт: 55%  200/110'
 		}
