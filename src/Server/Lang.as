@@ -493,6 +493,8 @@ package Server
 			Lang.lang_table[186] = ["Сообщение", "", ""];
 			Lang.lang_table[187] = ["Прив. сообщ.", "", ""];
 			Lang.lang_table[188] = ["Профиль", "", ""];
+			Lang.lang_table[189] = ["Рейтинг", "", ""];
+			Lang.lang_table[190] = ["Винрейт", "", ""];
 			
 			
 		}

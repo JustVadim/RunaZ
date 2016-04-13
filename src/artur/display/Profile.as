@@ -1,4 +1,5 @@
 package artur.display {
+	import Server.Lang;
 	import flash.display.Sprite;
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
@@ -19,31 +20,20 @@ package artur.display {
 	public class Profile extends mcProfile {
 		private var units:Array;
 		private var ava_loader:Loader;
-		public var lvl_star:LvlStar = new LvlStar();
 		public var btnClose:BaseButton = new BaseButton(61);
 		private var userId:String
 		private var txts:Object = { };
+		
 		public function Profile() {
 			this.units = new Array();
 			for (var i:int = 0; i < 4; i++) {
 				this.units[i] = new ProfileUnitText(223 + (i%2)*230, 144 + int((i/2))*125);
 				this.addChild(units[i]);
 			}
-			this.lvl_star.x = 15;
-			this.lvl_star.y = 15;
-			this.lvl_star.star.gotoAndStop(1);
-			this.mcAva.addChild(lvl_star);
 			this.addChild(this.btnClose = new BaseButton(61));
 			btnClose.x = 580;
 			btnClose.y = 101;
 			creatText();
-			
-			txts.txtName1.text = 'Артур';
-			txts.txtName2.text = 'Лаухин';
-			txts.txtGold.text = '100';
-			txts.txtSilver.text = '30000';
-			txts.txtLvl.text = '27';
-			txts.txtOther.text = 'Рейтинг: 1029  Винрейт: 55%  200/110'
 		}
 		
 		public function init(userId:String):void {
@@ -95,12 +85,12 @@ package artur.display {
 		
 		private function onHero(e:DataExchangeEvent):void {
 			var res:Object = JSON2.decode(e.result);
-			Functions.compareAndSet(this.lvl_star.txt, res.lvl);
 			DataExchange(e.target).removeEventListener(e.type, this.onHero);
 			if(res.error == null) {
 				if (this.stage) {
 					for (var i:int = 0; i < 4; i++) {
 						ProfileUnitText(this.units[i]).init(res, i);
+						this.setText(res);
 					}
 				} else {
 					
@@ -108,6 +98,16 @@ package artur.display {
 			} else {
 				//Report.addMassage(res.error);
 			}
+		}
+		
+		private function setText(hero:Object):void {
+			txts.txtName1.text = UserStaticData.users_info[this.userId].sn;
+			txts.txtName2.text = UserStaticData.users_info[this.userId].fn;
+			Functions.compareAndSet(txts.txtGold, hero.g);
+			Functions.compareAndSet(txts.txtSilver, hero.s);
+			Functions.compareAndSet(txts.txtLvl, hero.lvl);
+			var wr:String = (hero.bt == 0)? "--":int(hero.w * 100 / hero.bt) + "% ("+hero.w + "/" + hero.bt + ")";
+			Functions.compareAndSet(txts.txtOther, String(Lang.getTitle(189) + ": " + hero.rat + "  " + Lang.getTitle(190) + ": "+wr)); 
 		}
 		
 		public function frees():void {

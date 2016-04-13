@@ -131,7 +131,7 @@ package artur.win {
 			char2.itemUpdate([RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(0,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5)]);
 			char1.itemUpdate([RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(0,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5)]);
 			char2.scaleX = -1;
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 			//U_Warwar.onSound = false;
 			//U_Paladin.onSound = false;
 			App.spr.addChild(Sprite(char2));
@@ -142,7 +142,7 @@ package artur.win {
 			
 		//	App.spr.addChild(Sprite(char2));
 			//App.spr.addChild(Sprite(char1));
->>>>>>> 5281d5bb66e8725bcf0b72790f3b193c977fbedb
+>>>>>>> 5281d5bb66e8725bcf0b72790f3b193c977fbedb*/
 			App.spr.addChild(this.ratText);
 			btn1.addEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
