@@ -1,5 +1,7 @@
 package artur.display 
 {
+	import artur.units.U_Paladin;
+	import artur.units.U_Warwar;
 	import Utils.Functions;
 	import _SN_vk.api.DataProvider;
 	import artur.units.UnitCache;
@@ -82,6 +84,8 @@ package artur.display
 				this.unit.y = 105;
 				this.unit.x = 45;
 				this.unit.scaleX = this.unit.scaleY = 1.2;
+				U_Warwar.onSound = false;
+			    U_Paladin.onSound = false;
 			}
 		}
 		
