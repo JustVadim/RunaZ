@@ -481,6 +481,7 @@ package artur.win
 					hero.silver += int(obj.mcd.s);
 					hero.addAndCheckExp(int(obj.exp) / 2);
 					hero.addAndCheckUnitExp(int(obj.exp), obj.ul);
+					//App.topMenu.updateAva();
 					
 					
 					mc.starBar.visible = true;

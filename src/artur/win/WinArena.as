@@ -127,8 +127,8 @@ package artur.win {
 			char2.itemUpdate([RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5)]);
 			char1.itemUpdate([RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5)]);
 			char2.scaleX = -1;
-			U_Warwar.onSound = false;
-			U_Paladin.onSound = false;
+			//U_Warwar.onSound = false;
+			//U_Paladin.onSound = false;
 			App.spr.addChild(Sprite(char2));
 			App.spr.addChild(Sprite(char1));
 			App.spr.addChild(this.ratText);
