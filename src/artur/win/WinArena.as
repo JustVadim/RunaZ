@@ -118,19 +118,24 @@ package artur.win {
 			mcFound.rot.visible = false;
 			App.topPanel.init(this);
 			App.topMenu.init(true, true);
+			
+			
 			char1 = UnitCache.getUnit('Barbarian');
+			char1.init(App.spr);
 			char1.x = 290;
 			char1.y = 380;
 			char2 = UnitCache.getUnit('Paladin');
+			char2.init(App.spr);
 			char2.x = 800 - 290;
 			char2.y = 380;
-			char2.itemUpdate([RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5)]);
-			char1.itemUpdate([RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5), RandomInt(0,5)]);
+			char2.itemUpdate([RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(0,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5)]);
+			char1.itemUpdate([RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(0,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5)]);
 			char2.scaleX = -1;
 			U_Warwar.onSound = false;
 			U_Paladin.onSound = false;
-			App.spr.addChild(Sprite(char2));
-			App.spr.addChild(Sprite(char1));
+			
+		//	App.spr.addChild(Sprite(char2));
+			//App.spr.addChild(Sprite(char1));
 			App.spr.addChild(this.ratText);
 			btn1.addEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
@@ -153,9 +158,9 @@ package artur.win {
 				mcFound.rot.visible = true;
 				mcFound.rot.rotation = -mcFound.rotation; 
 			}
-			char1.update();
-			char2.update();
-			if (dell1-- < 0)
+			//char1.update();
+			//char2.update();
+			/*if (dell1-- < 0)
 			{
 				dell1 = 80;
 			     char1.gotoAndPlay('atack1' )
@@ -164,7 +169,7 @@ package artur.win {
 			{
 				dell2 =  60;
 				char2.gotoAndPlay('atack1' );
-			}
+			}*/
 		}
 		
 		public function frees():void {
