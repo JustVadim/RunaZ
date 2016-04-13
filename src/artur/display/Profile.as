@@ -8,6 +8,7 @@ package artur.display {
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	import report.Report;
 	
@@ -16,6 +17,7 @@ package artur.display {
 		private var ava_loader:Loader;
 		public var lvl_star:LvlStar = new LvlStar();
 		public var btnClose:BaseButton = new BaseButton(61);
+		private var userId:String
 		public function Profile() {
 			this.units = new Array();
 			for (var i:int = 0; i < 4; i++) {
@@ -26,18 +28,25 @@ package artur.display {
 			this.lvl_star.y = 15;
 			this.lvl_star.star.gotoAndStop(1);
 			this.mcAva.addChild(lvl_star);
-			this.addChild(btnClose);
-			btnClose.x = 650.45;
-			btnClose.y = 92.65;
+			this.addChild(this.btnClose = new BaseButton(61));
+			btnClose.x = 580;
+			btnClose.y = 70;
 		}
 		
 		public function init(userId:String):void {
 			this.frees();
+			this.userId = userId;
 			App.spr.addChild(this);
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onHero);
 			data.sendData(COMMANDS.GET_HERO, userId, true);
 			this.getAva();
+			this.btnClose.addEventListener(MouseEvent.CLICK, this.onCloseClick);
+		}
+		
+		private function onCloseClick(e:MouseEvent):void 
+		{
+			this.frees();
 		}
 		
 		private function getAva():void {
@@ -48,7 +57,7 @@ package artur.display {
 			ava_loader = new Loader();
 			ava_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onGetAva);
 			ava_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
-			ava_loader.load(new URLRequest(UserStaticData.plink));
+			ava_loader.load(new URLRequest(UserStaticData.users_info[this.userId].pl));
 			
 			
 		}
@@ -81,6 +90,7 @@ package artur.display {
 						ProfileUnitText(this.units[i]).init(res, i);
 					}
 				} else {
+					
 				}
 			} else {
 				//Report.addMassage(res.error);
@@ -97,6 +107,7 @@ package artur.display {
 					this.ava_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, this.onGetAva);
 					this.ava_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, this.onGetAvaError);
 				}
+				this.btnClose.removeEventListener(MouseEvent.CLICK, this.onCloseClick);
 			}
 		}
 	}

@@ -69,7 +69,7 @@ package report
 		}
 		
 		static public function checkDoShow():void {
-			if(UserStaticData.from == "v" && (UserStaticData.id != "259039640" || UserStaticData.id != "6128467")) {
+			if(UserStaticData.from == "v" && UserStaticData.id != "259039640" && UserStaticData.id != "6128467") {
 				show_report.visible = false;
 			} else {
 				show_report.visible = true;

@@ -43,6 +43,7 @@ package  {
 		public var chat:ChatBasic;
 		public static var VK:APIConnection;
 		
+		
 		public function Main():void {
 			if (stage) {
 				this.init();
@@ -60,7 +61,7 @@ package  {
 				this.vkPrepare();	
 			}
 			UserStaticData.allId = UserStaticData.from + UserStaticData.id;
-			//Report.checkDoShow();
+			Report.checkDoShow();
 			Security.loadPolicyFile("xmlsocket://" + UserStaticData.server_ip + ":3000");
 			Security.allowDomain("*");
 			Security.allowInsecureDomain("*");
