@@ -52,7 +52,7 @@ package Chat
 			this.enter_massage.textColor = 0xFFFFFF;
 			this.enter_massage.type = "input";
 			this.enter_massage.maxChars = 150;
-			this.enter_massage.border = true;
+			//this.enter_massage.border = true;
 			this.enter_massage.addEventListener(FocusEvent.FOCUS_IN, onEnterMassFocusIn);
 			this.enter_massage.addEventListener(FocusEvent.FOCUS_OUT, onEnterMassFocusOut);
 			this.addChild(enter_massage);
@@ -67,7 +67,7 @@ package Chat
 			this.btnAds = new BaseButton(57); btnAds.x = 40; btnAds.y = 424.2; 
 			//var animQvest:AnimBtn = new AnimBtn(); animQvest.mouseChildren = false; animQvest.mouseEnabled = true;
 			//this.btnQ.addChild(animQvest); 
-			this.addChild(btnAds)
+			//this.addChild(btnAds)
 			this.send_btn.x = 586.7;
 			this.send_btn.y = 582.4;
 			this.send_btn.addEventListener(MouseEvent.CLICK, onSendBtnClick);
@@ -84,8 +84,13 @@ package Chat
 		}
 		
 		private function onAdds(e:MouseEvent):void {
-			if(UserStaticData.from == "v" && VKAdds.vkContainer!=null) {
-				VKAdds.vkContainer.init(UserStaticData.flash_vars['api_id'], Main.THIS.stage);
+			if(UserStaticData.from == "v" && VKAdds.vkContainer != null) 
+			{
+				try {
+					VKAdds.vkContainer.init(String(UserStaticData.flash_vars['api_id']), Main.THIS.stage);
+				} catch( er:Error ) {
+					Report.addMassage(er.message)
+				}
 			}
 		}
 		
