@@ -1,5 +1,6 @@
 package artur.display 
 {
+	import Server.Lang;
 	import artur.units.U_Paladin;
 	import artur.units.U_Warwar;
 	import Utils.Functions;
@@ -49,6 +50,10 @@ package artur.display
 			this.addChild(this.txtInic);
 			this.addChild(this.txtSpeed);
 			this.addChild(this.lvl_star);
+			
+			this.txtDmg.txtPlus.visible = false;
+			this.txtDmg.txt2.visible = false;
+			this.txtDmg.txt1.width = 110;
 		}
 		
 		public function init(hero:Object, num:int):void {
@@ -63,12 +68,21 @@ package artur.display
 						chars[int(key2)] += unit.it[key].c[key2];
 					}
 				}
+				
+				if (unit.it[5] != null) {
+					var minD:int = Functions.getDamage(unit.min_d, unit.max_d, chars[2]);
+					var maxD:int = unit.max_d + int(chars[2]);
+					Functions.compareAndSet(this.txtDmg.txt1, String(" " + minD + " - " + maxD));
+					this.txtDmg.txt1.textColor = 0xFFFFFF;
+				} else {
+					Functions.compareAndSet(this.txtDmg.txt1, Lang.getTitle(191));
+					this.txtDmg.txt1.textColor = 0xFF1717;
+				}
+				
 				Functions.compareAndSet(this.txtLife.txt1, unit.hp);
 				Functions.compareAndSet(this.txtLife.txt2, chars[0]);
 				Functions.compareAndSet(this.txtMana.txt1, unit.mp);
 				Functions.compareAndSet(this.txtMana.txt2, chars[1]);
-				Functions.compareAndSet(this.txtDmg.txt1, String(unit.min_d + " - " + unit.max_d));
-				Functions.compareAndSet(this.txtDmg.txt2, chars[2]);
 				Functions.compareAndSet(this.txtFizDeff.txt1, unit.f_d);
 				Functions.compareAndSet(this.txtFizDeff.txt2, chars[3]);
 				Functions.compareAndSet(this.txtMagDeff.txt1, unit.m_d);

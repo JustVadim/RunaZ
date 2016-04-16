@@ -40,7 +40,7 @@ package artur.display {
 			this.addChild(this.txt_sk_miss);
 			this.addChild(this.txt_sk_ult);
 			this.addChild(this.txt_available);
-			this.txtLife.x = this.txtMana.x = this.txtDmg.x = this.txtFizDeff.x = this.txtMagDeff.x = this.txtInic.x = this.txtSpeed.x = -85; 
+			this.txtLife.x = this.txtMana.x = this.txtDmg.x = this.txtFizDeff.x = this.txtMagDeff.x = this.txtInic.x = this.txtSpeed.x = -83; 
 			this.txtLife.y = -2;
 			this.txtMana.y = 15;
 			this.txtDmg.y = 32;
@@ -48,6 +48,20 @@ package artur.display {
 			this.txtMagDeff.y = 66;
 			this.txtInic.y = 83;
 			this.txtSpeed.y = 100;
+			
+			this.txtDmg.txtPlus.visible = false;
+			this.txtDmg.txt2.visible = false;
+			this.txtDmg.txt1.width = 110;
+		}
+		
+		public function battleInit():void {
+			this.txtLife.battleInit();
+			this.txtMana.battleInit();
+			this.txtDmg.battleInit();
+			this.txtFizDeff.battleInit();
+			this.txtMagDeff.battleInit();
+			this.txtInic.battleInit();
+			this.txtSpeed.battleInit();
 		}
 	}
 }

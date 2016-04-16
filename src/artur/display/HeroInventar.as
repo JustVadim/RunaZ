@@ -68,6 +68,7 @@ package artur.display
 				this.mouseChildren = false;
 				this.scaleX = this.scaleY = 0.9;
 				this.mcText.mcFreeskils.visible = false;
+				this.mcText.battleInit();
 			} else {
 				progresEXP.x = 10;  progresEXP.y = 283;
 				this.setBuffsBtnsProperties();
@@ -150,11 +151,12 @@ package artur.display
 				chars = Functions.GetHeroChars();
 				this.mcText.mcFreeskils.visible = unit.fs > 0;
 				this.enabledAllEvents(true);
+				this.initRemoveBtn();
 			} else {
 				this.x = xx; this.y = yy;
 				chars = [0, 0, 0, 0, 0];
 			}
-			this.calculateUnitStats(chars, unit,1);
+			this.calculateUnitStats(chars, unit);
 			this.updateSkillsStats(unit);
 			if (unit.ult != null) {
 				this.mcText.sk_ult.visible = true;
@@ -168,8 +170,6 @@ package artur.display
 			if(UserStaticData.hero.demo == 1) {
 				
 			}
-			this.initRemoveBtn();
-
 		}
 		
 		private function initRemoveBtn():void {
@@ -194,29 +194,39 @@ package artur.display
 			App.byeWin.init(Lang.getTitle(168), Lang.getTitle(169, UserStaticData.hero.units[WinCastle.currSlotClick].t), 0, 800, NaN, 7);
 		}
 		
-		public function calculateUnitStats(chars:Object, unit:Object, fsd:int):void {
-			for (var key:Object in unit.it) {
-				for (var key2:Object in unit.it[key].c ) {
-					chars[int(key2)] += unit.it[key].c[key2];
-				}
-			}
+		public function calculateUnitStats(chars:Object, unit:Object):void {
 			this.compareAndSet(this.mcText.txtLife.txt1, unit.hp);
-			this.compareAndSet(this.mcText.txtLife.txt2, chars[0]);
 			this.compareAndSet(this.mcText.txtMana.txt1, unit.mp);
-			this.compareAndSet(this.mcText.txtMana.txt2, chars[1]);
-			this.compareAndSet(this.mcText.txtDmg.txt1, String(unit.min_d + " - " + unit.max_d));
-			this.compareAndSet(this.mcText.txtDmg.txt2, chars[2]);
 			this.compareAndSet(this.mcText.txtFizDeff.txt1, unit.f_d);
-			this.compareAndSet(this.mcText.txtFizDeff.txt2, chars[3]);
 			this.compareAndSet(this.mcText.txtMagDeff.txt1, unit.m_d);
-			this.compareAndSet(this.mcText.txtMagDeff.txt2, chars[4]);
 			this.compareAndSet(this.mcText.txtInic.txt1, unit["in"]);
-			this.compareAndSet(this.mcText.txtInic.txt2, "0");
 			this.compareAndSet(this.mcText.txtSpeed.txt1, unit.sp);
-			this.compareAndSet(this.mcText.txtSpeed.txt2, "0");
+			if (!this.battle_init) {
+				for (var key:Object in unit.it) {
+					for (var key2:Object in unit.it[key].c ) {
+						chars[int(key2)] += unit.it[key].c[key2];
+					}
+				}
+				this.compareAndSet(this.mcText.txtLife.txt2, chars[0]);
+				this.compareAndSet(this.mcText.txtMana.txt2, chars[1]);
+				this.compareAndSet(this.mcText.txtFizDeff.txt2, chars[3]);
+				this.compareAndSet(this.mcText.txtMagDeff.txt2, chars[4]);
+				this.compareAndSet(this.mcText.txtInic.txt2, "0");
+				this.compareAndSet(this.mcText.txtSpeed.txt2, "0");
+				if (unit.it[5] != null) {
+					var minD:int = Functions.getDamage(unit.min_d, unit.max_d, chars[2]);
+					var maxD:int = unit.max_d + int(chars[2]);
+					this.compareAndSet(this.mcText.txtDmg.txt1, String(" " + minD + " - " + maxD));
+					this.mcText.txtDmg.txt1.textColor = 0xFFFFFF;
+				} else {
+					this.compareAndSet(this.mcText.txtDmg.txt1, Lang.getTitle(191));
+					this.mcText.txtDmg.txt1.textColor = 0xFF1717;
+				}
+			} else {
+				this.compareAndSet(this.mcText.txtDmg.txt1, String(" " + unit.min_d + " - " + unit.max_d));
+			}
 			this.compareAndSet(this.mcText.died, String(Lang.getTitle(35) + unit.l));
 			this.compareAndSet(this.mcText.killed, String(Lang.getTitle(34) + unit.k));
-			
 			this.compareAndSet(this.progresEXP.lvl, unit.lvl);
 			this.compareAndSet(this.progresEXP.exp, String(unit.exp + "/" + unit.nle));
 			var frame:int = int(100 * unit.exp / unit.nle);
@@ -521,7 +531,7 @@ package artur.display
 				delete(obj.ch);
 				WinCastle.chest.frees();
 				WinCastle.chest.init();
-				this.calculateUnitStats(Functions.GetHeroChars(), unit, 1);
+				this.calculateUnitStats(Functions.GetHeroChars(), unit);
 				App.lock.frees();
 			} else {
 				this.putOnOldPlace();
@@ -666,6 +676,7 @@ package artur.display
 				} else {
 					delete(UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.invPlace]);
 				}
+				this.calculateUnitStats(Functions.GetHeroChars(), UserStaticData.hero.units[WinCastle.currSlotClick]);
 				App.sound.playSound('gold', App.sound.onVoice, 1);
 				WinCastle.getCastle().slots[WinCastle.currSlotClick].unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[WinCastle.currSlotClick]));
 				App.lock.frees();

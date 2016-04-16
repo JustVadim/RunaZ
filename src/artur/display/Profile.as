@@ -1,5 +1,6 @@
 package artur.display {
 	import Server.Lang;
+	import _SN_vk.api.DataProvider;
 	import flash.display.Sprite;
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
@@ -22,7 +23,7 @@ package artur.display {
 		private var ava_loader:Loader;
 		public var btnClose:BaseButton = new BaseButton(61);
 		private var userId:String
-		private var txts:Object = { };
+		private var txts:Object;
 		
 		public function Profile() {
 			this.units = new Array();
@@ -31,8 +32,7 @@ package artur.display {
 				this.addChild(units[i]);
 			}
 			this.addChild(this.btnClose = new BaseButton(61));
-			btnClose.x = 580;
-			btnClose.y = 101;
+			Functions.SetPriteAtributs(this.btnClose, true, false, 580, 101);
 			creatText();
 		}
 		
@@ -101,12 +101,11 @@ package artur.display {
 		}
 		
 		private function setText(hero:Object):void {
-			txts.txtName1.text = UserStaticData.users_info[this.userId].sn;
-			txts.txtName2.text = UserStaticData.users_info[this.userId].fn;
+			Functions.compareAndSet(txts.txtName1, UserStaticData.users_info[this.userId].sn + " " +UserStaticData.users_info[this.userId].fn);
 			Functions.compareAndSet(txts.txtGold, hero.g);
 			Functions.compareAndSet(txts.txtSilver, hero.s);
 			Functions.compareAndSet(txts.txtLvl, hero.lvl);
-			var wr:String = (hero.bt == 0)? "--":int(hero.w * 100 / hero.bt) + "% ("+hero.w + "/" + hero.bt + ")";
+			var wr:String = (hero.bt == 0)? "--" : int(hero.w * 100 / hero.bt) + "% (" + hero.w + "/" + hero.bt + ")";
 			Functions.compareAndSet(txts.txtOther, String(Lang.getTitle(189) + ": " + hero.rat + "  " + Lang.getTitle(190) + ": "+wr)); 
 		}
 		
@@ -123,18 +122,18 @@ package artur.display {
 				this.btnClose.removeEventListener(MouseEvent.CLICK, this.onCloseClick);
 			}
 		}
-		private function creatText():void
-		{
+		
+		private function creatText():void {
 			var clip:mcTextProfile = new mcTextProfile();
 			var f:GlowFilter = new GlowFilter(0, 1, 3, 3, 2, 1);
-			for (var i:int = 0; i < clip.numChildren; i++) 
-			{
+			this.txts = new Object();
+			for (var i:int = 0; i < clip.numChildren; i++) {
 				var child:Object = clip.getChildAt(i) as Object; 
 				var txt:TextField = Functions.getTitledTextfield(child.x, child.y, child.width, child.height, new Art().fontName, child.size, child.color, child.align , "Asdadasdasdsadsadsad", 1);
 				this.addChild(txt);
 				txt.filters = [f];
 				txt.alpha = 1;
-				txts[child.name] = txt;
+				this.txts[child.name] = txt;
 			}
 			clip = null;
 		}

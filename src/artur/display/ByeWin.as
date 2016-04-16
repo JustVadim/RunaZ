@@ -313,7 +313,7 @@ package artur.display
 					UserStaticData.hero.demo++;
 					App.tutor.init(4);
 				}
-			 App.lock.frees();
+				App.lock.frees();
 			} else {
 				App.lock.init('Error: '+obj.error)
 			}
@@ -335,7 +335,7 @@ package artur.display
 					unit.it[this.itemType] = Maker.clone(UserStaticData.magazin_items[unit.t][this.itemType][this.index] ) ;
 					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(unit));
 					WinCastle.inventar.updateItem(this.itemType, this.index);
-					WinCastle.inventar.calculateUnitStats(Functions.GetHeroChars(), unit, 1);
+					WinCastle.inventar.calculateUnitStats(Functions.GetHeroChars(), unit);
 				} else {
 					unit.inv[invPlace] = Maker.clone(UserStaticData.magazin_items[UserStaticData.hero.units[int(WinCastle.currSlotClick)].t ][itemType][index]);
 					WinCastle.inventar.updateInv(this.invPlace, unit);

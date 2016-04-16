@@ -30,10 +30,8 @@ package artur.display.battle.eff
 			}
 		}
 		
-		public function frees():void
-		{
-			for (var i:int = 0; i < pool.length; i++)
-			{
+		public function frees():void {
+			for (var i:int = 0; i < pool.length; i++) {
 				pool[i].frees();
 			}
 		}

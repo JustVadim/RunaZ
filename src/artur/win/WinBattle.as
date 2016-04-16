@@ -812,17 +812,16 @@ package artur.win
 			this.mover.unit = null;
 			this.mover.cur_obj = null;
 			WinBattle.currUnit = null;
-			if(McWinAfterBattleExtend.rebattleUse == false) {
+			/*if(McWinAfterBattleExtend.rebattleUse == false) {
 				UserStaticData.hero.mbat = null;
 				UserStaticData.hero.bat = -1;
-			}
+			}*/
 			McWinAfterBattleExtend.rebattleUse = false;
 			effManajer.frees();
 			for (var i:int = 0; i < unitsInWin.length; i++) {
 				unitsInWin[i].frees();
 			}
-			for (var j:int = 0; j < sortArr.length; j++) 
-			{
+			for (var j:int = 0; j < sortArr.length; j++) {
 				sortArr[j].frees()
 			}
 			sortArr.splice(0, sortArr.length);
