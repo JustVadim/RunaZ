@@ -2,6 +2,7 @@ package artur
 {
 	import artur.display.BaseButton;
 	import artur.display.BonusDialog;
+	import artur.display.HeroAchievments;
 	import artur.display.Profile;
 	import artur.display.battle.TopPanel;
 	import artur.display.ByeWin;
@@ -74,6 +75,7 @@ package artur
 		public static var upPanel:UpPanel;
 		public static var bomusDialog:BonusDialog;
 		public static var profile:Profile;
+		public static var achievm:HeroAchievments;
 		
 		
 		public function App(stg:Stage) 
@@ -140,6 +142,7 @@ package artur
 			App.task = new Task();
 			App.bomusDialog = new BonusDialog();
 			App.profile = new Profile();
+			App.achievm = new HeroAchievments();
 			Main.THIS.addChild(App.upPanel = new UpPanel());
 			if(UserStaticData.from == "v") {
 				Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);
