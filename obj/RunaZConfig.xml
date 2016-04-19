@@ -8,19 +8,15 @@
   <compiler>
     <define append="true">
       <name>CONFIG::debug</name>
-      <value>true</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::release</name>
       <value>false</value>
     </define>
     <define append="true">
+      <name>CONFIG::release</name>
+      <value>true</value>
+    </define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-<<<<<<< HEAD
-      <value>'18.04.2016'</value>
-=======
-      <value>'16.04.2016'</value>
->>>>>>> 241919fb725cc7e4b563051ca0fa1624b61e3256
+      <value>'19.04.2016'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -34,7 +30,9 @@
       <name>CONFIG::desktop</name>
       <value>false</value>
     </define>
-    <verbose-stacktraces>true</verbose-stacktraces>
+    <optimize>true</optimize>
+    <omit-trace-statements>true</omit-trace-statements>
+    <verbose-stacktraces>false</verbose-stacktraces>
     <source-path append="true">
       <path-element>D:\Working\AS3Projects\RunaZ\src</path-element>
       <path-element>D:\Working\AS3Projects\RunaZ\source</path-element>
