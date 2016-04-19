@@ -3,6 +3,7 @@ package artur.display
 	import artur.PrepareGr;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	public class Achiv extends Sprite {
 		private static var frames:Array = PrepareGr.creatBms(new mcAchivs, false);

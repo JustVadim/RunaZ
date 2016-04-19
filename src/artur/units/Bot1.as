@@ -173,14 +173,11 @@ package artur.units
 		}
 		public function itemUpdate(ix:int=0):void
 		{
-			
 			for (var i:int = 0; i < parts.length; i++) 
 			{
 			   Sprite(parts[i]).removeChildAt(1);
 			   Sprite(parts[i]).addChild(this.parts_of_parts[i][lvl-1]);
-			}
-
-			
+			}	
 		}
 		
 	}
