@@ -187,7 +187,7 @@ package Server
 							case int(COMMANDS.UPDATE_TASK):
 								Report.addMassage(temp_obj.m);
 								UserStaticData.hero.t = JSON2.decode(temp_obj.m);
-								if ( (UserStaticData.hero.t.tp == 0 && UserStaticData.hero.t.tn !=1) || (UserStaticData.hero.t.tp == UserStaticData.hero.t.pa && UserStaticData.hero.t.tn == 6)) {
+								if ( (UserStaticData.hero.t.tp == 0 && UserStaticData.hero.t.tn !=1) || (UserStaticData.hero.t.tp == UserStaticData.hero.t.pa && (UserStaticData.hero.t.tn == 6 || UserStaticData.hero.t.tn == 10))) {
 									TweenLite.to(Main.THIS, 0, { delay:0.2, onComplete: DataExchange.onShowTask} );
 								} 
 								break;

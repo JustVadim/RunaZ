@@ -1,4 +1,6 @@
 package artur.display {
+	import Server.Lang;
+	import _SN_vk.api.DataProvider;
 	import flash.display.Sprite;
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
@@ -19,31 +21,19 @@ package artur.display {
 	public class Profile extends mcProfile {
 		private var units:Array;
 		private var ava_loader:Loader;
-		public var lvl_star:LvlStar = new LvlStar();
 		public var btnClose:BaseButton = new BaseButton(61);
 		private var userId:String
-		private var txts:Object = { };
+		private var txts:Object;
+		
 		public function Profile() {
 			this.units = new Array();
 			for (var i:int = 0; i < 4; i++) {
 				this.units[i] = new ProfileUnitText(223 + (i%2)*230, 144 + int((i/2))*125);
 				this.addChild(units[i]);
 			}
-			this.lvl_star.x = 15;
-			this.lvl_star.y = 15;
-			this.lvl_star.star.gotoAndStop(1);
-			this.mcAva.addChild(lvl_star);
 			this.addChild(this.btnClose = new BaseButton(61));
-			btnClose.x = 580;
-			btnClose.y = 101;
+			Functions.SetPriteAtributs(this.btnClose, true, false, 580, 101);
 			creatText();
-			
-			txts.txtName1.text = 'Артур Лаухин';
-			//txts.txtName2.text = 'Лаухин';
-			txts.txtGold.text =   '1000000';
-			txts.txtSilver.text = '3000000';
-			txts.txtLvl.text = '27';
-			txts.txtOther.text = 'Рейтинг: 1029  Винрейт: 55%  200/110'
 		}
 		
 		public function init(userId:String):void {
@@ -95,12 +85,12 @@ package artur.display {
 		
 		private function onHero(e:DataExchangeEvent):void {
 			var res:Object = JSON2.decode(e.result);
-			Functions.compareAndSet(this.lvl_star.txt, res.lvl);
 			DataExchange(e.target).removeEventListener(e.type, this.onHero);
 			if(res.error == null) {
 				if (this.stage) {
 					for (var i:int = 0; i < 4; i++) {
 						ProfileUnitText(this.units[i]).init(res, i);
+						this.setText(res);
 					}
 				} else {
 					
@@ -108,6 +98,15 @@ package artur.display {
 			} else {
 				//Report.addMassage(res.error);
 			}
+		}
+		
+		private function setText(hero:Object):void {
+			Functions.compareAndSet(txts.txtName1, UserStaticData.users_info[this.userId].sn + " " +UserStaticData.users_info[this.userId].fn);
+			Functions.compareAndSet(txts.txtGold, hero.g);
+			Functions.compareAndSet(txts.txtSilver, hero.s);
+			Functions.compareAndSet(txts.txtLvl, hero.lvl);
+			var wr:String = (hero.bt == 0)? "--" : int(hero.w * 100 / hero.bt) + "% (" + hero.w + "/" + hero.bt + ")";
+			Functions.compareAndSet(txts.txtOther, String(Lang.getTitle(189) + ": " + hero.rat + "  " + Lang.getTitle(190) + ": "+wr)); 
 		}
 		
 		public function frees():void {
@@ -123,18 +122,18 @@ package artur.display {
 				this.btnClose.removeEventListener(MouseEvent.CLICK, this.onCloseClick);
 			}
 		}
-		private function creatText():void
-		{
+		
+		private function creatText():void {
 			var clip:mcTextProfile = new mcTextProfile();
 			var f:GlowFilter = new GlowFilter(0, 1, 3, 3, 2, 1);
-			for (var i:int = 0; i < clip.numChildren; i++) 
-			{
+			this.txts = new Object();
+			for (var i:int = 0; i < clip.numChildren; i++) {
 				var child:Object = clip.getChildAt(i) as Object; 
 				var txt:TextField = Functions.getTitledTextfield(child.x, child.y, child.width, child.height, new Art().fontName, child.size, child.color, child.align , "Asdadasdasdsadsadsad", 1);
 				this.addChild(txt);
 				txt.filters = [f];
 				txt.alpha = 1;
-				txts[child.name] = txt;
+				this.txts[child.name] = txt;
 			}
 			clip = null;
 		}

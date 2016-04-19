@@ -19,6 +19,7 @@ package artur.units {
 		private static var sounds:Array = [ { id:'war_hurt', frame:85 }, { id:'blade2', frame:83 }, { id:'blade2', frame:94 }, { id:'fow2', frame:67 }, { id:'bot1_fs1', frame:47 }, { id:'bot1_fs2', frame:56 }, { id:'pall_death', frame:93 } ];
 		public var buffs:Array = PrepareGr.creatBms(new mcBaff, true);
 		public static var onSound:Boolean = true;
+		
 		public function U_Warwar() {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;

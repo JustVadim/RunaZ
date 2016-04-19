@@ -54,8 +54,8 @@ package Utils {
 			title.width = ww;
 			title.height = hh;
 			title.text = str;
-			//title.border = true;
-			//title.borderColor = 0xFFFFFF;
+			title.border = true;
+			title.borderColor = 0xFFFFFF;
 			title.alpha = alpha;
 			if (title.text.length > 1) {
 				title.cacheAsBitmap = true;
@@ -75,6 +75,13 @@ package Utils {
 				textf.htmlText= text;
 				textf.cacheAsBitmap = true;
 			}
+		}
+		
+		static public function getDamage(min_d:int, max_d:int, bd:int):int {
+			if(bd != 0) {
+				return min_d + bd * min_d / max_d;
+			}
+			return min_d;
 		}
 		
 		

@@ -42,8 +42,6 @@ package artur.units {
 			this.scaleY = normScale;
 			this.filters = [];
 			this.free = false;
-			this.x = 0;
-			this.y = 0;
 			this.gotoAndPlay('idle');
 			if (parr) {
 				parr.addChild(this);

@@ -194,25 +194,8 @@ package artur.display {
 				Functions.compareAndSet(this.txtAvatarLevel, hero.level.toString());
 				Functions.compareAndSet(this.txtExp, String(currExp + '/' + UserStaticData.hero.nle));
 				Functions.compareAndSet(this.txtVit, String(currEn + '/' + maxVit));
-				
 				this.mcAva.vitBar.gotoAndStop(int(currEn  / maxVit * 100) + 1);
 				this.mcAva.expBar.gotoAndStop(int(currExp / UserStaticData.hero.nle * 100) + 1);
-				
-				
-				/*if(currEn < 10) {
-					this.mcAva.vitBar.buttonMode = true;
-					this.mcAva.vitBar.mouseEnabled = true;
-					this.mcAva.vitBar.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
-					this.mcAva.vitBar.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
-					this.mcAva.vitBar.addEventListener(MouseEvent.CLICK, this.onClick);
-					
-				} else {
-					this.mcAva.vitBar.buttonMode = false;
-					this.mcAva.vitBar.mouseEnabled = false;
-					this.mcAva.vitBar.removeEventListener(MouseEvent.ROLL_OVER, this.onOver);
-					this.mcAva.vitBar.removeEventListener(MouseEvent.ROLL_OUT, this.onOut);
-					this.mcAva.vitBar.removeEventListener(MouseEvent.CLICK, this.onClick);
-				}*/
 			}
 		}
 		

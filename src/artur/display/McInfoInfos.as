@@ -25,6 +25,11 @@ package artur.display {
 			this.addChild(this.txt2);
 		}
 		
+		public function battleInit():void {
+			this.txt2.visible = false;
+			this.txtPlus.visible = false;
+		}
+		
 	}
 
 }

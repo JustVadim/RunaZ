@@ -389,7 +389,7 @@ package artur.display
 					unit.it[item.c[103]] = item;
 					WinCastle.getCastle().slots[int(WinCastle.currSlotClick)].unit.itemUpdate(Slot.getUnitItemsArray(unit));
 					WinCastle.inventar.updateItem(item.c[103], item.id);
-					WinCastle.inventar.calculateUnitStats(Functions.GetHeroChars(), unit, 1);
+					WinCastle.inventar.calculateUnitStats(Functions.GetHeroChars(), unit);
 				} else {	
 					unit.inv[this.invP] = item;
 					WinCastle.inventar.updateInv(this.invP, unit);

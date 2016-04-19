@@ -79,8 +79,10 @@ package  {
 			UserStaticData.sname = api_res.response[0].last_name;
 			UserStaticData.plink = api_res.response[0].photo_100;
 			UserStaticData.id = api_res.response[0].uid;
-			UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
-			VKAdds.init();
+			if(UserStaticData.flash_vars.user_id != "0") {
+				UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
+			}
+			//VKAdds.init();
 		}
 		
 		public static function onVkPayment(e:CustomEvent):void {
