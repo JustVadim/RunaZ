@@ -1,12 +1,17 @@
 package artur.display 
 {
+	import Server.Lang;
+	import artur.App;
 	import artur.PrepareGr;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	public class Achiv extends Sprite {
 		private static var frames:Array = PrepareGr.creatBms(new mcAchivs, false);
-		private static var OVER_FILTRE:Array = [new GlowFilter(0xFFFFFF, 1, 2, 2)];
+		private static var OVER_FILTRE:Array = [new GlowFilter(0xFFFFFF, 1, 4, 4)];
 		private var index:int;
 		private var star1:Bitmap = PrepareGr.creatBms(new mcStarAchiv, false)[0];
 		private var star2:Bitmap = PrepareGr.creatBms(new mcStarAchiv, false)[0];
@@ -22,6 +27,29 @@ package artur.display
 			this.y = yy;
 			this.buttonMode = true;
 			this.mouseChildren = false;
+			this.addEventListener(Event.ADDED_TO_STAGE, this.onAdded);
+		}
+		
+		private function onAdded(e:Event):void {
+			this.removeEventListener(Event.ADDED_TO_STAGE, this.onAdded);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemoved);
+			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+		}
+		
+		private function onOut(e:MouseEvent):void {
+			this.filters = [];
+			App.info.frees();
+		}
+		
+		private function onOver(e:MouseEvent):void {
+			this.filters = Achiv.OVER_FILTRE;
+			App.info.init( this.x + 80, this.y - 10, {txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getMyAchieveText(this.index), type:0 });
+		}
+		
+		private function onRemoved(e:Event):void {
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemoved);
+			this.addEventListener(Event.ADDED_TO_STAGE, this.onAdded);
 		}
 		
 		private function doStar(star:Bitmap, xx:Number, yy:Number):void {
@@ -32,18 +60,10 @@ package artur.display
 			star.height = 15.6;
 		}
 		
-		public function init(index:int = 0, xp:int = 0, yp:int = 0, st1:Boolean = false, st2:Boolean = false, st3:Boolean = false):void {
-			removeChild(frames[this.index]);
-			this.index = index;
-			addChild(frames[index]);
-			this.addChild(star1);
-			this.addChild(star2);
-			this.addChild(star3);
-			star1.visible = st1;
-			star2.visible = st2;
-			star3.visible = st3;
-			this.x = xp;
-			this.y = yp;
+		public function init(state:int):void {
+			this.star1.visible = state >= 1;
+			this.star2.visible = state >= 2;
+			this.star3.visible = state >= 3;
 		}
 		
 	}
