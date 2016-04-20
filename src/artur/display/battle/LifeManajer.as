@@ -79,7 +79,7 @@ package artur.display.battle
 			var unit:MovieClip = un_Data[t][p].unit;
 			var bar:mcBar = un_Data[t][p].bar;
 			bar.x = unit.x;
-			bar.y = unit.y + unit._head.y* unit.normScale - unit._head.height / 3;
+			bar.y = unit.y + (unit._head.y*unit.normScale) - unit._head.height/3; 
 		}
 		
 		public static function updateCurrLife(t:int, p:int):void

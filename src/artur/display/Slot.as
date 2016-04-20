@@ -20,7 +20,8 @@ package artur.display {
 		namesUnit[1] = 'Paladin';
 		namesUnit[2] = 'Lyk';
 		namesUnit[3] = 'Mag'
-		namesUnit[100] = 'Bot1';
+		//namesUnit[100] = 'Bot1';
+		namesUnit[100] = 'BotTroll';
 		namesUnit[101] = 'Bot2';
 		namesUnit[102] = 'BotGolem';
 		namesUnit[103] = 'LykBot';

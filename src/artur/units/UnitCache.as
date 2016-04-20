@@ -13,7 +13,8 @@ package artur.units
 			{ className:BotGolem, type:'BotGolem' },
 			{ className:U_LykBot, type:'LykBot' } ,
 			{ className:BotGhost, type:'BotGhost' },
-			{ className:BotGhost2, type:'BotGhost2' }	
+			{ className:BotGhost2, type:'BotGhost2' },
+			{ className:BotTroll, type:'BotTroll' }
 		];
 		public static var unitCache:Array = [];
 		

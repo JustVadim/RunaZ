@@ -123,7 +123,7 @@ package artur.win
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}
-			App.achievm.init(null);
+			//App.achievm.init(null);
 		}
 		
 		public function updateBar():void {
