@@ -42,8 +42,7 @@ package artur.display.battle {
 			this.curTime = time;
 		}
 		
-		public function frees():void 
-		{
+		public function frees():void {
 			if(this.parent) {
 				this.parent.removeChild(this);
 				this.timer.stop();

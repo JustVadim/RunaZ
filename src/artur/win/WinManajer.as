@@ -51,11 +51,9 @@ package artur.win
 			 brama.gotoAndPlay(1);
 			 swapMode = true;
 		}
-		public function update():void
-		{
+		public function update():void {
 			windows[currWin].update();
-			if (swapMode) 
-			{
+			if (swapMode) {
 				if (brama.currentFrame == 2 || brama.currentFrame == 25) {
 					App.sound.playSound('move', App.sound.onVoice,1);
 				}

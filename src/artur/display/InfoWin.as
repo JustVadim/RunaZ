@@ -73,16 +73,17 @@ package artur.display
 			{
 				this.title.visible = true;
 				this.titleTxtName.text = String(data.title); 
-				cur_Y = 10;
+				cur_Y = 4;
 			}
 			switch(data.type)
 			{
 				case int(0):
 					this.txtInfo.visible = true;
+					this.txtInfo.text = "";
 					this.txtInfo.width = data.txtInfo_w;
 					this.txtInfo.htmlText = data.txtInfo_t;
-					this.txtInfo.height = txtInfo.numLines * 17;
-					this.txtInfo.x = this.bg.x+2;
+					this.txtInfo.height = txtInfo.numLines * 18;
+					this.txtInfo.x = this.bg.x + 2;
 					this.txtInfo.y = cur_Y;
 					this.bg.width = data.txtInfo_w+4;
 					this.bg.height = txtInfo.height + cur_Y + 8;

@@ -161,6 +161,8 @@ package artur.win
 		}
 		
 		public function init():void {
+			Report.addMassage("Battle init");
+			this.bin = true;
 			App.swapMuz('BatleSong');
 			this.gift_id = 0;
 			this.unitsInWin = [];
@@ -448,6 +450,7 @@ package artur.win
 		}
 		
 		private function endBattle(obj:Object):void {
+			this.bin = false;
 			WinBattle.bat.is_end = true;
 			App.info.frees();
 			UserStaticData.hero.cur_vitality -= 10;
@@ -481,7 +484,7 @@ package artur.win
 					hero.silver += int(obj.mcd.s);
 					hero.addAndCheckExp(int(obj.exp) / 2);
 					hero.addAndCheckUnitExp(int(obj.exp), obj.ul);
-					//App.topMenu.updateAva();
+					App.topMenu.updateAva();
 					
 					
 					mc.starBar.visible = true;
@@ -786,17 +789,18 @@ package artur.win
 			}
 		}
 		 
-		private function onUltOver(e:MouseEvent):void 
-		{
+		private function onUltOver(e:MouseEvent):void {
 			if(WinBattle.ult_btn.currentFrame > 1) {
 				WinBattle.ult_btn.mcBg.visible = true;
 			}
 			App.sound.playSound("over1", App.sound.onVoice, 1);
 		}
 		 
-		public function update():void
-		{
-			mover.update();
+		
+		public function update():void {
+			if(this.bin) {
+				mover.update();
+			}
 			effManajer.update();
 		}
 		
@@ -816,7 +820,7 @@ package artur.win
 				UserStaticData.hero.mbat = null;
 				UserStaticData.hero.bat = -1;
 			}*/
-			McWinAfterBattleExtend.rebattleUse = false;
+			//McWinAfterBattleExtend.rebattleUse = false;
 			effManajer.frees();
 			for (var i:int = 0; i < unitsInWin.length; i++) {
 				unitsInWin[i].frees();
@@ -830,10 +834,8 @@ package artur.win
 		
 		private function freeUnits(unit:Object):void 
 		{
-			for (var key:Object in unit)
-			{
-				if (unit[key] != null)
-				{
+			for (var key:Object in unit) {
+				if (unit[key] != null) {
 					unit[key].frees();
 				}
 				delete(unit[key]);

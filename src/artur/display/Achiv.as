@@ -5,11 +5,8 @@ package artur.display
 	import artur.PrepareGr;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
-<<<<<<< HEAD
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-=======
->>>>>>> 71e4a1063623c1b9044f74bc1ef182e87cff13e3
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	public class Achiv extends Sprite {

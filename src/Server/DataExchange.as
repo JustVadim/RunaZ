@@ -225,6 +225,7 @@ package Server
 								UserStaticData.magaz_units = JSON2.decode(obj.m_u);
 								UserStaticData.magazin_items = JSON2.decode(obj.items);
 								UserStaticData.buffs_chances = JSON2.decode(obj.bm);
+								UserStaticData.achievments_table = JSON2.decode(obj.ach);
 								for (var key:Object in obj.uis) {
 									UserStaticData.users_info[key] = JSON2.decode(obj.uis[key]);
 									UserStaticData.users_info[key][6] = 1;

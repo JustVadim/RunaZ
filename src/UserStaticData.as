@@ -3,8 +3,8 @@
 	import datacalsses.Hero;
 	
 	public class UserStaticData {
-		//public static const server_ip:String = "192.168.1.198";
-		public static const server_ip:String = "151.80.10.33";
+		public static const server_ip:String = "192.168.1.198";
+		//public static const server_ip:String = "151.80.10.33";
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
 		public static var id:String = "2";
@@ -23,6 +23,7 @@
 		static public var flash_vars:Object;
 		static public var lang:int = 0;
 		static public var allId:String;
+		static public var achievments_table:Object;
 		
 	}
 }

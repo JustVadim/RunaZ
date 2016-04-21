@@ -189,7 +189,7 @@ package Server
 			Lang.lang_table[59][13] = ["10 камней добавят +3 к физ. защите", "10 stones add 3 to phys. protection ", ""];
 			Lang.lang_table[59][14] = ["10 камней добавят +3 к маг. защите", "10 stones add 3 to mag. protection ", ""];
 			Lang.lang_table[60] = new Array();
-			Lang.lang_table[60][1] = ["Зайдите в замок, что бы нанять юинита и купить ему артефакты", "Go to the castle to hire units and buy him artifacts", ""];
+			Lang.lang_table[60][1] = ["Зайдите в замок, что бы нанять юнита и купить ему артефакты", "Go to the castle to hire unit and buy him artifacts", ""];
 			Lang.lang_table[60][2] = ["Нажмите, что бы открыть таверну с юнитами", "Click to open a tavern with units", ""];
 			Lang.lang_table[60][3] = ["Наймите юнита", "Hire unit"];
 			Lang.lang_table[60][4] = ["У Вас есть юнит, но ему надо оружие", "You have unit, but he needs weapon", ""];
@@ -520,8 +520,8 @@ package Server
 										["Используйте свитки нужное количество раз.", "", ""],
 										["Используйте баночки нужное количество раз.", "", ""],
 										["Закажите нужное количество камне в кузнице.", "", ""],
-										["Купите нужное количесво золота в банке.", "", ""],
-										["Купите нужное количесво серебра в банке.", "", ""],
+										["Купите нужное количество золота в банке.", "", ""],
+										["Купите нужное количество серебра в банке.", "", ""],
 										["Пройдите нужное количество миссий на уровне \"Царь\".","",""]
 									];
 			Lang.lang_table[194] = [
@@ -530,6 +530,7 @@ package Server
 										["Уровень 3","",""],
 									];
 			Lang.lang_table[195] = ["Текущий прогресс", "", ""];
+			Lang.lang_table[196] = ["Текущий уровень", "", ""];
 			
 			
 		}
@@ -589,11 +590,16 @@ package Server
 		
 		static public function getMyAchieveText(index:int):String {
 			var str:String = "";
+			var achiev:Object = (UserStaticData.achievments_table[index] != null) ? UserStaticData.achievments_table[index]:[0, 0, 0];
 			str += "<font color=\"#00FF40\">" + Lang.getTitle(192, index) + "</font>" + "\n" + Lang.getTitle(193, index);
-			str += "\n\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 0) + ":</font> " + "100";
-			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 1) + ":</font> " + "10000";
-			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 2) + ":</font> " + "1000000";
-			str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ":</font> " + "85% (" + "150/160" + ")";
+			str += "\n\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 0) + ":</font> " + achiev[0];
+			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 1) + ":</font> " + achiev[1];
+			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 2) + ":</font> " + achiev[2];
+			var prog:int = UserStaticData.hero.ach[index].q;
+			var lvl:int = UserStaticData.hero.ach[index].s
+			var all:int = achiev[lvl];
+			str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ":</font> " + " " + int(prog*100/all) + "% (" + prog + "/" + all + ")";
+			str += "\n<font color=\"#FF8040\">" + Lang.getTitle(196) + ":</font> " + " " + lvl;
 			return str
 		}
 	}

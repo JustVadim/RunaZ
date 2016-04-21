@@ -1,6 +1,7 @@
 package Chat 
 {
 	import Adds.VKAdds;
+	import Utils.Functions;
 	import artur.App;
 	import artur.display.BaseButton;
 	import flash.display.Sprite;
@@ -63,11 +64,13 @@ package Chat
 			this.is_private.addEventListener(MouseEvent.CLICK, this.onIsPrivateClick);
 			this.addEventListener(KeyboardEvent.KEY_DOWN, this.onKeyDown);
 			this.addChild(this.send_btn = new BaseButton(6));
-			this.btnQ = new BaseButton(47); btnQ.x = 14.2; btnQ.y = 424.2;
-			this.btnAds = new BaseButton(57); btnAds.x = 40; btnAds.y = 424.2; 
-			//var animQvest:AnimBtn = new AnimBtn(); animQvest.mouseChildren = false; animQvest.mouseEnabled = true;
-			//this.btnQ.addChild(animQvest); 
-			//this.addChild(btnAds)
+			this.btnQ = new BaseButton(47);
+			Functions.SetPriteAtributs(this.btnQ, true, false, 14.2, 424.2);
+			this.btnAds = new BaseButton(57);
+			Functions.SetPriteAtributs(this.btnAds, true, false, 40, 424.2);
+			var animQvest:AnimBtn = new AnimBtn(); animQvest.mouseChildren = false; animQvest.mouseEnabled = true;
+			this.btnQ.addChild(animQvest); 
+			this.addChild(btnAds)
 			this.send_btn.x = 586.7;
 			this.send_btn.y = 582.4;
 			this.send_btn.addEventListener(MouseEvent.CLICK, onSendBtnClick);
@@ -84,14 +87,7 @@ package Chat
 		}
 		
 		private function onAdds(e:MouseEvent):void {
-			if(UserStaticData.from == "v" && VKAdds.vkContainer != null) 
-			{
-				try {
-					VKAdds.vkContainer.init(String(UserStaticData.flash_vars['api_id']), Main.THIS.stage);
-				} catch( er:Error ) {
-					Report.addMassage(er.message)
-				}
-			}
+			App.achievm.init();
 		}
 		
 		public function addBtn():void 

@@ -22,6 +22,7 @@ package datacalsses
 		public var sett:Object;
 		public var rat:int;
 		public var nle:int;
+		public var ach:Object;
 		
 		public function setHero(obj:Object):void {
 			this.silver = obj.s;
@@ -46,11 +47,13 @@ package datacalsses
 			this.demo = obj.demo;
 			this.t = obj.t;
 			this.sett = obj.fbs;
+			this.ach = obj.ach;
+			
 			/// - crab;
 		}
 		
-		public function addAndCheckExp(exp:int):void {
-			this.exp += exp;
+		public function addAndCheckExp(exp_:int):void {
+			this.exp += exp_;
 			if(this.exp >= this.nle) {
 				this.exp = 0;
 				this.level++;

@@ -10,7 +10,7 @@ package artur.display {
 	import report.Report;
 	
 	public class HeroAchievments extends Sprite {
-		public static var ACHIEVMENTS_QTY:int = 11;
+		public static var ACHIEVMENTS_QTY:int = 12;
 		private var bg:mcBgAchiv;
 		private var cont:Sprite;
 		private var ach_array:Array;
@@ -21,7 +21,7 @@ package artur.display {
 			Functions.SetPriteAtributs(this, true, true, 0, 0);
 			this.closeBtn = new BaseButton(31);
 			this.closeBtn.x = 400;
-			this.closeBtn.y = 55;
+			this.closeBtn.y = 358;
 			this.addChild(this.bg = new mcBgAchiv());
 			this.cont = new Sprite()
 			this.ach_array = new Array();
@@ -40,9 +40,12 @@ package artur.display {
 			this.addChild(this.closeBtn);
 		}
 		
-		public function init(ach_obj:Object):void {
+		public function init():void {
 			App.spr.addChild(this);
 			this.closeBtn.addEventListener(MouseEvent.CLICK, this.onClick);
+			for (var i:int = 0; i < HeroAchievments.ACHIEVMENTS_QTY; i++) {
+				Achiv(this.ach_array[i]).init(UserStaticData.hero.ach[i].s);
+			}
 		}
 		
 		private function onClick(e:MouseEvent):void 
