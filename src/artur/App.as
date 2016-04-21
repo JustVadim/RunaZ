@@ -1,5 +1,6 @@
 package artur 
 {
+	import artur.display.AchivDialog;
 	import artur.display.BaseButton;
 	import artur.display.BonusDialog;
 	import artur.display.HeroAchievments;
@@ -53,6 +54,7 @@ package artur
 		[Embed(source = "../../bin/sounds/menuSong.mp3")] private var s_menuSong:Class;
 		[Embed(source = "../../bin/sounds/mapSong.mp3")] private var s_mapSong:Class;
 		[Embed(source = "../../bin/sounds/onLose.mp3")] private var s_onLose:Class;
+		[Embed(source = "../../bin/sounds/achiv.mp3")] private var s_achiv:Class;
 		public static var sound:SoundManager = SoundManager.getInstance();
 		public static var winManajer:WinManajer;
 		public static var spr:Sprite;
@@ -60,6 +62,7 @@ package artur
 		public static var btnOverFilter:GlowFilter = new GlowFilter(0xFFFFFF, 1, 4, 4, 5);
 		public static var byeWin:ByeWin 
 		public static var closedDialog:CloseDialog
+		public static var achivDialog:AchivDialog
 	   // static public var btns:Array = [];
 		public static var info:InfoWin = new InfoWin();
 		public static var lock:LockSpr = new LockSpr();
@@ -80,6 +83,7 @@ package artur
 		
 		public function App(stg:Stage) 
 		{
+			sound.addSound('achiv', new s_achiv());
 			sound.addSound('onLose', new s_onLose());
 			sound.addSound('BatleSong', new s_BatleSong());
 			sound.addSound('MenuSong', new s_menuSong());
@@ -133,6 +137,7 @@ package artur
 			this.addEventListener(Event.ENTER_FRAME, update);
 			byeWin = new ByeWin();
 			closedDialog = new CloseDialog();
+			achivDialog = new AchivDialog();
 			cursor.addCursor(mcCursorArrow, 'arr');
 			cursor.addCursor(mcCursorHand, 'hand');		
 			cursor.changeCursor('arr');
