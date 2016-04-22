@@ -84,5 +84,11 @@ package datacalsses
 				}
 			}
 		}
+		
+		public function setAchievm(temp_obj:Object):void {
+			for(var key:Object in temp_obj) {
+				this.ach[key].q = temp_obj[key];
+			}
+		}
 	}
 }

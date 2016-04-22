@@ -36,6 +36,7 @@ package Server
 		static public const SWAP_UNITS:String = "33";
 		static public const SOLD_HERO:String = "34";
 		static public const GET_HERO:String = "35";
+		static public const SET_ACHIEVM:String = "36";
 		
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;

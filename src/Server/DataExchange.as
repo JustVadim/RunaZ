@@ -205,6 +205,11 @@ package Server
 							case int(COMMANDS.CHECK_FRIENDS_BONUS):
 								App.bomusDialog.init(0);
 								break;
+							case int(COMMANDS.SET_ACHIEVM):
+								Report.addMassage("Achievm come: " + temp_obj.m)
+								temp_obj = JSON2.decode(temp_obj.m);
+								UserStaticData.hero.setAchievm(temp_obj);
+								break;
 							}
 						} else {
 							data_evnt = new DataExchangeEvent(DataExchangeEvent.DATA_RECIEVED);

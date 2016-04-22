@@ -43,6 +43,7 @@ package artur.display
 		}
 		
 		private function onOver(e:MouseEvent):void {
+			App.sound.playSound('over1', App.sound.onVoice, 1);
 			this.filters = Achiv.OVER_FILTRE;
 			App.info.init( this.x + 80, this.y - 10, {txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getMyAchieveText(this.index), type:0 });
 		}

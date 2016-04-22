@@ -21,7 +21,7 @@ package artur.display {
 		namesUnit[2] = 'Lyk';
 		namesUnit[3] = 'Mag'
 		
-		namesUnit[100] = 'Bot1';
+		namesUnit[100] = 'Bot1';1
 		namesUnit[101] = 'Bot2';
 		namesUnit[102] = 'BotGolem';
 		namesUnit[103] = 'LykBot';

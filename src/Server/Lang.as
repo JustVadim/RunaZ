@@ -79,26 +79,62 @@ package Server
 									["В город","Vilagge",""]
 								];
 			Lang.lang_table[4] = ["У Вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "You do not have the resources for this purchase. You can buy the resources at the bank or the earn in missions.", ""];
+			
+			
 			Lang.lang_table[5] = ["Критический урон", "Critical strike", ""];
 			Lang.lang_table[6] = ["Уворот", "Dodge", ""];
 			Lang.lang_table[7] = ["Двойная атака", "Double attack", ""];
 			Lang.lang_table[8] = ["Бешенство", "Rage", ""];
 			Lang.lang_table[9] = ["Ответный удар", "Counter attack", ""];
-			Lang.lang_table[10] = ["шанс нанести двойной урон</font>\n Следующий уровень", "chance to inflict double damage</font>\n Next level", ""];
-			Lang.lang_table[11] = ["шанс уклониться от удара</font>\n Следующий уровень", "chance to dodge</font>\n Next level", ""];
-			Lang.lang_table[12] = ["шанс атаковать дважды</font>\n Следующий уровень", "chance to attack twice</font>\n Next level", ""];
-			Lang.lang_table[13] = ["шанс атаковать сквозь защиту</font>\n Следующий уровень", "chance to attack through the defense</font>\n Next level", ""];
-			Lang.lang_table[14] = ["шанс нанести ответный удар</font>\n Следующий уровень", "chance to strike back</font>\n Next level", ""];
-			Lang.lang_table[15] = ["Ярость", "Fury", ""];
-			Lang.lang_table[16] = ["Лечение", "Heal", ""];
-			Lang.lang_table[17] = ["Огненная стрела", "Fire arrow", ""];
-			Lang.lang_table[18] = ["Молния", "Lightning", ""];
-			Lang.lang_table[19] = [" увеличивает урон юнита на ", " increases the damage to the unit for ", ""];
-			Lang.lang_table[20] = ["на текущий ход", "for current step", ""];
-			Lang.lang_table[21] = [" востанавливает ", " restores ", ""];
-			Lang.lang_table[22] = [" единиц здоровья любому союзному юниту", " health points for any unit you chose", ""];
-			Lang.lang_table[23] = [" Оглушает вражеского юнита огненной стрелой и наносит ", " Stuns enemy unit Firebolt and deals", ""];
-			Lang.lang_table[24] = [" урона", " damage", ""];
+			Lang.lang_table[10] = 	[
+										["шанс нанести двойной урон",				"",				""],
+										["шанс уклониться от удара",				"",				""],
+										["шанс атаковать дважды",					"",				""],
+										["шанс атаковать сквозь защиту",			"",				""],
+										["шанс нанести ответный удар",				"",				""]
+			
+			
+									];
+			Lang.lang_table[11] = ["Слудующий уровень",	 			"", ""];
+			Lang.lang_table[12] = ["Этот навык прокачан максимально", 				"", 			""];
+			
+			Lang.lang_table[13] = 	[
+										["Ярость",									"",				""],
+										["Лечение",									"",				""],
+										["Огненная стрела",							"",				""],
+										["Молния",									"",				""]
+									];
+			Lang.lang_table[14] = 	[
+										[	"Увеличивает урон Варвара в процентном соотношении",
+											"",
+											""
+										],
+										[
+											"Востанавливает здоровье любому союзному юниту в команде",
+											"",
+											""
+										],
+										[
+											"Оглушает вражеского юнита огненной стрелой при єтом наносит ему урон",
+											"",
+											""
+										],
+										[
+											"Поражает вражеского юнита молнией при этом наносит ему урон",
+											"",
+											""
+										],
+									];
+			Lang.lang_table[15] = [""];
+			Lang.lang_table[16] = [];
+			Lang.lang_table[17] = [];
+			Lang.lang_table[18] = [];
+			Lang.lang_table[19] = [];
+			Lang.lang_table[20] = [];
+			Lang.lang_table[21] = [];
+			Lang.lang_table[22] = [];
+			Lang.lang_table[23] = [];
+			Lang.lang_table[24] = [];
 			Lang.lang_table[25] = [" Поражает вражеского юнита молнией при этом наносит ему ", " Lightning strikes an enemy unit at the same time causing him", ""];
 			Lang.lang_table[26] = ["Следующий уровень - ", "Next level - ", ""];
 			Lang.lang_table[27] = [" единиц", " points", ""];
