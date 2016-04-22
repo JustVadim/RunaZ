@@ -74,6 +74,7 @@ package artur.display {
 			switch(mc) {
 				case this.btnEx:
 					this.frees();
+					App.dialogManager.canShow();
 					break;
 				case this.btnCastl:
 					App.winManajer.swapWin(1);

@@ -1,5 +1,6 @@
 package datacalsses 
 {
+	import artur.App;
 	import report.Report;
 	public class Hero 
 	{
@@ -76,7 +77,8 @@ package datacalsses
 				Report.addMassage("Unit alive: " + ul[key] + "exp: " + exp);
 				var unit:Object = this.units[ul[key]];
 				unit.exp += exp;
-				if(unit.exp >= unit.nle) {
+				if (unit.exp >= unit.nle) {
+					App.dialogManager.checkUnits();
 					unit.lvl++;
 					unit.fs += 2;
 					unit.exp = 0;

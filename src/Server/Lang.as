@@ -56,6 +56,18 @@ package Server
 			lang_table[0][41] = ["Вторжение",			"BOSS",					""];
 			lang_table[0][42] = ["Вождь клана",			"BOSS",					""];
 			lang_table[0][43] = ["БОСС",				"BOSS",					""];
+			lang_table[0][44] = ["Кровавая луна",				"BOSS",					""];
+			lang_table[0][45] = ["Пожиратель грехов",				"BOSS",					""];
+			lang_table[0][46] = ["Дурная кровь",				"BOSS",					""];
+			lang_table[0][47] = ["Потерянный рай",				"BOSS",					""];
+			lang_table[0][48] = ["Шёпот во тьме",				"BOSS",					""];
+			lang_table[0][49] = ["Кровь и страх",				"BOSS",					""];
+			lang_table[0][50] = ["В диких условиях",				"BOSS",					""];
+			lang_table[0][51] = ["Ранний свет рассвета",				"BOSS",					""];
+			lang_table[0][52] = ["Одна жизнь",				"BOSS",					""];
+			lang_table[0][53] = ["Время летит",				"BOSS",					""];
+			lang_table[0][54] = ["БОСС",				"BOSS",					""];
+			
 			
 			
 			
@@ -125,7 +137,7 @@ package Server
 											""
 										],
 									];
-			Lang.lang_table[15] = [""];
+			Lang.lang_table[15] = ["Новый уровень"];
 			Lang.lang_table[16] = [];
 			Lang.lang_table[17] = [];
 			Lang.lang_table[18] = [];
@@ -628,14 +640,18 @@ package Server
 			var str:String = "";
 			var achiev:Object = (UserStaticData.achievments_table[index] != null) ? UserStaticData.achievments_table[index]:[0, 0, 0];
 			str += "<font color=\"#00FF40\">" + Lang.getTitle(192, index) + "</font>" + "\n" + Lang.getTitle(193, index);
-			str += "\n\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 0) + ":</font> " + achiev[0];
-			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 1) + ":</font> " + achiev[1];
-			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 2) + ":</font> " + achiev[2];
+			str += "\n\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 0) + ": " + achiev[0] + "</font>";
+			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 1) + ": " + achiev[1] + "</font>";
+			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 2) + ": " + achiev[2] + "</font>";
 			var prog:int = UserStaticData.hero.ach[index].q;
 			var lvl:int = UserStaticData.hero.ach[index].s
-			var all:int = achiev[lvl];
-			str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ":</font> " + " " + int(prog*100/all) + "% (" + prog + "/" + all + ")";
-			str += "\n<font color=\"#FF8040\">" + Lang.getTitle(196) + ":</font> " + " " + lvl;
+			if (lvl != 3) {
+				var all:int = achiev[lvl];
+				str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ": " + " " + int(prog * 100 / all) + "% (" + prog + "/" + all + ")</font>";
+			} else {
+				str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ": " + " " + int(prog * 100 / achiev[2]) + "% (" + prog + "/" + achiev[2] + ")</font>";
+			}
+			str += "\n<font color=\"#FF8040\">" + Lang.getTitle(196) + ": " + " " + lvl + "</font>";
 			return str
 		}
 	}

@@ -90,9 +90,10 @@ package Chat
 			App.achievm.init();
 		}
 		
-		public function addBtn():void 
-		{
-			this.addChild(this.btnQ);
+		public function addBtn():void {
+			if(this.btnQ.parent == null) {
+				this.addChild(this.btnQ);
+			}
 		}
 		
 		public function removeBtn():void {

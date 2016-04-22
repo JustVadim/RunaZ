@@ -28,7 +28,7 @@ package artur.win
 		public var currWin:int=0;
 		public var neadWin:int=0;
 		private var brama:mcAnimBrama = new mcAnimBrama();
-		private var swapMode:Boolean = false;
+		public var swapMode:Boolean = false;
 		public static var taskWasShown:Boolean = false;
 		private var is_fb_checked:Boolean = false;
 		
@@ -43,14 +43,15 @@ package artur.win
 			var bm2:MyBitMap = new MyBitMap(App.prepare.cach[16]);
 			brama.mc.addChild(bm1); brama.mc2.addChild(bm2);
 		}
-		public function swapWin(neadWin:int):void
-		{
-			 windows[currWin].bin = false;
-			 this.neadWin = neadWin;
-		     App.spr.addChild(brama);
-			 brama.gotoAndPlay(1);
-			 swapMode = true;
+		
+		public function swapWin(neadWin:int):void {
+			windows[currWin].bin = false;
+			this.neadWin = neadWin;
+			App.spr.addChild(brama);
+			brama.gotoAndPlay(1);
+			swapMode = true;
 		}
+		
 		public function update():void {
 			windows[currWin].update();
 			if (swapMode) {
@@ -69,12 +70,8 @@ package artur.win
 					App.spr.removeChild(brama);
 					brama.stop();
 					swapMode = false;
-					if (this.currWin != 3) {
-						//this.isLevelUp();
-						WinManajer.checkTask();
-						if(!this.is_fb_checked) {
-							this.checkFriendBonus();
-						}
+					if(currWin != 3) {
+						App.dialogManager.canShow();
 					}
 				}
 			}
@@ -99,39 +96,6 @@ package artur.win
 				}
 			}
 		}
-		
-		private function isLevelUp():void {
-			for (var key:Object in UserStaticData.hero.units) {
-				var unit:Object = UserStaticData.hero.units[key];
-				if (unit.exp >= unit.nle) {
-					var data:DataExchange = new DataExchange();
-					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onLevelUpRes);
-					data.sendData(COMMANDS.UNIT_LEVEL_UP, key.toString(), true);
-					//break;
-				}
-			}
-		}
-		
-		private function onLevelUpRes(e:DataExchangeEvent):void 
-		{
-			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onLevelUpRes);
-			var obj:Object = JSON2.decode(e.result);
-			if (obj.error == null)
-			{
-				var unit:Object = UserStaticData.hero.units[obj.num];
-				unit.exp = 0;
-				unit.lvl = obj.lvl;
-				unit.nle = obj.nle;
-				unit.fs = obj.fs;
-				
-			}
-			else
-			{
-				App.lock.init(obj.error);
-			}
-		}
-		
-		
 	}
 
 }

@@ -186,17 +186,15 @@ package artur.display {
 		
 		
 		public function updateAva():void {
-			if (this.mcAva.parent) {
-				var hero:Hero = UserStaticData.hero;
-				var maxVit:int = hero.skills.vitality*10;
-				var currEn:int = hero.cur_vitality;
-				var currExp:int = hero.exp;
-				Functions.compareAndSet(this.txtAvatarLevel, hero.level.toString());
-				Functions.compareAndSet(this.txtExp, String(currExp + '/' + UserStaticData.hero.nle));
-				Functions.compareAndSet(this.txtVit, String(currEn + '/' + maxVit));
-				this.mcAva.vitBar.gotoAndStop(int(currEn  / maxVit * 100) + 1);
-				this.mcAva.expBar.gotoAndStop(int(currExp / UserStaticData.hero.nle * 100) + 1);
-			}
+			var hero:Hero = UserStaticData.hero;
+			var maxVit:int = hero.skills.vitality*10;
+			var currEn:int = hero.cur_vitality;
+			var currExp:int = hero.exp;
+			Functions.compareAndSet(this.txtAvatarLevel, hero.level.toString());
+			Functions.compareAndSet(this.txtExp, String(currExp + '/' + UserStaticData.hero.nle));
+			Functions.compareAndSet(this.txtVit, String(currEn + '/' + maxVit));
+			this.mcAva.vitBar.gotoAndStop(int(currEn  / maxVit * 100) + 1);
+			this.mcAva.expBar.gotoAndStop(int(currExp / UserStaticData.hero.nle * 100) + 1);
 		}
 		
 		private function onClick(e:MouseEvent):void {
