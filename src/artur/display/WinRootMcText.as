@@ -53,6 +53,7 @@ package artur.display
 		}
 		
 		private function onOver(e:MouseEvent):void {
+			App.sound.playSound('over1', App.sound.onVoice, 1);
 			var mc:mcUserParam = mcUserParam(e.target);
 			var num:int = int(mc.name) - 1;
 			var str:String = "";

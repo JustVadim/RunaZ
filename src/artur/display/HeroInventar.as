@@ -310,52 +310,47 @@ package artur.display
 			var ub:Object = UserStaticData.hero.units[WinCastle.currSlotClick].b;
 			var bc:Object = UserStaticData.buffs_chances;
 			var uult:Object = UserStaticData.hero.units[WinCastle.currSlotClick].ult;
-			switch(true)
-			{
-				case(mc == this.mcText.sk_crit):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(5) +"</font>\n<font color=\"#FFFFFF\">" + bc[0][ub[0].l] + "% " + Lang.getTitle(10) + " - " + bc[0][ub[0].l + 1] + "%";
-					break;
-				case(this.mcText.sk_miss == mc):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(6) +"</font>\n<font color=\"#FFFFFF\">" + bc[1][ub[1].l] + "% " + Lang.getTitle(11)+" - " + bc[1][ub[1].l + 1] + "%";
-					break;
-				case(this.mcText.sk_double == mc):
-					descr = "<font color=\"#00FF00\">"+ Lang.getTitle(7)+"</font>\n<font color=\"#FFFFFF\">" + bc[2][ub[2].l] + "% " + Lang.getTitle(12)+" - " + bc[2][ub[2].l + 1] + "%";
-					break;
-				case(this.mcText.sk_out == mc):
-					descr = "<font color=\"#00FF00\">"+Lang.getTitle(8)+"</font>\n<font color=\"#FFFFFF\">" + bc[3][ub[3].l] + "% " + Lang.getTitle(13)+" - " + bc[3][ub[3].l + 1] + "%";
-					break;
-				case(this.mcText.sk_return == mc):
-					descr = "<font color=\"#00FF00\">" +Lang.getTitle(9) +"</font>\n<font color=\"#FFFFFF\">" + bc[4][ub[4].l] + "% " + Lang.getTitle(14)+" - " + bc[4][ub[4].l + 1] + "%";
-					break;
-				case (this.mcText.sk_ult == mc):
-					switch(UserStaticData.hero.units[WinCastle.currSlotClick].t)
-					{
-						case 0:
-							descr = "<font color=\"#00FF00\">" + Lang.getTitle(15) + "</font>\n";
-							descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(19) + bc[5][uult.lvl] + "% " + Lang.getTitle(20) + "</font>\n";
-							descr += Lang.getTitle(26) + bc[5][uult.lvl + 1] + "%";
-							break;
-						case 1:
-							descr = "<font color=\"#00FF00\">" + Lang.getTitle(16) + "</font>\n";
-							descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(21) + bc[6][uult.lvl] + Lang.getTitle(22) + "</font>\n";
-							descr += Lang.getTitle(26) + bc[6][uult.lvl + 1] + Lang.getTitle(27);
-							break;
-						case 2:
-							descr = "<font color=\"#00FF00\">" + Lang.getTitle(17) + "</font>\n";
-							descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(23) + bc[7][uult.lvl] + Lang.getTitle(24) + "</font>\n";
-							descr += Lang.getTitle(26) + bc[7][uult.lvl + 1] + Lang.getTitle(24);
-							break;
-						case 3:
-							descr = "<font color=\"#00FF00\">" + Lang.getTitle(18) + "</font>\n";
-							descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(25) + bc[8][uult.lvl] + Lang.getTitle(24) + "</font>\n";
-							descr += Lang.getTitle(26) + bc[8][uult.lvl + 1] + Lang.getTitle(24);
-							break;
-					}
-					descr += "\n<font color=\"#15B4FF\">" +Lang.getTitle(28) + uult.mc + Lang.getTitle(29) + "</font>\n";
-					break;
+			
+			
+			if (mc != this.mcText.sk_ult) {
+				var buff_num:int;
+				switch(mc) {
+					case this.mcText.sk_crit:
+						buff_num = 0;
+						break;
+					case this.mcText.sk_miss:
+						buff_num = 1;
+						break;
+					case this.mcText.sk_double:
+						buff_num = 2
+						break;
+					case this.mcText.sk_out:
+						buff_num = 3;
+						break;
+					case this.mcText.sk_return:
+						buff_num = 4;
+						break;
+						
+				}
+				descr = "<font color=\"#00FF00\">" + Lang.getTitle(5 + buff_num) +"</font>\n<font color=\"#FFFFFF\">" + bc[buff_num][ub[buff_num].l] + "% " + Lang.getTitle(10, buff_num);
+				if(ub[buff_num].l < 24) {
+					descr += "\n" +  "<font color=\"#11B1FF\">" + Lang.getTitle(11) + ": " + bc[buff_num][ub[buff_num].l + 1] + "%</font>";
+				} else {
+					descr += "\n" +  "<font color=\"#11B1FF\">" + Lang.getTitle(12) + "%</font>";
+				}
+				
+			} else {
+				var type:int = UserStaticData.hero.units[WinCastle.currSlotClick].t;
+				descr = "<font color=\"#00FF00\">" + Lang.getTitle(13, type) + "</font>\n";
+				descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(14, type) + "</font>\n";
+				descr += "<font color=\"#FF8040\">" + Lang.getTitle(196) + ": " + bc[5 + type][uult.lvl] + "</font>";
+				if (uult.lvl < 24)
+					descr += "\n" +  "<font color=\"#11B1FF\">" + Lang.getTitle(11) + ": " + bc[5 + type][uult.lvl+1] + "</font>";
+				else {
+					descr += "\n" +  "<font color=\"#11B1FF\">" + Lang.getTitle(12) + "%</font>";
+				}
 			}
-			if (this.mcText.mcFreeskils.visible)
-			{
+			if (this.mcText.mcFreeskils.visible) {
 				descr += "\n\n<font color=\"#00FF00\" size=\"10\">" + Lang.getTitle(30) + "</font>"
 			}
 			App.info.init(p.x + 35, p.y + 35, { type:0, title:Lang.getTitle(31), txtInfo_w:290, txtInfo_h:48, txtInfo_t:descr} );

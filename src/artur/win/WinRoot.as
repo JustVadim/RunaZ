@@ -123,8 +123,15 @@ package artur.win
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}
+<<<<<<< HEAD
 			App.achivDialog.init(1);
+=======
+<<<<<<< HEAD
+=======
+			//App.achivDialog.init(1);
+>>>>>>> 8665ec8cd0905f6ac7cceabb5f209a6f0141afce
 			//App.achievm.init(null);
+>>>>>>> a8a549741012490a1230f14bae792333293538f1
 		}
 		
 		public function updateBar():void {

@@ -88,21 +88,8 @@ package artur.display
 					descr = "<font color=\"#00FF00\">" + Lang.getTitle(9) +"</font>\n<font color=\"#FFFFFF\">" + Lang.getTitle(83) + "</font>";
 					break;
 				case (this.mcText.sk_ult == mc):
-					switch(this.index)
-					{
-						case 0:
-							descr = "<font color=\"#00FF00\">" + Lang.getTitle(15) + "</font>\n<font color=\"#FFFFFF\">";
-							break;
-						case 1:
-							descr = "<font color=\"#00FF00\">" + Lang.getTitle(16) + "</font>\n<font color=\"#FFFFFF\">";
-							break;
-						case 2:
-							descr = "<font color=\"#00FF00\">" + Lang.getTitle(17) + "</font>\n<font color=\"#FFFFFF\">";
-							break;
-						case 3:
-							descr = "<font color=\"#00FF00\">" + Lang.getTitle(18) + "</font>\n<font color=\"#FFFFFF\">";
-							break;
-					}
+					descr = "<font color=\"#00FF00\">" + Lang.getTitle(13, this.index) + "</font>";
+					descr += "\n" + Lang.getTitle(14, this.index);
 					break;
 			}
 			App.info.init(p.x + 35, p.y + 35, { type:0, title:Lang.getTitle(31), txtInfo_w:300, txtInfo_h:48, txtInfo_t:descr} );

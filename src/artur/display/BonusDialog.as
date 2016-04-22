@@ -48,6 +48,7 @@ package artur.display
 		}
 		
 		public function frees():void {
+			App.dialogManager.canShow();
 			if (this.parent) {
 				this.btnEx.removeEventListener(MouseEvent.CLICK, this.onClick);
 				this.parent.removeChild(this);

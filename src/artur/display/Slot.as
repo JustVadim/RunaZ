@@ -20,13 +20,14 @@ package artur.display {
 		namesUnit[1] = 'Paladin';
 		namesUnit[2] = 'Lyk';
 		namesUnit[3] = 'Mag'
-		//namesUnit[100] = 'Bot1';
-		namesUnit[100] = 'BotTroll';
+		
+		namesUnit[100] = 'Bot1';1
 		namesUnit[101] = 'Bot2';
 		namesUnit[102] = 'BotGolem';
 		namesUnit[103] = 'LykBot';
 		namesUnit[104] = 'BotGhost';
 		namesUnit[105] = 'BotGhost2';
+		namesUnit[106] = 'BotTroll';
 		
 		public function Slot(i:int) {
 			Functions.SetPriteAtributs(this, true, false, 73.1, 68.25 + i * 95);

@@ -56,6 +56,18 @@ package Server
 			lang_table[0][41] = ["Вторжение",			"BOSS",					""];
 			lang_table[0][42] = ["Вождь клана",			"BOSS",					""];
 			lang_table[0][43] = ["БОСС",				"BOSS",					""];
+			lang_table[0][44] = ["Кровавая луна",				"BOSS",					""];
+			lang_table[0][45] = ["Пожиратель грехов",				"BOSS",					""];
+			lang_table[0][46] = ["Дурная кровь",				"BOSS",					""];
+			lang_table[0][47] = ["Потерянный рай",				"BOSS",					""];
+			lang_table[0][48] = ["Шёпот во тьме",				"BOSS",					""];
+			lang_table[0][49] = ["Кровь и страх",				"BOSS",					""];
+			lang_table[0][50] = ["В диких условиях",				"BOSS",					""];
+			lang_table[0][51] = ["Ранний свет рассвета",				"BOSS",					""];
+			lang_table[0][52] = ["Одна жизнь",				"BOSS",					""];
+			lang_table[0][53] = ["Время летит",				"BOSS",					""];
+			lang_table[0][54] = ["БОСС",				"BOSS",					""];
+			
 			
 			
 			
@@ -79,26 +91,62 @@ package Server
 									["В город","Vilagge",""]
 								];
 			Lang.lang_table[4] = ["У Вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "You do not have the resources for this purchase. You can buy the resources at the bank or the earn in missions.", ""];
+			
+			
 			Lang.lang_table[5] = ["Критический урон", "Critical strike", ""];
 			Lang.lang_table[6] = ["Уворот", "Dodge", ""];
 			Lang.lang_table[7] = ["Двойная атака", "Double attack", ""];
 			Lang.lang_table[8] = ["Бешенство", "Rage", ""];
 			Lang.lang_table[9] = ["Ответный удар", "Counter attack", ""];
-			Lang.lang_table[10] = ["шанс нанести двойной урон</font>\n Следующий уровень", "chance to inflict double damage</font>\n Next level", ""];
-			Lang.lang_table[11] = ["шанс уклониться от удара</font>\n Следующий уровень", "chance to dodge</font>\n Next level", ""];
-			Lang.lang_table[12] = ["шанс атаковать дважды</font>\n Следующий уровень", "chance to attack twice</font>\n Next level", ""];
-			Lang.lang_table[13] = ["шанс атаковать сквозь защиту</font>\n Следующий уровень", "chance to attack through the defense</font>\n Next level", ""];
-			Lang.lang_table[14] = ["шанс нанести ответный удар</font>\n Следующий уровень", "chance to strike back</font>\n Next level", ""];
-			Lang.lang_table[15] = ["Ярость", "Fury", ""];
-			Lang.lang_table[16] = ["Лечение", "Heal", ""];
-			Lang.lang_table[17] = ["Огненная стрела", "Fire arrow", ""];
-			Lang.lang_table[18] = ["Молния", "Lightning", ""];
-			Lang.lang_table[19] = [" увеличивает урон юнита на ", " increases the damage to the unit for ", ""];
-			Lang.lang_table[20] = ["на текущий ход", "for current step", ""];
-			Lang.lang_table[21] = [" востанавливает ", " restores ", ""];
-			Lang.lang_table[22] = [" единиц здоровья любому союзному юниту", " health points for any unit you chose", ""];
-			Lang.lang_table[23] = [" Оглушает вражеского юнита огненной стрелой и наносит ", " Stuns enemy unit Firebolt and deals", ""];
-			Lang.lang_table[24] = [" урона", " damage", ""];
+			Lang.lang_table[10] = 	[
+										["шанс нанести двойной урон",				"",				""],
+										["шанс уклониться от удара",				"",				""],
+										["шанс атаковать дважды",					"",				""],
+										["шанс атаковать сквозь защиту",			"",				""],
+										["шанс нанести ответный удар",				"",				""]
+			
+			
+									];
+			Lang.lang_table[11] = ["Слудующий уровень",	 			"", ""];
+			Lang.lang_table[12] = ["Этот навык прокачан максимально", 				"", 			""];
+			
+			Lang.lang_table[13] = 	[
+										["Ярость",									"",				""],
+										["Лечение",									"",				""],
+										["Огненная стрела",							"",				""],
+										["Молния",									"",				""]
+									];
+			Lang.lang_table[14] = 	[
+										[	"Увеличивает урон Варвара в процентном соотношении",
+											"",
+											""
+										],
+										[
+											"Востанавливает здоровье любому союзному юниту в команде",
+											"",
+											""
+										],
+										[
+											"Оглушает вражеского юнита огненной стрелой при єтом наносит ему урон",
+											"",
+											""
+										],
+										[
+											"Поражает вражеского юнита молнией при этом наносит ему урон",
+											"",
+											""
+										],
+									];
+			Lang.lang_table[15] = ["Новый уровень"];
+			Lang.lang_table[16] = [];
+			Lang.lang_table[17] = [];
+			Lang.lang_table[18] = [];
+			Lang.lang_table[19] = [];
+			Lang.lang_table[20] = [];
+			Lang.lang_table[21] = [];
+			Lang.lang_table[22] = [];
+			Lang.lang_table[23] = [];
+			Lang.lang_table[24] = [];
 			Lang.lang_table[25] = [" Поражает вражеского юнита молнией при этом наносит ему ", " Lightning strikes an enemy unit at the same time causing him", ""];
 			Lang.lang_table[26] = ["Следующий уровень - ", "Next level - ", ""];
 			Lang.lang_table[27] = [" единиц", " points", ""];
@@ -189,7 +237,7 @@ package Server
 			Lang.lang_table[59][13] = ["10 камней добавят +3 к физ. защите", "10 stones add 3 to phys. protection ", ""];
 			Lang.lang_table[59][14] = ["10 камней добавят +3 к маг. защите", "10 stones add 3 to mag. protection ", ""];
 			Lang.lang_table[60] = new Array();
-			Lang.lang_table[60][1] = ["Зайдите в замок, что бы нанять юинита и купить ему артефакты", "Go to the castle to hire units and buy him artifacts", ""];
+			Lang.lang_table[60][1] = ["Зайдите в замок, что бы нанять юнита и купить ему артефакты", "Go to the castle to hire unit and buy him artifacts", ""];
 			Lang.lang_table[60][2] = ["Нажмите, что бы открыть таверну с юнитами", "Click to open a tavern with units", ""];
 			Lang.lang_table[60][3] = ["Наймите юнита", "Hire unit"];
 			Lang.lang_table[60][4] = ["У Вас есть юнит, но ему надо оружие", "You have unit, but he needs weapon", ""];
@@ -496,6 +544,41 @@ package Server
 			Lang.lang_table[189] = ["Рейтинг", "", ""];
 			Lang.lang_table[190] = ["Винрейт", "", ""];
 			Lang.lang_table[191] = ["без оружия", "", ""];
+			Lang.lang_table[192] =	[
+										["Убийца монтсров","",""],
+										["Убийца юнитов","",""],
+										["Победитель арены","",""],
+										["Победитель миссий","",""],
+										["Непобедимый на арене","",""],
+										["Непобедимый в миссиях", "", ""],
+										["Великий маг", "", ""],
+										["Искустный алхимик", "", ""],
+										["Кузнец", "", ""],
+										["Донатер золото", "", ""],
+										["Донатер серебро", "", ""],
+										["Царь карты","",""]
+									];
+			Lang.lang_table[193] = [
+										["Убейте нужное количество монстров в миссиях.","",""],
+										["Убейте нужное количество юнитов в бою на Арене.","",""],
+										["Выиграйте нужное количество сражений на Арене.","",""],
+										["Выиграйте нужное количество сражений в миссиях.","",""],
+										["Выиграйте нужное количество сражений на Арене подряд.","",""],
+										["Выиграйте нужное количество сражений в миссиях подряд", "", ""],
+										["Используйте свитки нужное количество раз.", "", ""],
+										["Используйте баночки нужное количество раз.", "", ""],
+										["Закажите нужное количество камне в кузнице.", "", ""],
+										["Купите нужное количество золота в банке.", "", ""],
+										["Купите нужное количество серебра в банке.", "", ""],
+										["Пройдите нужное количество миссий на уровне \"Царь\".","",""]
+									];
+			Lang.lang_table[194] = [
+										["Уровень 1","",""],
+										["Уровень 2","",""],
+										["Уровень 3","",""],
+									];
+			Lang.lang_table[195] = ["Текущий прогресс", "", ""];
+			Lang.lang_table[196] = ["Текущий уровень", "", ""];
 			
 			
 		}
@@ -551,6 +634,25 @@ package Server
 				}
 			}
 			return res;
+		}
+		
+		static public function getMyAchieveText(index:int):String {
+			var str:String = "";
+			var achiev:Object = (UserStaticData.achievments_table[index] != null) ? UserStaticData.achievments_table[index]:[0, 0, 0];
+			str += "<font color=\"#00FF40\">" + Lang.getTitle(192, index) + "</font>" + "\n" + Lang.getTitle(193, index);
+			str += "\n\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 0) + ": " + achiev[0] + "</font>";
+			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 1) + ": " + achiev[1] + "</font>";
+			str += "\n<font color=\"#11B1FF\">" + Lang.getTitle(194, 2) + ": " + achiev[2] + "</font>";
+			var prog:int = UserStaticData.hero.ach[index].q;
+			var lvl:int = UserStaticData.hero.ach[index].s
+			if (lvl != 3) {
+				var all:int = achiev[lvl];
+				str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ": " + " " + int(prog * 100 / all) + "% (" + prog + "/" + all + ")</font>";
+			} else {
+				str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ": " + " " + int(prog * 100 / achiev[2]) + "% (" + prog + "/" + achiev[2] + ")</font>";
+			}
+			str += "\n<font color=\"#FF8040\">" + Lang.getTitle(196) + ": " + " " + lvl + "</font>";
+			return str
 		}
 	}
 }

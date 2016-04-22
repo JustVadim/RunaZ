@@ -187,9 +187,13 @@ package Server
 							case int(COMMANDS.UPDATE_TASK):
 								Report.addMassage(temp_obj.m);
 								UserStaticData.hero.t = JSON2.decode(temp_obj.m);
-								if ( (UserStaticData.hero.t.tp == 0 && UserStaticData.hero.t.tn !=1) || (UserStaticData.hero.t.tp == UserStaticData.hero.t.pa && (UserStaticData.hero.t.tn == 6 || UserStaticData.hero.t.tn == 10))) {
+								App.dialogManager.checkTask();
+								if (!WinBattle.inst.bin) {
+									App.dialogManager.canShow();
+								}
+								/*if ( (UserStaticData.hero.t.tp == 0 && UserStaticData.hero.t.tn !=1) || (UserStaticData.hero.t.tp == UserStaticData.hero.t.pa && (UserStaticData.hero.t.tn == 6 || UserStaticData.hero.t.tn == 10))) {
 									TweenLite.to(Main.THIS, 0, { delay:0.2, onComplete: DataExchange.onShowTask} );
-								} 
+								} */
 								break;
 							case int(COMMANDS.BYE_COINS):
 								var res:Object = JSON2.decode(temp_obj.m);
@@ -203,7 +207,13 @@ package Server
 								App.topMenu.updateGold();
 								break;
 							case int(COMMANDS.CHECK_FRIENDS_BONUS):
-								App.bomusDialog.init(0);
+								App.dialogManager.show_bonus = true;
+								break;
+							case int(COMMANDS.SET_ACHIEVM):
+								Report.addMassage("Achievm come: " + temp_obj.m)
+								temp_obj = JSON2.decode(temp_obj.m);
+								UserStaticData.hero.setAchievm(temp_obj);
+								App.dialogManager.checkAchievement();
 								break;
 							}
 						} else {
@@ -225,6 +235,7 @@ package Server
 								UserStaticData.magaz_units = JSON2.decode(obj.m_u);
 								UserStaticData.magazin_items = JSON2.decode(obj.items);
 								UserStaticData.buffs_chances = JSON2.decode(obj.bm);
+								UserStaticData.achievments_table = JSON2.decode(obj.ach);
 								for (var key:Object in obj.uis) {
 									UserStaticData.users_info[key] = JSON2.decode(obj.uis[key]);
 									UserStaticData.users_info[key][6] = 1;

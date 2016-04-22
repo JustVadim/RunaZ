@@ -77,10 +77,11 @@ package artur.display {
 		}
 		
 		private function getRessBattle(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(e.type, getRessBattle);
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.error==null) {
 				UserStaticData.hero.mbat = obj.res;
-					UserStaticData.hero.bat = obj.res.id;
+				UserStaticData.hero.bat = obj.res.id;
 				App.lock.frees();
 				App.winManajer.swapWin(3);
 			} else {

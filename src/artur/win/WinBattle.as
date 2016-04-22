@@ -161,6 +161,7 @@ package artur.win
 		}
 		
 		public function init():void {
+			this.bin = true;
 			App.swapMuz('BatleSong');
 			this.gift_id = 0;
 			this.unitsInWin = [];
@@ -448,6 +449,7 @@ package artur.win
 		}
 		
 		private function endBattle(obj:Object):void {
+			this.bin = false;
 			WinBattle.bat.is_end = true;
 			App.info.frees();
 			UserStaticData.hero.cur_vitality -= 10;
@@ -481,7 +483,7 @@ package artur.win
 					hero.silver += int(obj.mcd.s);
 					hero.addAndCheckExp(int(obj.exp) / 2);
 					hero.addAndCheckUnitExp(int(obj.exp), obj.ul);
-					//App.topMenu.updateAva();
+					App.topMenu.updateAva();
 					
 					
 					mc.starBar.visible = true;
@@ -543,11 +545,8 @@ package artur.win
 			App.prop.y = 0;
 			Main.THIS.stage.removeChild(WinBattle.battleChat);
 			Main.THIS.chat.setFocus();
-			if (hero.checkLevelUp()) {
-				App.closedDialog.init1(Lang.getTitle(2), true);
-			} else if(UserStaticData.hero.t.tp == UserStaticData.hero.t.pa) {
-				TweenLite.to(this, 0, {delay:1, onComplete:this.onShowTask});	
-			}
+			//App.dialogManager.checkUnits();
+			App.dialogManager.canShow();
 			WinBattle.bat = null;
 		}
 		
@@ -636,7 +635,6 @@ package artur.win
 		private function isHeroRange(loc:Object, r:int):Boolean {
 			for(var key:Object in WinBattle.bat.locs[1]) {
 				var loc1:Object = WinBattle.bat.locs[1][key];
-				Report.addMassage(BattleGrid.getDistance(loc.x, loc.y, loc1.x, loc1.y) + "   " + r + " diff");
 				if(BattleGrid.getDistance(loc.x, loc.y, loc1.x, loc1.y)<=r) {
 					return true;
 				}
@@ -786,22 +784,22 @@ package artur.win
 			}
 		}
 		 
-		private function onUltOver(e:MouseEvent):void 
-		{
+		private function onUltOver(e:MouseEvent):void {
 			if(WinBattle.ult_btn.currentFrame > 1) {
 				WinBattle.ult_btn.mcBg.visible = true;
 			}
 			App.sound.playSound("over1", App.sound.onVoice, 1);
 		}
 		 
-		public function update():void
-		{
-			mover.update();
+		
+		public function update():void {
+			if(this.bin) {
+				mover.update();
+			}
 			effManajer.update();
 		}
 		
 		public function frees():void {
-			Report.addMassage("battle freeeesss");
 			this.freeUnits(units[0]);
 			this.freeUnits(units[1]);
 			WinBattle.units = null;
@@ -812,11 +810,6 @@ package artur.win
 			this.mover.unit = null;
 			this.mover.cur_obj = null;
 			WinBattle.currUnit = null;
-			/*if(McWinAfterBattleExtend.rebattleUse == false) {
-				UserStaticData.hero.mbat = null;
-				UserStaticData.hero.bat = -1;
-			}*/
-			McWinAfterBattleExtend.rebattleUse = false;
 			effManajer.frees();
 			for (var i:int = 0; i < unitsInWin.length; i++) {
 				unitsInWin[i].frees();
@@ -828,12 +821,9 @@ package artur.win
 			WinBattle.timer.frees();
 		}
 		
-		private function freeUnits(unit:Object):void 
-		{
-			for (var key:Object in unit)
-			{
-				if (unit[key] != null)
-				{
+		private function freeUnits(unit:Object):void {
+			for (var key:Object in unit) {
+				if (unit[key] != null) {
 					unit[key].frees();
 				}
 				delete(unit[key]);

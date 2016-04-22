@@ -31,7 +31,8 @@ package artur.units
 		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
 		 private static var sounds:Array = [{id:'fow2',frame:83},{id:'golemAtack',frame:88}, { id:'bot1_fs1', frame:45 }, { id:'bot1_fs2', frame:60 },{id:'golemHurt',frame:151}];
 		 private var isOver:Boolean;
-		  private var lvl:int = 0;
+		 private var lvl:int = 0;
+		 private static var normalScales:Array = [0.8, 1, 1, 1, 1, 1, 1, 1]; 
 		public function BotTroll() 
 		{
 			this.mouseEnabled = false;
@@ -87,6 +88,8 @@ package artur.units
 		}
 		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
+			this.lvl = lvl;
+			normScale = normalScales[lvl-1]
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
@@ -96,7 +99,7 @@ package artur.units
 			{
 				parr.addChild(this);
 			}
-			this.lvl = lvl;
+			
 		}
 		public function update():void
 		{
