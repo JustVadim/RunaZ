@@ -545,7 +545,7 @@ package Server
 			Lang.lang_table[190] = ["Винрейт", "", ""];
 			Lang.lang_table[191] = ["без оружия", "", ""];
 			Lang.lang_table[192] =	[
-										["Убийца монтсров","",""],
+										["Убийца монстров","",""],
 										["Убийца юнитов","",""],
 										["Победитель арены","",""],
 										["Победитель миссий","",""],
@@ -649,7 +649,7 @@ package Server
 				var all:int = achiev[lvl];
 				str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ": " + " " + int(prog * 100 / all) + "% (" + prog + "/" + all + ")</font>";
 			} else {
-				str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ": " + " " + int(prog * 100 / achiev[2]) + "% (" + prog + "/" + achiev[2] + ")</font>";
+				str += "\n\n<font color=\"#FF8040\">" + Lang.getTitle(195) + ": 100% (" + prog + "/" + achiev[2] + ")</font>";
 			}
 			str += "\n<font color=\"#FF8040\">" + Lang.getTitle(196) + ": " + " " + lvl + "</font>";
 			return str
