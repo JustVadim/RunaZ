@@ -134,6 +134,7 @@ package artur.display.battle {
 							this.unit = WinBattle.units[this.cur_obj.a.u.t][this.cur_obj.a.u.p];
 							this.cur_obj.a = temp_attack;
 							TextEff(EffManajer.getEff('text')).init(this.unit.x, this.unit.y - 60, String("Отдача"), 0x00FF40);
+							
 							this.temp_attack = null;
 						} else {
 							this.frees();
@@ -167,6 +168,7 @@ package artur.display.battle {
 					this.frees();
 				}
 			}
+		
 		}
 		
 		private function magEffect():void 
@@ -208,6 +210,7 @@ package artur.display.battle {
 				}
 				this.unit.shawdow.visible = false;
 			}
+				BaseEff(EffManajer.getEff('base')).init(App.spr, this.unit.x, this.unit.y, 6);
 		}
 		
 		private function onUnitMove(is_run:Boolean):void {

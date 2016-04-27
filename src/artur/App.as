@@ -85,6 +85,8 @@ package artur
 		
 		public function App(stg:Stage) 
 		{
+			sound.addSound('EffMaxDamage', new EffMaxSound());
+			sound.addSound('MaxSpeed', new EffSpeedSound());
 			sound.addSound('achiv', new s_achiv());
 			sound.addSound('onLose', new s_onLose());
 			sound.addSound('BatleSong', new s_BatleSong());
