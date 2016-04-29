@@ -695,9 +695,12 @@ package artur.display
 			}
 		}
 		
-		public function showGreenInv(uppedItemObj:Object):void 
-		{
+		public function showGreenInv(uppedItemObj:Object):void {
 			if (this.bin) {
+				var lvl:int = (uppedItemObj.c[108] == null)? 1:uppedItemObj.c[108];
+				if (UserStaticData.hero.units[WinCastle.currSlotClick].lvl < lvl) {
+					return;
+				}
 				var type:int = uppedItemObj.c[103];
 				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
 				switch(true) {

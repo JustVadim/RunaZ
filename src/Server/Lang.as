@@ -137,9 +137,9 @@ package Server
 											""
 										],
 									];
-			Lang.lang_table[15] = ["Новый уровень"];
-			Lang.lang_table[16] = [];
-			Lang.lang_table[17] = [];
+			Lang.lang_table[15] = ["Новый уровень","",""];
+			Lang.lang_table[16] = ["Уровень","",""];
+			Lang.lang_table[17] = ["Вы не набрали нужный уровень что бы купить эту вещь. Набрать больше опыта Вы можете в миссиях или на арене.", "", ""];
 			Lang.lang_table[18] = [];
 			Lang.lang_table[19] = [];
 			Lang.lang_table[20] = [];

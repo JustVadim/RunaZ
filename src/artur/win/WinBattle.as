@@ -193,9 +193,7 @@ package artur.win
 				App.spr.addChild(bgs[int(String(WinBattle.bat.ids[1]).substring(3))%2]);
 			} else {
 				App.spr.addChild(bgs[Numbs1.RandomInt(0,1)]);
-			}
-			
-			
+			}	
 		}
 		
 		private function onCheckDigitClick(e:MouseEvent):void {
@@ -222,7 +220,7 @@ package artur.win
 		 public function onBattleMassage(e:DataExchangeEvent):void {
 			var obj:Object = JSON2.decode(e.result);
 			WinBattle.anim.push(obj);	
-		 }
+		}
 		 
 		public function makeStep():void {
 			var obj:Object = anim.shift();
@@ -265,16 +263,18 @@ package artur.win
 		}
 		
 		private function useBanochka(obj:Object):void {
-			mover.bin = true;
-			mover.otherAnim = true
+			this.mover.bin = true;
+			this.mover.otherAnim = true
 			var hps:Object = WinBattle.bat.hps[obj.tu.t];
 			var mps:Object = WinBattle.bat.mps[obj.tu.t];
 			var unit:Object = WinBattle.bat.u[obj.tu.t][obj.tu.p];
-			var hp:int = 0;
-			var mp:int = 0;
-			var banka:Object = UserStaticData.magazin_items[unit.t][Items.INVENTAR][obj.ban];
 			var ef_coord:Object = bat.locs[obj.tu.t][obj.tu.p];
 			var node:Node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
+			var used_unit:Object = bat.u[obj.tu.t][obj.tu.p];
+			var banka:Object = used_unit.inv[obj.ban];
+			delete(used_unit.inv[obj.ban]);
+			this.updateBanochka(used_unit, obj.ban);
+			
 			var tim:Timer = new Timer(1500, 1);
 			tim.addEventListener(TimerEvent.TIMER_COMPLETE, onBanochkaUseTim);
 			tim.start();
@@ -642,7 +642,7 @@ package artur.win
 			return false;
 		}
 		
-		private function showBanochki(cur_unit:Object, cus:Object):void {
+		private function showBanochki(cur_unit:Object, cus:Object = null):void {
 			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) {
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
 				if (cur_unit.inv[i] != null) { 
@@ -674,12 +674,12 @@ package artur.win
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.error == null) {
 				App.lock.frees();
-				var unit:Object
+				/*var unit:Object
 				var cur_pos:int = WinBattle.bat['set'][WinBattle.bat.cus].p;
 				var inv_place:int = int(obj.res);
 				unit = bat.u[WinBattle.myTeam][cur_pos];
 				delete(unit.inv[inv_place]);
-				this.updateBanochka(unit, inv_place);
+				this.updateBanochka(unit, inv_place);*/
 			} else {
 				App.lock.init(obj.error);
 			}
