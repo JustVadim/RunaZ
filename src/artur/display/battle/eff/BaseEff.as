@@ -1,5 +1,6 @@
 package artur.display.battle.eff 
 {
+	import artur.App;
 	import artur.display.RasterMovie;
 	import artur.RasterClip;
 	import artur.win.WinBattle;
@@ -13,7 +14,9 @@ package artur.display.battle.eff
 		                                         new RasterMovie(new effHill(), true), //1
 												 new RasterMovie(new effBAttleCry(), true), //2 
 												 new RasterMovie(new mcEffArrow(), true,new GlowFilter(0x000000,1,3,3)), //3
-		                                         new RasterMovie(new mcEffBlast1(), true,new GlowFilter(0x000000,1,3,3)) //4
+		                                         new RasterMovie(new mcEffBlast1(), true, new GlowFilter(0x000000, 1, 3, 3)), //4
+												 new RasterMovie(new EffMaxDamage(), false), //5
+												 new RasterMovie(new EffSpeed(), false) //6
 												 ];
 		public var free:Boolean = true;
 		public var type:String = 'base';
@@ -25,6 +28,11 @@ package artur.display.battle.eff
 		}
 		public function init(parr:Sprite, xp:int=0, yp:int=0,index:int=0):void
 		{
+			if (index == 5)
+			App.sound.playSound('EffMaxDamage', App.sound.onVoice, 1);
+			else if (index == 6)
+			App.sound.playSound('MaxSpeed', App.sound.onVoice, 1);
+			
 			this.x = xp;
 			this.y = yp;
 			free = false;

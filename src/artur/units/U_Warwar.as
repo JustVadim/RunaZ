@@ -33,6 +33,7 @@ package artur.units {
 				this._baff.removeChildAt(1);
 			}
 			this._baff.addChild(buffs[num]);
+			
 		}
 		
 		public function hideBuff():void {
