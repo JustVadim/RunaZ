@@ -210,7 +210,6 @@ package artur.display.battle {
 				}
 				this.unit.shawdow.visible = false;
 			}
-				BaseEff(EffManajer.getEff('base')).init(App.spr, this.unit.x, this.unit.y, 6);
 		}
 		
 		private function onUnitMove(is_run:Boolean):void {

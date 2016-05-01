@@ -235,6 +235,10 @@ package artur.win
 					delete(unit.b[5]);
 					WinBattle.currUnit.hideBuff();
 				}
+				if (unit.b[GameVars.BUFF_SVSPEED] != null) {
+					unit.sp -= 2;
+					delete(unit.b[GameVars.BUFF_SVSPEED]);
+				}
 				var path:Array = WinBattle.inst.grid.findPath(WinBattle.inst.grid.nodes[loc.x][loc.y], WinBattle.inst.grid.nodes[obj.m.x][obj.m.y]);
 				WinBattle.inst.mover.init(path, obj, is_r, type);
 				Node(this.grid.nodes[loc.x][loc.y]).walcable = 0;
@@ -254,12 +258,12 @@ package artur.win
 		}
 		
 		private function banochckaUsed(obj:Object):void {
-			var unit:Object
+			/*var unit:Object
 			var cur_pos:int = WinBattle.bat['set'][WinBattle.bat.cus].p;
 			var inv_place:int = int(obj.bk);
 			unit = bat.u[WinBattle.myTeam][cur_pos];
 			delete(unit.inv[inv_place]);
-			this.updateBanochka(unit, inv_place);
+			this.updateBanochka(unit, inv_place);*/
 		}
 		
 		private function useBanochka(obj:Object):void {
@@ -318,6 +322,22 @@ package artur.win
 				App.sound.playSound("sw", App.sound.onVoice, 1);
 				SwAtackEff(EffManajer.getEff('swAtack')).init(node.x, node.y);
 				LifeManajer.updateCurrLife(obj.tu.t, obj.tu.p);
+				return;
+			}
+			
+			if(banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_SVSpeed) {
+				BaseEff(EffManajer.getEff('base')).init(App.spr, node.x, node.y, 6);
+				unit.sp += 2;
+				unit.b[GameVars.BUFF_SVSPEED];
+				if(WinBattle.bat["set"][WinBattle.bat.cus].t == WinBattle.myTeam && this.topPanel.isAuto() == false) {
+					this.grid.clearNodesControl();
+					this.getControll();
+				}
+				return;
+			}
+			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_SVMaxDamage) {
+				BaseEff(EffManajer.getEff('base')).init(App.spr, node.x, node.y, 6);
+				//unit.b[GameVars.BUFF_SVSPEED];
 				return;
 			}
 			
@@ -882,6 +902,11 @@ package artur.win
 		}
 		
 		private function getControlAfterUlt(is_ult_btn:Boolean):void {
+			this.getControll()
+			WinBattle.ult_btn.mc.visible = !is_ult_btn;
+		}
+		
+		private function getControll():void {
 			WinBattle.inst.grid.lightUnits(bat.locs[0], bat.hps[0], 0);
 			WinBattle.inst.grid.lightUnits(bat.locs[1], bat.hps[1], 1);
 			var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
@@ -890,7 +915,6 @@ package artur.win
 			var r:int = cur_unit.sp;
 			var loc:Object = WinBattle.bat.locs[myTeam][cus.p];
 			WinBattle.inst.grid.showAvailableCells(loc.x, loc.y, r, is_arr, cur_unit.it[5] != null);
-			WinBattle.ult_btn.mc.visible = !is_ult_btn;
 		}
 		
 		public static function inverseTeam(team:int):int
