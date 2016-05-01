@@ -210,7 +210,9 @@ package artur.display.battle {
 				}
 				this.unit.shawdow.visible = false;
 			}
-				BaseEff(EffManajer.getEff('base')).init(App.spr, this.unit.x, this.unit.y, 6);
+				//BaseEff(EffManajer.getEff('base')).init(App.spr, this.unit.x, this.unit.y, 6);//Скорость
+				//BaseEff(EffManajer.getEff('base')).init(App.spr, this.unit.x, this.unit.y, 5);//Макс урон
+				
 		}
 		
 		private function onUnitMove(is_run:Boolean):void {
