@@ -336,7 +336,7 @@ package artur.win
 				return;
 			}
 			if (banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_SVMaxDamage) {
-				BaseEff(EffManajer.getEff('base')).init(App.spr, node.x, node.y, 6);
+				BaseEff(EffManajer.getEff('base')).init(App.spr, node.x, node.y, 5);
 				//unit.b[GameVars.BUFF_SVSPEED];
 				return;
 			}
