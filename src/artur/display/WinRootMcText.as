@@ -26,7 +26,7 @@ package artur.display
 				mc.gotoAndStop(i);
 				mc.buttonMode = true;
 				mc.mouseChildren = false;
-				mc.name = i.toString();r
+				mc.name = i.toString();
 				this.addChild(mc);
 			}
 			Functions.SetPriteAtributs(this, false, true, 0, 0);

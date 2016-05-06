@@ -328,7 +328,7 @@ package artur.win
 			if(banka.c[Items.INVENTAR_TYPE] == Items.INVENTAR_SVSpeed) {
 				BaseEff(EffManajer.getEff('base')).init(App.spr, node.x, node.y, 6);
 				unit.sp += 2;
-				unit.b[GameVars.BUFF_SVSPEED];
+				unit.b[GameVars.BUFF_SVSPEED] = new Object();
 				if(WinBattle.bat["set"][WinBattle.bat.cus].t == WinBattle.myTeam && this.topPanel.isAuto() == false) {
 					this.grid.clearNodesControl();
 					this.getControll();
