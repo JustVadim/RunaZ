@@ -23,7 +23,8 @@ package artur.win
 			new WinMap(), //2
 			new WinBattle(),//3
 			new WinKyz(),//4
-			new WinArena//5
+			new WinArena(),//5
+		    new WinFortuna()//6
 		];
 		public var currWin:int=0;
 		public var neadWin:int=0;
@@ -34,7 +35,7 @@ package artur.win
 		
 		public function WinManajer() {
 			if (UserStaticData.hero.bat == -1) {
-				swapWin(0)
+				swapWin(6)
 			} else {
 			    swapWin(3)	 
 			}
