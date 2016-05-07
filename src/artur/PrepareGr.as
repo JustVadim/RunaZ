@@ -86,9 +86,10 @@ package artur
 			/*60  */ new BtnChatDialogExtends(Lang.getTitle(188)), 
 			/*61  */ new btnClsoeDialog(),
 		    /*62  */ new mcBgFortuna2(),
-			 /*63  */ new btnBack(),
-			  /*64  */ new btnFortuna(),
-			   /*65  */ new btnFortunaDonate()
+			/*63  */ new btnBack(),
+			/*64  */ new btnFortuna(),
+			/*65  */ new btnFortunaDonate(),
+			/*66  */ new btnFortunaChat()
 			
 		];
 		

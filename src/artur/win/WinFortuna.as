@@ -73,6 +73,7 @@ package artur.win
 			  {frame:'none' },
 			 {frame:'silver'   ,num:10 }
 			 ]
+			 
 			 var f:GlowFilter = new GlowFilter(0x000000, 1, 3, 3, 2);
 			for (var i:int = 0; i < arr.length; i++) 
 			{

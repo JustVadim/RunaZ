@@ -31,6 +31,7 @@ package Chat
 		public var send_btn:BaseButton;
 		public var btnQ:BaseButton;
 		public var btnAds:BaseButton;
+		public var btnRullet:BaseButton;
 		public static var userDialog:UserInListDialog = new UserInListDialog();
 		
 		
@@ -67,7 +68,10 @@ package Chat
 			this.btnQ = new BaseButton(47);
 			Functions.SetPriteAtributs(this.btnQ, true, false, 14.2, 424.2);
 			this.btnAds = new BaseButton(57);
-			Functions.SetPriteAtributs(this.btnAds, true, false, 40, 424.2);
+		    Functions.SetPriteAtributs(this.btnAds, true, false, 40, 424.2);
+			 this.btnRullet = new BaseButton(66);
+			 this.addChild(btnRullet); 
+			 Functions.SetPriteAtributs(this.btnRullet, true, false, 40+ 40 -14.2, 424.2);
 			var animQvest:AnimBtn = new AnimBtn(); animQvest.mouseChildren = false; animQvest.mouseEnabled = true;
 			this.btnQ.addChild(animQvest); 
 			this.addChild(btnAds)
