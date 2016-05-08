@@ -35,7 +35,7 @@ package artur.win
 		
 		public function WinManajer() {
 			if (UserStaticData.hero.bat == -1) {
-				swapWin(6)
+				swapWin(0)
 			} else {
 			    swapWin(3)	 
 			}
