@@ -70,8 +70,7 @@ package artur.display
 			App.btnOverFilter.color = 0xFFFFFF;
 			mc.filters = [App.btnOverFilter];
 			var descr:String = "";
-			switch(true)
-			{
+			switch(true) {
 				case(mc == this.mcText.sk_crit):
 					descr = "<font color=\"#00FF00\">" + Lang.getTitle(5) + "</font>\n<font color=\"#FFFFFF\">"+Lang.getTitle(80)+"</font>";
 					break;
@@ -88,8 +87,7 @@ package artur.display
 					descr = "<font color=\"#00FF00\">" + Lang.getTitle(9) +"</font>\n<font color=\"#FFFFFF\">" + Lang.getTitle(83) + "</font>";
 					break;
 				case (this.mcText.sk_ult == mc):
-					descr = "<font color=\"#00FF00\">" + Lang.getTitle(13, this.index) + "</font>";
-					descr += "\n" + Lang.getTitle(14, this.index);
+					descr = Lang.getUltimateText(this.index, 0);
 					break;
 			}
 			App.info.init(p.x + 35, p.y + 35, { type:0, title:Lang.getTitle(31), txtInfo_w:300, txtInfo_h:48, txtInfo_t:descr} );
@@ -145,6 +143,7 @@ package artur.display
 			 unit.frees();
 			 this.removeEventListener(MouseEvent.ROLL_OVER, over);
 			 this.removeEventListener(MouseEvent.ROLL_OUT, out);
+			 this.removeEventListener(MouseEvent.CLICK, this.onBtn);
 		}
 		
 	}

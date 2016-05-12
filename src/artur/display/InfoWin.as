@@ -64,8 +64,7 @@ package artur.display
 			this.price.visible = false;
 		}
 		
-		public function init( xp:int, yp:int, data:Object):void
-		{	 
+		public function init( xp:int, yp:int, data:Object):void {	 
 			this.x = xp
 			this.y = yp	
 			var cur_Y:int = -5;
@@ -76,8 +75,7 @@ package artur.display
 				this.titleTxtName.text = String(data.title); 
 				cur_Y = 4;
 			}
-			switch(data.type)
-			{
+			switch(data.type) {
 				case int(0):
 					this.txtInfo.visible = true;
 					this.txtInfo.text = "";
@@ -156,6 +154,39 @@ package artur.display
 					}
 					this.bg.height = cur_Y + price.height + 10;
 					break;
+				case 3:
+					this.txtInfo.visible = true;
+					this.txtInfo.text = "";
+					this.txtInfo.width = data.txtInfo_w;
+					this.txtInfo.htmlText = Lang.getTitle(172, data.item.id);
+					this.txtInfo.height = txtInfo.numLines * 18;
+					this.txtInfo.x = this.bg.x + 2;
+					this.txtInfo.y = cur_Y;
+					this.bg.width = data.txtInfo_w + 4;
+					cur_Y += this.txtInfo.height;
+					if(data.bye != null) {
+						this.level.visible = true;;
+						this.level.y = cur_Y;
+						cur_Y += this.level.height + 3;
+						var mov3:McInfoInfos = McInfoInfos(infos[7]);
+						var il:int = (data.item.c["108"] == null)? 1:data.item.c["108"];
+						var ul:int = (data.level == null) ? 1 : data.level;
+						mov3.visible = true;
+						mov3.txt1.visible = true;
+						mov3.txt1.text = il.toString();
+						if (ul < il) {
+							mov3.txt1.textColor = mov3.title.textColor =  0xF40000;
+						} else {
+							mov3.txt1.textColor = mov3.title.textColor = 0xFFFFFF;
+						}
+						this.price.y = cur_Y;
+						this.price.visible = true;
+						cur_Y += price.height + 10;
+						this.txtGold.text = "0";
+						this.txtSilver.text = String(data.item.c[100]/2);
+					}
+					this.bg.height = cur_Y;
+					break;
 			}
 			  
 			 /* if (dell)
@@ -184,8 +215,11 @@ package artur.display
 			this.title.x = bg.width / 2 ;
 		}
 		public function update():void {
-			if (delay-- < 0) {
-				this.visible = true;
+			if(delay > 0) {
+				delay--;
+				if (delay == 0) {
+					this.visible = true;
+				}
 			}
 		}
 		

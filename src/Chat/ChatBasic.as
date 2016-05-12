@@ -88,6 +88,11 @@ package Chat
 			}
 			this.btnQ.addEventListener(MouseEvent.CLICK, this.onAddedBtnQCLick);
 			this.btnAds.addEventListener(MouseEvent.CLICK, this.onAdds);
+			this.btnRullet.addEventListener(MouseEvent.CLICK, this.onRoulettClick);
+		}
+		
+		private function onRoulettClick(e:MouseEvent):void {
+			App.winManajer.swapWin(6);
 		}
 		
 		private function onAdds(e:MouseEvent):void {

@@ -57,7 +57,12 @@ package artur.display
 		public function over(e:MouseEvent):void {
 			this.filters = [App.btnOverFilter];
 			var item:Object = UserStaticData.hero.chest[int(e.currentTarget.name)];
-			App.info.init(this.x+WinCastle.chest.x- 236,this.y+WinCastle.chest.y+this.height, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:2, chars:item.c, bye:false } )
+			if(item.c[103]!=7) {
+				App.info.init(this.x + WinCastle.chest.x - 236, this.y + WinCastle.chest.y + this.height, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:2, chars:item.c, bye:false } )
+			} else {
+				var lvl:int = (UserStaticData.hero.units[WinCastle.currSlotClick] == null)? 1:UserStaticData.hero.units[WinCastle.currSlotClick].lvl;
+				App.info.init(this.x + WinCastle.chest.x - 236, this.y + WinCastle.chest.y + this.height + 5, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:3, item:item, txtInfo_w:290, bye:false, level:lvl});
+			}
 		}
 		
 		

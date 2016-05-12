@@ -88,7 +88,7 @@ package artur.display
 			this.setLevel(i, item_obj);
 			this.title.text = Lang.getItemTitle(item_obj.c[103], item_obj.id, item_obj.c[102]);
 			if(item_obj.c[103] == 7) {
-				this.descr.text = Lang.getTitle(172, item_obj.id);
+				this.descr.htmlText = Lang.getTitle(172, item_obj.id);
 				this.addChild(this.descr);	
 			}
 			this.txtGold.text = item_obj.c[101];

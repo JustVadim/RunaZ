@@ -135,14 +135,14 @@ package artur.display
 						if(UserStaticData.hero.gold >= this.g) {
 							this.bye(1);
 						} else {
-							App.closedDialog.init1(Lang.getTitle(45), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(45), false, true, true);
 						}
 						break;
 					case this.btnSilver:
 						if(UserStaticData.hero.silver >= this.s) {
 							this.bye(0);
 						} else {
-							App.closedDialog.init1(Lang.getTitle(46), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(46), false, true, true);
 						}
 						break;
 					case this.btnEx:
@@ -156,14 +156,14 @@ package artur.display
 						if(UserStaticData.hero.gold >= this.g) {
 							this.byeItem(1);
 						} else {
-							App.closedDialog.init1(Lang.getTitle(45), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(45), false, true, true);
 						}
 						break;
 					case this.btnSilver:
 						if(UserStaticData.hero.silver >= this.s) {
 							this.byeItem(0);
 						} else {
-							App.closedDialog.init1(Lang.getTitle(46), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(46), false, true, true);
 						}
 						break;
 					case this.btnEx:
@@ -228,7 +228,7 @@ package artur.display
 						break;
 					case this.btnGold:
 						if (UserStaticData.hero.gold < GameVars.ENERGY_PRICE) {
-							App.closedDialog.init1(Lang.getTitle(45), false, false, true);
+							App.closedDialog.init1(Lang.getTitle(45), false, true, true);
 						} else {
 							App.topMenu.buyEnergy();
 						}

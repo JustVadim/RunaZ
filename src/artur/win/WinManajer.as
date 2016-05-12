@@ -26,8 +26,9 @@ package artur.win
 			new WinArena(),//5
 		    new WinFortuna()//6
 		];
-		public var currWin:int=0;
-		public var neadWin:int=0;
+		public var prevWin:int = 0;
+		public var currWin:int = 0;
+		public var neadWin:int = 0;
 		private var brama:mcAnimBrama = new mcAnimBrama();
 		public var swapMode:Boolean = false;
 		public static var taskWasShown:Boolean = false;
@@ -62,10 +63,14 @@ package artur.win
 				if (brama.currentFrame == 20) {
 					App.clear();
 					App.topPanel.frees();
+					if(this.currWin==3 && this.neadWin == 6) {
+						
+					} else {
+						this.prevWin = currWin;
+					}
 					windows[currWin].frees();
 					currWin = neadWin;
 					windows[currWin].init();
-					
 					App.spr.addChild(brama);
 				} else if (brama.currentFrame == brama.totalFrames) {
 					App.spr.removeChild(brama);
