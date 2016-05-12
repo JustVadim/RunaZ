@@ -6,6 +6,7 @@ package artur.display {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import Server.Lang;
 	
@@ -15,8 +16,8 @@ package artur.display {
 		private var boots:Array            	= 	PrepareGr.creatBms(new Shop_Boots(),true)
 		private var hends_top:Array 		=	PrepareGr.creatBms(new Shop_HendTop(),true)
 		private var hends_down:Array 		= 	PrepareGr.creatBms(new Shop_HendDown,true) 
-		private var guns1:Array            	=	[	PrepareGr.creatBms(new Shop_Gun, true),	PrepareGr.creatBms(new Shop_Gun1Pall, true)	, PrepareGr.creatBms(new Shop_Lyk(), true)	,	PrepareGr.creatBms(new Shop_Totem(), true)	];
-		private var guns2:Array            	=	[	[]                                    , 	PrepareGr.creatBms(new Shop_Gun2Pall(), true), []										,	[]											];
+		private var guns1:Array            	=	[PrepareGr.creatBms(new Shop_Gun, true), PrepareGr.creatBms(new Shop_Gun1Pall, true), PrepareGr.creatBms(new Shop_Lyk(), true), PrepareGr.creatBms(new Shop_Totem(), true)];
+		private var guns2:Array            	=	[[],PrepareGr.creatBms(new Shop_Gun2Pall(), true), [], []];
 		private var invent:Array 			= 	PrepareGr.creatBms(new Shop_Inv, true);
 		private var parts_of_parts:Array 	= 	[heads, bodys, boots, hends_top, hends_down];
 		private var btnClosed:BaseButton 	= 	new BaseButton(15);
@@ -27,6 +28,7 @@ package artur.display {
 		private var invPlace:int
 		private var scroll_sprite:Sprite = new Sprite();
 		private var bgs_array:Array = new Array();
+		private var bin:Boolean = false;
 
 		public function ShopInventar() {
 			this.tabEnabled = this.tabChildren = this.scroll_sprite.mouseEnabled = false; 
@@ -41,24 +43,25 @@ package artur.display {
 		}
 		
 		public function init(itemType:int = 0, unitType:int = 0, invPlace:int = -1):void {
+			this.bin = true;
 			App.sound.playSound('inventar', App.sound.onVoice, 1);
 			App.spr.addChild(this);
 			this.itemType = itemType;
 			this.unitType = unitType;
 			this.invPlace = invPlace;
 			switch(true) {
-			case(itemType < 5):
-				currPart = this.parts_of_parts[itemType];
-				break;
-			case (itemType == 5):
-				currPart = this.guns1[unitType];
-				break;
-			case (itemType == 6):
-				currPart = this.guns2[unitType];
-				break;
-			case (itemType == 7):
-				currPart = this.invent;
-				break;	
+				case(itemType < 5):
+					currPart = this.parts_of_parts[itemType];
+					break;
+				case (itemType == 5):
+					currPart = this.guns1[unitType];
+					break;
+				case (itemType == 6):
+					currPart = this.guns2[unitType];
+					break;
+				case (itemType == 7):
+					currPart = this.invent;
+					break;	
 			}
 			var h:int = 0;
 			var item_obj:Object;
@@ -76,6 +79,12 @@ package artur.display {
 			if (UserStaticData.hero.demo == 1) {
 				App.tutor.init(5);
 			}
+			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemoved);
+		}
+		
+		private function onRemoved(e:Event):void {
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemoved);
+			this.frees();
 		}
 		
 		private function getBg():ShopItemBG {
@@ -91,17 +100,18 @@ package artur.display {
 		}
 		
 		private function onClick(e:MouseEvent):void  {
-			
 			var mc:MovieClip = MovieClip(e.currentTarget);
 			var item_id:int = int(mc.name);
+			var item:Object = UserStaticData.magazin_items [unitType] [itemType] [item_id];
 			var _gold:int = UserStaticData.hero.gold;
 			var _silver:int = UserStaticData.hero.silver;
-			var gold:int = UserStaticData.magazin_items [unitType] [itemType] [item_id].c[101];
-			var silver:int =  UserStaticData.magazin_items [unitType] [itemType] [item_id].c[100];
+			var gold:int = item.c[101];
+			var silver:int =  item.c[100];
 			if (!WinCastle.isMoney(gold, silver)) {
 				App.closedDialog.init1(Lang.getTitle(4), false, true, true);
-			}
-			else {
+			} else if(item.c[108] > UserStaticData.hero.units[WinCastle.currSlotClick].lvl) {
+				App.closedDialog.init1(Lang.getTitle(17), false, true, false);
+			} else {
 				App.byeWin.init(Lang.getTitle(72), Lang.getItemTitle(this.itemType, item_id, this.unitType), gold, silver, item_id, 1, this.itemType, this.invPlace);
 			}
 		}
@@ -109,14 +119,19 @@ package artur.display {
 		public function update():void {
 			
 		}
+		
 		public function frees():void {
-			
-			for (var i:int = 0; i < bgs_array.length; i++)  {
-				if (!ShopItemBG(bgs_array[i]).free) {
-					ShopItemBG(bgs_array[i]).frees();
+			if (this.bin) {
+				this.bin = false;
+				for (var i:int = 0; i < bgs_array.length; i++)  {
+					if (!ShopItemBG(bgs_array[i]).free) {
+						ShopItemBG(bgs_array[i]).frees();
+					}
+				}
+				if(this.parent) {
+					App.spr.removeChild(this);
 				}
 			}
-			App.spr.removeChild(this);
 		}
 		
 	}

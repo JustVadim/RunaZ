@@ -1,6 +1,7 @@
 package artur.display 
 {
 	import artur.App;
+	import artur.win.WinCastle;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
@@ -26,8 +27,8 @@ package artur.display
 			this.mouseChildren = false;
 			this.mouseEnabled = false;
 			this.title.y = -5;
-			infos1 = [this.hp, this.mp, this.dmg, this.f_fiz, this.f_mag, this.speed, this.inc];
-			this.infos = [addInfo(this.hp, Lang.getTitle(63)), addInfo(this.mp, Lang.getTitle(64)), addInfo(this.dmg, Lang.getTitle(65)), addInfo(this.f_fiz, Lang.getTitle(66)), addInfo(this.f_mag, Lang.getTitle(67)), addInfo(this.speed, Lang.getTitle(68)), addInfo(this.inc, Lang.getTitle(69))];
+			this.infos1 = [this.hp, this.mp, this.dmg, this.f_fiz, this.f_mag, this.speed, this.inc, this.level];
+			this.infos = [addInfo(this.hp, Lang.getTitle(63)), addInfo(this.mp, Lang.getTitle(64)), addInfo(this.dmg, Lang.getTitle(65)), addInfo(this.f_fiz, Lang.getTitle(66)), addInfo(this.f_mag, Lang.getTitle(67)), addInfo(this.speed, Lang.getTitle(68)), addInfo(this.inc, Lang.getTitle(69)), addInfo(this.level, Lang.getTitle(16))];
 			this.hideAll();
 			this.filters = [new GlowFilter(0x000000, 1, 3, 3)]
 			this.dmg.iconRange.visible = false;
@@ -63,8 +64,7 @@ package artur.display
 			this.price.visible = false;
 		}
 		
-		public function init( xp:int, yp:int, data:Object):void
-		{	 
+		public function init( xp:int, yp:int, data:Object):void {	 
 			this.x = xp
 			this.y = yp	
 			var cur_Y:int = -5;
@@ -75,8 +75,7 @@ package artur.display
 				this.titleTxtName.text = String(data.title); 
 				cur_Y = 4;
 			}
-			switch(data.type)
-			{
+			switch(data.type) {
 				case int(0):
 					this.txtInfo.visible = true;
 					this.txtInfo.text = "";
@@ -100,17 +99,19 @@ package artur.display
 						} else {
 							mov.txt1.text  = data.chars[2] + " - " + data.chars[7];
 						}
-						if (data.chars[200 + i] != null && int(data.chars[200 + i]) > 0)
-						{
+						if (data.chars[200 + i] != null && int(data.chars[200 + i]) > 0) {
 							mov.txt2.visible = true;
 							mov.txt2.text = String(data.chars[200 + i]);
 							mov.txtPlus.visible = true;
 						}
 						cur_Y += 18;
 					}
+					cur_Y -= 18;
+					this.level.visible = false;
+					
 					this.bg.width = 236;
 					this.bg.height = cur_Y + 5;
-					if (data.chars[8] == 0) {
+					if (data.chars[8] == 1) {
 						this.dmg.iconRange.visible = true;
 						this.dmg.iconMili.visible = false;
 					} else {
@@ -120,13 +121,24 @@ package artur.display
 					break;
 				case(2):
 					for (var j:int = 0; j < infos.length; j++) {
-						if (data.chars[j] != null) {
+						var mov1:McInfoInfos;
+						if (data.chars[j] != null || j == 7) {
 							MovieClip(infos1[j]).visible = true;
 							MovieClip(infos1[j]).y = cur_Y;
-							var mov1:McInfoInfos = this.infos[j];
+							mov1 = this.infos[j];
 							mov1.visible = true;
 							mov1.txt1.visible = true;
-							mov1.txt1.text = "+" + data.chars[j];
+							if (j != 7) {
+								Functions.compareAndSet(mov1.txt1, "+" + data.chars[j]);
+							} else {
+								var item_lvl:int = (data.chars["108"] == null)? 1:data.chars["108"];
+								Functions.compareAndSet(mov1.txt1, item_lvl.toString());
+								if (UserStaticData.hero.units[WinCastle.currSlotClick].lvl < item_lvl) {
+									mov1.txt1.textColor = mov1.title.textColor =  0xF40000;
+								} else {
+									mov1.txt1.textColor = mov1.title.textColor = 0xFFFFFF;
+								}
+							}
 							cur_Y += 18;
 						}
 					}
@@ -141,6 +153,39 @@ package artur.display
 						this.txtSilver.text = String(data.chars[100]/2);
 					}
 					this.bg.height = cur_Y + price.height + 10;
+					break;
+				case 3:
+					this.txtInfo.visible = true;
+					this.txtInfo.text = "";
+					this.txtInfo.width = data.txtInfo_w;
+					this.txtInfo.htmlText = Lang.getTitle(172, data.item.id);
+					this.txtInfo.height = txtInfo.numLines * 18;
+					this.txtInfo.x = this.bg.x + 2;
+					this.txtInfo.y = cur_Y;
+					this.bg.width = data.txtInfo_w + 4;
+					cur_Y += this.txtInfo.height;
+					if(data.bye != null) {
+						this.level.visible = true;;
+						this.level.y = cur_Y;
+						cur_Y += this.level.height + 3;
+						var mov3:McInfoInfos = McInfoInfos(infos[7]);
+						var il:int = (data.item.c["108"] == null)? 1:data.item.c["108"];
+						var ul:int = (data.level == null) ? 1 : data.level;
+						mov3.visible = true;
+						mov3.txt1.visible = true;
+						mov3.txt1.text = il.toString();
+						if (ul < il) {
+							mov3.txt1.textColor = mov3.title.textColor =  0xF40000;
+						} else {
+							mov3.txt1.textColor = mov3.title.textColor = 0xFFFFFF;
+						}
+						this.price.y = cur_Y;
+						this.price.visible = true;
+						cur_Y += price.height + 10;
+						this.txtGold.text = "0";
+						this.txtSilver.text = String(data.item.c[100]/2);
+					}
+					this.bg.height = cur_Y;
 					break;
 			}
 			  
@@ -170,8 +215,11 @@ package artur.display
 			this.title.x = bg.width / 2 ;
 		}
 		public function update():void {
-			if (delay-- < 0) {
-				this.visible = true;
+			if(delay > 0) {
+				delay--;
+				if (delay == 0) {
+					this.visible = true;
+				}
 			}
 		}
 		

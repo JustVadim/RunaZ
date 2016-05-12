@@ -341,14 +341,7 @@ package artur.display
 				
 			} else {
 				var type:int = UserStaticData.hero.units[WinCastle.currSlotClick].t;
-				descr = "<font color=\"#00FF00\">" + Lang.getTitle(13, type) + "</font>\n";
-				descr += "<font color=\"#FFFFFF\">" + Lang.getTitle(14, type) + "</font>\n";
-				descr += "<font color=\"#FF8040\">" + Lang.getTitle(196) + ": " + bc[5 + type][uult.lvl] + "</font>";
-				if (uult.lvl < 24)
-					descr += "\n" +  "<font color=\"#11B1FF\">" + Lang.getTitle(11) + ": " + bc[5 + type][uult.lvl+1] + "</font>";
-				else {
-					descr += "\n" +  "<font color=\"#11B1FF\">" + Lang.getTitle(12) + "%</font>";
-				}
+				descr = Lang.getUltimateText(type, uult.lvl);
 			}
 			if (this.mcText.mcFreeskils.visible) {
 				descr += "\n\n<font color=\"#00FF00\" size=\"10\">" + Lang.getTitle(30) + "</font>"
@@ -604,15 +597,17 @@ package artur.display
 			} else {
 				var item:Object;
 				switch(true) {
-					case (int(bat.name) < 5):
+					case (itemId < 5):
 						item = UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)];
 						App.info.init(bat.x + this.x - 236 - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:2, chars:item.c, bye:false } )
 						break;
-					case (int(bat.name) == 5 || int(bat.name) == 6):
+					case (itemId == 5 || itemId == 6):
 						item = UserStaticData.hero.units[int(WinCastle.currSlotClick)].it[int(bat.name)];
 						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 5, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:2, chars:item.c, bye:false} )	
 						break;
 					case (int(bat.name) == 7):
+						item = UserStaticData.hero.units[int(WinCastle.currSlotClick)].inv[this.getIsInv(bat)];
+						App.info.init(bat.x + this.x - bat.width / 2 - 5 , bat.y + this.y + bat.height / 2 + 12, { title:Lang.getItemTitle(item.c[103], item.id, item.c[102]), type:3, item:item, txtInfo_w:290,level: UserStaticData.hero.units[int(WinCastle.currSlotClick)].lvl, bye:false});
 						break;
 				}
 			}
@@ -695,9 +690,12 @@ package artur.display
 			}
 		}
 		
-		public function showGreenInv(uppedItemObj:Object):void 
-		{
+		public function showGreenInv(uppedItemObj:Object):void {
 			if (this.bin) {
+				var lvl:int = (uppedItemObj.c[108] == null)? 1:uppedItemObj.c[108];
+				if (UserStaticData.hero.units[WinCastle.currSlotClick].lvl < lvl) {
+					return;
+				}
 				var type:int = uppedItemObj.c[103];
 				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
 				switch(true) {

@@ -228,6 +228,7 @@ package Server
 						if ( int(temp_obj.c) == 0 && temp_obj.n == 0 ) {
 							var obj:Object = JSON2.decode(temp_obj.m);
 							if (obj.error == null) {
+								Report.addMassage(temp_obj.m)
 								UserStaticData.hero.setHero(obj.h);
 								UserStaticData.hero.mbat = obj.bat;
 								UserStaticData.my_info = obj.ui;
@@ -236,6 +237,7 @@ package Server
 								UserStaticData.magazin_items = JSON2.decode(obj.items);
 								UserStaticData.buffs_chances = JSON2.decode(obj.bm);
 								UserStaticData.achievments_table = JSON2.decode(obj.ach);
+								UserStaticData.fd = obj.fd;
 								for (var key:Object in obj.uis) {
 									UserStaticData.users_info[key] = JSON2.decode(obj.uis[key]);
 									UserStaticData.users_info[key][6] = 1;

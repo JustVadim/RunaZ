@@ -199,13 +199,10 @@ package artur.display.battle
 			}
 		}
 		
-		public function lightUnits(locs:Object, hps:Object, team:int):void 
-		{
+		public function lightUnits(locs:Object, hps:Object, team:int):void {
 			var key:Object;
-			for (key in locs)
-			{
-				if (hps[key] > 0)
-				{
+			for (key in locs) {
+				if (hps[key] > 0) {
 					var unit:MovieClip = WinBattle.units[team][key];
 					var unit_data:Object = WinBattle.bat.u[team][key];
 					if (unit_data.b[5] != null)
@@ -214,8 +211,7 @@ package artur.display.battle
 						{Node(this.nodes[locs[key].x][locs[key].y]).mc.gotoAndStop(4);}
 					else
 						{Node(this.nodes[locs[key].x][locs[key].y]).mc.gotoAndStop(5);}
-					if(unit.currentLabel == "idle"|| unit.currentLabel =="hurt")
-					{
+					if(unit.currentLabel == "idle" || unit.currentLabel =="hurt") {
 						unit.scaleX = (team == 0)? 1: -1;
 						if(unit.scaleX<0) unit.scaleX = -unit.normScale else unit.scaleX = unit.normScale  
 						unit.rotation = 0;

@@ -51,6 +51,7 @@ package  {
 				this.addEventListener(Event.ADDED_TO_STAGE, this.init);
 			}
 		}
+		
 		private function init(e:Event = null):void {
 			Lang.init();	
 			this.removeEventListener(Event.ADDED_TO_STAGE, this.init);

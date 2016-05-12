@@ -25,7 +25,7 @@ package artur.display {
 	import Utils.json.JSON2;
 	public class TopMenu extends Sprite {
 		private var mcAva:mcAvatarBar = new mcAvatarBar();
-		private var txtAvatarLevel:TextField = Functions.getTitledTextfield(32.5, 77, 31.75, 19.9, new Art().fontName, 15, 0xFBFBFB, TextFormatAlign.CENTER, "99", 1, Kerning.OFF, -1);
+		private var txtAvatarLevel:TextField = Functions.getTitledTextfield(27, 77, 36, 19.9, new Art().fontName, 15, 0xFBFBFB, TextFormatAlign.CENTER, "99", 1, Kerning.OFF, -1);
 		public var txtExp:TextField;
 		public var txtVit:TextField;
 		public var txtGold:TextField = Functions.getTitledTextfield(31, 11, 78, 22, new Art().fontName, 15, 0xFFF642, TextFormatAlign.CENTER, "9999", 1, Kerning.OFF, -1);
@@ -145,7 +145,7 @@ package artur.display {
 				ava_loader.y = 4;
 				ava_loader.width = 85;
 				ava_loader.height = 82;
-				ava_loader.mask = mcAva.avatarMask;
+				//ava_loader.mask = mcAva.avatarMask;
 				addChild(ava_loader);
 			}
 			

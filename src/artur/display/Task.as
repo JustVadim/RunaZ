@@ -47,7 +47,7 @@ package artur.display {
 		public function init(isChat:Boolean = false):void {
 			App.sound.playSound('inventar', App.sound.onVoice, 1);
 			
-			App.spr.addChild(this);
+			Main.THIS.addChild(this);
 			if (UserStaticData.hero.t.tn != 0) {
 				if(!isChat) {
 					if(UserStaticData.hero.t.tp == 0) {

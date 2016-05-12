@@ -79,7 +79,7 @@ package artur.display.battle {
 			App.spr.addChild(this);
 			this.mcBtns.over.gotoAndStop(1);
 			this.bmAutoFight.visible = false;
-			this.bmHold.visible = true;
+			this.bmHold.visible = int(WinBattle.bat['set'][WinBattle.bat.cus].t) == int(WinBattle.myTeam);
 			this.btnsEventsAdd(this.mcBtns.btnFree);
 		}
 		
