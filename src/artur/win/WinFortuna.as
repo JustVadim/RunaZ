@@ -52,9 +52,14 @@ package artur.win
 		private static var ENERGY:int = 3;
 		private static var SILVER:int = 4;
 		private var arr:Object = UserStaticData.fd;
-		
+		private var animFortuna:mcFortunaAnim = new mcFortunaAnim();
 		public function WinFortuna() {
 			//circle.addChild();
+			animFortuna.gotoAndStop(1);
+			animFortuna.mc.gotoAndStop(1);
+			animFortuna.x = 400;
+		    animFortuna.y = 233;
+			//App.sound.playSound('fortuna_lose', App.sound.onVoice, 1);
 			bg = new MyBitMap(App.prepare.cach[62]);
 			btnClose = new BaseButton(63);
 			btnFree = new BaseButton(64);
@@ -234,6 +239,7 @@ package artur.win
 				} else {
 					UserStaticData.hero.gold -= 3;
 					App.topMenu.updateGold();
+					
 					App.sound.playSound('gold', App.sound.onVoice, 1);
 				}
 				App.lock.frees();
@@ -246,21 +252,30 @@ package artur.win
 			this.addEvents(true);
 			var obj:Object = arr[this.res];
 			Report.addMassage(res + " res: " + JSON2.encode(obj));
+			this.addChild(animFortuna);
+			animFortuna.gotoAndPlay(1);
+			
 			if (obj.f == WinFortuna.NONE) {
+				App.sound.playSound('fortuna_lose', App.sound.onVoice, 1);
+				animFortuna.mc.gotoAndStop(1);
 				//losesound
 			} else {
+				App.sound.playSound('fortuna_win', App.sound.onVoice, 1);
 				//winsound
 				switch(obj.f) {
 					case WinFortuna.ENERGY:
 						UserStaticData.hero.cur_vitality += obj.n;
 						App.topMenu.updateAva();
+						animFortuna.mc.gotoAndStop(3);
 						break;
 					case WinFortuna.SILVER:
 						UserStaticData.hero.silver += obj.n;
+						animFortuna.mc.gotoAndStop(4);
 						App.sound.playSound('gold', App.sound.onVoice, 1);
 						App.topMenu.updateGold();
 						break;
 					case WinFortuna.GOLD:
+						animFortuna.mc.gotoAndStop(2);
 						UserStaticData.hero.gold += obj.n;
 						App.sound.playSound('gold', App.sound.onVoice, 1);
 						App.topMenu.updateGold();

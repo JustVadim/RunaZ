@@ -56,6 +56,8 @@ package artur
 		[Embed(source = "../../bin/sounds/mapSong.mp3")] private var s_mapSong:Class;
 		[Embed(source = "../../bin/sounds/onLose.mp3")] private var s_onLose:Class;
 		[Embed(source = "../../bin/sounds/achiv.mp3")] private var s_achiv:Class;
+		[Embed(source = "../../bin/sounds/FortunaWin.mp3")] private var s_fortuna_win:Class;
+		[Embed(source="../../bin/sounds/FortunaLose.mp3")] private var s_fortuna_lose:Class;
 		public static var sound:SoundManager = SoundManager.getInstance();
 		public static var winManajer:WinManajer;
 		public static var spr:Sprite;
@@ -136,6 +138,8 @@ package artur
 			sound.addSound('click2', new CLick2);
 			sound.addSound('golemAtack', new GolemAtack);
 			sound.addSound('golemHurt', new GolemHurt );
+			sound.addSound('fortuna_win', new s_fortuna_win );
+			sound.addSound('fortuna_lose', new s_fortuna_lose );
 			spr = Sprite(this);
 			winManajer = new WinManajer();
 			this.addEventListener(Event.ENTER_FRAME, update);
