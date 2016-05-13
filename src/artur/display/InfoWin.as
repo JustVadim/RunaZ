@@ -2,6 +2,7 @@ package artur.display
 {
 	import artur.App;
 	import artur.win.WinCastle;
+	import com.greensock.TweenLite;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
@@ -189,13 +190,14 @@ package artur.display
 					break;
 			}
 			  
-			 /* if (dell)
-			  {
-				  this.delay = dell;
-				  this.visible = false;
-			  }*/
-			  
-			  
+			
+			if (data.dell == null) {
+				this.delay = 15;
+			}
+			this.scaleX = this.scaleY = 0;
+			
+			
+			
 			_1.x = bg.x; 
 			_1.y = bg.y;
 			_2.x = bg.width - 5; 
@@ -218,7 +220,7 @@ package artur.display
 			if(delay > 0) {
 				delay--;
 				if (delay == 0) {
-					this.visible = true;
+					TweenLite.to(this, 0.05, {scaleX:1, scaleY: 1});
 				}
 			}
 		}

@@ -45,39 +45,40 @@ package artur.display {
 		}
 		
 		public function init(isChat:Boolean = false):void {
-			App.sound.playSound('inventar', App.sound.onVoice, 1);
-			
-			Main.THIS.addChild(this);
-			if (UserStaticData.hero.t.tn != 0) {
-				if(!isChat) {
-					if(UserStaticData.hero.t.tp == 0) {
-						//play new task sound
+			if (this.parent == null) {
+				App.sound.playSound('inventar', App.sound.onVoice, 1);
+				Main.THIS.addChild(this);
+				if (UserStaticData.hero.t.tn != 0) {
+					if(!isChat) {
+						if(UserStaticData.hero.t.tp == 0) {
+							//play new task sound
+						} else {
+							//play done task sound
+						}
 					} else {
-						//play done task sound
+						if(UserStaticData.hero.t.tp == UserStaticData.hero.t.pa) {
+							//play done task sound
+						}
 					}
-				} else {
-					if(UserStaticData.hero.t.tp == UserStaticData.hero.t.pa) {
-						//play done task sound
+					if(UserStaticData.hero.t.tp != UserStaticData.hero.t.pa) {
+						this.addChild(this.close);
+						this.close.addEventListener(MouseEvent.CLICK, this.onClose);
+						Functions.compareAndSet(this.preText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 0));
+						Functions.compareAndSet(this.textText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 1));
+					} else {
+						this.addChild(this.take);
+						this.take.addEventListener(MouseEvent.CLICK, this.onTake);
+						Functions.compareAndSet(this.preText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 0));
+						Functions.compareAndSet(this.textText, Lang.getTitle(152))
+						//this.textText.text = "ВЫПОЛНЕНО";
+						
 					}
-				}
-				if(UserStaticData.hero.t.tp != UserStaticData.hero.t.pa) {
-					this.addChild(this.close);
-					this.close.addEventListener(MouseEvent.CLICK, this.onClose);
-					Functions.compareAndSet(this.preText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 0));
-					Functions.compareAndSet(this.textText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 1));
+					this.progress.gotoAndStop(1 + int((100 * UserStaticData.hero.t.tp) / UserStaticData.hero.t.pa));
+					Functions.compareAndSet(this.progressText, UserStaticData.hero.t.tp + "/" + UserStaticData.hero.t.pa);
+					Functions.compareAndSet(this.txtGold, UserStaticData.hero.t.pr);
 				} else {
-					this.addChild(this.take);
-					this.take.addEventListener(MouseEvent.CLICK, this.onTake);
-					Functions.compareAndSet(this.preText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 0));
-					Functions.compareAndSet(this.textText, Lang.getTitle(152))
-					//this.textText.text = "ВЫПОЛНЕНО";
-					
+					this.frees();
 				}
-				this.progress.gotoAndStop(1 + int((100 * UserStaticData.hero.t.tp) / UserStaticData.hero.t.pa));
-				Functions.compareAndSet(this.progressText, UserStaticData.hero.t.tp + "/" + UserStaticData.hero.t.pa);
-				Functions.compareAndSet(this.txtGold, UserStaticData.hero.t.pr);
-			} else {
-				this.frees();
 			}
 		}
 		

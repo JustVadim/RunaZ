@@ -1,6 +1,7 @@
 package Chat 
 {
 	import Adds.VKAdds;
+	import Server.Lang;
 	import Utils.Functions;
 	import artur.App;
 	import artur.display.BaseButton;
@@ -87,16 +88,49 @@ package Chat
 				this.addChild(this.btnQ);
 			}
 			this.btnQ.addEventListener(MouseEvent.CLICK, this.onAddedBtnQCLick);
+			this.btnQ.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.btnQ.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
 			this.btnAds.addEventListener(MouseEvent.CLICK, this.onAdds);
+			this.btnAds.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.btnAds.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
 			this.btnRullet.addEventListener(MouseEvent.CLICK, this.onRoulettClick);
+			this.btnRullet.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.btnRullet.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+		}
+		
+		private function onOut(e:MouseEvent):void {
+			App.info.frees();
+		}
+		
+		private function onOver(e:MouseEvent):void {
+			var btn:BaseButton = BaseButton(e.target);
+			
+			App.sound.playSound("over1", App.sound.onVoice, 1);
+			switch(btn) {
+				case this.btnRullet://
+					App.info.init(btn.x + btn.width, btn.y - btn.height, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(18), type:0 } );
+					break;
+					
+				case this.btnAds://
+					App.info.init( btn.x + btn.width, btn.y - btn.height, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(19), type:0 } );
+					break;
+					
+				case this.btnQ://
+					App.info.init(btn.x + btn.width, btn.y - btn.height, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(20), type:0 } );
+					break;
+			}
 		}
 		
 		private function onRoulettClick(e:MouseEvent):void {
-			App.winManajer.swapWin(6);
+			if(App.winManajer.swapMode == false && App.winManajer.currWin != 6) {
+				App.winManajer.swapWin(6);
+				App.info.frees()
+			}
 		}
 		
 		private function onAdds(e:MouseEvent):void {
 			App.achievm.init();
+			App.info.frees();
 		}
 		
 		public function addBtn():void {
@@ -111,9 +145,9 @@ package Chat
 			}
 		}
 		
-		private function onAddedBtnQCLick(e:MouseEvent):void 
-		{
+		private function onAddedBtnQCLick(e:MouseEvent):void {
 			App.task.init(true);
+			App.info.frees();
 		}
 		
 		

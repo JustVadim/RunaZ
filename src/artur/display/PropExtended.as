@@ -13,9 +13,24 @@ package artur.display
 		
 		public function PropExtended() {
 			Functions.SetPriteAtributs(this, false, true, 0, 0);
+			if (UserStaticData.data.data.s == null) {
+				UserStaticData.data.data.s = true;
+				UserStaticData.data.data.m = true;
+				UserStaticData.data.flush();
+			}
 			this.setBtn(this.full);
 			this.setBtn(this.muz);
 			this.setBtn(this.sound);
+			Report.addMassage(JSON.stringify(UserStaticData.data.data));
+			if (!UserStaticData.data.data.s) {
+				this.sound.gotoAndStop(2);
+				App.sound.onVoice = 0;
+			}
+			if(!UserStaticData.data.data.m) {
+				this.muz.gotoAndStop(2);
+				App.sound.onSound = 0;
+			}
+			
 			Main.THIS.stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFull);
 		}
 		
@@ -54,20 +69,27 @@ package artur.display
 					}
 					break;
 				case this.muz:
-					if (mc.currentFrame == 2)
-					{
-					      App.sound.stopSound(App.currMuzPlay);
-						  App.sound.onSound = 0;
+					if (mc.currentFrame == 2) {
+						App.sound.stopSound(App.currMuzPlay);
+						App.sound.onSound = 0;
+						UserStaticData.data.data.m = false;
+						
+					} else {
+						App.sound.onSound = 0.4;
+						App.sound.playSound(App.currMuzPlay, App.sound.onSound);
+						UserStaticData.data.data.m = true;
 					}
-					else
-					{
-						 App.sound.onSound = 0.4;
-						 App.sound.playSound(App.currMuzPlay, App.sound.onSound);
-					}
-				
+					UserStaticData.data.flush();
 					break;
 				case this.sound:
-					App.sound.onVoice = (mc.currentFrame==2)?0:0.6
+					if(mc.currentFrame == 2) {
+						App.sound.onVoice = 0;
+						UserStaticData.data.data.s = false;
+					} else {
+						App.sound.onVoice = 0.6;
+						UserStaticData.data.data.s = true;
+					}
+					UserStaticData.data.flush();
 					break;
 			}
 		}

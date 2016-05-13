@@ -75,7 +75,7 @@ package artur
 		public static var task:Task;
 		//public static var topMenu:
 		public static var currMuzPlay:String = 'BatleSong';
-		public static var prop:PropExtended = new PropExtended();
+		public static var prop:PropExtended;
 		public static var upPanel:UpPanel;
 		public static var bomusDialog:BonusDialog;
 		public static var profile:Profile;
@@ -137,6 +137,7 @@ package artur
 			sound.addSound('golemAtack', new GolemAtack);
 			sound.addSound('golemHurt', new GolemHurt );
 			spr = Sprite(this);
+			App.prop = new PropExtended();
 			winManajer = new WinManajer();
 			this.addEventListener(Event.ENTER_FRAME, update);
 			byeWin = new ByeWin();

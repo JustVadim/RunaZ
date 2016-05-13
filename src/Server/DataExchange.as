@@ -228,7 +228,6 @@ package Server
 						if ( int(temp_obj.c) == 0 && temp_obj.n == 0 ) {
 							var obj:Object = JSON2.decode(temp_obj.m);
 							if (obj.error == null) {
-								Report.addMassage(temp_obj.m)
 								UserStaticData.hero.setHero(obj.h);
 								UserStaticData.hero.mbat = obj.bat;
 								UserStaticData.my_info = obj.ui;

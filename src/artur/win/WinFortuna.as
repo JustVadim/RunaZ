@@ -52,9 +52,13 @@ package artur.win
 		private static var ENERGY:int = 3;
 		private static var SILVER:int = 4;
 		private var arr:Object = UserStaticData.fd;
+		private var exitBtnText:TextField;
+		private var freeBtnText:TextField;
+		private var donateBtnText:TextField;
 		
 		public function WinFortuna() {
 			//circle.addChild();
+			this.tabEnabled = this.tabChildren = false;
 			bg = new MyBitMap(App.prepare.cach[62]);
 			btnClose = new BaseButton(63);
 			btnFree = new BaseButton(64);
@@ -96,6 +100,13 @@ package artur.win
 			this.addChild(this.timerText);
 			this.timerText.y = 359 - this.timerText.height / 2;
 			this.timerText.x = 659 - this.timerText.width / 2;
+			this.exitBtnText = Functions.getTitledTextfield( -(this.btnClose.width) / 2 + 40, -this.btnClose.height / 2 + 10, this.btnClose.width - 43, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(21), 1, Kerning.ON, 1, true);
+			this.freeBtnText = Functions.getTitledTextfield( -(this.btnFree.width) / 2, -this.btnFree.height / 2 + 10, this.btnFree.width, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(22), 1, Kerning.ON, 1, true);
+			this.donateBtnText= Functions.getTitledTextfield(-(this.btnDonate.width)/2, -this.btnDonate.height/2 + 10, this.btnFree.width-25, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(22), 1, Kerning.ON, 1, true);
+			this.btnClose.addChild(this.exitBtnText);
+			this.btnDonate.addChild(this.donateBtnText);
+			this.btnFree.addChild(this.freeBtnText);
+			this.donateBtnText.filters = this.freeBtnText.filters = this.exitBtnText.filters = [new GlowFilter(0x0,1,3,3,1)];
 		}
 		public function init(rot:int = 0 ):void {
 			bin = true;
@@ -127,10 +138,10 @@ package artur.win
 		
 		private function updateFreeBtn():void {
 			if (dt > 0) {
-				if(this.btnFree.parent) {
+				if(this.btnFree.parent!=null) {
 					this.removeChild(this.btnFree);
 				}
-				if(this.timerText.parent != null) {
+				if(this.timerText.parent == null) {
 					this.addChild(this.timerText);
 				}
 				this.timer = new Timer(1000, this.dt);
@@ -138,7 +149,7 @@ package artur.win
 				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
 				this.timer.start();
 			} else {
-				if(this.timerText.parent) {
+				if(this.timerText.parent != null) {
 					this.removeChild(this.timerText);
 				}
 				this.addChild(this.btnFree);
@@ -155,7 +166,6 @@ package artur.win
 		
 		private function onTImer(e:TimerEvent):void {
 			this.dt--;
-			Report.addMassage(dt);
 			this.setTimeText(dt);
 		}
 		

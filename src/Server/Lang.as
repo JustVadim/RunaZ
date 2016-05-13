@@ -141,11 +141,11 @@ package Server
 			Lang.lang_table[15] = ["Новый уровень","",""];
 			Lang.lang_table[16] = ["Уровень","",""];
 			Lang.lang_table[17] = ["Вы не набрали нужный уровень что бы купить эту вещь. Набрать больше опыта Вы можете в миссиях или на арене.", "", ""];
-			Lang.lang_table[18] = [];
-			Lang.lang_table[19] = [];
-			Lang.lang_table[20] = [];
-			Lang.lang_table[21] = [];
-			Lang.lang_table[22] = [];
+			Lang.lang_table[18] = ["Колесо фортуны", "", ""];
+			Lang.lang_table[19] = ["Достижения", "", ""];
+			Lang.lang_table[20] = ["Задания","",""];
+			Lang.lang_table[21] = ["Назад", "", ""];
+			Lang.lang_table[22] = ["Крутить","",""];
 			Lang.lang_table[23] = [];
 			Lang.lang_table[24] = [];
 			Lang.lang_table[25] = [" Поражает вражеского юнита молнией при этом наносит ему ", " Lightning strikes an enemy unit at the same time causing him", ""];

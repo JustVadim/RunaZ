@@ -1,6 +1,7 @@
 ﻿package  
 {
 	import datacalsses.Hero;
+	import flash.net.SharedObject;
 	
 	public class UserStaticData {
 		public static const server_ip:String = "192.168.1.198";
@@ -25,5 +26,6 @@
 		static public var allId:String;
 		static public var achievments_table:Object;
 		static public var fd:Object;
+		static public var data:SharedObject = SharedObject.getLocal("DarkLands");
 	}
 }

@@ -22,10 +22,11 @@ package artur.display.battle
 		private var txts:Array = [];
 		public function TopPanel() 
 		{
+			this.x = 400;
+			this.tabEnabled = this.tabChildren = false;
 			this.addChild(bg);
 			this.addChild(mcBtns);
-			for (var i:int = 0; i < mcBtns.numChildren; i++) 
-			{
+			for (var i:int = 0; i < mcBtns.numChildren; i++) {
 				Sprite(mcBtns.getChildAt(i)).addEventListener(MouseEvent.CLICK, onBtn);
 				Sprite(mcBtns.getChildAt(i)).addEventListener(MouseEvent.MOUSE_OVER, over);
 				Sprite(mcBtns.getChildAt(i)).addEventListener(MouseEvent.MOUSE_OUT, out);
@@ -35,10 +36,11 @@ package artur.display.battle
 			}
 			mcBtns.over.mouseChildren = false;
 		    mcBtns.over.mouseEnabled = false;
-			this.x = 400;
+			mcBtns.over.tabEnabled = false;
 			mcBtns.over.gotoAndStop(1);
 			btns = [mcBtns.btnCastle, mcBtns.btnArena, mcBtns.btnUp, mcBtns.btnMap, mcBtns.btnKyz];
 			txts  = [Lang.getTitle(3,2), Lang.getTitle(3,3), Lang.getTitle(3,6), Lang.getTitle(3, 5), Lang.getTitle(3, 4)];
+			
 		}
 		
 		private function up(e:MouseEvent):void 

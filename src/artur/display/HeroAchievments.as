@@ -41,10 +41,13 @@ package artur.display {
 		}
 		
 		public function init():void {
-			App.spr.addChild(this);
-			this.closeBtn.addEventListener(MouseEvent.CLICK, this.onClick);
-			for (var i:int = 0; i < HeroAchievments.ACHIEVMENTS_QTY; i++) {
-				Achiv(this.ach_array[i]).init(UserStaticData.hero.ach[i].s);
+			if(this.parent == null) {
+				App.sound.playSound('inventar', App.sound.onVoice, 1);
+				App.spr.addChild(this);
+				this.closeBtn.addEventListener(MouseEvent.CLICK, this.onClick);
+				for (var i:int = 0; i < HeroAchievments.ACHIEVMENTS_QTY; i++) {
+					Achiv(this.ach_array[i]).init(UserStaticData.hero.ach[i].s);
+				}
 			}
 		}
 		
