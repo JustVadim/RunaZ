@@ -24,12 +24,8 @@ package artur.win
 	import Utils.Functions;
 	import flash.utils.Timer;
 	import report.Report;
-	/**
-	 * ...
-	 * @author Som911
-	 */
-	public class WinFortuna extends Sprite
-	{
+	
+	public class WinFortuna extends Sprite {
 		public var bin:Boolean = false;
 		private var circle:Sprite = new Sprite();
 		private var currStep:int = 0;
@@ -45,31 +41,28 @@ package artur.win
 		private var is_free_lock:Boolean = false;
 		private var dt:int = -1;
 		private var sp:int = 0;
-		private var timerText:TextField = Functions.getTitledTextfield(35, 4, 100, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
+		
 		private var res:int;
 		private static var NONE:int = 1;
 		private static var GOLD:int = 2;
 		private static var ENERGY:int = 3;
 		private static var SILVER:int = 4;
 		private var arr:Object = UserStaticData.fd;
-<<<<<<< HEAD
+		private var timerText:TextField = Functions.getTitledTextfield(35, 4, 100, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
 		private var exitBtnText:TextField;
 		private var freeBtnText:TextField;
 		private var donateBtnText:TextField;
+		private var animFortuna:mcFortunaAnim = new mcFortunaAnim();
+		private var animFortunaText:TextField = Functions.getTitledTextfield(-42, -12.5, 84, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);;
+		
 		
 		public function WinFortuna() {
-			//circle.addChild();
 			this.tabEnabled = this.tabChildren = false;
-=======
-		private var animFortuna:mcFortunaAnim = new mcFortunaAnim();
-		public function WinFortuna() {
 			//circle.addChild();
 			animFortuna.gotoAndStop(1);
 			animFortuna.mc.gotoAndStop(1);
 			animFortuna.x = 400;
 		    animFortuna.y = 233;
-			//App.sound.playSound('fortuna_lose', App.sound.onVoice, 1);
->>>>>>> 0fdc22dadb3288f5bf22f13d952ad1a191ed9a76
 			bg = new MyBitMap(App.prepare.cach[62]);
 			btnClose = new BaseButton(63);
 			btnFree = new BaseButton(64);
@@ -111,13 +104,14 @@ package artur.win
 			this.addChild(this.timerText);
 			this.timerText.y = 359 - this.timerText.height / 2;
 			this.timerText.x = 659 - this.timerText.width / 2;
-			this.exitBtnText = Functions.getTitledTextfield( -(this.btnClose.width) / 2 + 40, -this.btnClose.height / 2 + 10, this.btnClose.width - 43, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(21), 1, Kerning.ON, 1, true);
-			this.freeBtnText = Functions.getTitledTextfield( -(this.btnFree.width) / 2, -this.btnFree.height / 2 + 10, this.btnFree.width, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(22), 1, Kerning.ON, 1, true);
-			this.donateBtnText= Functions.getTitledTextfield(-(this.btnDonate.width)/2, -this.btnDonate.height/2 + 10, this.btnFree.width-25, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(22), 1, Kerning.ON, 1, true);
+			this.exitBtnText = Functions.getTitledTextfield( -(this.btnClose.width) / 2 + 40, -this.btnClose.height / 2 + 7, this.btnClose.width - 43, 25, new Art().fontName, 18, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(21), 1, Kerning.ON, 1, true);
+			this.freeBtnText = Functions.getTitledTextfield( -(this.btnFree.width) / 2, -this.btnFree.height / 2 + 7, this.btnFree.width, 25, new Art().fontName, 18, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(22), 1, Kerning.ON, 1, true);
+			this.donateBtnText = Functions.getTitledTextfield( -(this.btnDonate.width) / 2, -this.btnDonate.height / 2 + 7, this.btnFree.width - 25, 25, new Art().fontName, 18, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(22), 1, Kerning.ON, 1, true);
+			this.animFortuna.mc.addChild(this.animFortunaText);
 			this.btnClose.addChild(this.exitBtnText);
 			this.btnDonate.addChild(this.donateBtnText);
 			this.btnFree.addChild(this.freeBtnText);
-			this.donateBtnText.filters = this.freeBtnText.filters = this.exitBtnText.filters = [new GlowFilter(0x0,1,3,3,1)];
+			this.donateBtnText.filters = this.freeBtnText.filters = this.exitBtnText.filters = this.timerText.filters = [new GlowFilter(0x0,1,3,3,1)];
 		}
 		public function init(rot:int = 0 ):void {
 			bin = true;
@@ -273,10 +267,15 @@ package artur.win
 			
 			if (obj.f == WinFortuna.NONE) {
 				App.sound.playSound('fortuna_lose', App.sound.onVoice, 1);
+				this.animFortunaText.width = 84;
+				this.animFortunaText.text = Lang.getTitle(23);
 				animFortuna.mc.gotoAndStop(1);
+				
 				//losesound
 			} else {
 				App.sound.playSound('fortuna_win', App.sound.onVoice, 1);
+				this.animFortunaText.width = 60;
+				this.animFortunaText.text = "+" + obj.n; 
 				//winsound
 				switch(obj.f) {
 					case WinFortuna.ENERGY:
@@ -287,13 +286,13 @@ package artur.win
 					case WinFortuna.SILVER:
 						UserStaticData.hero.silver += obj.n;
 						animFortuna.mc.gotoAndStop(4);
-						App.sound.playSound('gold', App.sound.onVoice, 1);
+						//App.sound.playSound('gold', App.sound.onVoice, 1);
 						App.topMenu.updateGold();
 						break;
 					case WinFortuna.GOLD:
 						animFortuna.mc.gotoAndStop(2);
 						UserStaticData.hero.gold += obj.n;
-						App.sound.playSound('gold', App.sound.onVoice, 1);
+						//App.sound.playSound('gold', App.sound.onVoice, 1);
 						App.topMenu.updateGold();
 						break;
 				}
