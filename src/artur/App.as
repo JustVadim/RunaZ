@@ -12,6 +12,7 @@ package artur
 	import artur.display.InfoWin;
 	import artur.display.LockSpr;
 	import artur.display.PropExtended;
+	import artur.display.SprTop;
 	import artur.display.Task;
 	import artur.display.TopMenu;
 	import artur.display.Tutor;
@@ -83,7 +84,7 @@ package artur
 		public static var profile:Profile;
 		public static var achievm:HeroAchievments;
 		public static var dialogManager:DialogManager;
-		
+		public static var sprTop:SprTop
 		
 		public function App(stg:Stage) 
 		{
@@ -154,6 +155,7 @@ package artur
 			this.tabEnabled = false;
 			this.tabChildren = false;
 			App.task = new Task();
+			App.sprTop = new SprTop();
 			App.bomusDialog = new BonusDialog();
 			App.profile = new Profile();
 			App.achievm = new HeroAchievments();

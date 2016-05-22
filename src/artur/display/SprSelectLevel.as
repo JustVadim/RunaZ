@@ -27,6 +27,7 @@ package artur.display {
 		
 		//  зелени галочкы s0 s1 s2 s3
 		public function SprSelectLevel() {
+			Lang
 			Functions.SetPriteAtributs(this, true, true);
 			Functions.SetPriteAtributs(this.btn, true, false, 405, 302);
 			for (var i:int = 1; i < 5; i++) {
