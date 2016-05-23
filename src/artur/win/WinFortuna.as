@@ -68,12 +68,12 @@ package artur.win
 			btnClose = new BaseButton(63);
 			btnFree = new BaseButton(64);
 			btnDonate = new BaseButton(65);
-			btnClose.x = 79;
-			btnClose.y = 300;
-			btnFree.x = 658.65;
-			btnFree.y = 358.6;
-			btnDonate.x = 682.9;
-			btnDonate.y = 310.1;
+			btnClose.x = 613.95;
+			btnClose.y = 103;
+			btnFree.x = 655.65;
+			btnFree.y = 201.65;
+			btnDonate.x = 665.95;
+			btnDonate.y = 152;
 			this.addChild(bg);
 			this.addChild(btnClose);
 			this.addChild(btnFree);

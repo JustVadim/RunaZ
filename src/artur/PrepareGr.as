@@ -89,8 +89,9 @@ package artur
 			/*63  */ new btnBack(),
 			/*64  */ new btnFortuna(),
 			/*65  */ new btnFortunaDonate(),
-			/*66  */ new btnFortunaChat()
-			
+			/*66  */ new btnFortunaChat(),
+		    /*67  */ new btnTopInside(),
+			/*68  */ new imgBtnFortuna()
 		];
 		
 		public static var scaleFactor:Number = 2;
