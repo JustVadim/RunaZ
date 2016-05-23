@@ -83,7 +83,18 @@ package  {
 			if(UserStaticData.flash_vars.user_id != "0") {
 				UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
 			}
+			//Main.VK.api("wall.post", {owner_id:UserStaticData.id, friends_only:0, message:"Test massage", attachments:"photo218688849_321317918", signed:1}, onPost, onError);
 			//VKAdds.init();
+		}
+		
+		private function onPost():void 
+		{
+			Report.addMassage("done");
+		}
+		
+		private function onError():void 
+		{
+			Report.addMassage("error");
 		}
 		
 		public static function onVkPayment(e:CustomEvent):void {

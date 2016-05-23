@@ -70,9 +70,11 @@ package Chat
 			Functions.SetPriteAtributs(this.btnQ, true, false, 14.2, 424.2);
 			this.btnAds = new BaseButton(57);
 		    Functions.SetPriteAtributs(this.btnAds, true, false, 40, 424.2);
-			 this.btnRullet = new BaseButton(66);
-			 this.addChild(btnRullet); 
-			 Functions.SetPriteAtributs(this.btnRullet, true, false, 40+ 40 -14.2, 424.2);
+			this.btnRullet = new BaseButton(66);
+			if(UserStaticData.hero.level > 1) {
+				this.addChild(btnRullet); 
+			}
+			Functions.SetPriteAtributs(this.btnRullet, true, false, 40+ 40 -14.2, 424.2);
 			var animQvest:AnimBtn = new AnimBtn(); animQvest.mouseChildren = false; animQvest.mouseEnabled = true;
 			this.btnQ.addChild(animQvest); 
 			this.addChild(btnAds)
@@ -287,6 +289,12 @@ package Chat
 				this.massages_scrollbar.verticalScrollPosition = this.massages_scrollbar.maxVerticalScrollPosition;
 			} else {
 				this.massages_scrollbar.update();
+			}
+		}
+		
+		public function addFortunaBtn():void {
+			if(this.btnRullet.parent == null) {
+				this.addChild(this.btnRullet);
 			}
 		}
 		

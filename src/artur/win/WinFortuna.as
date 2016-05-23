@@ -39,7 +39,7 @@ package artur.win
 		
 		private var timer:Timer;
 		private var is_free_lock:Boolean = false;
-		private var dt:int = -1;
+		public static var dt:int = -1;
 		private var sp:int = 0;
 		
 		private var res:int;
@@ -53,7 +53,8 @@ package artur.win
 		private var freeBtnText:TextField;
 		private var donateBtnText:TextField;
 		private var animFortuna:mcFortunaAnim = new mcFortunaAnim();
-		private var animFortunaText:TextField = Functions.getTitledTextfield(-42, -12.5, 84, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);;
+		private var animFortunaText:TextField = Functions.getTitledTextfield( -42, -12.5, 84, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);;
+		public static var dialogChecked:Boolean = false;
 		
 		
 		public function WinFortuna() {
@@ -95,11 +96,11 @@ package artur.win
 					txt.cacheAsBitmap = true;
 				}
 			}
-			bgCircle.x = 400;
-			bgCircle.y = 233;
-			bgCircle.addChild(circle);
-			bgCircle.addChild(arrow);
-			bgCircle.rotation = - 90;
+			this.bgCircle.x = 400;
+			this.bgCircle.y = 233;
+			this.bgCircle.addChild(circle);
+			this.bgCircle.addChild(arrow);
+			this.bgCircle.rotation = - 90;
 			this.checkTime(false);
 			this.addChild(this.timerText);
 			this.timerText.y = 359 - this.timerText.height / 2;
@@ -134,7 +135,7 @@ package artur.win
 		
 		private function checkTimeRes(e:DataExchangeEvent):void {
 			var obj:Object = JSON2.decode(e.result);
-			this.dt = obj.res;
+			WinFortuna.dt = obj.res;
 			this.updateFreeBtn();
 			if(this.is_free_lock) {
 				App.lock.frees();
@@ -149,11 +150,14 @@ package artur.win
 				if(this.timerText.parent == null) {
 					this.addChild(this.timerText);
 				}
-				this.timer = new Timer(1000, this.dt);
+				this.timer = new Timer(1000, WinFortuna.dt);
 				this.timer.addEventListener(TimerEvent.TIMER, this.onTImer);
 				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
 				this.timer.start();
 			} else {
+				if(!this.bin) {
+					WinFortuna.dialogChecked = true;
+				}
 				if(this.timerText.parent != null) {
 					this.removeChild(this.timerText);
 				}
@@ -170,7 +174,7 @@ package artur.win
 		}
 		
 		private function onTImer(e:TimerEvent):void {
-			this.dt--;
+			WinFortuna.dt--;
 			this.setTimeText(dt);
 		}
 		
@@ -244,7 +248,7 @@ package artur.win
 				TweenLite.to(this.circle, 3, { rotation : - (res.res * 20 + agle + 360), ease: Cubic.easeOut, onComplete:onSpinComplete });
 				this.res = res.res;
 				if(this.sp == 0) {
-					this.dt = 90 * 60;
+					WinFortuna.dt = 90 * 60;
 					this.updateFreeBtn();
 				} else {
 					UserStaticData.hero.gold -= 3;

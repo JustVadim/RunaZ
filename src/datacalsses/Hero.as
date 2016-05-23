@@ -60,6 +60,7 @@ package datacalsses
 				this.level++;
 				this.fs++;
 				this.nle = UserStaticData.levels[this.level];
+				Main.THIS.chat.addFortunaBtn();
 			}
 		}
 		

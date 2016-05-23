@@ -147,7 +147,7 @@ package Server
 			Lang.lang_table[21] = ["Назад", "", ""];
 			Lang.lang_table[22] = ["Крутить","",""];
 			Lang.lang_table[23] = [":(",":(",":("];
-			Lang.lang_table[24] = [];
+			Lang.lang_table[24] = ["У вас есть одна бесплатная прокрутка колеса фортуны."];
 			Lang.lang_table[25] = [" Поражает вражеского юнита молнией при этом наносит ему ", " Lightning strikes an enemy unit at the same time causing him", ""];
 			Lang.lang_table[26] = ["Следующий уровень - ", "Next level - ", ""];
 			Lang.lang_table[27] = [" единиц", " points", ""];

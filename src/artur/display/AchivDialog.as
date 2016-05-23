@@ -82,6 +82,9 @@ package artur.display  {
 				App.sound.playSound('gold', App.sound.onVoice, 1);
 				App.topMenu.updateGold();
 				App.lock.frees();
+				if(UserStaticData.from == "v") {
+					Main.VK.api("wall.post", {owner_id:UserStaticData.id, friends_only:0, message:"http://vk.com/app5367058\nВыполнил задания и получил достижение \"" + Lang.getTitle(192, this.index) + "\", Я теперь непобедим. А ты так сможешь?", attachments:UserStaticData.vkAcievs[this.index][lvl - 1], signed:1});
+				}
 				this.frees();
 			} else {
 				App.lock.init(res.error);
