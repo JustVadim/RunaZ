@@ -97,6 +97,9 @@ package artur.win
 			case 'shop':
 				App.winManajer.swapWin(4);
 				break;
+			case 'top':
+				App.sprTop.init();
+				break;
 			}
 			
 		}

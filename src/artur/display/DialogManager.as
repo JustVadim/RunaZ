@@ -48,9 +48,8 @@ package artur.display
 					this.show_show_achieve = false;
 					return;
 				}
-				Report.addMassage(UserStaticData.hero.level + "  " + WinFortuna.dt + "  " + WinFortuna.dialogChecked);
 				if (UserStaticData.hero.level > 1 && WinFortuna.dt == 0 && WinFortuna.dialogChecked) {
-					App.closedDialog.init1(Lang.getTitle(24));
+					App.closedDialog.init1(Lang.getTitle(24), false, false, false, false, true, true);
 					WinFortuna.dialogChecked = false;
 					return;
 				}

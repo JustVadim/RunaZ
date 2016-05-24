@@ -36,7 +36,7 @@ package artur.display {
 			this.addChild(btnEx);
 			this.addChild(this.txt);
 			this.txt.y += 0;
-			this.btns = [this.btnCastl, this.btnBanK, this.btnMision, this.btnEnergy,this.btnFortun];
+			this.btns = [this.btnCastl, this.btnBanK, this.btnMision, this.btnEnergy, this.btnFortun];
 			this.spr.y = 310;
 			this.addChild(this.spr);
 			this.txt.filters = [new GlowFilter(0x0, 1, 2, 2)];
@@ -94,11 +94,14 @@ package artur.display {
 					App.byeWin.init("Я хочу пополнить", "энергию", GameVars.ENERGY_PRICE, 0, NaN, 6);
 					this.frees();
 					break;
+				case btnFortun:
+					App.winManajer.swapWin(6);
+					break;
 			}
 			
 		}
 		
-		public function init1(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false, showEnergy:Boolean = false, playSoung:Boolean = true):void {
+		public function init1(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false, showEnergy:Boolean = false, playSoung:Boolean = true, showFortuna:Boolean = false):void {
 			if(playSoung) {
 				App.sound.playSound('inventar', App.sound.onVoice, 1);
 			}
@@ -106,7 +109,7 @@ package artur.display {
 				spr.removeChildAt(0);
 			}
 			Functions.compareAndSet(this.txt, text);
-			var arr:Array = [showCastle, showBank, showMision, showEnergy];
+			var arr:Array = [showCastle, showBank, showMision, showEnergy, showFortuna];
 			this.addBtnsEvents(this.btnEx);
 			var count:int = 0;
 			for (var i:int = 0; i < arr.length; i++) {

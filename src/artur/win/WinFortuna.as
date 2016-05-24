@@ -103,7 +103,7 @@ package artur.win
 			this.bgCircle.rotation = - 90;
 			this.checkTime(false);
 			this.addChild(this.timerText);
-			this.timerText.y = 359 - this.timerText.height / 2;
+			this.timerText.y = 202 - this.timerText.height / 2;
 			this.timerText.x = 659 - this.timerText.width / 2;
 			this.exitBtnText = Functions.getTitledTextfield( -(this.btnClose.width) / 2 + 40, -this.btnClose.height / 2 + 7, this.btnClose.width - 43, 25, new Art().fontName, 18, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(21), 1, Kerning.ON, 1, true);
 			this.freeBtnText = Functions.getTitledTextfield( -(this.btnFree.width) / 2, -this.btnFree.height / 2 + 7, this.btnFree.width, 25, new Art().fontName, 18, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(22), 1, Kerning.ON, 1, true);
