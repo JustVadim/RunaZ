@@ -29,7 +29,7 @@ package artur.display {
 		
 		
 		public function SprTop() {
-			this.btnClose = new BaseButton(31); btnClose.x = 571.9; btnClose.y = 17.8;
+			this.btnClose = new BaseButton(31); btnClose.x = 603.9; btnClose.y = 17.8;
 			this.tabEnabled = false;
 			this.tabChildren = false;
 			this.btnReiting = new BaseButton(67);
