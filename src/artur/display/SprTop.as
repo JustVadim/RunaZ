@@ -16,7 +16,7 @@ package artur.display
 		private var btnClose:BaseButton
 		public function SprTop() 
 		{
-			btnClose = new BaseButton(31); btnClose.x = 571.9; btnClose.y = 17.8;
+			btnClose = new BaseButton(31); btnClose.x = 603.9; btnClose.y = 17.8;
 			
 			btnReiting = new BaseButton(67);
 			btnGold = new BaseButton(67);
