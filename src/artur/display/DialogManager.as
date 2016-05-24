@@ -4,6 +4,7 @@ package artur.display
 	import Server.DataExchange;
 	import Server.Lang;
 	import artur.App;
+	import artur.win.WinFortuna;
 	import flash.display.Sprite;
 	import report.Report;
 	public class DialogManager extends Sprite {
@@ -45,6 +46,11 @@ package artur.display
 				if (show_show_achieve) {
 					this.showAchieveLvlUp();
 					this.show_show_achieve = false;
+					return;
+				}
+				if (UserStaticData.hero.level > 1 && WinFortuna.dt == 0 && WinFortuna.dialogChecked) {
+					App.closedDialog.init1(Lang.getTitle(24), false, false, false, false, true, true);
+					WinFortuna.dialogChecked = false;
 					return;
 				}
 			}

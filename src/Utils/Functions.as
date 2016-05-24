@@ -42,7 +42,7 @@ package Utils {
 			textf.leading = leading;
 			var title:TextField = new TextField();
 			title.embedFonts = true;
-			//title.antiAliasType = AntiAliasType.ADVANCED
+			title.antiAliasType = AntiAliasType.ADVANCED
 			title.defaultTextFormat = textf;
 			title.x = xx;
 			title.y = yy;

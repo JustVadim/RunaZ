@@ -237,6 +237,7 @@ package Server
 								UserStaticData.buffs_chances = JSON2.decode(obj.bm);
 								UserStaticData.achievments_table = JSON2.decode(obj.ach);
 								UserStaticData.fd = obj.fd;
+								UserStaticData.top = JSON2.decode(obj.top);
 								for (var key:Object in obj.uis) {
 									UserStaticData.users_info[key] = JSON2.decode(obj.uis[key]);
 									UserStaticData.users_info[key][6] = 1;

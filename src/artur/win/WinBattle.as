@@ -497,6 +497,9 @@ package artur.win
 							this.gift_id = obj.mcd.gift.k;
 							hero.chest[obj.mcd.gift.d] = Maker.clone(UserStaticData.magazin_items[0][7][this.gift_id]);
 						}
+						if(UserStaticData.from == "v" && obj.mcd.sa[3] == 1) {
+							Main.VK.api("wall.post", {owner_id:UserStaticData.id, friends_only:0, message:"http://vk.com/app5367058\nПобедил всех монтсров и осоводил от зла этот город. Помоги и ты одолеть зло.", attachments:UserStaticData.vkCastlesPhoto[WinBattle.bat.id], signed:1});
+						}
 					}
 					hero.miss[mapNum].mn[missNum].st = obj.mcd.sa;
 					hero.gold += int(obj.mcd.g);
