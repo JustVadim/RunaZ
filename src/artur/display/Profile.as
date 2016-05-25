@@ -33,6 +33,7 @@ package artur.display {
 			}
 			this.addChild(this.btnClose = new BaseButton(61));
 			Functions.SetPriteAtributs(this.btnClose, true, false, 580, 101);
+			
 			creatText();
 		}
 		
@@ -47,40 +48,47 @@ package artur.display {
 			this.btnClose.addEventListener(MouseEvent.CLICK, this.onCloseClick);
 		}
 		
-		private function onCloseClick(e:MouseEvent):void 
-		{
+		private function onCloseClick(e:MouseEvent):void {
 			this.frees();
 		}
 		
 		private function getAva():void {
-			if(this.ava_loader != null && this.ava_loader.parent) {
-				this.ava_loader.parent.removeChild(this.ava_loader);
-				this.ava_loader = null;
+			if(this.ava_loader == null) {
+				this.ava_loader = new Loader();
+				this.ava_loader.tabChildren = false;
+				this.ava_loader.mouseEnabled = false;
+				this.ava_loader.mouseChildren = false;
+				this.ava_loader.tabEnabled = false;
+				this.mcAva.addChildAt(this.ava_loader, 1);
+				this.ava_loader.mask = this.mcAva.avatarMask;
+				this.onUnload();
+			} else {
+				this.ava_loader.contentLoaderInfo.addEventListener(Event.UNLOAD, this.onUnload);
+				this.ava_loader.unload();
 			}
-			ava_loader = new Loader();
-			ava_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onGetAva);
-			ava_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
-			ava_loader.load(new URLRequest(UserStaticData.users_info[this.userId].pl));
-			
 			
 		}
+		
+		private function onUnload(e:Event = null):void {
+			this.ava_loader.contentLoaderInfo.removeEventListener(Event.UNLOAD, this.onUnload);
+			this.ava_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onGetAva);
+			this.ava_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
+			this.ava_loader.load(new URLRequest(UserStaticData.users_info[this.userId].pl));
+		}
+		
+		
 		
 		private function onGetAva(e:Event):void {
 			this.ava_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, this.onGetAva);
 			this.ava_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, this.onGetAvaError);
-			this.ava_loader.tabChildren = false;
-			this.ava_loader.mouseEnabled = false;
-			this.ava_loader.mouseChildren = false;
-			this.ava_loader.tabEnabled = false;
 			this.ava_loader.width = 100;
 			this.ava_loader.height = 100;
-			this.ava_loader.mask = mcAva.avatarMask;
-			this.mcAva.addChildAt(ava_loader, 1);
+			
 		}
 		
 		private function onGetAvaError(e:IOErrorEvent):void {
-				this.ava_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, this.onGetAva);
-				this.ava_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, this.onGetAvaError);
+			this.ava_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, this.onGetAva);
+			this.ava_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, this.onGetAvaError);
 		}
 		
 		private function onHero(e:DataExchangeEvent):void {

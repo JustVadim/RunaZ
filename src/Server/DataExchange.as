@@ -131,6 +131,7 @@ package Server
 					temp_obj = JSON2.decode(String(temp_array[count])); 
 					if (loged) {
 						if (int(temp_obj.n == 0)) {
+							Report.addMassage(temp_obj.m);
 							switch(int(temp_obj.c)) {
 								case COMMANDS.new_window:
 									socket.removeEventListener(Event.CLOSE, onSocketClose);
@@ -215,7 +216,12 @@ package Server
 								UserStaticData.hero.setAchievm(temp_obj);
 								App.dialogManager.checkAchievement();
 								break;
+							case int(COMMANDS.UPDATE_TOP):
+								Report.addMassage("Update top:  " + temp_obj.m)
+								UserStaticData.top = JSON2.decode(temp_obj.m);
+								break;
 							}
+							
 						} else {
 							data_evnt = new DataExchangeEvent(DataExchangeEvent.DATA_RECIEVED);
 							data_evnt.c = String(temp_obj.c);
