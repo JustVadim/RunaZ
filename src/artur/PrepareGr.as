@@ -91,7 +91,9 @@ package artur
 			/*65  */ new btnFortunaDonate(),
 			/*66  */ new btnFortunaChat(),
 		    /*67  */ new btnTopInside(),
-			/*68  */ new imgBtnFortuna()
+			/*68  */ new imgBtnFortuna(),
+			/*69  */ new btnPlus2(),
+			/*70  */ new btnFriendsStone(),
 		];
 		
 		public static var scaleFactor:Number = 2;
