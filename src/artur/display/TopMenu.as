@@ -150,7 +150,8 @@ package artur.display {
 			}
 			
 			function onGetAvaError(e:IOErrorEvent):void {
-				
+				ava_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onGetAva);
+				ava_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
 			}
 
 		}
