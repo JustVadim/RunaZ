@@ -1,6 +1,7 @@
 package artur.display 
 {
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
@@ -84,7 +85,7 @@ package artur.display
 			bm.height /= PrepareGr.scaleFactor;
 			bm.x -= mtx.tx/PrepareGr.scaleFactor;
 			bm.y -= mtx.ty / PrepareGr.scaleFactor;
-			this.addChild(bm)
+			this.addChild(bm);
 		}
 		
 	}

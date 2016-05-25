@@ -71,7 +71,7 @@ package artur.display
 			
 		}
 		
-		public function init(par:Sprite, image:Sprite, item_obj:Object):void {
+		public function init(par:Sprite, image:Bitmap, item_obj:Object):void {
 			//size logic
 			this.gotoAndStop(1);
 			this.name = item_obj.id;

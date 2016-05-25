@@ -1,5 +1,6 @@
 package artur.units {
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
@@ -20,7 +21,7 @@ package artur.units {
 		public function U_WarwarItemsCash(type:int, id:int) {
 			this.type = type;
 			this.id = id;
-			this.getImage(type, id+1);
+			this.getImage(type, id + 1);
 		}
 		
 		public function get getId():int {
@@ -36,10 +37,12 @@ package artur.units {
 			var vector:MovieClip = MovieClip(itemsVector[type]);
 			vector.gotoAndStop(frame);
 			vector.filters = [U_Lyk.f];
+			Report.addMassage("TYPE:" + type + " FRAME: " + frame);
 			if(vector.scaleX != PrepareGr.scaleFactor) {
 				vector.scaleX = PrepareGr.scaleFactor;
 				vector.scaleY = PrepareGr.scaleFactor;
 			}
+			Report.addMassage("RASTR q:" + PrepareGr.scaleFactor);
 			cont.addChild(vector);
 			rect = cont.getBounds(cont);
 			mtx.tx = -rect.x;
@@ -53,6 +56,7 @@ package artur.units {
 			this.scaleY /= PrepareGr.scaleFactor;
 			this.x -= mtx.tx/PrepareGr.scaleFactor;
 			this.y -= mtx.ty / PrepareGr.scaleFactor;
+			
 		}
 		
 		public static function getItem(type:int, id:int):U_WarwarItemsCash {

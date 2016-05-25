@@ -3,12 +3,14 @@ package artur.display
 	import Utils.BuffsVars;
 	import artur.App;
 	import artur.ProgressBarExtended;
+	import artur.RasterClip;
 	import artur.win.WinBattle;
 	import artur.win.WinCastle;
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.TweenLite;
 	import datacalsses.Hero;
 	import fl.text.TLFTextField;
+	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -27,7 +29,7 @@ package artur.display
 	import report.Report;
 	
 	public class HeroInventar extends Sprite  {
-		private var bg:MyBitMap;
+		private var bg:Bitmap;
 		private var currHead:MovieClip = new I_Head();
 		private var currBody:MovieClip = new I_Body();
 		private var currBoot:MovieClip  = new I_Boot();
@@ -73,7 +75,10 @@ package artur.display
 				progresEXP.x = 10;  progresEXP.y = 283;
 				this.setBuffsBtnsProperties();
 			}
-			this.addChild(this.bg = new MyBitMap(App.prepare.cach[13]));
+			this.addChild(this.bg = RasterClip.getBitmapFromBmd(App.prepare.cach[13]));
+			
+			//new MyBitMap(App.prepare.cach[13]));
+			
 			this.addChild(this.mcText);
 			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6];
 			

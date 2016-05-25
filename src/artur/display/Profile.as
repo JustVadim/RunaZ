@@ -38,13 +38,14 @@ package artur.display {
 		}
 		
 		public function init(userId:String):void {
+			Report.addMassage(userId);
 			this.frees();
 			this.userId = userId;
 			App.spr.addChild(this);
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onHero);
 			data.sendData(COMMANDS.GET_HERO, userId, true);
-			this.getAva();
+			//this.getAva();
 			this.btnClose.addEventListener(MouseEvent.CLICK, this.onCloseClick);
 		}
 		
@@ -73,7 +74,13 @@ package artur.display {
 			this.ava_loader.contentLoaderInfo.removeEventListener(Event.UNLOAD, this.onUnload);
 			this.ava_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onGetAva);
 			this.ava_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
-			this.ava_loader.load(new URLRequest(UserStaticData.users_info[this.userId].pl));
+			if(UserStaticData.users_info[this.userId].pl != null) {
+				this.ava_loader.load(new URLRequest(UserStaticData.users_info[this.userId].pl));
+				Functions.compareAndSet(txts.txtName1, UserStaticData.users_info[this.userId].sn + " " +UserStaticData.users_info[this.userId].fn);
+			} else {
+				
+			}
+			
 		}
 		
 		
@@ -92,6 +99,7 @@ package artur.display {
 		}
 		
 		private function onHero(e:DataExchangeEvent):void {
+			//Report.addMassage(e.result);
 			var res:Object = JSON2.decode(e.result);
 			DataExchange(e.target).removeEventListener(e.type, this.onHero);
 			if(res.error == null) {
@@ -101,20 +109,26 @@ package artur.display {
 						this.setText(res);
 					}
 				} else {
-					
+					var data:DataExchange = new DataExchange();
+					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onGetUserInfo);
+					//get user info
 				}
 			} else {
 				//Report.addMassage(res.error);
 			}
 		}
 		
+		private function onGetUserInfo(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(e.type, onGetUserInfo);
+			
+		}
+		
 		private function setText(hero:Object):void {
-			Functions.compareAndSet(txts.txtName1, UserStaticData.users_info[this.userId].sn + " " +UserStaticData.users_info[this.userId].fn);
 			Functions.compareAndSet(txts.txtGold, hero.g);
 			Functions.compareAndSet(txts.txtSilver, hero.s);
 			Functions.compareAndSet(txts.txtLvl, hero.lvl);
 			var wr:String = (hero.bt == 0)? "--" : int(hero.w * 100 / hero.bt) + "% (" + hero.w + "/" + hero.bt + ")";
-			Functions.compareAndSet(txts.txtOther, String(Lang.getTitle(189) + ": " + hero.rat + "  " + Lang.getTitle(190) + ": "+wr)); 
+			Functions.compareAndSet(txts.txtOther, String(Lang.getTitle(189) + ": " + hero.rat + "  " + Lang.getTitle(190) + ": "+wr));
 		}
 		
 		public function frees():void {

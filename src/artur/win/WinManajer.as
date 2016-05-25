@@ -1,7 +1,8 @@
 package artur.win 
 {
 	import artur.App;
-	import artur.display.MyBitMap;
+	import artur.RasterClip;
+	
 	import artur.display.Task;
 	import flash.display.Bitmap;
 	import flash.events.Event;
@@ -16,8 +17,7 @@ package artur.win
 	
 	public class WinManajer 
 	{
-		public var windows:Array = 
-		[
+		public var windows:Array = [
 			new WinRoot(),//0 
 			new WinCastle(), //1
 			new WinMap(), //2
@@ -26,6 +26,7 @@ package artur.win
 			new WinArena(),//5
 		    new WinFortuna()//6
 		];
+		
 		public var prevWin:int = 0;
 		public var currWin:int = 0;
 		public var neadWin:int = 0;
@@ -41,8 +42,8 @@ package artur.win
 			    swapWin(3)	 
 			}
 			
-			var bm1:MyBitMap = new MyBitMap(App.prepare.cach[16]);
-			var bm2:MyBitMap = new MyBitMap(App.prepare.cach[16]);
+			var bm1:Bitmap = RasterClip.getBitmapFromBmd(App.prepare.cach[16]);
+			var bm2:Bitmap = RasterClip.getBitmapFromBmd(App.prepare.cach[16]);;
 			brama.mc.addChild(bm1); brama.mc2.addChild(bm2);
 		}
 		

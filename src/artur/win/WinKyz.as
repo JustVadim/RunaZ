@@ -23,11 +23,11 @@ package artur.win {
 	import Utils.json.JSON2;
 	
 	public class WinKyz {
-		private var bg:Bitmap = RasterClip.raster(new mc_bg_kyz(), 800, 440);
+		public static var dt:int = -1;
+		
+		private var bg:Bitmap = RasterClip.getBitmap(new mc_bg_kyz(), 1, 800, 440);
 		public var bin:Boolean = true;
-		private var txt_stones:Array = [];
 		private var btns_add:Array = [];
-		private var btnStoneCreat:BaseButton;
 		private var btnCraft:BaseButton;
 		private var bgPrice:Sprite =  new Sprite();
 		private var btnsInBg:Array = [];
@@ -37,10 +37,6 @@ package artur.win {
 		public var timerStone:mcStones = new mcStones();
 		public var timerText:TextField = Functions.getTitledTextfield(35, 4, 100, 25, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.LEFT, "00:00:00", 1, Kerning.ON, 1, true);
 		private var timer:Timer;
-		//public var txtGold:TextField = Functions.getTitledTextfield( 585, 8, 75, 22, new Art().fontName, 16, 0xFFF642, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
-		//public var txtSilver:TextField = Functions.getTitledTextfield( 713, 8, 75, 22, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.OFF, -1);
-		
-		
 		
 		public function WinKyz() {
 			var i:int
@@ -52,7 +48,8 @@ package artur.win {
 			btnClosePrice.x = 696;
 			btnClosePrice.y = -7.4;
 			bgPrice.addChild(block);
-			bgPrice.addChild(Sprite(PrepareGr.creatBms(new bgStonePrice(), true)[0]));
+			bgPrice.addChild(RasterClip.getMovedBitmap(new bgStonePrice()));
+			//Sprite(PrepareGr.creatBms(new bgStonePrice(), true)[0]));
 			bgPrice.addChild(btnClosePrice);
 			this.timerStone.scaleX = this.timerStone.scaleY = 0.8;
 			WinKyz.inst = this;
@@ -76,7 +73,7 @@ package artur.win {
 					txt.x = 20 + i * 70;
 					txt.y = 74 + j * 40;
 					txt.alpha = 1;
-					txt_stones[index] =  txt;
+					//txt_stones[index] =  txt;
 					txt.filters = [App.btnOverFilter];
 					btn = new BaseButton(41);
 					btn.x = txt.x + 30;
@@ -91,10 +88,8 @@ package artur.win {
 				}
 			}
 			
-			btnStoneCreat = new BaseButton(43);
 			btnCraft = new BaseButton(42);
-			btnStoneCreat.x = 91.5;
-			btnStoneCreat.y = 26.5;
+
 			btnCraft.x = 410.15;
 			btnCraft.y = 218.35;
 			bgPrice.x = 60;
@@ -105,12 +100,7 @@ package artur.win {
 			this.btnCraft.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
 			this.btnCraft.addEventListener(MouseEvent.CLICK, onCraft);
 			
-			
-			this.btnStoneCreat.addEventListener(MouseEvent.CLICK, onCreatStone);
-			
-			this.btnStoneCreat.addEventListener(MouseEvent.ROLL_OVER, this.onBtnOver);
-			this.btnStoneCreat.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
-			
+						
 			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OVER, this.onBtnClosePrice);
 			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
 			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);
@@ -153,9 +143,6 @@ package artur.win {
 		{
 			var mc:BaseButton = BaseButton(e.target);
 			switch(mc) {
-				case this.btnStoneCreat:
-					App.info.init(mc.x + mc.width - 55, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(52), type:0 } );
-					break;
 				case this.btnCraft:
 					App.info.init(mc.x + mc.width - 35, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(53), type:0 } );
 					break;
@@ -214,17 +201,17 @@ package artur.win {
 		public function init():void {
 			this.bin = true;
 			App.spr.addChild(bg);
-			for (var i:int = 0; i < txt_stones.length; i++) {
-				App.spr.addChild(txt_stones[i]);
+			/*for (var i:int = 0; i < txt_stones.length; i++) {
+				//App.spr.addChild(txt_stones[i]);
 				App.spr.addChild(btns_add[i]);
-				txt_stones[i].text = UserStaticData.hero.st[i];
+				//txt_stones[i].text = UserStaticData.hero.st[i];
 				if(UserStaticData.hero.st[i] > 9) {
 					BaseButton(btns_add[i]).visible = true;
 					BaseButton(btns_add[i]).scaleX = 1;
 				}
-			}
+			}*/
 			if(UserStaticData.hero.sz == null) {
-				App.spr.addChild(btnStoneCreat);
+				
 			} else {
 				this.checkStone();
 			}
@@ -255,7 +242,6 @@ package artur.win {
 					}
 				} else {
 					UserStaticData.hero.st[res.res.t]++;
-					this.txt_stones[res.res.t].text = UserStaticData.hero.st[res.res.t];
 					UserStaticData.hero.sz = null;
 					if(this.timerStone.parent) {
 						App.spr.removeChild(this.timerStone);
@@ -263,7 +249,6 @@ package artur.win {
 					}
 					//give stone and addbutton;
 					if(this.bin) {
-						App.spr.addChildAt(this.btnStoneCreat, App.spr.numChildren - 1);
 						if(UserStaticData.hero.st[res.res.t]>9) {
 							BaseButton(this.btns_add[res.res.t]).visible = true;
 						}
@@ -371,7 +356,6 @@ package artur.win {
 					var sn2:int = sn - index * 5;
 					index++;
 					UserStaticData.hero.st[sn] -= 10;
-					TextField(this.txt_stones[sn]).text = String(UserStaticData.hero.st[sn]);
 					if(UserStaticData.hero.st[sn] < 9) {
 						BaseButton(this.btns_add[sn]).visible = false;
 					} else {
@@ -395,7 +379,6 @@ package artur.win {
 			var res:Object = JSON2.decode(e.result);
 			if (res.error == null) {
 				App.lock.frees();
-				this.btnStoneCreat.parent.removeChild(this.btnStoneCreat);
 				UserStaticData.hero.sz = res.res;
 				UserStaticData.hero.gold -= (2 + (int(res.res.t / 5)));
 				App.topMenu.updateGold();

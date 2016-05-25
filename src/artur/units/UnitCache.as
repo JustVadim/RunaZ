@@ -1,5 +1,6 @@
 package artur.units 
 {	
+	import report.Report;
 	public class UnitCache 
 	{
 		private static var typeUnits:Array = 
@@ -31,6 +32,7 @@ package artur.units
 					return obj;
 				}
 			} 
+			
 			throw new Error("Cant find unit type: " + str);
 		}
 		

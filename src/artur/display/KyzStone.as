@@ -1,6 +1,7 @@
 package artur.display {
 	import adobe.utils.CustomActions;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.PixelSnapping;
@@ -48,7 +49,7 @@ package artur.display {
 			bm.scaleY /= PrepareGr.scaleFactor;
 			bm.x -= mtx.tx/PrepareGr.scaleFactor;
 			bm.y -= mtx.ty / PrepareGr.scaleFactor;
-			this.addChild(bm)
+			
 		}
 		
 		public static function getStone(id:int):KyzStone {

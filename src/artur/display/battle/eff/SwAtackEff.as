@@ -17,7 +17,7 @@ package artur.display.battle.eff
 		public var type:String =  'swAtack'
 		public function SwAtackEff() 
 		{
-			frm = PrepareGr.creatBms(new EffAtack(), false);
+			frm = RasterClip.getAnimationBitmaps(new EffAtack());//PrepareGr.creatBms(new EffAtack(), false);
 			maxFrame = frm.length-3;
 		}
 		public function init(xp:int,yp:int):void

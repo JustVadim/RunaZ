@@ -6,8 +6,8 @@ package artur.win
 	import Server.Lang;
 	import Utils.json.JSON2;
 	import artur.App;
+	import artur.RasterClip;
 	import artur.display.BaseButton;
-	import artur.display.MyBitMap;
 	import artur.util.Numbs1;
 	import com.greensock.easing.Circ;
 	import com.greensock.easing.Cubic;
@@ -28,7 +28,6 @@ package artur.win
 	public class WinFortuna extends Sprite {
 		public var bin:Boolean = false;
 		private var circle:Sprite = new Sprite();
-		private var currStep:int = 0;
 		private var arrow:mcFortuna = new mcFortuna();
 		private var bgCircle:mcBgFortuna = new mcBgFortuna();
 		private var bg:Bitmap;
@@ -64,7 +63,8 @@ package artur.win
 			animFortuna.mc.gotoAndStop(1);
 			animFortuna.x = 400;
 		    animFortuna.y = 233;
-			bg = new MyBitMap(App.prepare.cach[62]);
+			bg = RasterClip.getBitmapFromBmd(App.prepare.cach[62]);
+			//new MyBitMap();
 			btnClose = new BaseButton(63);
 			btnFree = new BaseButton(64);
 			btnDonate = new BaseButton(65);

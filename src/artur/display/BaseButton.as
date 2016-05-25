@@ -1,6 +1,7 @@
 package artur.display 
 {
 	import artur.App;
+	import artur.RasterClip;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -8,7 +9,7 @@ package artur.display
 	import report.Report;
 	
 	public class BaseButton extends Sprite {
-		private var bm:MyBitMap
+		private var bm:Bitmap
 		public var index:int;
 		private var active:Boolean = true;
 		private var color:uint;
@@ -18,8 +19,7 @@ package artur.display
 		private var glowPawer:Number = 1;
 		private var cont:Sprite = new Sprite();
 		
-		public function BaseButton(index:int, scaleClick:Number = 1.05, glowPawer:Number = 5, soundCLick:String = 'click1', soundOver:String = 'over1', color:uint = 0xFFFFFF ) 
-		{
+		public function BaseButton(index:int, scaleClick:Number = 1.05, glowPawer:Number = 5, soundCLick:String = 'click1', soundOver:String = 'over1', color:uint = 0xFFFFFF ) {
 			this.glowPawer = glowPawer;
 			this.scaleClick = scaleClick;
 			this.soundCLick = soundCLick;
@@ -27,7 +27,8 @@ package artur.display
 			this.color = color;
 			this.index = index;
 			this.mouseChildren = false;
-			bm = new MyBitMap(App.prepare.cach[index]);
+			bm = RasterClip.getBitmapFromBmd(App.prepare.cach[index]);
+			//new MyBitMap();
 			bm.width += 1;
 			bm.height += 1;
 			bm.x = - bm.width / 2;

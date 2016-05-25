@@ -2,6 +2,7 @@ package artur.display.battle
 {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import artur.win.WinArena;
 	import artur.win.WinCastle;
 	import artur.win.WinKyz;
@@ -15,9 +16,9 @@ package artur.display.battle
 	
 	public class TopPanel extends Sprite
 	{
-		private var bg:Bitmap  = PrepareGr.creatBms(new mcBgTopPanel(), false)[0];
+		private var bg:Bitmap  = RasterClip.getMovedBitmap(new mcBgTopPanel()); //PrepareGr.creatBms(new mcBgTopPanel(), false)[0];
 		private var mcBtns:mcBtnTopPanel = new mcBtnTopPanel();
-		private var mcCurrWin:Array = PrepareGr.creatBms(new mcTopPanelCurrWin(), false);
+		private var mcCurrWin:Array = RasterClip.getAnimationBitmaps(new mcTopPanelCurrWin()); //PrepareGr.creatBms(new mcTopPanelCurrWin(), false);
 		private var btns:Array = [];
 		private var txts:Array = [];
 		public function TopPanel() 

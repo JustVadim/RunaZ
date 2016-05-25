@@ -19,7 +19,7 @@ package artur.display.battle.eff {
 		public function BotleHillEff() {
 			var mc:MovieClip = new EffHillBotl();
 			this.maxFrame = mc.totalFrames -3;
-			this.frm = PrepareGr.creatBms(mc, false);
+			this.frm = RasterClip.getAnimationBitmaps(mc);//PrepareGr.creatBms(mc, false);
 		}
 		
 		public function init(xp:int,yp:int):void {

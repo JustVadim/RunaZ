@@ -21,7 +21,7 @@ package artur.display {
 		public function UpPanel() {
 			this.y = 600;
 			var mc:MovieClip = new bgTopMenu();
-			this.addChild(RasterClip.raster(mc, mc.width, mc.height));
+			this.addChild(RasterClip.getBitmap(mc, 1, mc.width, mc.height));
 		    btns = [new BaseButtonWithGalochka(51, false), new BaseButtonWithGalochka(52, false), new BaseButtonWithGalochka(53, true), new BaseButtonWithGalochka(54, true), new BaseButtonWithGalochka(55, true, -73)];
 			var xps:Array = [127.5, 257.5, 387.5, 517.5, 659.75];
 			

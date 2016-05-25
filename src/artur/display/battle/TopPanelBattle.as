@@ -1,6 +1,7 @@
 package artur.display.battle {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import artur.win.WinBattle;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
@@ -16,10 +17,10 @@ package artur.display.battle {
 	import Utils.json.JSON2;
 	
 	public class TopPanelBattle extends Sprite {
-		private var bg:Bitmap  = PrepareGr.creatBms(new mcBgTopPanelBatle(), false)[0];
-		private var bmAutoFight :Bitmap = PrepareGr.creatBms(new mcActiveAuto(), false)[0];
-		private var bmHold        :Bitmap = PrepareGr.creatBms(new mcBtnsTopPanelBattle(), false)[0];
-		private var mcBtns:mcBtnTopPanelBatle = new mcBtnTopPanelBatle();
+		private var bg			:Bitmap = RasterClip.getMovedBitmap(new mcBgTopPanelBatle());
+		private var bmAutoFight	:Bitmap = RasterClip.getMovedBitmap(new mcActiveAuto());
+		private var bmHold      :Bitmap = RasterClip.getMovedBitmap(new mcBtnsTopPanelBattle());
+		private var mcBtns		:mcBtnTopPanelBatle = new mcBtnTopPanelBatle();
 		
 		private var winBattle:WinBattle;
 		

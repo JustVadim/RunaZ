@@ -123,7 +123,6 @@ package Server
 		}
 		
 		static private function onSocketDataHandler(e:ProgressEvent=null):void {
-			try {
 				temp_str += socket.readUTFBytes(socket.bytesAvailable);
 				var temp_array:Array = temp_str.split("#end#");
 				var temp_obj:Object = new Object();
@@ -192,9 +191,6 @@ package Server
 								if (!WinBattle.inst.bin) {
 									App.dialogManager.canShow();
 								}
-								/*if ( (UserStaticData.hero.t.tp == 0 && UserStaticData.hero.t.tn !=1) || (UserStaticData.hero.t.tp == UserStaticData.hero.t.pa && (UserStaticData.hero.t.tn == 6 || UserStaticData.hero.t.tn == 10))) {
-									TweenLite.to(Main.THIS, 0, { delay:0.2, onComplete: DataExchange.onShowTask} );
-								} */
 								break;
 							case int(COMMANDS.BYE_COINS):
 								var res:Object = JSON2.decode(temp_obj.m);
@@ -264,9 +260,6 @@ package Server
 					}
 				}
 				temp_str = temp_array[count];
-			} catch (err:Error) {
-				Report.addMassage("Error in event-function onSocketDataHandler in class DataExchange: " + err);
-			}
 		}
 		
 		public static function onShowTask():void {

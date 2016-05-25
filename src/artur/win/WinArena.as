@@ -1,13 +1,15 @@
 package artur.win {
 	import artur.App;
+	import artur.RasterClip;
 	import artur.display.BaseButton;
-	import artur.display.MyBitMap;
+	
 	import artur.units.U_Lyk;
 	import artur.units.U_Mag;
 	import artur.units.U_Paladin;
 	import artur.units.U_Warwar;
 	import artur.units.UnitCache;
 	import artur.util.GetServerData;
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import Server.COMMANDS;
@@ -26,7 +28,7 @@ package artur.win {
 	
 	public class WinArena {
 		public var bin:Boolean = false;
-		private var bg:MyBitMap;
+		private var bg:Bitmap;
 		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
@@ -42,7 +44,7 @@ package artur.win {
 		
 		
 		public function WinArena() {
-			bg = new MyBitMap(App.prepare.cach[39]);
+			bg = RasterClip.getBitmapFromBmd(App.prepare.cach[39]);
 			btn1 = new BaseButton(40);
 			btn1.x = 400;
 			btn1.y = 100;

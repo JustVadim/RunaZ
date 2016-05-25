@@ -2,58 +2,50 @@ package artur.units
 {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import com.greensock.TweenLite;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	public class BotTroll extends TrollDoll
-	{
+	public class BotTroll extends TrollDoll {
 		public  var normScale:Number = 1;
-		 private var heads        :Array;
-		 private var bodys        :Array;
+		private var heads:Array;
+		private var bodys:Array;
+		private var hends1R    :Array;
+		private var hends2R    :Array;
+		private var hends1L    :Array;
+		private var hends2L    :Array;
+		private var legsL       :Array;
+		private var legsR       :Array; 
+		public var type:String = 'BotTroll';
+		public var free:Boolean = true;
+		private var parts:Array ;
+		private var parts_of_parts:Array; 
+		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());
+		private static var sounds:Array = [{id:'fow2',frame:83},{id:'golemAtack',frame:88}, { id:'bot1_fs1', frame:45 }, { id:'bot1_fs2', frame:60 },{id:'golemHurt',frame:151}];
+		private var isOver:Boolean;
+		private var lvl:int = 0;
+		private static var normalScales:Array = [0.8, 1, 1, 1, 1, 1, 1, 1]; 
 		
-		 private var hends1R    :Array;
-		 private var hends2R    :Array;
-	
-		 private var hends1L    :Array;
-		 private var hends2L    :Array;
-		
-		 private var legsL       :Array;
-		 private var legsR       :Array;
-		 
-		 public var type:String = 'BotTroll';
-		 public var free:Boolean = true;
-		 
-		  private var parts:Array ;
-		 private var parts_of_parts:Array;
-		 
-		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
-		 private static var sounds:Array = [{id:'fow2',frame:83},{id:'golemAtack',frame:88}, { id:'bot1_fs1', frame:45 }, { id:'bot1_fs2', frame:60 },{id:'golemHurt',frame:151}];
-		 private var isOver:Boolean;
-		 private var lvl:int = 0;
-		 private static var normalScales:Array = [0.8, 1, 1, 1, 1, 1, 1, 1]; 
-		public function BotTroll() 
-		{
+		public function BotTroll() {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh);
 			
-			heads = PrepareGr.creatBms(new itemHeadTroll());
-			bodys = PrepareGr.creatBms(new itemBodyTroll());
+			heads 	= RasterClip.getAnimationBitmaps(new itemHeadTroll());// PrepareGr.creatBms();
+			bodys 	= RasterClip.getAnimationBitmaps(new itemBodyTroll());//PrepareGr.creatBms();
+			hends1R = RasterClip.getAnimationBitmaps(new itemHand1Troll());//PrepareGr.creatBms();
+			hends2R = RasterClip.getAnimationBitmaps(new itemHand2Troll());//PrepareGr.creatBms();
+			hends1L = RasterClip.getAnimationBitmaps(new itemHand1Troll());//PrepareGr.creatBms();
+			hends2L = RasterClip.getAnimationBitmaps(new itemHand2Troll());//PrepareGr.creatBms();
+			legsL 	= RasterClip.getAnimationBitmaps(new itemLegTroll());//PrepareGr.creatBms();
+			legsR 	= RasterClip.getAnimationBitmaps(new itemLegTroll());//PrepareGr.creatBms();
 			
-			hends1R = PrepareGr.creatBms(new itemHand1Troll());
-			hends2R = PrepareGr.creatBms(new itemHand2Troll());
-			
-			hends1L = PrepareGr.creatBms(new itemHand1Troll());
-			hends2L = PrepareGr.creatBms(new itemHand2Troll());
-			
-			legsL = PrepareGr.creatBms(new itemLegTroll());
-			legsR = PrepareGr.creatBms(new itemLegTroll());
 			
 			parts =                [this._head, this._body, this._hand1R, this._hand2R,  this._hand1L , this._hand2L, this._legR , this._legL];
 			parts_of_parts =  [heads       , bodys      , hends1R       , hends2R       ,  hends1L       ,  hends2L       ,  legsR      , legsL];
-			
 			this._head.addChild(heads[0]);
 			this._body.addChild(bodys[0]);
 		   
@@ -71,21 +63,23 @@ package artur.units
 			}
 			
 		}
-			public function out(e:MouseEvent=null):void 
-		 {
+		
+		public function out(e:MouseEvent=null):void {
 			//isOver = false;
-		 }
-		 public function onWalk():void
-		 {
-			 //App.sound.playSound('bot1_init', App.sound.onVoice, 1);
-		 }
-		public function over(e:MouseEvent=null):void 
+		}
+		
+		public function onWalk():void
 		{
+			//App.sound.playSound('bot1_init', App.sound.onVoice, 1);
+		}
+		
+		public function over(e:MouseEvent=null):void {
 			isOver = true;
 			TweenLite.to(this, 0.25, { scaleX:1.3, scaleY:1.3} );
 			App.btnOverFilter.color = 0xFFFFFF;
 			this.filters = [App.btnOverFilter];
 		}
+		
 		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
 			this.lvl = lvl;

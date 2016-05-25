@@ -3,19 +3,21 @@ package artur.display
 	import Server.Lang;
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
+	
 	public class Achiv extends Sprite {
-		private static var frames:Array = PrepareGr.creatBms(new mcAchivs, false);
+		private static var frames:Array = RasterClip.getAnimationBitmaps(new mcAchivs());//PrepareGr.creatBms(new mcAchivs, false);
 		private static var OVER_FILTRE:Array = [new GlowFilter(0xFFFFFF, 1, 4, 4)];
 		private var index:int;
-		private var star1:Bitmap = PrepareGr.creatBms(new mcStarAchiv, false)[0];
-		private var star2:Bitmap = PrepareGr.creatBms(new mcStarAchiv, false)[0];
-		private var star3:Bitmap = PrepareGr.creatBms(new mcStarAchiv, false)[0];
+		private var star1:Bitmap = RasterClip.getMovedBitmap(new mcStarAchiv());//PrepareGr.creatBms(new mcStarAchiv, false)[0];
+		private var star2:Bitmap = RasterClip.getMovedBitmap(new mcStarAchiv());
+		private var star3:Bitmap = RasterClip.getMovedBitmap(new mcStarAchiv());
 		
 		public function Achiv(index:int, xx:Number, yy:Number){
 			this.index = index;

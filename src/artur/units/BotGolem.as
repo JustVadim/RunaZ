@@ -2,7 +2,9 @@ package artur.units
 {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import com.greensock.TweenLite;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -10,50 +12,40 @@ package artur.units
 	public class BotGolem extends GolemDoll
 	{
 		public  var normScale:Number = 1;
-		 private var heads        :Array;
-		 private var bodys        :Array;
-		
-		 private var hends1R    :Array;
-		 private var hends2R    :Array;
-	
-		 private var hends1L    :Array;
-		 private var hends2L    :Array;
-		
-		 private var legs1R       :Array;
-		 private var legs2R       :Array;
-	
-		 private var legs1L       :Array;
-		 private var legs2L       :Array;
-		 
-		 public var type:String = 'BotGolem';
-		 public var free:Boolean = true;
-		 
-		  private var parts:Array ;
-		 private var parts_of_parts:Array;
-		 
-		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
-		 private static var sounds:Array = [{id:'fow2',frame:93},{id:'golemHurt',frame:160},{id:'golemAtack',frame:83}, { id:'bot1_fs1', frame:55 }, { id:'bot1_fs2', frame:76 },{id:'golemHurt',frame:105}];
-		 private var isOver:Boolean;
+		private var heads        :Array;
+		private var bodys        :Array;
+		private var hends1R    :Array;
+		private var hends2R    :Array;
+		private var hends1L    :Array;
+		private var hends2L    :Array;
+		private var legs1R       :Array;
+		private var legs2R       :Array;
+		private var legs1L       :Array;
+		private var legs2L       :Array;
+		public var type:String = 'BotGolem';
+		public var free:Boolean = true;
+		private var parts:Array ;
+		private var parts_of_parts:Array;
+		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());
+		private static var sounds:Array = [{id:'fow2',frame:93},{id:'golemHurt',frame:160},{id:'golemAtack',frame:83}, { id:'bot1_fs1', frame:55 }, { id:'bot1_fs2', frame:76 },{id:'golemHurt',frame:105}];
+		private var isOver:Boolean;
 		 
 		public function BotGolem() 
 		{
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh);
-			heads = PrepareGr.creatBms(new itemHeadGolem());
-			bodys = PrepareGr.creatBms(new itemBodyGolem());
 			
-			hends1R = PrepareGr.creatBms(new itemHand1RGolem());
-			hends2R = PrepareGr.creatBms(new itemHand2RGolem());
-			
-			hends1L = PrepareGr.creatBms(new itemHand1LGolem());
-			hends2L = PrepareGr.creatBms(new itemHand2LGolem());
-			
-			legs1R = PrepareGr.creatBms(new itemLeg1RGolem());
-			legs2R = PrepareGr.creatBms(new itemLeg2RGolem());
-			
-			legs1L = PrepareGr.creatBms(new itemLeg1LGolem());
-			legs2L = PrepareGr.creatBms(new itemLeg2LGolem());
+			heads 	= RasterClip.getAnimationBitmaps(new itemHeadGolem());// PrepareGr.creatBms();
+			bodys 	= RasterClip.getAnimationBitmaps(new itemBodyGolem());// PrepareGr.creatBms();
+			hends1R = RasterClip.getAnimationBitmaps(new itemHand1RGolem());// PrepareGr.creatBms();
+			hends2R = RasterClip.getAnimationBitmaps(new itemHand2RGolem());// PrepareGr.creatBms();
+			hends1L = RasterClip.getAnimationBitmaps(new itemHand1LGolem());// PrepareGr.creatBms();
+			hends2L = RasterClip.getAnimationBitmaps(new itemHand2LGolem());// PrepareGr.creatBms();
+			legs1R 	= RasterClip.getAnimationBitmaps(new itemLeg1RGolem());// PrepareGr.creatBms();
+			legs2R 	= RasterClip.getAnimationBitmaps(new itemLeg2RGolem());// PrepareGr.creatBms();
+			legs1L 	= RasterClip.getAnimationBitmaps(new itemLeg1LGolem());// PrepareGr.creatBms();
+			legs2L 	= RasterClip.getAnimationBitmaps(new itemLeg2LGolem());// PrepareGr.creatBms();
 			
 			parts =                [this._head, this._body, this._hend1R, this._hend2R,  this._hend1L , this._hend2L, this._leg1R, this._leg2R, this._leg1L, this._leg2L];
 			parts_of_parts =  [heads       , bodys      , hends1R       , hends2R       ,  hends1L       , hends2L       ,  legs1R      , legs2R       , legs1L      , legs2L];

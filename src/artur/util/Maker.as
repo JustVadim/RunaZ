@@ -53,7 +53,7 @@ package artur.util
 			 return txt;
 		}
 		
-		public static function raster(mc:Sprite, wd:Number , hg:Number , alpha:Boolean = true):Bitmap
+		/*public static function raster(mc:Sprite, wd:Number , hg:Number , alpha:Boolean = true):Bitmap
 		{
 			 var bm:Bitmap
              var tmp_bitmap:BitmapData = new BitmapData( wd*PrepareGr.scaleFactor, hg*PrepareGr.scaleFactor , alpha, 0x00000000);
@@ -66,7 +66,7 @@ package artur.util
 			 mc = null;
 			 clip = null;
              return bm;
-		}
+		}*/
 		
 		public static function clone(source:Object):* 
 		{

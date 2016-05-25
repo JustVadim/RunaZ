@@ -1,6 +1,7 @@
 package artur.display 
 {
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	
@@ -15,7 +16,11 @@ package artur.display
 		
 		public function RasterMovie(baseClip:MovieClip,getSprite:Boolean = false, filter:Object = null) 
 		{
-			frames = PrepareGr.creatBms(baseClip,getSprite,filter);
+			if(filter) {
+				frames = RasterClip.getAnimationBitmaps(baseClip, [filter]);
+			} else {
+				frames = RasterClip.getAnimationBitmaps(baseClip);
+			}
 			this.addChild(frames[currFrame]);
 			maxFrame = frames.length -2 ;
 		}

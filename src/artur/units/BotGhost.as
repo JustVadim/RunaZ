@@ -1,7 +1,9 @@
 package artur.units {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import com.greensock.TweenLite;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -17,7 +19,7 @@ package artur.units {
 		private var isOver:Boolean = false;
 		private var parts:Array ;
 		private var parts_of_parts:Array;
-		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
+		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());//PrepareGr.creatBms(new mcShawdow(), true)[0];
 		private static var sounds:Array = [{id:'gAtack',frame:55},{id:'gHurt',frame:65},{id:'blade2',frame:60},{id:'gDie',frame:70},{id:'blade1',frame:68}];
 		public var _head:Sprite 
 		
@@ -26,9 +28,10 @@ package artur.units {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh);
-			bodys = PrepareGr.creatBms(new Item_BodysGhost());
-			hendsR = PrepareGr.creatBms(new Item_HandsGhost());
-			hendsL = PrepareGr.creatBms(new Item_HandsGhost());
+			
+			bodys = RasterClip.getAnimationBitmaps(new Item_BodysGhost());// PrepareGr.creatBms(new Item_BodysGhost());
+			hendsR = RasterClip.getAnimationBitmaps(new Item_HandsGhost());//PrepareGr.creatBms(new Item_HandsGhost());
+			hendsL = RasterClip.getAnimationBitmaps(new Item_HandsGhost());//PrepareGr.creatBms(new Item_HandsGhost());
 			
 			parts = [this.body, this.h1, this.h2];
 			parts_of_parts = [bodys, hendsL , hendsR ];

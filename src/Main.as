@@ -83,8 +83,6 @@ package  {
 			if(UserStaticData.flash_vars.user_id != "0") {
 				UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
 			}
-			//Main.VK.api("wall.post", {owner_id:UserStaticData.id, friends_only:0, message:"Test massage", attachments:"photo218688849_321317918", signed:1}, onPost, onError);
-			//VKAdds.init();
 		}
 		
 		private function onPost():void 
@@ -107,7 +105,7 @@ package  {
 			this.app = new App(this.stage);
 			this.chat = new ChatBasic();
 			App.dialogManager.init();
-			if(Preloader.loader!=null) {
+			if (Preloader.loader != null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
 			
@@ -117,7 +115,6 @@ package  {
 			stage.addChildAt(this.chat, 1);
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
-			///stage.addChild(new movieMonitor());
 			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onPreloader } );
 		}
 		
@@ -137,6 +134,7 @@ package  {
 			if(WinBattle.battleChat.parent != null) {
 				WinBattle.battleChat.parent.removeChild(WinBattle.battleChat);
 			}
+			App.upPanel.parent.removeChild(App.upPanel);
 			App.lock.init("Connection was closed. Reload application please.")
 		}
 		

@@ -54,7 +54,7 @@ package artur.win
 
 	public class WinBattle 
 	{
-		private var bgs:Array = [RasterClip.raster(new Bg_Battle_1(), 820, 600), RasterClip.raster(new Bg_Battle_2(), 820, 600)];
+		private var bgs:Array = [RasterClip.getBitmap(new Bg_Battle_1(), 1, -1, -1), RasterClip.getBitmap(new Bg_Battle_2(), 1, -1, -1)];
 		public var grid:BattleGrid = new BattleGrid();
 		public static var units:Array;
 		public static var myTeam:int;

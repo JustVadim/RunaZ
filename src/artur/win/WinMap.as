@@ -21,7 +21,7 @@ package artur.win {
 	public class WinMap {
 		public var mcRess:mcResourseText = new mcResourseText();
 		public static var currMap:int = 0;
-		private var bgs:Array = [Maker.raster(new mapBg1(), 800, 420)];
+		private var bgs:Array = [RasterClip.getBitmap(new mapBg1)];
 		private var maps:Array = [];
 		private var sprsXY:Array = [new mcBuildsCoordinate1()];
 		public var bin:Boolean = false;
@@ -33,12 +33,8 @@ package artur.win {
 		public static var sprSelLevel:SprSelectLevel = new SprSelectLevel();
 		
 		public function WinMap() {
+			Report.addMassage(bgs[0].width);
 			this.townList = new TownList();
-			for (var j:int = 0; j < this.bgs.length; j++) {
-				 var b:Bitmap = this.bgs[j];
-				 b.smoothing = true;
-			     b.scaleX =b.scaleY /= PrepareGr.scaleFactor;
-			}
 			for (var i:int = 0; i < sprsXY.length; i++) {
 				var cClip:Sprite = sprsXY[i];
 				this.maps[i] = [];

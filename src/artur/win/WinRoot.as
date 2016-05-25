@@ -2,9 +2,9 @@ package artur.win
 {
 	import Chat.UserInListDialog;
 	import artur.App;
+	import artur.RasterClip;
 	import artur.display.BaseButton;
 	import artur.display.battle.eff.EffManajer;
-	import artur.display.MyBitMap;
 	import artur.display.SprUserNewLevel;
 	import artur.display.WinRootMcText;
 	import artur.PrepareGr;
@@ -34,7 +34,8 @@ package artur.win
 		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
 		
 		public function WinRoot() {
-			this.bg = new MyBitMap(App.prepare.cach[0]);
+			this.bg = RasterClip.getBitmapFromBmd(App.prepare.cach[0]);
+			//new MyBitMap(App.prepare.cach[0]);
 			this.bg.x = bg.y = -33;
 			var xps:Array       = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5];
 			var yps:Array       = [214.75  , 218  , 291.25 , 367, 367.35, 89.15];

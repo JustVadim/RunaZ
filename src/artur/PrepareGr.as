@@ -8,7 +8,6 @@ package artur
 	import artur.display.BtnHeroExtend;
 	import artur.display.btnSel1Extend;
 	import artur.display.BtnStoneExtend;
-	import artur.display.MyBitMap;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
@@ -17,12 +16,15 @@ package artur
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import Server.Lang;
+	import report.Report;
 	
 	public class PrepareGr 
 	{
 		public var cach:Array = [];
-		public  var clips:Array = 
-		[
+		public static var btnsScale:Number = 1;
+		public static var scaleFactor:Number = 2;   //unitItemsScale
+		public function PrepareGr() {
+			var clips:Array = [
 			/*0*/new bg1Root(),
 			/*2*/new btnBank,
 			/**/new btnTop,//2
@@ -40,39 +42,39 @@ package artur
 			/**/new btnTown(),//14
 			/**/new btnClosedShopExtended(),//15
 			/**/new mcBrmPart(),//16
-			/**/new t1(), // 17
-			/**/new t2(), // 18
-			/**/new t3(), //19
-			/**/new t4(), //20
-			/**/new t5(),//21
-			/**/new t6(),//22
-			/**/new t7(),//23
-			/**/new t8(),//24
-			/**/new t9(),//25
-			/**/new t10(),//26
-			/**/new t11(),//27
-			/**/new t12(),//28
-			/**/new btnMap(),//29
-			/**/new btnToBatle(),//30
-			/**/new btnCloseList(),//31
-			/**/new imgBtnCastle(),//32
-			/**/new btnTakes(),//33
-			/**/new btnPlus(),//34
-			/**/new btnSel1Extend(Lang.getTitle(40, 0)),//35
-			/**/new btnSel1Extend(Lang.getTitle(40, 1)),//36
-			/**/new btnSel1Extend(Lang.getTitle(40, 2)),//37
-			/**/new btnSel1Extend(Lang.getTitle(40, 3)),//38
-		    /**/new mcArena(),//39,
-		    /**/new BtnArena(),//40
-		    /**/new btnAddStone(),//41
-		    /**/new BtnCraft(),//42
-		    /**/new BtnStoneExtend(),//43//
-		    /**/new btnByeStone(),//44
-		    /**/new imgBtnBank(),//45
-		    /**/new imgBtnMap(),//46
-			/**/new btnQvest(),//47
-		    /**/new btnMapNext(),//48
-		    /**/new btnMapRes(),//49
+			/*17  */new t1(),
+			/*18  */new t2(),
+			/*19  */new t3(),
+			/*20  */new t4(),
+			/*21  */new t5(),
+			/*22  */new t6(),
+			/*23  */new t7(),
+			/*24  */new t8(),
+			/*25  */new t9(),
+			/*26  */new t10(),
+			/*27  */new t11(),
+			/*28  */new t12(),
+			/*29  */new btnMap(),
+			/*30  */new btnToBatle(),
+			/*31  */new btnCloseList(),
+			/*32  */new imgBtnCastle(),
+			/*33  */new btnTakes(),
+			/*34  */new btnPlus(),
+			/*35  */new btnSel1Extend(Lang.getTitle(40, 0)),
+			/*36  */new btnSel1Extend(Lang.getTitle(40, 1)),
+			/*37  */new btnSel1Extend(Lang.getTitle(40, 2)),
+			/*38  */new btnSel1Extend(Lang.getTitle(40, 3)),
+		    /*39  */new mcArena(),//39,
+		    /*40  */new BtnArena(),//40
+		    /*41  */new btnAddStone(),//41
+		    /*42  */new BtnCraft(),//42
+		    /*43  */new BtnStoneExtend(),//43//
+		    /*44  */new btnByeStone(),//44
+		    /*45  */new imgBtnBank(),//45
+		    /*46  */new imgBtnMap(),//46
+			/*47  */new btnQvest(),//47
+		    /*48  */new btnMapNext(),//48
+		    /*49  */new btnMapRes(),//49
 			/*50  */new imgBtnEnergy(),
 		    /*51  */new btnTop1(),
 		    /*52  */new btnTop2(),
@@ -95,90 +97,14 @@ package artur
 			/*69  */ new btnPlus2(),
 			/*70  */ new btnFriendsStone(),
 		];
-		
-		public static var scaleFactor:Number = 2;
-		
-		private static var spr:Sprite;
-		private static var bmd:BitmapData;
-		public static var scaleFactor2:Number = 3;
-		private static var drawSpr:Sprite = new Sprite();
-		private static var rect : Rectangle = new Rectangle();
-		private var flooredX : int;
-		private var flooredY : int;
-		private static var mtx : Matrix;
-		private static var bm:Bitmap;
-	       
-		public function PrepareGr() {
-			while (clips.length > 0) {
-				spr = clips.shift();
-				spr.width *= scaleFactor;
-				spr.height *= scaleFactor;
-				drawSpr.addChild(spr);
-				bmd = new BitmapData(drawSpr.width, drawSpr.height, true, 0);
-				bmd.draw(drawSpr);
-				cach.push(bmd);
-				drawSpr.removeChild(spr);
-				spr = null;
+			
+			
+			for (var i:int = 0; i < clips.length; i++) {
+				this.cach[i] = RasterClip.getBitmapData(clips[i], 1, -1, -1, null, RasterClip.PrepareGrScale);
 			}
-		}
-		
-
-		public static function creatBms(clip:MovieClip, getSprites:Boolean = false, filter:Object = null ):Array {
-			var bms:Array = [];
-			clip.width *= scaleFactor;
-			clip.height *= scaleFactor;
-			if (filter) {
-				clip.filters = [filter];
-			}
-			  
-		
-			for (var i:int = 0; i < clip.totalFrames; i++) 
-			{
-				clip.gotoAndStop(i + 1);
-				drawSpr.addChild(clip);
-				for (var j:int = 0; j < clip.numChildren; j++) 
-				{
-					if (clip.getChildAt(j) is MovieClip)
-					{
-						MovieClip(clip.getChildAt(j)).gotoAndStop(i + 1)
-					}
-				}
-				rect = drawSpr.getBounds(drawSpr);
-				mtx = new Matrix();
-				mtx.tx = -rect.x;
-				mtx.ty = -rect.y;
-				bmd = new BitmapData(drawSpr.width, drawSpr.height, true, 0);
-				bmd.draw(drawSpr, mtx);
-				drawSpr.removeChild(clip);
-				bm = new Bitmap(bmd, PixelSnapping.AUTO, true);
-				bm.smoothing = true;
-				bm.width /= scaleFactor; 
-				bm.height /= scaleFactor;
-				bm.x -= mtx.tx/scaleFactor;
-				bm.y -= mtx.ty / scaleFactor;
-				 
-				if (clip.currentLabel) 
-				{
-					bm.name = clip.currentLabel;
-				} 
-				else  
-				{
-					bm.name = String(clip.currentFrame);
-				}
-				if (getSprites) 
-				{
-					var spr:Sprite = new Sprite();
-					spr.addChild(bm);
-					spr.name = bm.name;
-					bms.push(spr); 
-				} 
-				else 
-				{
-				   bms.push(bm);
-				}
-			}
-			clip = null;
-			return bms;
+			
+			
+			
 		}
 	}
 
