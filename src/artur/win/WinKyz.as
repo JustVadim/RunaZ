@@ -29,30 +29,29 @@ package artur.win {
 		public static var inst:WinKyz;
 		public var bin:Boolean = false;
 		public static var dt:int = -1;
-		
-		
-		/*public static var dt:int = -1;
-		private var bg:Bitmap = RasterClip.getBitmap(new mc_bg_kyz(), 1, 800, 440);
-		public var bin:Boolean = true;
-		private var btns_add:Array = [];
-		private var btnCraft:BaseButton;
-		private var bgPrice:Sprite =  new Sprite();
-		private var btnsInBg:Array = [];
-		private var btnClosePrice:BaseButton = new BaseButton(31);
-		
-		
-		public var timerStone:mcStones = new mcStones();
-		public var timerText:TextField = Functions.getTitledTextfield(35, 4, 100, 25, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.LEFT, "00:00:00", 1, Kerning.ON, 1, true);
-		private var timer:Timer;*/
+		private var is_free_lock:Boolean = false;
+		public var zakazBtns:Array = new Array();
+		private var timerText:TextField = Functions.getTitledTextfield(35, 4, 100, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
+		private var timer:Timer;
 		
 		public function WinKyz() {
+			WinKyz.inst = this;
 			this.bg = RasterClip.getBitmap(new mc_bg_kyz(), -1, -1);
 			this.addChild(this.bg );
 			this.chest = new KuznitsaChest();
 			this.addChild(this.chest);
 			for (var i:int = 1; i <= 5; i++) {
-				this.addChild(new KyzStone(i, 96.55, 50*i - 22));
+				var showSt:KyzStone = new KyzStone(i, 96.55, 50 * i - 22);
+				this.zakazBtns[i] = showSt;
+				showSt.showZakazBtn(false);
+				showSt.setSt();
+				this.addChild(showSt);
 			}
+			this.addChild(this.timerText);
+			this.checkTime(false);
+			
+			
+			
 			
 			
 			
@@ -121,6 +120,116 @@ package artur.win {
 			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OVER, this.onBtnClosePrice);
 			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
 			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);*/
+		}
+		
+		private function checkTime(state:Boolean):void {
+			this.is_free_lock = state;
+			if(is_free_lock) {
+				App.lock.init();
+			}
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onCheckStone);
+			data.sendData(COMMANDS.CHECK_STONE, "", true);
+		}
+		
+		private function onCheckStone(e:DataExchangeEvent):void {
+			Report.addMassage(e.result);
+			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCheckStone);
+			var res:Object = JSON2.decode(e.result);
+			if (res.error == null) { 
+				WinKyz.dt = res.res.tl;
+				if(res.res.tl == 0 && res.res.t != null) {
+					UserStaticData.hero.st[res.res.t]++;
+					Report.addMassage(UserStaticData.hero.st[res.res.t]);
+					KyzStone(this.zakazBtns[res.res.t + 1]).setSt();
+				}
+				this.updateZakazBtn();
+				if(this.is_free_lock) {
+					App.lock.frees();
+				}
+			} else {
+				App.lock.init(res.error);
+			}
+		}
+		
+		private function updateZakazBtn():void {
+			Report.addMassage(WinKyz.dt + " update");
+			if (WinKyz.dt > 0) {
+				Report.addMassage("dt > 0");
+				for (var j:int = 1; j < 6; j++) {
+					KyzStone(this.zakazBtns[j]).showZakazBtn(false);
+				}
+				this.addChild(this.timerText);
+				this.setTimeText(dt);
+				this.timer = new Timer(1000, WinKyz.dt);
+				this.timer.addEventListener(TimerEvent.TIMER, this.onTImer);
+				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
+				this.timer.start();
+			} else {
+				for (var i:int = 1; i < 6; i++) {
+					KyzStone(this.zakazBtns[i]).showZakazBtn(true);
+				}
+				if(this.timerText.parent) {
+					this.timerText.parent.removeChild(this.timerText);
+				}
+			}
+		}
+		
+		private function onTImerCmplt(e:TimerEvent):void {
+			this.timer.removeEventListener(TimerEvent.TIMER, this.onTImer);
+			this.timer.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
+			this.timer = null;
+			this.checkTime(this.parent != null);
+		}
+		
+		private function onTImer(e:TimerEvent):void {
+			WinKyz.dt--;
+			this.setTimeText(dt);
+		}
+		
+		private function setTimeText(time:int):void {
+			if (this.parent ) {
+				var h:int = time / 3600;
+				time = time - h * 3600;
+				var m:int = (time / 60);
+				time = time - m * 60;
+				this.timerText.text = "";
+				if (h < 10) {
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(h.toString() + ":");
+				if (m < 10) { 
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(m.toString()+":");
+				if(time< 10) {
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(time.toString());
+			}
+		}
+		
+		public function zakazKamnja(itemType:int):void {
+			App.lock.init();
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onRes);
+			data.sendData(COMMANDS.GET_STONE, itemType.toString(), true);
+		}
+		
+		private function onRes(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onRes);
+			var res:Object = JSON2.decode(e.result);
+			if (res.error == null) {
+				App.lock.frees();
+				UserStaticData.hero.sz = res.res;
+				UserStaticData.hero.gold -= 2;
+				App.topMenu.updateGold();
+				WinKyz.dt = res.res.tl;
+				Report.addMassage(res.res.tl);
+				this.updateZakazBtn();
+			}else {
+				App.lock.init(res.error);
+			}
 		}
 		
 		/*private function onBtnClosePrice(e:MouseEvent):void {
@@ -339,12 +448,7 @@ package artur.win {
 			}
 		}
 		
-		public function zakazKamnja(itemType:int):void {
-			App.lock.init();
-			var data:DataExchange = new DataExchange();
-			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onRes);
-			data.sendData(COMMANDS.GET_STONE, itemType.toString(), true);
-		}
+		
 		
 		public function craftItem():void {
 			App.lock.init();
@@ -408,6 +512,9 @@ package artur.win {
 				App.topPanel.init(this);
 				App.topMenu.init(false, true);
 				this.chest.init();
+				if(WinKyz.dt > 0) {
+					this.setTimeText(dt);
+				}
 			}
 			
 			public function frees():void {

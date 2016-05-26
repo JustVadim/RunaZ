@@ -202,7 +202,7 @@ package artur.display
 						break;
 					case this.btnGold:
 						if(UserStaticData.hero.gold >= this.g) {
-							//WinKyz.inst.zakazKamnja(this.itemType);
+							WinKyz.inst.zakazKamnja(this.itemType);
 							this.frees();
 						} else {
 							App.closedDialog.init1(Lang.getTitle(45), false, true, true);

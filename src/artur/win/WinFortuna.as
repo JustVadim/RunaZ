@@ -14,6 +14,7 @@ package artur.win
 	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.filters.GlowFilter;
@@ -114,6 +115,7 @@ package artur.win
 			this.btnFree.addChild(this.freeBtnText);
 			this.donateBtnText.filters = this.freeBtnText.filters = this.exitBtnText.filters = this.timerText.filters = [new GlowFilter(0x0,1,3,3,1)];
 		}
+		
 		public function init(rot:int = 0 ):void {
 			bin = true;
 			this.circle.rotation = 1;
@@ -134,6 +136,7 @@ package artur.win
 		}
 		
 		private function checkTimeRes(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(e.type, this.checkTimeRes);
 			var obj:Object = JSON2.decode(e.result);
 			WinFortuna.dt = obj.res;
 			this.updateFreeBtn();
@@ -150,6 +153,7 @@ package artur.win
 				if(this.timerText.parent == null) {
 					this.addChild(this.timerText);
 				}
+				this.setTimeText(dt);
 				this.timer = new Timer(1000, WinFortuna.dt);
 				this.timer.addEventListener(TimerEvent.TIMER, this.onTImer);
 				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
@@ -179,23 +183,25 @@ package artur.win
 		}
 		
 		private function setTimeText(time:int):void {
-			var h:int = time / 3600;
-			time = time - h * 3600;
-			var m:int = (time / 60);
-			time = time - m * 60;
-			this.timerText.text = "";
-			if (h < 10) {
-				this.timerText.appendText("0");
+			if(this.parent) {
+				var h:int = time / 3600;
+				time = time - h * 3600;
+				var m:int = (time / 60);
+				time = time - m * 60;
+				this.timerText.text = "";
+				if (h < 10) {
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(h.toString() + ":");
+				if (m < 10) { 
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(m.toString()+":");
+				if(time< 10) {
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(time.toString());
 			}
-			this.timerText.appendText(h.toString() + ":");
-			if (m < 10) { 
-				this.timerText.appendText("0");
-			}
-			this.timerText.appendText(m.toString()+":");
-			if(time< 10) {
-				this.timerText.appendText("0");
-			}
-			this.timerText.appendText(time.toString());
 		}
 		
 		private function addEvents(state:Boolean):void {

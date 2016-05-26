@@ -167,11 +167,11 @@ package Server
 			Lang.lang_table[41] = ["Что бы улучшить, надо вещь и как минимум один камeнь.", "In order to improve, you have an item and at least one stone", ""];
 			Lang.lang_table[42] = ["У Вас недостаточно золота для улучшения. Вы можете купить золото в банке или заработать в миссиях.", "You do not have gold to improve. You can buy gold in a bank or earn it in the missions.", ""];
 			Lang.lang_table[43] = new Array();
-			Lang.lang_table[43][0] = ["Рубин ур.1", "Ruby lvl.1", ""];
-			Lang.lang_table[43][1] = ["Изумруд ур.1", "Emerald lvl.1", ""];
-			Lang.lang_table[43][2] = ["Аметист ур.1", "Amethyst lvl.1", ""];
-			Lang.lang_table[43][3] = ["Сапфир ур.1", "Sapphire lvl.1", ""];
-			Lang.lang_table[43][4] = ["Топаз ур.1", "Topaz lvl.1", ""];
+			Lang.lang_table[43][0] = ["Рубин", "Ruby", ""];
+			Lang.lang_table[43][1] = ["Изумруд", "Emerald", ""];
+			Lang.lang_table[43][2] = ["Аметист", "Amethyst", ""];
+			Lang.lang_table[43][3] = ["Топаз", "Topaz", ""];
+			Lang.lang_table[43][4] = ["Сапфир", "Sapphire", ""];
 			
 			Lang.lang_table[43][5] = ["Рубин ур.2", "Ruby lvl.1", ""];
 			Lang.lang_table[43][6] = ["Изумруд ур.2", "Emerald lvl.2", ""];

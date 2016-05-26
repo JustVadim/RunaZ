@@ -1,4 +1,5 @@
 package artur.display {
+	import _SN_vk.api.DataProvider;
 	import adobe.utils.CustomActions;
 	import artur.App;
 	import artur.win.WinKyz;
@@ -9,18 +10,19 @@ package artur.display {
 	import report.Report;
 	import Utils.Functions;
 	public class KuznitsaChest extends Sprite {
-		
 		private const wd:int = 5;
 		private const hg:int  = 8;
 		private var grid:Array = new Array();
 		private var items:Array = new Array();
-		
 		private const crafterWD:int = 5;
 		private const crafterHG:int = 3;
 		private var craftGrid:Array = new Array();
 		private var selectedItem:ItemCall;
 		private var stonesArray:Array = new Array();
 		private var stonesObj:Object = new Object();
+		
+		
+		private var chestStones:Array = new Array();
 		
 		
 		
@@ -54,8 +56,13 @@ package artur.display {
 					this.addChild(mc);
 				}
 			}
+			for (var i:int = 0; i < 5; i++) {
+				chestStones[i] = new KyzChestStone(i);
+			}
 			this.x = 566; this.y = 73.35;
 		}
+		
+		
 		
 		public function init():void {
 			var chest:Object = UserStaticData.hero.chest;
@@ -92,7 +99,7 @@ package artur.display {
 		}
 		
 		private function onItemInChestMouserDown(e:MouseEvent):void {
-			/*var chest:Object = UserStaticData.hero.chest;
+			var chest:Object = UserStaticData.hero.chest;
 			var key:String = ItemCall(e.target).name;
 			if (chest[key].c[103] != 7) {
 				this.removeSelectedItem(); 
@@ -111,7 +118,7 @@ package artur.display {
 				this.addChild(selectedItem);
 			} else {
 				//dialog
-			}*/
+			}
 		}
 		
 		private function onCraftClick(e:MouseEvent):void {
@@ -169,24 +176,19 @@ package artur.display {
 		}
 		
 		public function addSoneToCraft(stoneNum:int):Boolean {
-			/*var pos:int = -1;
+			Report.addMassage("add to:" + stoneNum)
+			var pos:int = -1;
 			for (var i:int = 0; i < 9; i++) {
-				if(stonesArray[i]==null) {
+				if(this.stonesObj[i]==null) {
 					pos = i;
 					break;
 				}
 			}
-			if(pos != -1) {
-				var stone:KyzStone = KyzStone.getStone(stoneNum + 1);
-				stone.addEventListener(MouseEvent.CLICK, this.onStoneClick);
-				stone.buttonMode = true;
-				stonesArray[pos] = stone;
-				mcCall(this.craftGrid[6 + pos]).addChild(stone);
+			if (pos != -1) {
+				mcCall(this.craftGrid[6 + pos]).addChild(chestStones[stoneNum]);
 				this.stonesObj[pos] = stoneNum;
 				return true;
-			} else {
-				return false;
-			}*/
+			}
 			return false;
 		}
 		
@@ -196,13 +198,22 @@ package artur.display {
 		}
 		
 		public function removeStoneFromCraft(stoneNum:int):void {
-			/*var key:Object;
-			for(key in stonesObj) {
+			Report.addMassage("remove from :" + stoneNum)
+			var key:Object;
+			for(key in this.stonesObj) {
 				if(this.stonesObj[key] == stoneNum) {
 					break;
 				}
 			}
 			if (key != null) {
+				if(KyzChestStone(chestStones[stoneNum]).parent) {
+					KyzChestStone(chestStones[stoneNum]).parent.removeChild(KyzChestStone(chestStones[stoneNum]));
+				}
+				delete(this.stonesObj[key]);
+			}
+			
+			/*
+			
 				var stone:KyzStone = KyzStone(stonesArray[key]);
 				stone.removeEventListener(MouseEvent.CLICK, this.onStoneClick);
 				stone.buttonMode = false;

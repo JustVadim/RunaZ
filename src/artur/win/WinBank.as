@@ -117,6 +117,7 @@ package artur.win {
 		}
 		
 		public function init():void {
+			App.sound.playSound('inventar', App.sound.onVoice, 1);
 			if (!close) {
 				close = new BaseButton(61);
 				close.addEventListener(MouseEvent.CLICK, onClose);
