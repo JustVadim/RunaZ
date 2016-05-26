@@ -4,6 +4,7 @@ package artur.win {
 	import artur.display.KuznitsaChest;
 	import artur.PrepareGr;
 	import artur.RasterClip;
+	import artur.display.KyzStone;
 	import artur.util.Maker;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
@@ -22,9 +23,14 @@ package artur.win {
 	import Utils.Functions;
 	import Utils.json.JSON2;
 	
-	public class WinKyz {
-		public static var dt:int = -1;
+	public class WinKyz extends Sprite {
+		private var bg:Bitmap;
+		public var chest:KuznitsaChest;
+		public static var inst:WinKyz;
+		public var bin:Boolean = false;
 		
+		
+		/*public static var dt:int = -1;
 		private var bg:Bitmap = RasterClip.getBitmap(new mc_bg_kyz(), 1, 800, 440);
 		public var bin:Boolean = true;
 		private var btns_add:Array = [];
@@ -32,14 +38,21 @@ package artur.win {
 		private var bgPrice:Sprite =  new Sprite();
 		private var btnsInBg:Array = [];
 		private var btnClosePrice:BaseButton = new BaseButton(31);
-		public var chest:KuznitsaChest = new KuznitsaChest();
-		public static var inst:WinKyz;
+		
+		
 		public var timerStone:mcStones = new mcStones();
 		public var timerText:TextField = Functions.getTitledTextfield(35, 4, 100, 25, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.LEFT, "00:00:00", 1, Kerning.ON, 1, true);
-		private var timer:Timer;
+		private var timer:Timer;*/
 		
 		public function WinKyz() {
-			var i:int
+			this.bg = RasterClip.getBitmap(new mc_bg_kyz(), -1, -1);
+			this.addChild(this.bg );
+			this.chest = new KuznitsaChest();
+			this.addChild(this.chest);
+			for (var i:int = 1; i <= 5; i++) {
+				this.addChild(new KyzStone(i, 96.55, 50*i - 22));
+			}
+			/*var i:int
 			var block:Sprite = new mcBlock();
 			var index:int = 0;
 			block.x = - 200;
@@ -103,10 +116,10 @@ package artur.win {
 						
 			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OVER, this.onBtnClosePrice);
 			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
-			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);
+			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);*/
 		}
 		
-		private function onBtnClosePrice(e:MouseEvent):void {
+		/*private function onBtnClosePrice(e:MouseEvent):void {
 			var mc:BaseButton = BaseButton(e.target);
 			App.info.init(mc.x - 45, mc.y + 30, { txtInfo_w:70, txtInfo_h:37, txtInfo_t:Lang.getTitle(47), type:0} );
 		}
@@ -210,7 +223,7 @@ package artur.win {
 					BaseButton(btns_add[i]).scaleX = 1;
 				}
 			}*/
-			if(UserStaticData.hero.sz == null) {
+			/*if(UserStaticData.hero.sz == null) {
 				
 			} else {
 				this.checkStone();
@@ -336,9 +349,7 @@ package artur.win {
 			data.sendData(COMMANDS.CRAFT_ITEM, JSON2.encode(this.chest.getCraftObj()), true);
 		}
 		
-		public function turnStoneBtn(stoneNum:int):void {
-			BaseButton(this.btns_add[stoneNum]).scaleX = 1;
-		}
+		
 		
 		private function onCraftRes(e:DataExchangeEvent):void {
 			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCraftRes);
@@ -386,7 +397,28 @@ package artur.win {
 			}else {
 				App.lock.init(res.error);
 			}
-		}
+		}*/
+		
+			public function init():void {
+				App.spr.addChild(this);
+				App.topPanel.init(this);
+				App.topMenu.init(false, true);
+				this.chest.init();
+			}
+			
+			public function frees():void {
+				if(this.parent) {
+					App.spr.removeChild(this);
+				}
+			}
+			
+			public function update():void {
+				
+			}
+			
+			public function turnStoneBtn(stoneNum:int):void {
+				//BaseButton(this.btns_add[stoneNum]).scaleX = 1;
+			}
 		
 	}
 

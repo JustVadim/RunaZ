@@ -1,78 +1,52 @@
 package artur.display {
+	import Utils.Functions;
 	import adobe.utils.CustomActions;
 	import artur.PrepareGr;
 	import artur.RasterClip;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.MovieClip;
 	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
+	import flash.filters.GlowFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+	import flash.text.TextField;
+	import flash.text.TextFormatAlign;
+	import flash.text.engine.Kerning;
 	
 	public class KyzStone extends Sprite {
-		private static var st:mcStones = new mcStones();
-		private static var kyzStones:Array = new Array();
-		private var free:Boolean = false;
+		private static var vector:MovieClip = new KyzStones();
 		private var id:int;
+		private var getBtn:BaseButton;
+		private var askFriend:BaseButton;
+		private var sendToCrafter:BaseButton;
+		private var text:TextField;
 		
-		public function KyzStone(id:int) {
+		public function KyzStone(id:int, xx:Number, yy:Number) {
+			var bm:Bitmap = RasterClip.getMovedBitmap(new KyzStones(), id);
+			this.addChild(bm);
+			this.x = xx;
+			this.y = yy;
 			this.tabEnabled = false;
 			this.tabChildren = false;
-			this.mouseChildren = false;
 			this.id = id;
-			this.getImage();
+			this.buttonMode = true;
+			this.getBtn = new BaseButton(69);
+			this.addChild(getBtn);
+			this.getBtn.x = -40.5;
+			this.getBtn.y = 0;
+			this.askFriend = new BaseButton(70);
+			this.askFriend.x = -40.5 - getBtn.width - 5;
+			this.addChild(this.askFriend);
+			this.sendToCrafter = new BaseButton(41);
+			this.sendToCrafter.x = 125;
+			this.sendToCrafter.y = 0;
+			this.addChild(this.sendToCrafter);
+			this.text = Functions.getTitledTextfield(20, -10, 85, 25, new Art().fontName, 18, 0xFFFFFF, TextFormatAlign.CENTER, "12", 1, Kerning.ON, 1, true);
+			this.text.filters = [new GlowFilter(0x0, 1, 3, 3)];
+			this.addChild(text);
 		}
 		
-		public function getId():int {
-			return this.id - 1;
-		}
-		
-		public function getImage():void {
-			var rect:Rectangle = new Rectangle();
-			var cont:Sprite = new Sprite();
-			var bmd:BitmapData;
-			var mtx:Matrix = new Matrix();
-			var bm:Bitmap;
-			st.gotoAndStop(this.id);
-			if(st.scaleX != PrepareGr.scaleFactor) {
-				st.scaleX = PrepareGr.scaleFactor;
-				st.scaleY = PrepareGr.scaleFactor;
-			}
-			cont.addChild(st);
-			rect = cont.getBounds(cont);
-			mtx.tx = -rect.x;
-			mtx.ty = -rect.y;
-			bmd = new BitmapData(cont.width, cont.height, true, 0);
-			bmd.draw(cont, mtx);
-			bm = new Bitmap(bmd, PixelSnapping.AUTO, true);
-			bm.scaleX /= PrepareGr.scaleFactor; 
-			bm.scaleY /= PrepareGr.scaleFactor;
-			bm.x -= mtx.tx/PrepareGr.scaleFactor;
-			bm.y -= mtx.ty / PrepareGr.scaleFactor;
-			
-		}
-		
-		public static function getStone(id:int):KyzStone {
-			var stone:KyzStone;
-			for (var i:int = 0; i < KyzStone.kyzStones.length; i++) {
-				stone = KyzStone(KyzStone.kyzStones[i]);
-				if (stone.free && stone.id == id) {
-					stone.free = false;
-					return stone;
-				}
-			}
-			stone = new KyzStone(id);
-			KyzStone.kyzStones.push(stone);
-			return stone;
-		}
-		
-		public function frees():void 
-		{
-			this.free = true;
-			this.scaleX = this.scaleY = 1;
-			if(this.parent) {
-				this.parent.removeChild(this);
-			}
-		}
 	}
 }

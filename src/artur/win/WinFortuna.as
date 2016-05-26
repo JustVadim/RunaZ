@@ -52,7 +52,7 @@ package artur.win
 		private var freeBtnText:TextField;
 		private var donateBtnText:TextField;
 		private var animFortuna:mcFortunaAnim = new mcFortunaAnim();
-		private var animFortunaText:TextField = Functions.getTitledTextfield( -42, -12.5, 84, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);;
+		private var animFortunaText:TextField = Functions.getTitledTextfield( -42, -12.5, 84, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);
 		public static var dialogChecked:Boolean = false;
 		
 		
@@ -63,7 +63,7 @@ package artur.win
 			animFortuna.mc.gotoAndStop(1);
 			animFortuna.x = 400;
 		    animFortuna.y = 233;
-			bg = RasterClip.getBitmapFromBmd(App.prepare.cach[62]);
+			bg = RasterClip.getBitmap(new mcBgFortuna2());
 			//new MyBitMap();
 			btnClose = new BaseButton(63);
 			btnFree = new BaseButton(64);

@@ -42,7 +42,7 @@ package artur.win {
 			WinCastle.shopInventar = new ShopInventar();
 			WinCastle.txtCastle.scroll.source = this.spr_units;
 			this.mcCurr.x = -7;
-			this.bg = RasterClip.getBitmapFromBmd(App.prepare.cach[7]);
+			this.bg = RasterClip.getBitmap(new bgCastle1());
 			//new MyBitMap(App.prepare.cach[7]);
 			for (var i:int = 0; i < 4; i++) {
 				this.slots.push(new Slot(i));

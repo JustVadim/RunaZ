@@ -1,5 +1,12 @@
 package artur.units 
 {	
+	import artur.RasterClip;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.MovieClip;
+	import flash.display.PixelSnapping;
+	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	import report.Report;
 	public class UnitCache 
 	{
@@ -41,6 +48,34 @@ package artur.units
 				if (!unitCache[i].free) {
 				   unitCache[i].update();
 				}
+			}
+		}
+		
+		public static function getItem(host:Bitmap, itemsVector:Array, type:int, frame:int):void{
+			var vector:MovieClip = MovieClip(itemsVector[type]);
+			vector.gotoAndStop(frame);
+			vector.filters = [U_Lyk.f];
+			if(vector.scaleX != RasterClip.unitItemsScale) {
+				vector.scaleX = vector.scaleY = RasterClip.unitItemsScale;
+			}
+			if(vector.width > 5) {
+				var cont:Sprite = new Sprite();
+				cont.addChild(vector);
+				var rect:Rectangle = cont.getBounds(cont);
+				vector.x = -rect.x;
+				vector.y = -rect.y;
+				var bmd:BitmapData = new BitmapData(cont.width, cont.height, true, 0);
+				bmd.draw(cont);
+				host.bitmapData = bmd;
+				host.pixelSnapping = PixelSnapping.AUTO;
+				host.smoothing = true;
+				host.scaleX /= RasterClip.unitItemsScale; 
+				host.scaleY /= RasterClip.unitItemsScale;
+				host.x = rect.x / RasterClip.unitItemsScale;
+				host.y = rect.y / RasterClip.unitItemsScale;
+				vector.x = 0;
+				vector.y = 0;
+				cont.removeChild(vector);
 			}
 		}
 	}

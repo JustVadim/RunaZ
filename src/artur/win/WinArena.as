@@ -44,7 +44,7 @@ package artur.win {
 		
 		
 		public function WinArena() {
-			bg = RasterClip.getBitmapFromBmd(App.prepare.cach[39]);
+			bg = RasterClip.getBitmap(new mcArena());
 			btn1 = new BaseButton(40);
 			btn1.x = 400;
 			btn1.y = 100;

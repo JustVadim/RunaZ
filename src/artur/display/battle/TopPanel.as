@@ -49,14 +49,11 @@ package artur.display.battle
 			mcBtns.over.gotoAndStop(1);
 		}
 		
-		private function down(e:MouseEvent):void 
-		{
+		private function down(e:MouseEvent):void {
 			mcBtns.over.gotoAndStop(2);
-			Report.addMassage('MouseDown');
 		}
 	
-		private function out(e:MouseEvent):void 
-		{
+		private function out(e:MouseEvent):void {
 			mcBtns.over.y = -200;
 			mcBtns.over.gotoAndStop(1);
 			App.info.frees();
@@ -80,6 +77,7 @@ package artur.display.battle
 		
 		private function onBtn(e:MouseEvent):void 
 		{
+			Report.addMassage(e.currentTarget.name);
 			switch(e.currentTarget.name)
 			{
 				case 'btnCastle':

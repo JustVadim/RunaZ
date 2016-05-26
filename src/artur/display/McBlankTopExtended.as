@@ -21,7 +21,7 @@ package artur.display {
 		private var txtSilver:TextField = Functions.getTitledTextfield(186.75, 17, 59.75, 16, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "99999", 1, Kerning.ON, 0.5, false);
 		private var ratText:TextField = Functions.getTitledTextfield(306.5, 18, 50, 16, new Art().fontName, 12, 0xFFF642, TextFormatAlign.CENTER, "99999", 1, Kerning.ON, 0.5, false);
 		private var loader:Loader = new Loader();
-		private var id:String;
+		private var ui:Object;
 		
 		public function McBlankTopExtended(xx:Number, yy:Number, place:int) {
 			this.mouseChildren = false;
@@ -57,7 +57,7 @@ package artur.display {
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			App.profile.init(this.id);
+			App.profile.init(ui.id, ui);
 		}
 		
 		private function onOver(e:MouseEvent):void {
@@ -78,8 +78,9 @@ package artur.display {
 				this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoad);
 				this.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 				this.loader.unload();
+				this.ui = obj.ui;
 				this.loader.load(new URLRequest(obj.ui.pl));
-				this.id = obj.ui.id;
+				//this.id = obj.ui.id;
 			}
 		}
 		

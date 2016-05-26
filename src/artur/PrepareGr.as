@@ -22,17 +22,17 @@ package artur
 	{
 		public var cach:Array = [];
 		public static var btnsScale:Number = 1;
-		public static var scaleFactor:Number = 2;   //unitItemsScale
+		//public static var scaleFactor:Number = 2;   //unitItemsScale
 		public function PrepareGr() {
 			var clips:Array = [
-			/*0*/new bg1Root(),
+			/*0*/new MovieClip(),//new bg1Root(),
 			/*2*/new btnBank,
 			/**/new btnTop,//2
 			/**/new btnCastle,//3
 			/**/new btnArena,//4
 			/**/new btnShop, //5
 			/**/new btnSend,//6
-			/**/new bgCastle1,//7
+			/**/new MovieClip,//7
 			/**/new BtnAddHeroExtend,//8
 			/**/new BtnHeroExtend,//9
 			/**/new bgBlankUnitExtend,//10;
@@ -41,7 +41,7 @@ package artur
 			/**/new mcBgHeroInv(),//13
 			/**/new btnTown(),//14
 			/**/new btnClosedShopExtended(),//15
-			/**/new mcBrmPart(),//16
+			/**/new MovieClip(),//16
 			/*17  */new t1(),
 			/*18  */new t2(),
 			/*19  */new t3(),
@@ -64,7 +64,7 @@ package artur
 			/*36  */new btnSel1Extend(Lang.getTitle(40, 1)),
 			/*37  */new btnSel1Extend(Lang.getTitle(40, 2)),
 			/*38  */new btnSel1Extend(Lang.getTitle(40, 3)),
-		    /*39  */new mcArena(),//39,
+		    /*39  */new MovieClip(),//39,
 		    /*40  */new BtnArena(),//40
 		    /*41  */new btnAddStone(),//41
 		    /*42  */new BtnCraft(),//42
@@ -87,7 +87,7 @@ package artur
 			/*59  */ new BtnChatDialogExtends(Lang.getTitle(187)),
 			/*60  */ new BtnChatDialogExtends(Lang.getTitle(188)), 
 			/*61  */ new btnClsoeDialog(),
-		    /*62  */ new mcBgFortuna2(),
+		    /*62  */ new MovieClip(),
 			/*63  */ new btnBack(),
 			/*64  */ new btnFortuna(),
 			/*65  */ new btnFortunaDonate(),

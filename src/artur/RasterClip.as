@@ -14,18 +14,21 @@ package artur
 	public class RasterClip  {	
 		//public static var scaleFactor:Number = 1;
 		private static var drawSpr:Sprite;
-		public static var defaultScale:Number = 2;
-		public static var defaultScale1:Number = 1;
-		public static var PrepareGrScale:Number = 3;
+		public static var defaultScale:Number = 1.2;
+		public static var unitItemsScale:Number = 1.2;
+		public static var PrepareGrScale:Number = 2;
 		
-		public function RasterClip() 
-		{
+		public function RasterClip() {
 			
 		}
 		
 		public static function getBitmap(clip:MovieClip, frame:int = 1, wd:Number = -1, hg:Number = -1, filter:Array = null, scalef:Number = 1):Bitmap {	 
 			var bmd:BitmapData = RasterClip.getBitmapData(clip, frame, wd, hg, filter, scalef);
-			var bm:Bitmap= new Bitmap(bmd, PixelSnapping.ALWAYS, true);
+			var bm:Bitmap= new Bitmap(bmd, PixelSnapping.AUTO, true);
+			if(scalef == 1) {
+				scalef = defaultScale;
+			}
+			
 			if(wd == -1) {
 				bm.scaleX /= scalef;
 			}
@@ -42,6 +45,9 @@ package artur
 		}
 		
 		public static function getBitmapData(clip:DisplayObject, frame:int, ww:int = -1, hh:int = -1, filter:Array = null, scaleF:Number = 1):BitmapData {
+			if(scaleF == 1) {
+				scaleF = defaultScale;
+			}
 			if (RasterClip.drawSpr == null) {
 				RasterClip.drawSpr = new Sprite();
 			}
@@ -58,40 +64,55 @@ package artur
 			} else {
 				clip.height = hh;
 			}
-			RasterClip.drawSpr.addChild(clip);
-			var bmd:BitmapData = new BitmapData(clip.width, clip.height, true, 0);
-			bmd.draw(RasterClip.drawSpr);
-			RasterClip.drawSpr.removeChild(clip);
-			return bmd;
+			if(clip.width>5) {
+				RasterClip.drawSpr.addChild(clip);
+				var bmd:BitmapData = new BitmapData(clip.width, clip.height, true, 0);
+				bmd.draw(RasterClip.drawSpr);
+				RasterClip.drawSpr.removeChild(clip);
+				return bmd;
+			} else {
+				return new BitmapData(10, 10);
+			}
 		}
 		
 		public static function getMovedBitmap(clip:MovieClip, frame:int = 1, ww:int = -1, hh:int = -1, filter:Array = null, scaleF:Number = 1):Bitmap {
+			if(scaleF == 1) {
+				scaleF = defaultScale;
+			}
 			if(filter) {
 				clip.filters = filter;
 			}
 			clip.gotoAndStop(frame);
-			for (var j:int = 0; j < clip.numChildren; j++) {
-				if (clip.getChildAt(j) is MovieClip) {
-					MovieClip(clip.getChildAt(j)).gotoAndStop(frame);
+			if (clip.width > 4)
+			{
+				for (var j:int = 0; j < clip.numChildren; j++) {
+					if (clip.getChildAt(j) is MovieClip) {
+						MovieClip(clip.getChildAt(j)).gotoAndStop(frame);
+					}
 				}
+				clip.scaleX *= scaleF;
+				clip.scaleY *= scaleF;
+				RasterClip.drawSpr.addChild(clip);
+				var rect:Rectangle = RasterClip.drawSpr.getBounds(RasterClip.drawSpr);
+				clip.x = -rect.x;
+				clip.y = -rect.y;
+				var bmd:BitmapData = new BitmapData(clip.width, clip.height, true, 0);
+				bmd.draw(RasterClip.drawSpr);
+				var bm:Bitmap = new Bitmap(bmd, PixelSnapping.AUTO, true);
+				bm.scaleX = bm.scaleY = 1 / scaleF;
+				bm.x = rect.x/scaleF;
+				bm.y = rect.y/scaleF;
+				RasterClip.drawSpr.removeChild(clip);
+				return bm;
+			}else {
+				return new Bitmap;
 			}
-			clip.scaleX *= scaleF;
-			clip.scaleY *= scaleF;
-			RasterClip.drawSpr.addChild(clip);
-			var rect:Rectangle = RasterClip.drawSpr.getBounds(RasterClip.drawSpr);
-			clip.x = -rect.x;
-			clip.y = -rect.y;
-			var bmd:BitmapData = new BitmapData(clip.width, clip.height, true, 0);
-			bmd.draw(RasterClip.drawSpr);
-			var bm:Bitmap = new Bitmap(bmd, PixelSnapping.ALWAYS, true);
-			bm.scaleX = bm.scaleY = 1 / scaleF;
-			bm.x = rect.x/scaleF;
-			bm.y = rect.y/scaleF;
-			RasterClip.drawSpr.removeChild(clip);
-			return bm;
 		}
 		
 		public static function getAnimationBitmaps(clip:MovieClip, filter:Array = null, scaleF:Number = 1):Array {
+			if(scaleF == 1) {
+				scaleF = defaultScale;
+			}
 			var arr:Array = new Array();
 			if(filter) {
 				clip.filters = filter;

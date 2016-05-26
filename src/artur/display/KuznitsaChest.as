@@ -92,7 +92,7 @@ package artur.display {
 		}
 		
 		private function onItemInChestMouserDown(e:MouseEvent):void {
-			var chest:Object = UserStaticData.hero.chest;
+			/*var chest:Object = UserStaticData.hero.chest;
 			var key:String = ItemCall(e.target).name;
 			if (chest[key].c[103] != 7) {
 				this.removeSelectedItem(); 
@@ -111,7 +111,7 @@ package artur.display {
 				this.addChild(selectedItem);
 			} else {
 				//dialog
-			}
+			}*/
 		}
 		
 		private function onCraftClick(e:MouseEvent):void {
@@ -139,7 +139,7 @@ package artur.display {
 		}
 		
 		public function frees():void {
-			this.removeSelectedItem();
+			/*this.removeSelectedItem();
 			for (var i:Object in items) {
 				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OVER, items[i].over);
 				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OUT, items[i].out);
@@ -148,28 +148,28 @@ package artur.display {
 				delete(items[i]);
 			}
 			//this.items = new Array();
-			this.cleareStones();
+			this.cleareStones();*/
 			
 		}
 		
 		public function removeCraft():void {
-			this.removeSelectedItem();
-			this.cleareStones();
+			/*this.removeSelectedItem();
+			this.cleareStones();*/
 		}
 		
 		private function cleareStones():void
 		{
 			for (var key:Object in this.stonesArray) {
-				KyzStone(this.stonesArray[key]).removeEventListener(MouseEvent.CLICK, this.onStoneClick);
+				/*KyzStone(this.stonesArray[key]).removeEventListener(MouseEvent.CLICK, this.onStoneClick);
 				KyzStone(this.stonesArray[key]).frees();
 				KyzStone(this.stonesArray[key]).buttonMode = false;
 				delete(this.stonesArray[key]);
-				delete(this.stonesObj[key]);
+				delete(this.stonesObj[key]);*/
 			}
 		}
 		
 		public function addSoneToCraft(stoneNum:int):Boolean {
-			var pos:int = -1;
+			/*var pos:int = -1;
 			for (var i:int = 0; i < 9; i++) {
 				if(stonesArray[i]==null) {
 					pos = i;
@@ -186,16 +186,17 @@ package artur.display {
 				return true;
 			} else {
 				return false;
-			}
+			}*/
+			return false;
 		}
 		
 		private function onStoneClick(e:MouseEvent):void {
-			var stone:KyzStone = KyzStone(e.target);
-			this.removeStoneFromCraft(stone.getId());
+			/*var stone:KyzStone = KyzStone(e.target);
+			this.removeStoneFromCraft(stone.getId());*/
 		}
 		
 		public function removeStoneFromCraft(stoneNum:int):void {
-			var key:Object;
+			/*var key:Object;
 			for(key in stonesObj) {
 				if(this.stonesObj[key] == stoneNum) {
 					break;
@@ -212,21 +213,23 @@ package artur.display {
 				App.sound.playSound("stone", App.sound.onVoice, 1);
 			} else {
 				App.lock.init("Error!!!!");
-			}
+			}*/
 		}
 		
 		public function canCraft():Boolean {
-			if(this.selectedItem !=null) {
+			/*if(this.selectedItem !=null) {
 				for(var key:Object in this.stonesObj){
 					return true;
 				}
 			} 
+			return false;*/
 			return false;
 		}
 		
 		public function getCraftObj():Object 
 		{
-			return { "in":int(this.selectedItem.name), "gems":this.stonesObj };
+			//return { "in":int(this.selectedItem.name), "gems":this.stonesObj };
+			return null;
 		}
 	}
 }

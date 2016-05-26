@@ -1,5 +1,6 @@
 package artur.display.battle {
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.PixelSnapping;
@@ -34,7 +35,7 @@ package artur.display.battle {
 		}
 		
 		public function getImage(frame:int):void {
-			var rect:Rectangle = new Rectangle();
+			/*var rect:Rectangle = new Rectangle();
 			var cont:Sprite = new Sprite();
 			var bmd:BitmapData;
 			var mtx:Matrix = new Matrix();
@@ -55,7 +56,13 @@ package artur.display.battle {
 			bm.scaleY /= PrepareGr.scaleFactor;
 			bm.x -= mtx.tx/PrepareGr.scaleFactor;
 			bm.y -= mtx.ty / PrepareGr.scaleFactor;
-			this.addChild(bm)
+			this.addChild(bm)*/
+			
+			var bm:Bitmap = RasterClip.getMovedBitmap(sonesVector, frame, -1, -1, null, RasterClip.unitItemsScale);
+			this.addChild(bm);
+			sonesVector.scaleX = sonesVector.scaleY = 1;
+			sonesVector.x = 0;
+			sonesVector.y = 0;
 		}
 		
 		public function frees():void 

@@ -42,8 +42,9 @@ package artur.win
 			    swapWin(3)	 
 			}
 			
-			var bm1:Bitmap = RasterClip.getBitmapFromBmd(App.prepare.cach[16]);
-			var bm2:Bitmap = RasterClip.getBitmapFromBmd(App.prepare.cach[16]);;
+			var bm1:Bitmap = RasterClip.getBitmap(new mcBrmPart(), 1,-1,-1,null,0.9);
+			RasterClip.getBitmapFromBmd(App.prepare.cach[16]);
+			var bm2:Bitmap = RasterClip.getBitmap(new mcBrmPart(), 1,-1,-1,null,0.9);
 			brama.mc.addChild(bm1); brama.mc2.addChild(bm2);
 		}
 		

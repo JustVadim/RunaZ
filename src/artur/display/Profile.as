@@ -23,6 +23,7 @@ package artur.display {
 		private var ava_loader:Loader;
 		public var btnClose:BaseButton = new BaseButton(61);
 		private var userId:String
+		private var obj:Object;
 		private var txts:Object;
 		
 		public function Profile() {
@@ -37,16 +38,19 @@ package artur.display {
 			creatText();
 		}
 		
-		public function init(userId:String):void {
-			Report.addMassage(userId);
+		public function init(userId:String, obj:Object = null):void {
+			Report.addMassage(JSON.stringify(obj) + userId);
 			this.frees();
 			this.userId = userId;
 			App.spr.addChild(this);
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onHero);
 			data.sendData(COMMANDS.GET_HERO, userId, true);
-			//this.getAva();
+			this.obj = obj;
+			this.getAva();
+			
 			this.btnClose.addEventListener(MouseEvent.CLICK, this.onCloseClick);
+			
 		}
 		
 		private function onCloseClick(e:MouseEvent):void {
@@ -74,12 +78,21 @@ package artur.display {
 			this.ava_loader.contentLoaderInfo.removeEventListener(Event.UNLOAD, this.onUnload);
 			this.ava_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onGetAva);
 			this.ava_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onGetAvaError);
-			if(UserStaticData.users_info[this.userId].pl != null) {
+			if (this.obj != null) {
+				this.ava_loader.load(new URLRequest(obj.pl));
+				Functions.compareAndSet(txts.txtName1, obj.sn + " " + obj.fn);
+				this.obj = null;
+			} else if(UserStaticData.users_info[this.userId].pl != null) {
 				this.ava_loader.load(new URLRequest(UserStaticData.users_info[this.userId].pl));
 				Functions.compareAndSet(txts.txtName1, UserStaticData.users_info[this.userId].sn + " " +UserStaticData.users_info[this.userId].fn);
 			} else {
 				
 			}
+			
+		}
+		
+		private function onGetInfo(e:DataExchangeEvent):void 
+		{
 			
 		}
 		
@@ -108,9 +121,10 @@ package artur.display {
 						ProfileUnitText(this.units[i]).init(res, i);
 						this.setText(res);
 					}
+					
 				} else {
-					var data:DataExchange = new DataExchange();
-					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onGetUserInfo);
+					//var data:DataExchange = new DataExchange();
+					//data.addEventListener(DataExchangeEvent.ON_RESULT, this.onGetUserInfo);
 					//get user info
 				}
 			} else {
