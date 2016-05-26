@@ -36,8 +36,8 @@ package artur.win
 		public function WinRoot() {
 			this.bg = RasterClip.getBitmap(new bg1Root());
 			this.bg.x = bg.y = -33;
-			var xps:Array       = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5];
-			var yps:Array       = [214.75  , 218  , 291.25 , 367, 367.35, 89.15];
+			var xps:Array = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5];
+			var yps:Array = [214.75  , 218  , 291.25 , 367, 367.35, 89.15];
 			var names:Array = ['bank','top','castle','arena','shop','map'];
 			for (var i:int = 0; i < indxBtn.length; i++) {
 				var btn:MovieClip = new indxBtn[i]();
@@ -126,7 +126,7 @@ package artur.win
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}
-			App.sprTop.init();
+			//App.sprTop.init();
 		}
 		
 		public function updateBar():void {

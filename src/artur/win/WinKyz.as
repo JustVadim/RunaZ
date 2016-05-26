@@ -28,6 +28,7 @@ package artur.win {
 		public var chest:KuznitsaChest;
 		public static var inst:WinKyz;
 		public var bin:Boolean = false;
+		public static var dt:int = -1;
 		
 		
 		/*public static var dt:int = -1;
@@ -52,6 +53,9 @@ package artur.win {
 			for (var i:int = 1; i <= 5; i++) {
 				this.addChild(new KyzStone(i, 96.55, 50*i - 22));
 			}
+			
+			
+			
 			/*var i:int
 			var block:Sprite = new mcBlock();
 			var index:int = 0;
