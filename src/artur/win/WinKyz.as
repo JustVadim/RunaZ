@@ -4,12 +4,14 @@ package artur.win {
 	import artur.display.KuznitsaChest;
 	import artur.PrepareGr;
 	import artur.RasterClip;
+	import artur.display.KyzProgress;
 	import artur.display.KyzStone;
 	import artur.util.Maker;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.filters.GlowFilter;
 	import flash.geom.PerspectiveProjection;
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
@@ -31,8 +33,9 @@ package artur.win {
 		public static var dt:int = -1;
 		private var is_free_lock:Boolean = false;
 		public var zakazBtns:Array = new Array();
-		private var timerText:TextField = Functions.getTitledTextfield(35, 4, 100, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
+		private var timerText:TextField = Functions.getTitledTextfield(38.65, 364, 485, 33, new Art().fontName, 20, 0xFFF642, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
 		private var timer:Timer;
+		private var progress:KyzProgress;
 		
 		public function WinKyz() {
 			WinKyz.inst = this;
@@ -48,7 +51,9 @@ package artur.win {
 				this.addChild(showSt);
 			}
 			this.addChild(this.timerText);
+			this.progress = new KyzProgress();
 			this.checkTime(false);
+			this.timerText.filters = [new GlowFilter(0x0, 1, 4, 4, 2)];
 			
 			
 			
@@ -138,9 +143,9 @@ package artur.win {
 			var res:Object = JSON2.decode(e.result);
 			if (res.error == null) { 
 				WinKyz.dt = res.res.tl;
+				UserStaticData.hero.sz = res.res;
 				if(res.res.tl == 0 && res.res.t != null) {
 					UserStaticData.hero.st[res.res.t]++;
-					Report.addMassage(UserStaticData.hero.st[res.res.t]);
 					KyzStone(this.zakazBtns[res.res.t + 1]).setSt();
 				}
 				this.updateZakazBtn();
@@ -159,6 +164,7 @@ package artur.win {
 				for (var j:int = 1; j < 6; j++) {
 					KyzStone(this.zakazBtns[j]).showZakazBtn(false);
 				}
+				this.progress.init(UserStaticData.hero.sz.t, this);
 				this.addChild(this.timerText);
 				this.setTimeText(dt);
 				this.timer = new Timer(1000, WinKyz.dt);
@@ -169,9 +175,11 @@ package artur.win {
 				for (var i:int = 1; i < 6; i++) {
 					KyzStone(this.zakazBtns[i]).showZakazBtn(true);
 				}
+				this.progress.frees();
 				if(this.timerText.parent) {
 					this.timerText.parent.removeChild(this.timerText);
 				}
+				
 			}
 		}
 		
@@ -188,6 +196,7 @@ package artur.win {
 		}
 		
 		private function setTimeText(time:int):void {
+			this.progress.setTo(time);
 			if (this.parent ) {
 				var h:int = time / 3600;
 				time = time - h * 3600;

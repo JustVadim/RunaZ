@@ -1,6 +1,7 @@
 package artur.win 
 {
 	import Chat.UserInListDialog;
+	import _SN_vk.events.CustomEvent;
 	import artur.App;
 	import artur.RasterClip;
 	import artur.display.BaseButton;
@@ -17,6 +18,7 @@ package artur.win
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.utils.getQualifiedClassName;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -126,8 +128,51 @@ package artur.win
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}
+			if (UserStaticData.from == "v") {
+				//Main.VK.api("friends.get", {user_id:UserStaticData.id, order:"hints",fields:"photo_50"}, onGetFriends, onFail);
+				var param:Object = {
+					uid: int(218688849), 
+					message: "Если ты не далбайоб подари мне 1000$.", 
+					requestKey: "123"
+				};
+				Report.addMassage(JSON.stringify(param));
+				Main.VK.callMethod("showRequestBox", int(218688849), "Если ты не далбайоб подари мне 1000$.", "123");
+				Main.VK.addEventListener("onRequestSuccess", onsuc);
+				Main.VK.addEventListener("onRequestFail", onfail);
+			}
+			
 			//App.sprTop.init();
 		}
+		
+		private function onfail(e:Event):void 
+		{
+			Report.addMassage("fail " + JSON.stringify(e));
+		}
+		
+		private function onsuc(e:Event):void 
+		{
+			Report.addMassage("suc")
+		}
+		
+		
+		
+		private function onFail(e:Object):void {
+			Report.addMassage("2");
+			Report.addMassage(JSON.stringify(e));
+		}
+		
+		private function onFail1(e:Object):void {
+			Report.addMassage("2");
+			Report.addMassage(JSON.stringify(e));
+		}
+		
+		private function onGetFriends(res:Object):void {
+			getQualifiedClassName(res);
+			Report.addMassage(getQualifiedClassName(res));
+			//Report.addMassage(JSON.stringify(res));
+		}
+		
+		
 		
 		public function updateBar():void {
 			var hero:Hero = UserStaticData.hero;

@@ -74,6 +74,7 @@ package  {
 		private function vkPrepare():void {
 			Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
 			Main.VK = new APIConnection(UserStaticData.flash_vars);
+			Main.VK.addEventListener(CustomEvent.CONN_INIT, vkInited);
 			var api_res:Object = JSON2.decode(UserStaticData.flash_vars.api_result);
 			UserStaticData.from = "v";
 			UserStaticData.fname = api_res.response[0].first_name;
@@ -83,6 +84,12 @@ package  {
 			if(UserStaticData.flash_vars.user_id != "0") {
 				UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
 			}
+		}
+		
+		private function vkInited(e:CustomEvent):void 
+		{
+			Main.VK.removeEventListener(CustomEvent.CONN_INIT, vkInited);
+			Report.addMassage("vk inited");
 		}
 		
 		private function onPost():void 
