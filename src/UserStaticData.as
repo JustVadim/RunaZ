@@ -166,6 +166,7 @@
 														"photo-118450370_413055297",
 														"photo-118450370_413055300", 
 			
-													]
+													];
+		public static var ASK_FRIENDS:Array = null;
 	}
 }

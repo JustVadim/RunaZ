@@ -10,11 +10,11 @@ package artur.display {
 	
 	public class KyzChestStone extends Sprite {
 		private var id:int;
+		private var st:KyzChestStoneGraph;
 		public function KyzChestStone(id:int) {
 			this.id = id;
-			var st:MovieClip = new mcStones();
-			this.addChild(RasterClip.getMovedBitmap(st, id + 1, -1, -1));
 			this.buttonMode = true;
+			this.mouseChildren = false;
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 		}
 		
@@ -24,6 +24,7 @@ package artur.display {
 			this.addEventListener(MouseEvent.CLICK, this.onClick);
 			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
 			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			this.addChild(this.st = KyzChestStoneGraph.getStone(this.id, 0, 0, 1));
 		}
 		
 		private function onOut(e:MouseEvent):void {
@@ -44,6 +45,7 @@ package artur.display {
 			this.removeEventListener(MouseEvent.ROLL_OVER, this.onOver);
 			this.removeEventListener(MouseEvent.ROLL_OUT, this.onOut);
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
+			this.st.frees();
 		}
 		
 	}

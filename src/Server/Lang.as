@@ -260,7 +260,7 @@ package Server
 			Lang.lang_table[75] = ["Я хочу заказать", "I want to order", ""];
 			Lang.lang_table[76] = ["Убил", "Killed", ""];
 			Lang.lang_table[77] = ["Доступно", "Available", ""];
-			Lang.lang_table[78] = ["Заказать", "Order", ""];
+			Lang.lang_table[78] = ["Подарить", "Gift", ""];
 			Lang.lang_table[79] = ["шанс ударить указанную цель 2 раза", "chance to attack target 2 times", ""];
 			Lang.lang_table[80] = ["шанс нанести двойной урон", "chance for double damage", ""];
 			Lang.lang_table[81] = ["шанс нанести урон сквозь броню", "chance to deal damage through armor", ""];
@@ -592,6 +592,8 @@ package Server
 										["Богатство", "", ""],
 										["Опыт", "", ""]
 									];
+			Lang.lang_table[199] = ["Попросить", "", ""];
+			Lang.lang_table[200] = ["Подарить", "", ""];
 			
 			
 			

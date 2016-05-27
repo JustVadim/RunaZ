@@ -60,6 +60,11 @@ package artur.display {
 			this.getBtn.addEventListener(MouseEvent.CLICK, this.onClick);
 			this.sendToCrafter.addEventListener(MouseEvent.CLICK, this.onAddCraftClick);
 			this.sendToCrafter.scaleX = 1;
+			this.askFriend.addEventListener(MouseEvent.CLICK, this.onAskClick);
+		}
+		
+		private function onAskClick(e:MouseEvent):void {
+			WinKyz.inst.askGiftDialog.init(this.id);
 		}
 		
 		public function onAddCraftClick(e:MouseEvent = null):void {

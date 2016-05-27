@@ -1,5 +1,6 @@
 package artur.win {
 	import artur.App;
+	import artur.display.AskGiftDialog;
 	import artur.display.BaseButton;
 	import artur.display.KuznitsaChest;
 	import artur.PrepareGr;
@@ -36,6 +37,8 @@ package artur.win {
 		private var timerText:TextField = Functions.getTitledTextfield(38.65, 364, 485, 33, new Art().fontName, 20, 0xFFF642, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
 		private var timer:Timer;
 		private var progress:KyzProgress;
+		private var btnStone:BaseButton;
+		public var askGiftDialog:AskGiftDialog;
 		
 		public function WinKyz() {
 			WinKyz.inst = this;
@@ -54,6 +57,11 @@ package artur.win {
 			this.progress = new KyzProgress();
 			this.checkTime(false);
 			this.timerText.filters = [new GlowFilter(0x0, 1, 4, 4, 2)];
+			this.btnStone = new BaseButton(43);
+			this.btnStone.x = 85.85;
+			this.btnStone.y = 278.85
+			this.addChild(btnStone);
+			this.askGiftDialog = new AskGiftDialog(0);
 			
 			
 			
@@ -137,8 +145,8 @@ package artur.win {
 			data.sendData(COMMANDS.CHECK_STONE, "", true);
 		}
 		
+		
 		private function onCheckStone(e:DataExchangeEvent):void {
-			Report.addMassage(e.result);
 			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCheckStone);
 			var res:Object = JSON2.decode(e.result);
 			if (res.error == null) { 
@@ -158,9 +166,7 @@ package artur.win {
 		}
 		
 		private function updateZakazBtn():void {
-			Report.addMassage(WinKyz.dt + " update");
 			if (WinKyz.dt > 0) {
-				Report.addMassage("dt > 0");
 				for (var j:int = 1; j < 6; j++) {
 					KyzStone(this.zakazBtns[j]).showZakazBtn(false);
 				}
@@ -234,7 +240,6 @@ package artur.win {
 				UserStaticData.hero.gold -= 2;
 				App.topMenu.updateGold();
 				WinKyz.dt = res.res.tl;
-				Report.addMassage(res.res.tl);
 				this.updateZakazBtn();
 			}else {
 				App.lock.init(res.error);
@@ -536,9 +541,7 @@ package artur.win {
 				
 			}
 			
-			public function turnStoneBtn(stoneNum:int):void {
-				//BaseButton(this.btns_add[stoneNum]).scaleX = 1;
-			}
+			
 		
 	}
 

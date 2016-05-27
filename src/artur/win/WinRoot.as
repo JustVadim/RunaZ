@@ -130,15 +130,9 @@ package artur.win
 			}
 			if (UserStaticData.from == "v") {
 				//Main.VK.api("friends.get", {user_id:UserStaticData.id, order:"hints",fields:"photo_50"}, onGetFriends, onFail);
-				var param:Object = {
-					uid: int(218688849), 
-					message: "Если ты не далбайоб подари мне 1000$.", 
-					requestKey: "123"
-				};
-				Report.addMassage(JSON.stringify(param));
-				Main.VK.callMethod("showRequestBox", int(218688849), "Если ты не далбайоб подари мне 1000$.", "123");
+				/*Main.VK.callMethod("showRequestBox", int(218688849), "Если ты не далбайоб подари мне 1000$.", "123");
 				Main.VK.addEventListener("onRequestSuccess", onsuc);
-				Main.VK.addEventListener("onRequestFail", onfail);
+				Main.VK.addEventListener("onRequestFail", onfail);*/
 			}
 			
 			//App.sprTop.init();
