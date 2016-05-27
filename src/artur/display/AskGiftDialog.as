@@ -18,7 +18,7 @@ package artur.display
 		private var cont:Sprite = new Sprite();
 		public var type:int;
 		public static var stoneNum:int;
-		private var title:TextField = Functions.getTitledTextfield(330, 99, 170, 20, new Art().fontName, 13, 0xFFF642, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);
+		private var title:TextField = Functions.getTitledTextfield(314, 99, 170, 20, new Art().fontName, 13, 0xFFF642, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);
 		private var closeBtn:BaseButton;
 		private var st:KyzChestStoneGraph;
 		
@@ -32,7 +32,7 @@ package artur.display
 			this.addChild(this.title);
 			this.closeBtn = new BaseButton(15);
 			this.addChild(this.closeBtn);
-			this.closeBtn.x = 410;
+			this.closeBtn.x = 394;
 			this.closeBtn.y = 400;
 		}
 		
@@ -52,7 +52,7 @@ package artur.display
 		public function init(stoneNum:int):void {
 			Functions.compareAndSet(this.title, Lang.getTitle(199 + this.type) + " " + Lang.getTitle(43, stoneNum));
 			App.spr.addChild(this);
-			this.st = KyzChestStoneGraph.getStone(stoneNum, 392, 42, 1.5);
+			this.st = KyzChestStoneGraph.getStone(stoneNum, 370, 37, 1.5);
 			this.addChild(st);
 			if (UserStaticData.ASK_FRIENDS != null) {
 				AskGiftDialog.stoneNum = stoneNum;
@@ -71,7 +71,6 @@ package artur.display
 		public function frees():void {
 			if(this.parent) {
 				App.spr.removeChild(this);
-				//this.removeChild(AskGiftDialog.images[AskGiftDialog.stoneNum]);
 				for (var i:int = 0; i < UserStaticData.ASK_FRIENDS.length; i++) {
 					this.cont.removeChild(users_arr[i]);
 				}

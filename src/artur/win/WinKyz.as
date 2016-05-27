@@ -5,6 +5,7 @@ package artur.win {
 	import artur.display.KuznitsaChest;
 	import artur.PrepareGr;
 	import artur.RasterClip;
+	import artur.display.KyzChestStoneGraph;
 	import artur.display.KyzProgress;
 	import artur.display.KyzStone;
 	import artur.util.Maker;
@@ -35,10 +36,17 @@ package artur.win {
 		private var is_free_lock:Boolean = false;
 		public var zakazBtns:Array = new Array();
 		private var timerText:TextField = Functions.getTitledTextfield(38.65, 364, 485, 33, new Art().fontName, 20, 0xFFF642, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
+		private var timerTextGift:TextField = Functions.getTitledTextfield(0, 0, 485, 33, new Art().fontName, 15, 0xFFF642, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
 		private var timer:Timer;
 		private var progress:KyzProgress;
 		private var btnStone:BaseButton;
 		public var askGiftDialog:AskGiftDialog;
+		private var zakazBtnBg:Bitmap;
+		private var giftStone:KyzChestStoneGraph;
+		private var is_free_lock_gift:Boolean = false;
+		private var timer2:Timer;
+		public static var dt_gift:int;
+		
 		
 		public function WinKyz() {
 			WinKyz.inst = this;
@@ -56,13 +64,17 @@ package artur.win {
 			this.addChild(this.timerText);
 			this.progress = new KyzProgress();
 			this.checkTime(false);
+			this.checkStoneGiftTime(false);
 			this.timerText.filters = [new GlowFilter(0x0, 1, 4, 4, 2)];
 			this.btnStone = new BaseButton(43);
 			this.btnStone.x = 85.85;
 			this.btnStone.y = 278.85
-			this.addChild(btnStone);
+			//this.addChild(btnStone);
 			this.askGiftDialog = new AskGiftDialog(0);
-			
+			this.zakazBtnBg = RasterClip.getBitmap(new mcBtnBgStoneGift());
+			this.zakazBtnBg.x = 29.15;
+			this.zakazBtnBg.y = 297.45;
+			this.addChild(zakazBtnBg);
 			
 			
 			
@@ -135,6 +147,63 @@ package artur.win {
 			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);*/
 		}
 		
+		private function checkStoneGiftTime(state:Boolean):void {
+			this.is_free_lock_gift = state;
+			if(is_free_lock_gift) {
+				App.lock.init();
+			}
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onCheckStoneGiftRes);
+			data.sendData(COMMANDS.CHECK_STONE_GIFT, "", true);
+		}
+		
+		private function onCheckStoneGiftRes(e:DataExchangeEvent):void {
+			Report.addMassage("gift_res: " + e.result);
+			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCheckStone);
+			var res:Object = JSON2.decode(e.result);
+			if (res.error == null) { 
+				WinKyz.dt_gift = res.res.tl;
+				UserStaticData.hero.sg = res.res;
+				this.updateGiftBtn();
+				if(this.is_free_lock) {
+					App.lock.frees();
+				}
+			} else {
+				App.lock.init(res.error);
+			}
+		}
+		
+		private function updateGiftBtn():void {
+			if (WinKyz.dt_gift > 0) {
+				if(this.btnStone.parent) {
+					this.removeChild(this.btnStone);
+				}
+				this.timer2 = new Timer(1000, WinKyz.dt_gift);
+				this.timer2.addEventListener(TimerEvent.TIMER, this.onTImerGift);
+				this.timer2.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmpltGift);
+				this.timer2.start();
+				this.addChild(this.timerTextGift);
+			} else {
+				if(!this.btnStone.parent) {
+					this.addChild(this.btnStone);
+				}
+				if(this.timerTextGift.parent) {
+					this.removeChild(this.timerTextGift);
+				}
+			}
+		}
+		
+		private function onTImerGift(e:TimerEvent):void {
+			this.setTimeText(dt_gift, this.timerTextGift, true);
+		}
+		
+		private function onTImerCmpltGift(e:TimerEvent):void {
+			this.timer2.removeEventListener(TimerEvent.TIMER, this.onTImerGift);
+			this.timer2.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmpltGift);
+			this.timer2 = null;
+			this.checkStoneGiftTime(this.parent != null);
+		}
+		
 		private function checkTime(state:Boolean):void {
 			this.is_free_lock = state;
 			if(is_free_lock) {
@@ -172,7 +241,7 @@ package artur.win {
 				}
 				this.progress.init(UserStaticData.hero.sz.t, this);
 				this.addChild(this.timerText);
-				this.setTimeText(dt);
+				this.setTimeText(dt,this.timerText);
 				this.timer = new Timer(1000, WinKyz.dt);
 				this.timer.addEventListener(TimerEvent.TIMER, this.onTImer);
 				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
@@ -198,29 +267,33 @@ package artur.win {
 		
 		private function onTImer(e:TimerEvent):void {
 			WinKyz.dt--;
-			this.setTimeText(dt);
+			this.setTimeText(dt, this.timerText);
 		}
 		
-		private function setTimeText(time:int):void {
-			this.progress.setTo(time);
-			if (this.parent ) {
-				var h:int = time / 3600;
-				time = time - h * 3600;
-				var m:int = (time / 60);
-				time = time - m * 60;
-				this.timerText.text = "";
-				if (h < 10) {
-					this.timerText.appendText("0");
+		private function setTimeText(time:int, tf:TextField, is_gift:Boolean = false):void {
+			if(this.parent) {
+				if(!is_gift) {
+					this.progress.setTo(time);
 				}
-				this.timerText.appendText(h.toString() + ":");
-				if (m < 10) { 
-					this.timerText.appendText("0");
+				if (this.parent ) {
+					var h:int = time / 3600;
+					time = time - h * 3600;
+					var m:int = (time / 60);
+					time = time - m * 60;
+					tf.text = "";
+					if (h < 10) {
+						tf.appendText("0");
+					}
+					tf.appendText(h.toString() + ":");
+					if (m < 10) { 
+						tf.appendText("0");
+					}
+					tf.appendText(m.toString()+":");
+					if (time < 10){
+						tf.appendText("0");
+					}
+					tf.appendText(time.toString());
 				}
-				this.timerText.appendText(m.toString()+":");
-				if(time< 10) {
-					this.timerText.appendText("0");
-				}
-				this.timerText.appendText(time.toString());
 			}
 		}
 		
@@ -527,8 +600,9 @@ package artur.win {
 				App.topMenu.init(false, true);
 				this.chest.init();
 				if(WinKyz.dt > 0) {
-					this.setTimeText(dt);
+					this.setTimeText(dt, this.timerText);
 				}
+				//this.giftStone = KyzChestStoneGraph.getStone(UserStaticData.hero
 			}
 			
 			public function frees():void {

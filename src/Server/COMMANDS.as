@@ -41,6 +41,7 @@ package Server
 		static public const GET_FORTUNA_TIMER:String = "38";
 		static public const SPIN_FORTUNA:String = "39";
 		static public const UPDATE_TOP:String = "40";
+		static public const CHECK_STONE_GIFT:String = "41";
 		
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;

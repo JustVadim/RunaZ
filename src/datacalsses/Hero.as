@@ -24,6 +24,7 @@ package datacalsses
 		public var rat:int;
 		public var nle:int;
 		public var ach:Object;
+		public var sg:Object;
 		
 		public function setHero(obj:Object):void {
 			this.silver = obj.s;
