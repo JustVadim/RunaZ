@@ -216,7 +216,7 @@ package artur.display
 						this.frees();
 						break;
 					case this.btnGold:
-						//WinKyz.inst.craftItem();
+						WinKyz.inst.craftItem();
 						this.frees();
 						break;
 				}

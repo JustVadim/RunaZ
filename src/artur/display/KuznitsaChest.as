@@ -6,6 +6,7 @@ package artur.display {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
 	import flash.geom.PerspectiveProjection;
 	import report.Report;
 	import Utils.Functions;
@@ -18,15 +19,8 @@ package artur.display {
 		private const crafterHG:int = 3;
 		private var craftGrid:Array = new Array();
 		private var selectedItem:ItemCall;
-		private var stonesArray:Array = new Array();
 		private var stonesObj:Object = new Object();
-		
-		
-		private var chestStones:Array = new Array();
-		
-		
-		
-		
+		private var stonesGr:Object = new Object();
 		
 		public function KuznitsaChest() {
 			this.name = "KuzChest"
@@ -55,9 +49,6 @@ package artur.display {
 					this.craftGrid[pos] = mc;
 					this.addChild(mc);
 				}
-			}
-			for (var i:int = 0; i < 5; i++) {
-				chestStones[i] = new KyzChestStone(i);
 			}
 			this.x = 566; this.y = 73.35;
 		}
@@ -109,10 +100,6 @@ package artur.display {
 				this.selectedItem.x = mcCall(craftGrid[0]).x;
 				this.selectedItem.y = mcCall(craftGrid[0]).y;
 				this.selectedItem.name = key;
-				
-				//show info, and frees info
-				//this.selectedItem.addEventListener(MouseEvent.ROLL_OVER, selectedItem.over);
-				//this.selectedItem.addEventListener(MouseEvent.ROLL_OUT, selectedItem.out);
 				this.selectedItem.addEventListener(MouseEvent.MOUSE_DOWN, this.onCraftClick);
 				App.info.frees();
 				this.addChild(selectedItem);
@@ -128,8 +115,6 @@ package artur.display {
 		
 		private function removeSelectedItem():void {
 			if (this.selectedItem != null) {
-				this.selectedItem.removeEventListener(MouseEvent.ROLL_OVER, selectedItem.over);
-				this.selectedItem.removeEventListener(MouseEvent.ROLL_OUT, selectedItem.out);
 				this.selectedItem.removeEventListener(MouseEvent.MOUSE_DOWN, this.onCraftClick);
 				for (var key:Object in items) {
 					if(ItemCall(items[key]).name == this.selectedItem.name) {
@@ -146,7 +131,8 @@ package artur.display {
 		}
 		
 		public function frees():void {
-			/*this.removeSelectedItem();
+			this.removeSelectedItem();
+			this.cleareStones();
 			for (var i:Object in items) {
 				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OVER, items[i].over);
 				ItemCall(items[i]).removeEventListener(MouseEvent.MOUSE_OUT, items[i].out);
@@ -154,29 +140,31 @@ package artur.display {
 				ItemCall(items[i]).frees();
 				delete(items[i]);
 			}
-			//this.items = new Array();
-			this.cleareStones();*/
+			this.items = new Array();
+			
 			
 		}
 		
 		public function removeCraft():void {
-			/*this.removeSelectedItem();
-			this.cleareStones();*/
+			this.removeSelectedItem();
+			this.cleareStones();
 		}
 		
-		private function cleareStones():void
-		{
-			for (var key:Object in this.stonesArray) {
-				/*KyzStone(this.stonesArray[key]).removeEventListener(MouseEvent.CLICK, this.onStoneClick);
-				KyzStone(this.stonesArray[key]).frees();
-				KyzStone(this.stonesArray[key]).buttonMode = false;
-				delete(this.stonesArray[key]);
-				delete(this.stonesObj[key]);*/
+		private function cleareStones():void {
+			for (var key:Object in this.stonesObj) {
+				var stone:KyzChestStoneGraph = this.stonesGr[key];
+				stone.buttonMode = false;
+				stone.removeEventListener(MouseEvent.CLICK, this.onStoneClick);
+				stone.removeEventListener(MouseEvent.ROLL_OVER, this.onStoneOver);
+				stone.removeEventListener(MouseEvent.ROLL_OUT, this.onStoneOur);
+				stone.frees();
+				WinKyz.inst.turnStoneBtn(stone.id + 1);
+				delete(this.stonesObj[key]);
+				delete(this.stonesGr[key]);
 			}
 		}
 		
 		public function addSoneToCraft(stoneNum:int):Boolean {
-			Report.addMassage("add to:" + stoneNum)
 			var pos:int = -1;
 			for (var i:int = 0; i < 9; i++) {
 				if(this.stonesObj[i]==null) {
@@ -185,62 +173,62 @@ package artur.display {
 				}
 			}
 			if (pos != -1) {
-				mcCall(this.craftGrid[6 + pos]).addChild(chestStones[stoneNum]);
+				var stone:KyzChestStoneGraph = KyzChestStoneGraph(KyzChestStoneGraph.getStone(stoneNum, 0, 0, 1));
 				this.stonesObj[pos] = stoneNum;
+				this.stonesGr[pos] = stone;
+				mcCall(this.craftGrid[6 + pos]).addChild(stone);
+				stone.buttonMode = true;
+				stone.addEventListener(MouseEvent.CLICK, this.onStoneClick);
+				stone.addEventListener(MouseEvent.ROLL_OVER, this.onStoneOver);
+				stone.addEventListener(MouseEvent.ROLL_OUT, this.onStoneOur);
 				return true;
 			}
 			return false;
 		}
 		
+		private function onStoneOur(e:MouseEvent):void {
+			KyzChestStoneGraph(e.target).filters = [];
+		}
+		
+		private function onStoneOver(e:MouseEvent):void {
+			KyzChestStoneGraph(e.target).filters = [new GlowFilter(0xFFFFFF, 1, 3, 3)];
+		}
+		
 		private function onStoneClick(e:MouseEvent):void {
-			/*var stone:KyzStone = KyzStone(e.target);
-			this.removeStoneFromCraft(stone.getId());*/
+			var stone:KyzChestStoneGraph = KyzChestStoneGraph(e.target);
+			this.removeStoneFromCraft(stone.id);
 		}
 		
 		public function removeStoneFromCraft(stoneNum:int):void {
-			Report.addMassage("remove from :" + stoneNum)
 			var key:Object;
 			for(key in this.stonesObj) {
 				if(this.stonesObj[key] == stoneNum) {
 					break;
 				}
 			}
-			if (key != null) {
-				if(KyzChestStone(chestStones[stoneNum]).parent) {
-					KyzChestStone(chestStones[stoneNum]).parent.removeChild(KyzChestStone(chestStones[stoneNum]));
-				}
-				delete(this.stonesObj[key]);
-			}
-			
-			/*
-			
-				var stone:KyzStone = KyzStone(stonesArray[key]);
-				stone.removeEventListener(MouseEvent.CLICK, this.onStoneClick);
-				stone.buttonMode = false;
-				KyzStone(stonesArray[key]).frees();
-				delete(stonesArray[key]);
-				delete(stonesObj[key]);
-				WinKyz.inst.turnStoneBtn(stoneNum);
-				App.sound.playSound("stone", App.sound.onVoice, 1);
-			} else {
-				App.lock.init("Error!!!!");
-			}*/
+			var stone:KyzChestStoneGraph = this.stonesGr[key];
+			stone.buttonMode = false;
+			stone.removeEventListener(MouseEvent.CLICK, this.onStoneClick);
+			stone.removeEventListener(MouseEvent.ROLL_OVER, this.onStoneOver);
+			stone.removeEventListener(MouseEvent.ROLL_OUT, this.onStoneOur);
+			stone.frees();
+			WinKyz.inst.turnStoneBtn(stoneNum+1);
+			delete(this.stonesObj[key]);
+			delete(this.stonesGr[key]);
+			App.sound.playSound("stone", App.sound.onVoice, 1);
 		}
 		
 		public function canCraft():Boolean {
-			/*if(this.selectedItem !=null) {
+			if(this.selectedItem !=null) {
 				for(var key:Object in this.stonesObj){
 					return true;
 				}
 			} 
-			return false;*/
 			return false;
 		}
 		
-		public function getCraftObj():Object 
-		{
-			//return { "in":int(this.selectedItem.name), "gems":this.stonesObj };
-			return null;
+		public function getCraftObj():Object {
+			return { "in":int(this.selectedItem.name), "gems":this.stonesObj };
 		}
 	}
 }

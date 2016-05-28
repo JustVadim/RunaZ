@@ -4,7 +4,7 @@ package artur.display {
 	import report.Report;
 	public class KyzChestStoneGraph extends Sprite {
 		private static var stones:Array = [];
-		private var id:int;
+		public var id:int;
 		private var free:Boolean = false;
 		
 		public function KyzChestStoneGraph(id:int, xx:Number, yy:Number, scale:Number) {
@@ -24,8 +24,8 @@ package artur.display {
 					stone.free = false;
 					stone.x = xx;
 					stone.y = yy;
-					stone.scaleX *= scale;
-					stone.scaleY *= scale;
+					stone.scaleX = scale;
+					stone.scaleY = scale;
 					return stone;
 				}
 			}

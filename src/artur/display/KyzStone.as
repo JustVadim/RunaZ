@@ -19,6 +19,7 @@ package artur.display {
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
 	import flash.text.engine.Kerning;
+	import report.Report;
 	
 	public class KyzStone extends Sprite {
 		private static var vector:MovieClip = new KyzStones();
@@ -75,8 +76,6 @@ package artur.display {
 				}
 			} else {
 				WinKyz.inst.chest.removeStoneFromCraft(this.id);
-				App.sound.playSound("stone", App.sound.onVoice, 1);
-				this.sendToCrafter.scaleX = 1;
 			}
 		}
 		
@@ -112,6 +111,12 @@ package artur.display {
 					this.addChild(this.sendToCrafter);
 				}
 			}
+		}
+		
+		public function turnStoneBtn():void 
+		{
+			Report.addMassage("turned")
+			this.sendToCrafter.scaleX = 1;
 		}
 		
 	}

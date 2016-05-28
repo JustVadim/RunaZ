@@ -1,6 +1,12 @@
 package artur.display {
+	import Server.COMMANDS;
+	import Server.DataExchange;
+	import Server.DataExchangeEvent;
 	import Server.Lang;
+	import Utils.json.JSON2;
+	import artur.App;
 	import artur.RasterClip;
+	import artur.win.WinKyz;
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -50,13 +56,37 @@ package artur.display {
 					
 				}
 			} else {
-				Report.addMassage("clicked2");
+				App.lock.init();
+				var data:DataExchange = new DataExchange();
+				data.addEventListener(DataExchangeEvent.ON_RESULT, this.onMakeGift);
+				data.sendData(COMMANDS.MAKE_GIFT, UserStaticData.from + this.userObj.user_id, true);
 			}
 		}
 		
-		private function onFail(e:Event):void 
-		{
-			Report.addMassage("fail: " + JSON.stringify(e));
+		private function onMakeGift(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(e.type, onMakeGift);
+			var res:Object = JSON2.decode(e.result);
+			if(res.error == null) {
+				if(res.res.tl > 0) {
+					UserStaticData.hero.sg = res.res;
+					WinKyz.dt_gift = res.res.tl;
+					WinKyz.inst.updateGiftBtn();
+					WinKyz.inst.changeGiftStone();
+					if(UserStaticData.from == "v") {
+						Main.VK.callMethod("showRequestBox", int(this.userObj.user_id), "Я подарил тебе " + Lang.getTitle(43, AskGiftDialog.stoneNum) + ", но не нужно благодарности. Лучше зайди в игру и подари мне какой-то подарок.", AskGiftDialog.stoneNum);
+					}
+					//reques qift
+				} else {
+					Main.VK.callMethod("showRequestBox", int(this.userObj.user_id), "Я хотел подарить тебе подарок, но к сожалению ты еще не играл эту замечательную игру. Вступай в игру, получай и дари подарки друзьям, при этом наслаждайся игрой.", AskGiftDialog.stoneNum);					
+				}
+				App.lock.frees();
+				WinKyz.inst.makeGiftDialog.frees();
+			} else {
+				App.lock.init(res.error);
+			}
+		}
+		
+		private function onFail(e:Event):void {
 			Main.VK.removeEventListener("onRequestSuccess", this.onSuckes);
 			Main.VK.removeEventListener("onRequestCancel", this.onCancel);
 			Main.VK.removeEventListener("onRequestFail", this.onFail);

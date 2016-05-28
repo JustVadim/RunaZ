@@ -41,11 +41,13 @@ package artur.win {
 		private var progress:KyzProgress;
 		private var btnStone:BaseButton;
 		public var askGiftDialog:AskGiftDialog;
+		public var makeGiftDialog:AskGiftDialog;
 		private var zakazBtnBg:Bitmap;
 		private var giftStone:KyzChestStoneGraph;
 		private var is_free_lock_gift:Boolean = false;
 		private var timer2:Timer;
 		public static var dt_gift:int;
+		private var btnCraft:BaseButton;
 		
 		
 		public function WinKyz() {
@@ -71,12 +73,16 @@ package artur.win {
 			this.btnStone.y = 278.85
 			//this.addChild(btnStone);
 			this.askGiftDialog = new AskGiftDialog(0);
+			this.makeGiftDialog = new AskGiftDialog(1);
 			this.zakazBtnBg = RasterClip.getBitmap(new mcBtnBgStoneGift());
-			this.zakazBtnBg.x = 29.15;
-			this.zakazBtnBg.y = 297.45;
+			this.zakazBtnBg.x = 23.65;
+			this.zakazBtnBg.y = 301.45;
 			this.addChild(zakazBtnBg);
-			
-			
+			this.btnCraft = new BaseButton(42);
+			this.btnCraft.x = 410.15;
+			this.btnCraft.y = 218.35;
+			this.btnCraft.addEventListener(MouseEvent.CLICK, this.onCraft);
+			this.addChild(this.btnCraft);
 			
 			
 			
@@ -129,10 +135,7 @@ package artur.win {
 				}
 			}
 			
-			btnCraft = new BaseButton(42);
-
-			btnCraft.x = 410.15;
-			btnCraft.y = 218.35;
+			
 			bgPrice.x = 60;
 			bgPrice.y = 20;
 			
@@ -158,14 +161,13 @@ package artur.win {
 		}
 		
 		private function onCheckStoneGiftRes(e:DataExchangeEvent):void {
-			Report.addMassage("gift_res: " + e.result);
 			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCheckStone);
 			var res:Object = JSON2.decode(e.result);
 			if (res.error == null) { 
 				WinKyz.dt_gift = res.res.tl;
 				UserStaticData.hero.sg = res.res;
 				this.updateGiftBtn();
-				if(this.is_free_lock) {
+				if(this.is_free_lock_gift) {
 					App.lock.frees();
 				}
 			} else {
@@ -173,7 +175,7 @@ package artur.win {
 			}
 		}
 		
-		private function updateGiftBtn():void {
+		public function updateGiftBtn():void {
 			if (WinKyz.dt_gift > 0) {
 				if(this.btnStone.parent) {
 					this.removeChild(this.btnStone);
@@ -270,6 +272,12 @@ package artur.win {
 			this.setTimeText(dt, this.timerText);
 		}
 		
+		public function changeGiftStone():void {
+			this.giftStone.frees();
+			this.giftStone = KyzChestStoneGraph.getStone(UserStaticData.hero.sg.t, 70.5, 301, 0.9);
+			this.addChild(this.giftStone);
+		}
+		
 		private function setTimeText(time:int, tf:TextField, is_gift:Boolean = false):void {
 			if(this.parent) {
 				if(!is_gift) {
@@ -319,6 +327,79 @@ package artur.win {
 			}
 		}
 		
+		public function craftItem():void {
+			App.lock.init();
+			var data:DataExchange = new DataExchange();
+			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onCraftRes);
+			data.sendData(COMMANDS.CRAFT_ITEM, JSON2.encode(this.chest.getCraftObj()), true);
+		}
+		
+		private function onCraftRes(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCraftRes);
+			App.sound.playSound("craft", App.sound.onVoice, 1);
+			var obj:Object = JSON2.decode(e.result);
+			if (obj.res != null) {
+				App.lock.frees();
+				UserStaticData.hero.gold -= 3;
+				App.topMenu.updateGold();
+				obj = this.chest.getCraftObj();
+				var item:Object = UserStaticData.hero.chest[obj["in"]];
+				
+				for (var key:Object in obj.gems) {
+					var sn:int = obj.gems[key];
+					var ch:int = 0;
+					var qty:int = 0;
+					switch(sn) {
+						case 0:
+							ch = 0;
+							qty = 5;
+							break;
+						case 1:
+							ch = 3;
+							qty = 1;
+							break;
+						case 2:
+							ch = 4;
+							qty = 1;
+							break;
+						case 3:
+							ch = 1;
+							qty = 5;
+							break;
+						case 4:
+							ch = 2;
+							qty = 1;
+							break;
+					}
+					UserStaticData.hero.st[sn] -= 10;
+					KyzStone(this.zakazBtns[sn + 1]).setSt();
+					if (item.c[ch] != null) {
+						item.c[ch] += qty;
+					} else {
+						item.c[ch] = qty;
+					}
+				}
+				
+				
+				this.chest.removeCraft();
+			} else {
+				App.lock.init(obj.error);
+			}
+		}
+		
+		private function onCraft(e:MouseEvent):void {
+			if (this.chest.canCraft()) {
+				if (UserStaticData.hero.gold >= 3) {
+					App.byeWin.init(Lang.getTitle(74), "Вещицу", 3, 0, NaN, 5, 0, NaN);
+				} else {
+					App.closedDialog.init1(Lang.getTitle(42),false, true, true);
+				}
+				
+			} else {
+				App.closedDialog.init1(Lang.getTitle(41), true, false, false);
+			}
+		}
+		
 		/*private function onBtnClosePrice(e:MouseEvent):void {
 			var mc:BaseButton = BaseButton(e.target);
 			App.info.init(mc.x - 45, mc.y + 30, { txtInfo_w:70, txtInfo_h:37, txtInfo_t:Lang.getTitle(47), type:0} );
@@ -362,18 +443,7 @@ package artur.win {
 			}
 		}
 		
-		private function onCraft(e:MouseEvent):void {
-			if (this.chest.canCraft()) {
-				if (UserStaticData.hero.gold > 4) {
-					App.byeWin.init(Lang.getTitle(74), "Вещицу", 5, 0, NaN, 5, 0, NaN);
-				} else {
-					App.closedDialog.init1(Lang.getTitle(42),false, true, true);
-				}
-				
-			} else {
-				App.closedDialog.init1(Lang.getTitle(41), true, false, false);
-			}
-		}
+		
 		
 		private function onAddBtnClick(e:MouseEvent):void 
 		{
@@ -537,48 +607,11 @@ package artur.win {
 		
 		
 		
-		public function craftItem():void {
-			App.lock.init();
-			var data:DataExchange = new DataExchange();
-			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onCraftRes);
-			data.sendData(COMMANDS.CRAFT_ITEM, JSON2.encode(this.chest.getCraftObj()), true);
-		}
 		
 		
 		
-		private function onCraftRes(e:DataExchangeEvent):void {
-			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCraftRes);
-			App.sound.playSound("craft", App.sound.onVoice, 1);
-			var obj:Object = JSON2.decode(e.result);
-			if (obj.res != null) {
-				App.lock.frees();
-				UserStaticData.hero.gold -= 5;
-				App.topMenu.updateGold();
-				obj = this.chest.getCraftObj();
-				var item:Object = UserStaticData.hero.chest[obj["in"]];
-				for(var key:Object in obj.gems) {
-					var sn:int = obj.gems[key];
-					var index:int = sn / 5;
-					var sn2:int = sn - index * 5;
-					index++;
-					UserStaticData.hero.st[sn] -= 10;
-					if(UserStaticData.hero.st[sn] < 9) {
-						BaseButton(this.btns_add[sn]).visible = false;
-					} else {
-						BaseButton(this.btns_add[sn]).scaleX = 1;
-					}
-					if (item.c[sn2] != null) {
-						item.c[sn2] += index;
-					} else {
-						item.c[sn2] = index;
-					}
-				}
-				this.chest.removeCraft();
-				
-			} else {
-				App.lock.init(obj.error);
-			}
-		};
+		
+
 		
 		private function onRes(e:DataExchangeEvent):void {
 			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onRes);
@@ -602,17 +635,30 @@ package artur.win {
 				if(WinKyz.dt > 0) {
 					this.setTimeText(dt, this.timerText);
 				}
-				//this.giftStone = KyzChestStoneGraph.getStone(UserStaticData.hero
+				this.giftStone = KyzChestStoneGraph.getStone(UserStaticData.hero.sg.t, 70.5, 301, 0.9);
+				this.addChild(this.giftStone);
+				this.btnStone.addEventListener(MouseEvent.CLICK, this.onMakeGift);
+			}
+			
+			private function onMakeGift(e:MouseEvent):void {
+				this.makeGiftDialog.init(UserStaticData.hero.sg.t);
 			}
 			
 			public function frees():void {
 				if(this.parent) {
 					App.spr.removeChild(this);
 				}
+				this.chest.frees();
+				this.giftStone.frees();
 			}
 			
 			public function update():void {
 				
+			}
+			
+			public function turnStoneBtn(stoneNum:int):void 
+			{
+				KyzStone(this.zakazBtns[stoneNum]).turnStoneBtn()
 			}
 			
 			
