@@ -96,6 +96,9 @@ package artur
 			/*68  */ new imgBtnFortuna(),
 			/*69  */ new btnPlus2(),
 			/*70  */ new btnFriendsStone(),
+			/*71  */ new btnArenaGold();
+			/*72  */ new btnArenaPoint();
+			/*73  */ new btnArenaSilver();
 		];
 			
 			
