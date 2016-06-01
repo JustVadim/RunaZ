@@ -89,7 +89,9 @@ package Server
 									["Арена", "Arena", ""], 
 									["Кузница", "Smithy", ""], 
 									["Миссии", "Missions", ""],
-									["В город","Vilagge",""]
+									["В город", "Vilagge", ""],
+									["Катакомбы", "", ""]
+									
 								];
 			Lang.lang_table[4] = ["У Вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "You do not have the resources for this purchase. You can buy the resources at the bank or the earn in missions.", ""];
 			

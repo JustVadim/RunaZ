@@ -33,14 +33,14 @@ package artur.win
 		private var btns:Array = [];
 		private var mcText:WinRootMcText = new WinRootMcText();
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
-		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
+		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision, btnCave];
 		
 		public function WinRoot() {
 			this.bg = RasterClip.getBitmap(new bg1Root());
 			this.bg.x = bg.y = -33;
-			var xps:Array = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5];
-			var yps:Array = [214.75  , 218  , 291.25 , 367, 367.35, 89.15];
-			var names:Array = ['bank','top','castle','arena','shop','map'];
+			var xps:Array = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5, 259.7];
+			var yps:Array = [214.75  , 218  , 291.25 , 367, 367.35, 89.15, 81.1];
+			var names:Array = ['bank','top','castle','arena','shop','map', 'cave'];
 			for (var i:int = 0; i < indxBtn.length; i++) {
 				var btn:MovieClip = new indxBtn[i]();
 				Functions.SetPriteAtributs(btn, true, false, xps[i], yps[i]);
@@ -71,10 +71,14 @@ package artur.win
 		
 		private function onOverBtn(e:MouseEvent):void {
 			MovieClip(e.target).gotoAndStop(2);
-			var t:String
+			var t:String;
 			for (var i:int = 0; i < indxBtn.length; i++) {
 				if (e.currentTarget is indxBtn[i]) {
-					t = Lang.getTitle(3,i);
+					if(i==6) {
+						t = Lang.getTitle(3, i+1);
+					} else {
+						t = Lang.getTitle(3, i);
+					}
 					break;
 				}
 			}
@@ -102,6 +106,9 @@ package artur.win
 			case 'top':
 				App.sprTop.init();
 				break;
+			case 'cave':
+				
+				break;
 			}
 			
 		}
@@ -128,45 +135,7 @@ package artur.win
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}
-			if (UserStaticData.from == "v") {
-				//Main.VK.api("friends.get", {user_id:UserStaticData.id, order:"hints",fields:"photo_50"}, onGetFriends, onFail);
-				/*Main.VK.callMethod("showRequestBox", int(218688849), "Если ты не далбайоб подари мне 1000$.", "123");
-				Main.VK.addEventListener("onRequestSuccess", onsuc);
-				Main.VK.addEventListener("onRequestFail", onfail);*/
-			}
-			
-			//App.sprTop.init();
 		}
-		
-		private function onfail(e:Event):void 
-		{
-			Report.addMassage("fail " + JSON.stringify(e));
-		}
-		
-		private function onsuc(e:Event):void 
-		{
-			Report.addMassage("suc")
-		}
-		
-		
-		
-		private function onFail(e:Object):void {
-			Report.addMassage("2");
-			Report.addMassage(JSON.stringify(e));
-		}
-		
-		private function onFail1(e:Object):void {
-			Report.addMassage("2");
-			Report.addMassage(JSON.stringify(e));
-		}
-		
-		private function onGetFriends(res:Object):void {
-			getQualifiedClassName(res);
-			Report.addMassage(getQualifiedClassName(res));
-			//Report.addMassage(JSON.stringify(res));
-		}
-		
-		
 		
 		public function updateBar():void {
 			var hero:Hero = UserStaticData.hero;
