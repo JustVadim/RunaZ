@@ -73,7 +73,6 @@ package artur.win {
 			this.btnStone = new BaseButton(43);
 			this.btnStone.x = 85.85;
 			this.btnStone.y = 278.85
-			//this.addChild(btnStone);
 			this.askGiftDialog = new AskGiftDialog(0);
 			this.makeGiftDialog = new AskGiftDialog(1);
 			this.zakazBtnBg = RasterClip.getBitmap(new mcBtnBgStoneGift());
@@ -85,71 +84,6 @@ package artur.win {
 			this.btnCraft.y = 218.35;
 			this.btnCraft.addEventListener(MouseEvent.CLICK, this.onCraft);
 			this.addChild(this.btnCraft);
-			
-			
-			
-			/*var i:int
-			var block:Sprite = new mcBlock();
-			var index:int = 0;
-			block.x = - 200;
-			block.y = - 200;
-			block.alpha = 0.5;
-			btnClosePrice.x = 696;
-			btnClosePrice.y = -7.4;
-			bgPrice.addChild(block);
-			bgPrice.addChild(RasterClip.getMovedBitmap(new bgStonePrice()));
-			//Sprite(PrepareGr.creatBms(new bgStonePrice(), true)[0]));
-			bgPrice.addChild(btnClosePrice);
-			this.timerStone.scaleX = this.timerStone.scaleY = 0.8;
-			WinKyz.inst = this;
-			
-			for ( i = 0; i < 3; i++) {
-				for (var j:int = 0; j < 5; j++) {
-					var txt:TextField = Maker.getTextField(35, 20, 0xFDDF35, false, false, false, 13);
-					var btn:BaseButton = new BaseButton(44);
-					txt.x = 30;
-					txt.text = String(2 + i);
-					btn.addChild(txt);
-					btn.x = i * 230 + btn.width/2;
-					btn.y = j * 75 + btn.height/2;
-					btn.name = String(index);
-					btnsInBg[index] = btn;
-					bgPrice.addChild(btn);
-					btn.addEventListener(MouseEvent.ROLL_OVER, this.onMagStoneOver);
-					btn.addEventListener(MouseEvent.ROLL_OUT, this.onMagStoneOut);
-					
-					txt = Maker.getTextField(35, 20, 0x0F0F0F, false, false, false, 13);
-					txt.x = 20 + i * 70;
-					txt.y = 74 + j * 40;
-					txt.alpha = 1;
-					//txt_stones[index] =  txt;
-					txt.filters = [App.btnOverFilter];
-					btn = new BaseButton(41);
-					btn.x = txt.x + 30;
-					btn.y =  txt.y - 8;
-					btn.name = index.toString();
-					btn.addEventListener(MouseEvent.CLICK, this.onAddBtnClick);
-					btn.addEventListener(MouseEvent.ROLL_OVER, this.onAddBtnOver);
-					btn.addEventListener(MouseEvent.ROLL_OUT, this.onAddBtnOut);
-					btn.visible = false;
-					btns_add[index] = btn;
-					index ++;
-				}
-			}
-			
-			
-			bgPrice.x = 60;
-			bgPrice.y = 20;
-			
-			
-			this.btnCraft.addEventListener(MouseEvent.ROLL_OVER, this.onBtnOver);
-			this.btnCraft.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
-			this.btnCraft.addEventListener(MouseEvent.CLICK, onCraft);
-			
-						
-			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OVER, this.onBtnClosePrice);
-			this.btnClosePrice.addEventListener(MouseEvent.ROLL_OUT, this.onBtnOut);
-			this.btnClosePrice.addEventListener(MouseEvent.CLICK, onClosePrice);*/
 		}
 		
 		private function checkStoneGiftTime(state:Boolean):void {

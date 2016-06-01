@@ -38,8 +38,8 @@ package artur.win
 		public function WinRoot() {
 			this.bg = RasterClip.getBitmap(new bg1Root());
 			this.bg.x = bg.y = -33;
-			var xps:Array = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5, 259.7];
-			var yps:Array = [214.75  , 218  , 291.25 , 367, 367.35, 89.15, 81.1];
+			var xps:Array = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5, 300.7];
+			var yps:Array = [214.75  , 218  , 291.25 , 367, 367.35, 89.15, 126.1];
 			var names:Array = ['bank','top','castle','arena','shop','map', 'cave'];
 			for (var i:int = 0; i < indxBtn.length; i++) {
 				var btn:MovieClip = new indxBtn[i]();
@@ -107,7 +107,7 @@ package artur.win
 				App.sprTop.init();
 				break;
 			case 'cave':
-				
+				App.winManajer.swapWin(7);
 				break;
 			}
 			

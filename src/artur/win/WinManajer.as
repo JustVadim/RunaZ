@@ -24,7 +24,8 @@ package artur.win
 			new WinBattle(),//3
 			new WinKyz(),//4
 			new WinArena(),//5
-		    new WinFortuna()//6
+		    new WinFortuna(),//6
+			new WinCave(), //7
 		];
 		
 		public var prevWin:int = 0;

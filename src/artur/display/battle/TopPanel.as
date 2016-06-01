@@ -10,17 +10,17 @@ package artur.display.battle
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import report.Report;
 	import Server.Lang;
 	
 	
 	public class TopPanel extends Sprite
 	{
-		private var bg:Bitmap  = RasterClip.getMovedBitmap(new mcBgTopPanel()); //PrepareGr.creatBms(new mcBgTopPanel(), false)[0];
+		private var bg:Bitmap  = RasterClip.getMovedBitmap(new mcBgTopPanel());
 		private var mcBtns:mcBtnTopPanel = new mcBtnTopPanel();
-		private var mcCurrWin:Array = RasterClip.getAnimationBitmaps(new mcTopPanelCurrWin()); //PrepareGr.creatBms(new mcTopPanelCurrWin(), false);
+		private var mcCurrWin:Array = RasterClip.getAnimationBitmaps(new mcTopPanelCurrWin());
 		private var btns:Array = [];
 		private var txts:Array = [];
+		
 		public function TopPanel() 
 		{
 			this.x = 400;
@@ -44,8 +44,7 @@ package artur.display.battle
 			
 		}
 		
-		private function up(e:MouseEvent):void 
-		{
+		private function up(e:MouseEvent):void {
 			mcBtns.over.gotoAndStop(1);
 		}
 		
@@ -70,74 +69,60 @@ package artur.display.battle
 				if (e.currentTarget.name == btns[i].name)
 					t = txts[i]
 			}
-			App.info.init( e.currentTarget.x+ this.x+40, e.currentTarget.y+ 60, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:t, type:0 } );
+			App.info.init( e.currentTarget.x + this.x + 40, e.currentTarget.y + 60, { txtInfo_w:140, txtInfo_h:37, txtInfo_t:t, type:0 } );
 			
 			
 		}
 		
-		private function onBtn(e:MouseEvent):void 
-		{
-			Report.addMassage(e.currentTarget.name);
-			switch(e.currentTarget.name)
-			{
+		private function onBtn(e:MouseEvent):void {
+			switch(e.currentTarget.name) {
 				case 'btnCastle':
-					 App.winManajer.swapWin(1);
-				 break;
-			 case 'btnArena':
-				      App.winManajer.swapWin(5);
-				 break;
-			     case 'btnUp':
-				     App.winManajer.swapWin(0);
-				 break;
-			 case 'btnMap':
-				     App.winManajer.swapWin(2);
-				 break;
-			 case 'btnKyz':
+					App.winManajer.swapWin(1);
+					break;
+				case 'btnArena':
+					App.winManajer.swapWin(5);
+					break;
+				case 'btnUp':
+					App.winManajer.swapWin(0);
+					break;
+				case 'btnMap':
+					App.winManajer.swapWin(2);
+					break;
+				case 'btnKyz':
 				    App.winManajer.swapWin(4);
-				 break;
+					break;
 			}
-			
 			App.sound.playSound('click1', App.sound.onVoice, 1);
 		}
 		
-		public function init(clas:Object):void 
-		{
+		public function init(clas:Object):void {
 			App.spr.addChild(this);
 			mcBtns.over.gotoAndStop(1);
-			for (var i:int = 0; i < mcBtns.numChildren; i++) 
-			{
+			for (var i:int = 0; i < mcBtns.numChildren; i++) {
 				mcBtns.getChildAt(i).visible = true;
 			}
 			
-			if (clas is WinCastle) 
-			{
+			if (clas is WinCastle) {
 				this.addChild(mcCurrWin[0]);
 				mcBtns.btnCastle.visible = false;
-			}
-			else if (clas is WinMap)
-			{
+			} else if (clas is WinMap) {
 				this.addChild(mcCurrWin[2]);
 				mcBtns.btnMap.visible = false;
-			}
-			else if (clas is WinKyz) 
-			{
+			} else if (clas is WinKyz)  {
 				this.addChild(mcCurrWin[3]);
 				mcBtns.btnKyz.visible = false;
-			}
-			else if (clas is WinArena) 
-			{
+			} else if (clas is WinArena) {
 				this.addChild(mcCurrWin[1]);
 				mcBtns.btnArena.visible = false;
 			}
-			
 			this.addChild(mcBtns);
 		}
 		
-		public function frees():void
-		{
-			if (parent) parent.removeChild(this);
-			for (var i:int = 0; i < mcCurrWin.length; i++) 
-			{
+		public function frees():void {
+			if (parent) {
+				parent.removeChild(this);
+			}
+			for (var i:int = 0; i < mcCurrWin.length; i++) {
 				if (this.contains(mcCurrWin[i])) this.removeChild(mcCurrWin[i]);
 			}
 		}
