@@ -30,7 +30,7 @@ package artur.win {
 		public static var shopInventar:ShopInventar
 		public static var chest:Chest = new Chest();
 		public static var mcSell:WinSellExtend = new WinSellExtend();
-		public static var currSlotClick:String;
+		public static var currSlotClick:String = "0";
 		public static var inst:WinCastle;
 		
 		public function WinCastle() {

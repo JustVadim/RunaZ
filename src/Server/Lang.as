@@ -185,7 +185,12 @@ package Server
 			Lang.lang_table[43][13] = ["Сапфир ур.3", "Sapphire lvl.3", ""];
 			Lang.lang_table[43][14] = ["Топаз ур.3", "Topaz lvl.3", ""];
 			
-			Lang.lang_table[44] = ["Что бы участвовать в поединкe нужен уровень " + WinArena.NEEDED_LVL + ". Уровень Вы можете заработать в миссиях.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""];
+			Lang.lang_table[44] = 	[
+										["Что бы участвовать в поединкe на рейтинг нужен уровень " + 3 + ". Уровень Вы можете заработать в миссиях.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""],
+										["Что бы участвовать в поединкe на рейтинг и серебно нужен уровень " + 5 + ". Уровень Вы можете заработать в миссиях и на арене.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""],
+										["Что бы участвовать в поединкe на золото и рейтинг нужен уровень " + 7 + ". Уровень Вы можете заработать в миссиях и на арене.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""]
+									]
+										
 			Lang.lang_table[45] = ["У Вас недостаточно золота для этой покупки. Вы можете купить золото в банке или заработать в миссиях.", "You do not have enough gold for this purchase. You can buy gold in a bank or earn it in the missions.", ""];
 			Lang.lang_table[46] = ["У Вас недостаточно серебра для этой покупки. Вы можете купить серебро в банке или заработать в миссиях.", "You do not have enough silver for this purchase. You can buy enough in a bank or money in the missions.", ""];
 			Lang.lang_table[47] = ["Закрыть", "Close", ""];
@@ -193,38 +198,22 @@ package Server
 			Lang.lang_table[49] = ["Купить за серебро", "Buy for silver", ""];
 			Lang.lang_table[50] = ["Продать за серебро", "Sell for silver", ""];
 			Lang.lang_table[51] = ["Искать игру", "Find game", ""];
-			Lang.lang_table[52] = ["Заказать камeнь", "Order stone", ""];
+			Lang.lang_table[52] = ["Заказать ", "Order ", ""];
 			Lang.lang_table[53] = ["Улучшить вещь", "Improve item", ""];
 			Lang.lang_table[54] = ["Добавить в сундук", "", ""];
 			//Lang.lang_table[55] = [" в сундук", "", ""];
 			//Lang.lang_table[56] = ["Забрать ", "", ""];
 			Lang.lang_table[57] = ["Забрать из сундука", "Pick up from the chest", ""];
 			
-			Lang.lang_table[58] = new Array();
-			Lang.lang_table[58][0] = ["Добавит +1 к здоровью", "Add 1 to health", ""];
-			Lang.lang_table[58][1] = ["Добавит +1 к манне", "Add 1 to manna", ""];
-			Lang.lang_table[58][2] = ["Добавит +1 к урону", "Add 1 to damage", ""];
-			Lang.lang_table[58][3] = ["Добавит +1 к физ. защите", "Add 1 to phys. protection", ""];
-			Lang.lang_table[58][4] = ["Добавит +1 к маг. защите", "Add 1 to mag. protection", ""];
+			Lang.lang_table[58] = [];
 			
-			Lang.lang_table[58][5] = ["Добавит +2 к здоровью", "Add +2 to health", ""];
-			Lang.lang_table[58][6] = ["Добавит +2 к манне", "Add 2 to manna", ""];
-			Lang.lang_table[58][7] = ["Добавит +2 к урону", "Add 2 to damage", ""];
-			Lang.lang_table[58][8] = ["Добавит +2 к физ. защите", "Add 2 to phys. protection", ""];
-			Lang.lang_table[58][9] = ["Добавит +2 к маг. защите", "Add 2 to to mag. protection", ""];
-			
-			Lang.lang_table[58][10] = ["Добавит +3 к здоровью", "Add 3 to health", ""];
-			Lang.lang_table[58][11] = ["Добавит +3 к манне", "Add 3 to manna", ""];
-			Lang.lang_table[58][12] = ["Добавит +3 к урону", "Add 3 to damage", ""];
-			Lang.lang_table[58][13] = ["Добавит +3 к физ. защите", "Add 3 to phys. protection", ""];
-			Lang.lang_table[58][14] = ["Добавит +3 к маг. защите", "Add 3 to to mag. protection", ""];
 			
 			Lang.lang_table[59] = new Array();
-			Lang.lang_table[59][0] = ["10 камней добавят +1 к здоровью ", "10 stones add 1 to health ", ""];
-			Lang.lang_table[59][1] = ["10 камней добавят +1 к манне", "10 stones add 1 to manna ", ""];
-			Lang.lang_table[59][2] = ["10 камней добавят +1 к урону", "10 stones add 1 to damage ", ""];
-			Lang.lang_table[59][3] = ["10 камней добавят +1 к физ. защите", "10 stones add 1 to phys. protection ", ""];
-			Lang.lang_table[59][4] = ["10 камней добавят +1 к маг. защите", "10 stones add 1 to mag. protection ", ""];
+			Lang.lang_table[59][0] = ["10 камней добавят 5 к здоровью ", "10 stones add 1 to health ", ""];
+			Lang.lang_table[59][1] = ["10 камней добавят +1 к физ. защите", "10 stones add 1 to manna ", ""];
+			Lang.lang_table[59][2] = ["10 камней добавят +1 к маг. защите", "10 stones add 1 to damage ", ""];
+			Lang.lang_table[59][3] = ["10 камней добавят +5 к манне", "10 stones add 1 to phys. protection ", ""];
+			Lang.lang_table[59][4] = ["10 камней добавят +1 к урону", "10 stones add 1 to mag. protection ", ""];
 			
 			Lang.lang_table[59][5] = ["10 камней добавят +2 к здоровью", "10 stones add 2 to health ", ""];
 			Lang.lang_table[59][6] = ["10 камней добавят +2 к манне", "10 stones add 2 to manna ", ""];
@@ -594,7 +583,9 @@ package Server
 									];
 			Lang.lang_table[199] = ["Попросить", "", ""];
 			Lang.lang_table[200] = ["Подарить", "", ""];
-			
+			Lang.lang_table[201] = ["Подарить другу ", "", ""];
+			Lang.lang_table[202] = ["Попросить у друга ", "", ""];
+			Lang.lang_table[203] = ["Отправить в крафтер ", "", ""];
 			
 			
 		}

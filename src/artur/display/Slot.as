@@ -180,9 +180,9 @@ package artur.display {
 				this.addChild(WinCastle.getCastle().mcCurr);
 				this.addChild(btnByeUnit);
 				WinCastle.inventar.frees1();
-				if(UserStaticData.hero.demo == 0) {
-					App.tutor.init(3);
-				}
+			}
+			if(UserStaticData.hero.demo == 0) {
+				App.tutor.init(3);
 			}
 			
 		}

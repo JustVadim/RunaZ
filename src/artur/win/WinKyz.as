@@ -52,6 +52,8 @@ package artur.win {
 		
 		public function WinKyz() {
 			WinKyz.inst = this;
+			this.tabEnabled = false;
+			this.tabChildren = false;
 			this.bg = RasterClip.getBitmap(new mc_bg_kyz(), -1, -1);
 			this.addChild(this.bg );
 			this.chest = new KuznitsaChest();
@@ -400,266 +402,57 @@ package artur.win {
 			}
 		}
 		
-		/*private function onBtnClosePrice(e:MouseEvent):void {
-			var mc:BaseButton = BaseButton(e.target);
-			App.info.init(mc.x - 45, mc.y + 30, { txtInfo_w:70, txtInfo_h:37, txtInfo_t:Lang.getTitle(47), type:0} );
-		}
-		
-		private function onMagStoneOut(e:MouseEvent):void {
-			App.info.frees();
-		}
-		
-		private function onMagStoneOver(e:MouseEvent):void {
-			var mc:BaseButton = BaseButton(e.target);
-			App.info.init(mc.x-90, mc.y + mc.height, { txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(59, int(mc.name)), type:0, title: Lang.getTitle(43, int(mc.name)) } );
-		}
-		
-		private function onAddBtnOut(e:MouseEvent):void 
-		{
-			App.info.frees();
-		}
-		
-		private function onAddBtnOver(e:MouseEvent):void {
-			var mc:BaseButton = BaseButton(e.target);
-			if(mc.scaleX == 1) {
-				App.info.init(mc.x + mc.width + 15, mc.y + mc.height, { txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(54) + "\n" + Lang.getTitle(58, int(mc.name)), type:0, title: Lang.getTitle(43, int(mc.name))} );
-			} else {
-				App.info.init(mc.x + mc.width + 15, mc.y + mc.height, { txtInfo_w:300, txtInfo_h:37, txtInfo_t:Lang.getTitle(57) + "\n" + Lang.getTitle(58, int(mc.name)),title:Lang.getTitle(43, int(mc.name)), type:0 } );
-			}
-		}
-		
-		private function onBtnOut(e:MouseEvent):void 
-		{
-			App.info.frees();
-		}
-		
-		private function onBtnOver(e:MouseEvent):void 
-		{
-			var mc:BaseButton = BaseButton(e.target);
-			switch(mc) {
-				case this.btnCraft:
-					App.info.init(mc.x + mc.width - 35, mc.y + mc.height, { txtInfo_w:100, txtInfo_h:37, txtInfo_t:Lang.getTitle(53), type:0 } );
-					break;
-			}
-		}
-		
-		
-		
-		private function onAddBtnClick(e:MouseEvent):void 
-		{
-			if(BaseButton(e.target).scaleX == 1){
-				if (this.chest.addSoneToCraft(int(e.target.name))) {
-					BaseButton(e.target).scaleX = -1;
-					App.sound.playSound("stone", App.sound.onVoice, 1);
-				}
-			} else {
-				this.chest.removeStoneFromCraft(int(e.target.name));
-			}
-		}
-		
-		private function onClosePrice(e:MouseEvent = null):void 
-		{
-			for (var i:int = 0; i < btnsInBg.length; i++) {
-				BaseButton(this.btnsInBg[i]).removeEventListener(MouseEvent.CLICK, this.onBtnsInBgClick);
-			}
-			App.spr.removeChild(bgPrice);
-		}
-		
-		private function onCreatStone(e:MouseEvent):void 
-		{
-			App.spr.addChild(bgPrice);
-			for (var i:int = 0; i < btnsInBg.length; i++) {
-				BaseButton(this.btnsInBg[i]).addEventListener(MouseEvent.CLICK, this.onBtnsInBgClick);
-			}
-		}
-		
-		private function onBtnsInBgClick(e:MouseEvent):void {
-			this.onClosePrice();
-			var stoneNum:int = int(e.target.name);
-			if (true) {
-				App.byeWin.init(Lang.getTitle(75), Lang.getTitle(43, stoneNum), 2 + int(stoneNum/5), 0, 0, 4, stoneNum);
-			}
-		}
-		
 		public function init():void {
-			this.bin = true;
-			App.spr.addChild(bg);
-			/*for (var i:int = 0; i < txt_stones.length; i++) {
-				//App.spr.addChild(txt_stones[i]);
-				App.spr.addChild(btns_add[i]);
-				//txt_stones[i].text = UserStaticData.hero.st[i];
-				if(UserStaticData.hero.st[i] > 9) {
-					BaseButton(btns_add[i]).visible = true;
-					BaseButton(btns_add[i]).scaleX = 1;
-				}
-			}*/
-			/*if(UserStaticData.hero.sz == null) {
-				
-			} else {
-				this.checkStone();
-			}
-			App.spr.addChild(btnCraft);
+			App.spr.addChild(this);
+			App.topPanel.init(this);
 			App.topMenu.init(false, true);
 			this.chest.init();
-			App.topPanel.init(this);
+			if(WinKyz.dt > 0) {
+				this.setTimeText(dt, this.timerText);
+			}
+			this.giftStone = KyzChestStoneGraph.getStone(UserStaticData.hero.sg.t, 70.5, 301, 0.9);
+			this.addChild(this.giftStone);
+			this.btnStone.addEventListener(MouseEvent.CLICK, this.onMakeGift);
+			this.btnStone.addEventListener(MouseEvent.ROLL_OVER, this.onMakeGiftOver);
+			this.btnStone.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			this.btnCraft.addEventListener(MouseEvent.ROLL_OVER, this.onCraftOver);
+			this.btnCraft.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+		}
 			
+		private function onMakeGiftOver(e:MouseEvent):void {
+			App.info.init(this.btnStone.x + this.btnStone.width - 55, this.btnStone.y + this.btnStone.height-55, { txtInfo_w:120, txtInfo_h:37, txtInfo_t:Lang.getTitle(201) + Lang.getTitle(43, UserStaticData.hero.sg.t), type:0 } );
 		}
 		
-		private function checkStone():void {
-			App.lock.init();
-			var data:DataExchange = new DataExchange();
-			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onCheckStone);
-			data.sendData(COMMANDS.CHECK_STONE, "", true);
-		}
-		
-		private function onCheckStone(e:DataExchangeEvent):void 
-		{
-			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onCheckStone);
-			var res:Object = JSON2.decode(e.result);
-			if(res.error == null) {
-				App.lock.frees();
-				if (res.res.tl > 0 ) {
-					UserStaticData.hero.sz = res.res;
-					if(this.bin) {
-						this.addTimer();
-					}
-				} else {
-					UserStaticData.hero.st[res.res.t]++;
-					UserStaticData.hero.sz = null;
-					if(this.timerStone.parent) {
-						App.spr.removeChild(this.timerStone);
-						App.spr.removeChild(this.timerText);
-					}
-					//give stone and addbutton;
-					if(this.bin) {
-						if(UserStaticData.hero.st[res.res.t]>9) {
-							BaseButton(this.btns_add[res.res.t]).visible = true;
-						}
-					}
-				}
-			} else {
-				App.lock.init(res.error);
-			}
-		}
-		
-		private function addTimer():void {
-			if(this.timerStone.parent == null) {
-				App.spr.addChildAt(this.timerStone, App.spr.numChildren - 1);
-				App.spr.addChildAt(this.timerText, App.spr.numChildren - 1);
-				this.timerStone.gotoAndStop(UserStaticData.hero.sz.t +1);
-			}
-			this.timer = new Timer(1000, UserStaticData.hero.sz.tl + 1);
-			this.setTimeText(int(UserStaticData.hero.sz.tl + 1));
-			this.timer.addEventListener(TimerEvent.TIMER, onTimer);
-			this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, onTimerComplete);
-			this.timer.start();
-		}
-		
-		private function setTimeText(time:int):void {
-			var h:int = time / 3600;
-			time = time - h * 3600;
-			var m:int = (time / 60);
-			time = time - m * 60;
-			this.timerText.text = "";
-			if (h < 10) {
-				this.timerText.appendText("0");
-			}
-			this.timerText.appendText(h.toString() + ":");
-			if (m < 10) { 
-				this.timerText.appendText("0");
-			}
-			this.timerText.appendText(m.toString()+":");
-			if(time< 10) {
-				this.timerText.appendText("0");
-			}
-			this.timerText.appendText(time.toString());
-		}
-		
-		private function onTimerComplete(e:TimerEvent):void 
-		{
-			this.timer.removeEventListener(TimerEvent.TIMER, this.onTimer);
-			this.timer.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onTimerComplete);
-			this.timer = null;
-			this.checkStone();
-		}
-		
-		private function onTimer(e:TimerEvent):void {
-			this.setTimeText(int((this.timer.repeatCount - this.timer.currentCount)));
-		}
-		
-		public function update():void
-		{
-			
-		}
-		
-		public function frees():void
+		private function onRollOut(e:MouseEvent):void 
 		{
 			App.info.frees();
-			this.bin = false;
-			this.chest.frees();
-			if(this.timer != null) {
-				this.timer.stop();
-				this.timer.removeEventListener(TimerEvent.TIMER, this.onTimer);
-				this.timer.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onTimerComplete);
-				this.timer = null;
-			}
 		}
 		
+		private function onCraftOver(e:MouseEvent):void {
+			App.info.init(btnCraft.x + btnCraft.width - 35, btnCraft.y + btnCraft.height, { txtInfo_w:120, txtInfo_h:37, txtInfo_t:Lang.getTitle(53), type:0 } );
+		}
 		
+		private function onMakeGift(e:MouseEvent):void {
+			this.makeGiftDialog.init(UserStaticData.hero.sg.t);
+		}
 		
-		
-		
-		
-		
-
-		
-		private function onRes(e:DataExchangeEvent):void {
-			DataExchange(e.target).removeEventListener(DataExchangeEvent.ON_RESULT, this.onRes);
-			var res:Object = JSON2.decode(e.result);
-			if (res.error == null) {
-				App.lock.frees();
-				UserStaticData.hero.sz = res.res;
-				UserStaticData.hero.gold -= (2 + (int(res.res.t / 5)));
-				App.topMenu.updateGold();
-				this.addTimer();
-			}else {
-				App.lock.init(res.error);
+		public function frees():void {
+			if(this.parent) {
+				App.spr.removeChild(this);
 			}
-		}*/
+			this.chest.frees();
+			this.giftStone.frees();
+			this.btnStone.removeEventListener(MouseEvent.CLICK, this.onMakeGift);
+		}
 		
-			public function init():void {
-				App.spr.addChild(this);
-				App.topPanel.init(this);
-				App.topMenu.init(false, true);
-				this.chest.init();
-				if(WinKyz.dt > 0) {
-					this.setTimeText(dt, this.timerText);
-				}
-				this.giftStone = KyzChestStoneGraph.getStone(UserStaticData.hero.sg.t, 70.5, 301, 0.9);
-				this.addChild(this.giftStone);
-				this.btnStone.addEventListener(MouseEvent.CLICK, this.onMakeGift);
-			}
+		public function update():void {
 			
-			private function onMakeGift(e:MouseEvent):void {
-				this.makeGiftDialog.init(UserStaticData.hero.sg.t);
-			}
-			
-			public function frees():void {
-				if(this.parent) {
-					App.spr.removeChild(this);
-				}
-				this.chest.frees();
-				this.giftStone.frees();
-			}
-			
-			public function update():void {
-				
-			}
-			
-			public function turnStoneBtn(stoneNum:int):void 
-			{
-				KyzStone(this.zakazBtns[stoneNum]).turnStoneBtn()
-			}
+		}
+		
+		public function turnStoneBtn(stoneNum:int):void 
+		{
+			KyzStone(this.zakazBtns[stoneNum]).turnStoneBtn()
+		}
 			
 			
 		

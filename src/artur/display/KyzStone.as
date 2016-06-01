@@ -28,10 +28,12 @@ package artur.display {
 		private var askFriend:BaseButton;
 		private var sendToCrafter:BaseButton;
 		private var text:TextField;
+		private var bg:Sprite;
 		
 		public function KyzStone(id:int, xx:Number, yy:Number) {
+			this.addChild(this.bg = new Sprite())
 			var bm:Bitmap = RasterClip.getMovedBitmap(new KyzStones(), id);
-			this.addChild(bm);
+			this.bg.addChild(bm);
 			this.x = xx;
 			this.y = yy;
 			this.tabEnabled = false;
@@ -53,15 +55,57 @@ package artur.display {
 			this.text.filters = [new GlowFilter(0x0, 1, 3, 3)];
 			this.addChild(text);
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAdded);
+			this.bg.buttonMode = true;
 		}
 		
 		private function onAdded(e:Event):void {
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAdded);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemoved);
+			
 			this.getBtn.addEventListener(MouseEvent.CLICK, this.onClick);
-			this.sendToCrafter.addEventListener(MouseEvent.CLICK, this.onAddCraftClick);
-			this.sendToCrafter.scaleX = 1;
+			this.getBtn.addEventListener(MouseEvent.ROLL_OVER, this.onGetStoneOver);
+			this.getBtn.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			
+			this.askFriend.addEventListener(MouseEvent.ROLL_OVER, this.onAskFriendOver);
+			this.askFriend.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
 			this.askFriend.addEventListener(MouseEvent.CLICK, this.onAskClick);
+			
+			this.sendToCrafter.addEventListener(MouseEvent.CLICK, this.onAddCraftClick);
+			this.sendToCrafter.addEventListener(MouseEvent.ROLL_OVER, this.onSendToCraftOver);
+			this.sendToCrafter.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			
+			this.bg.addEventListener(MouseEvent.ROLL_OVER, this.onBgOver);
+			this.bg.addEventListener(MouseEvent.ROLL_OUT, this.onBgOut);
+			
+			this.sendToCrafter.scaleX = 1;
+			
+		}
+		
+		private function onBgOut(e:MouseEvent):void 
+		{
+			this.bg.filters = [];
+			App.info.frees();
+		}
+		
+		private function onBgOver(e:MouseEvent):void {
+			this.bg.filters = [new GlowFilter(0xFFFFFF, 1, 3, 3)];
+			App.info.init(this.x + 120, this.y, { txtInfo_w:280, txtInfo_h:37,title:Lang.getTitle(43, this.id), txtInfo_t:Lang.getTitle(59, this.id), type:0 } );
+		}
+		
+		private function onSendToCraftOver(e:MouseEvent):void {
+			App.info.init(this.x + 170, this.y, { txtInfo_w:200, txtInfo_h:37, txtInfo_t:Lang.getTitle(203) + Lang.getTitle(43, this.id), type:0 } );
+		}
+		
+		private function onAskFriendOver(e:MouseEvent):void {
+			App.info.init(this.x-40, this.y, { txtInfo_w:200, txtInfo_h:37, txtInfo_t:Lang.getTitle(202) + Lang.getTitle(43, this.id), type:0 } );
+		}
+		
+		private function onRollOut(e:MouseEvent):void {
+			App.info.frees();
+		}
+		
+		private function onGetStoneOver(e:MouseEvent):void {
+			App.info.init(this.x, this.y, { txtInfo_w:120, txtInfo_h:37, txtInfo_t:Lang.getTitle(52) + Lang.getTitle(43, this.id), type:0 } );
 		}
 		
 		private function onAskClick(e:MouseEvent):void {
@@ -80,7 +124,7 @@ package artur.display {
 		}
 		
 		private function onClick(e:MouseEvent):void {
-			if(UserStaticData.hero.gold > 2) {
+			if(UserStaticData.hero.gold >= 2) {
 				App.byeWin.init(Lang.getTitle(75), Lang.getTitle(43, this.id), 2, 0, 0, 4, this.id);
 			} else {
 				App.closedDialog.init1(Lang.getTitle(45), false, true, true);
@@ -90,6 +134,21 @@ package artur.display {
 		private function onRemoved(e:Event):void {
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAdded);
+			
+			this.getBtn.removeEventListener(MouseEvent.CLICK, this.onClick);
+			this.getBtn.removeEventListener(MouseEvent.ROLL_OVER, this.onGetStoneOver);
+			this.getBtn.removeEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			
+			this.askFriend.removeEventListener(MouseEvent.ROLL_OVER, this.onAskFriendOver);
+			this.askFriend.removeEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			this.askFriend.removeEventListener(MouseEvent.CLICK, this.onAskClick);
+			
+			this.sendToCrafter.removeEventListener(MouseEvent.CLICK, this.onAddCraftClick);
+			this.sendToCrafter.removeEventListener(MouseEvent.ROLL_OVER, this.onSendToCraftOver);
+			this.sendToCrafter.removeEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			
+			this.bg.removeEventListener(MouseEvent.ROLL_OVER, this.onBgOver);
+			this.bg.removeEventListener(MouseEvent.ROLL_OUT, this.onBgOut);
 		}
 		
 		public function showZakazBtn(state:Boolean):void {
@@ -113,9 +172,7 @@ package artur.display {
 			}
 		}
 		
-		public function turnStoneBtn():void 
-		{
-			Report.addMassage("turned")
+		public function turnStoneBtn():void {
 			this.sendToCrafter.scaleX = 1;
 		}
 		

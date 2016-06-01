@@ -29,7 +29,6 @@ package artur.win {
 	public class WinArena {
 		public var bin:Boolean = false;
 		private var bg:Bitmap;
-		private var btn1:BaseButton;
 		private var btnClose:BaseButton 
 		private var mcFound:mcFounMovie = new mcFounMovie();
 		public static const NEEDED_LVL:int = 3;
@@ -40,14 +39,28 @@ package artur.win {
 		private var char2:Object;
 		private var types:Array = [U_Lyk, U_Mag, U_Paladin, U_Warwar, U_Lyk, U_Mag, U_Paladin, U_Warwar];
 		private var ratText:TextField = Functions.getTitledTextfield(298, 165, 200, 20, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "1111", 0.9);
-		
+		private var pointBtn:BaseButton;
+		private var silverBtn:BaseButton;
+		private var goldBtn:BaseButton;
 		
 		
 		public function WinArena() {
 			bg = RasterClip.getBitmap(new mcArena());
-			btn1 = new BaseButton(40);
+			this.pointBtn = new BaseButton(72);
+			this.pointBtn.x = 161.1;
+			this.pointBtn.y = 127.95;
+			
+			this.silverBtn = new BaseButton(73);
+			this.silverBtn.x = 400.7;
+			this.silverBtn.y = 91.3;
+			
+			this.goldBtn = new BaseButton(71);
+			this.goldBtn.x = 646;
+			this.goldBtn.y = 128.7;
+			
+			/*btn1 = new BaseButton(40);
 			btn1.x = 400;
-			btn1.y = 100;
+			btn1.y = 100;*/
 			btnClose = new BaseButton(31);
 			mcFound.x = 400;
 			mcFound.y = 250;
@@ -70,7 +83,7 @@ package artur.win {
 			App.lock.frees();
 		}
 		
-		private function onBtn(e:MouseEvent):void {
+		/*private function onBtn(e:MouseEvent):void {
 			App.info.frees();
 			if(UserStaticData.hero.level >= WinArena.NEEDED_LVL && GetServerData.getUserIsReadyToBattle() && UserStaticData.hero.cur_vitality > 9) {
 				mcFound.rotation = 0;
@@ -94,7 +107,7 @@ package artur.win {
 					App.closedDialog.init1(Lang.getTitle(170), false, false, false, true);
 				}
 			}
-		}
+		}*/
 		
 		private function onRes(e:DataExchangeEvent):void {
 			var obj:Object = JSON2.decode(e.result);
@@ -108,20 +121,19 @@ package artur.win {
 		}
 		
 		public function init():void {
-			//Report.addMassage(UserStaticData.hero.rat);
 			this.ratText.text = Lang.getTitle(171) + UserStaticData.hero.rat;
 			dell1 = 80;
 			dell2 = 120;
 			App.swapMuz('MenuSong');
 			App.spr.addChild(bg);
-		    App.spr.addChild(btn1);
+			App.spr.addChild(this.pointBtn);
+			App.spr.addChild(this.silverBtn);
+			App.spr.addChild(this.goldBtn);
 			mcFound.gotoAndStop(1);
 			mcFound.rotation = 0;
 			mcFound.rot.visible = false;
 			App.topPanel.init(this);
 			App.topMenu.init(true, true);
-			
-			
 			char1 = UnitCache.getUnit('Barbarian');
 			char1.init(App.spr);
 			char1.x = 290;
@@ -133,23 +145,78 @@ package artur.win {
 			char2.itemUpdate([RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(0,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5)]);
 			char1.itemUpdate([RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(0,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5), RandomInt(1,5)]);
 			char2.scaleX = -1;
-/*<<<<<<< HEAD
-			//U_Warwar.onSound = false;
-			//U_Paladin.onSound = false;
-			App.spr.addChild(Sprite(char2));
-			App.spr.addChild(Sprite(char1));
-=======
-			U_Warwar.onSound = false;
-			U_Paladin.onSound = false;
-			
-		//	App.spr.addChild(Sprite(char2));
-			//App.spr.addChild(Sprite(char1));
->>>>>>> 5281d5bb66e8725bcf0b72790f3b193c977fbedb*/
 			App.spr.addChild(this.ratText);
-			btn1.addEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
-			btn1.addEventListener(MouseEvent.ROLL_OVER, this.onBattleOver);
-			btn1.addEventListener(MouseEvent.ROLL_OUT, this.onBattleBtnOut);
+			this.pointBtn.addEventListener(MouseEvent.CLICK, this.onClick);
+			this.silverBtn.addEventListener(MouseEvent.CLICK, this.onClick);
+			this.goldBtn.addEventListener(MouseEvent.CLICK, this.onClick);
+		}
+		
+		
+		
+		private function onClick(e:MouseEvent):void {
+			var btn:BaseButton = BaseButton(e.target);
+			var type:int = -1;
+			switch(btn) {
+				case this.pointBtn:
+					Report.addMassage(0);
+					if(UserStaticData.hero.level >= 1) {
+						if(!GetServerData.getUserIsReadyToBattle()) {
+							App.closedDialog.init1(Lang.getTitle(36), true);
+						} else if(UserStaticData.hero.cur_vitality < 10) {
+							App.closedDialog.init1(Lang.getTitle(170), false, false, false, true);
+						} else {
+							type = 0;
+						}
+					} else {
+						App.closedDialog.init1(Lang.getTitle(44, 0), false, true);
+					}
+					break;
+				case this.silverBtn:
+					if(UserStaticData.hero.level >= 1) {
+						if(!GetServerData.getUserIsReadyToBattle()) {
+							App.closedDialog.init1(Lang.getTitle(36), true);
+						} else if(UserStaticData.hero.cur_vitality < 10) {
+							App.closedDialog.init1(Lang.getTitle(170), false, false, false, true);
+						} else if(UserStaticData.hero.silver < UserStaticData.hero.level*10) {
+							
+						} else {
+							type = 1;
+						}
+					} else {
+						App.closedDialog.init1(Lang.getTitle(44, 1), false, true);
+					}
+					break;
+				case this.goldBtn:
+					if (UserStaticData.hero.level >= 1) {
+						var g:int = 1 + UserStaticData.hero.level / 3;
+						if(!GetServerData.getUserIsReadyToBattle()) {
+							App.closedDialog.init1(Lang.getTitle(36), true);
+						} else if(UserStaticData.hero.cur_vitality < 10) {
+							App.closedDialog.init1(Lang.getTitle(170), false, false, false, true);
+						} else if(UserStaticData.hero.gold < g) {
+							
+						} else {
+							type = 1;
+						}
+					} else {
+						App.closedDialog.init1(Lang.getTitle(44, 2), false, true);
+					}
+					break;
+			}
+			if(type != -1) {
+				mcFound.rotation = 0;
+				mcFound.rot.visible = false;
+				mcFound.gotoAndPlay(1);
+				App.spr.addChild(mcFound);
+				App.spr.addChild(btnClose);
+				btnClose.x = e.currentTarget.x;
+				btnClose.y = e.currentTarget.y + 50;
+				var data:DataExchange = new DataExchange();
+				data.addEventListener(DataExchangeEvent.ON_RESULT, this.onRes);
+				data.sendData(COMMANDS.FIND_BATTLE, type.toString(), true);
+				App.lock.init();
+			}
 		}
 		
 		private function onBattleBtnOut(e:MouseEvent):void {
@@ -185,22 +252,19 @@ package artur.win {
 			char1.frees();
 			char2.frees();
 			App.info.frees();
-			btn1.removeEventListener(MouseEvent.CLICK, onBtn);
 			btnClose.removeEventListener(MouseEvent.CLICK, onBtnClose);
-			btn1.removeEventListener(MouseEvent.ROLL_OVER, this.onBattleOver);
-			btn1.removeEventListener(MouseEvent.ROLL_OUT, this.onBattleBtnOut);
 		}
 		
 		static public function Random(clow:Number, chigh:Number):Number
 	    {
 	       return Math.round(Math.random() * (chigh - clow)) + clow;
 	    }
- 
-	    //Получить целое случайное число из диапазона clow..chigh
-	     static public function RandomInt(clow:int, chigh:int):int
-	    {
-	       return Math.round(Random(clow,chigh));
-	    }
+		
+		private function RandomInt(min:int, max:int):int 
+		{
+			 return Math.round(Math.random() * (max - min) + min);
+		}
+		
 	}
 	  
 
