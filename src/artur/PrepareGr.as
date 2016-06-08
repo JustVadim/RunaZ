@@ -94,6 +94,9 @@ package artur
 			/*68  */ new imgBtnFortuna(),
 			/*69  */ new btnPlus2(),
 			/*70  */ new btnFriendsStone(),
+			/*71  */ new imgKyz(),
+			/*72  */ new imgTown(),
+			/*73  */ new imgBtnArena()
 		];
 		
 		public static var scaleFactor:Number = 2;
