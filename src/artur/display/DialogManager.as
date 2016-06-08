@@ -5,6 +5,7 @@ package artur.display
 	import Server.Lang;
 	import artur.App;
 	import artur.win.WinFortuna;
+	import artur.win.WinKyz;
 	import flash.display.Sprite;
 	import report.Report;
 	public class DialogManager extends Sprite {
@@ -14,6 +15,8 @@ package artur.display
 		private var show_task:Boolean = false;
 		
 		private var show_show_achieve:Boolean = false;
+		private var showKyzZakaz:Boolean = false;
+		private var showKyzGift:Boolean = false;
 		public var show_bonus:Boolean = false;
 		
 		public function DialogManager() {
@@ -31,8 +34,10 @@ package artur.display
 		
 		public function canShow():void {
 			if (!App.winManajer.swapMode) {
-				if(this.show_person_lvl_up) {
-						
+				if (show_bonus) {
+					App.bomusDialog.init(0);
+					this.show_bonus = false;
+					return;
 				}
 				
 				if(show_task) {
@@ -40,26 +45,53 @@ package artur.display
 					this.show_task = false;
 					return;
 				}
+				
+				if (this.show_person_lvl_up ) {
+					this.show_person_lvl_up = false;
+					if(App.winManajer.currWin != 0) {
+						App.closedDialog.init1(Lang.getTitle(2), false, false, false, false, true, false, false, false, true);
+					} else {
+						
+					}
+					return;
+				}
+				
 				if(show_unit_lvl_up) {
 					App.closedDialog.init1(Lang.getTitle(2), true);
 					this.show_unit_lvl_up = false;
 					return;
 				}
-				if (show_bonus) {
-					App.bomusDialog.init(0);
-					this.show_bonus = false;
-					return;
-				}
+				
 				if (show_show_achieve) {
 					this.showAchieveLvlUp();
 					this.show_show_achieve = false;
 					return;
 				}
+				
 				if (UserStaticData.hero.level > 1 && WinFortuna.dt == 0 && WinFortuna.dialogChecked) {
 					App.closedDialog.init1(Lang.getTitle(24), false, false, false, false, true, true);
 					WinFortuna.dialogChecked = false;
 					return;
 				}
+				
+				if (UserStaticData.hero.demo > 4) {
+					if(this.showKyzZakaz) {
+						App.closedDialog.init1(Lang.getTitle(206), false, false, false, false, true, false, false, true);
+						this.showKyzZakaz = false;
+						return;
+					}
+					
+					if (this.showKyzGift) {
+						this.showKyzGift = false;
+						if (App.winManajer.currWin != 4) {
+							App.closedDialog.init1(Lang.getTitle(206), false, false, false, false, true, false, false, true);
+						} else {
+							
+						}
+						return;
+					}
+				}
+				
 			}
 			
 		}
@@ -87,7 +119,6 @@ package artur.display
 				if(ach.s != 3) {
 					if (ach.q >= UserStaticData.achievments_table[i][ach.s]) {
 						show_show_achieve = true;
-						Report.addMassage("find");
 						break;
 					}
 				}
@@ -121,6 +152,14 @@ package artur.display
 		
 		public function checkPerson():void {
 			this.show_person_lvl_up = UserStaticData.hero.fs > 0;
+		}
+		
+		public function checkKyzZakaz():void {
+			this.showKyzZakaz = WinKyz.dt == 0 && UserStaticData.hero.gold >= 3;
+		}
+		
+		public function checkKyzGift():void {
+			this.showKyzGift = WinKyz.dt_gift == 0;
 		}
 	}
 

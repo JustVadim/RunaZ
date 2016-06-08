@@ -101,6 +101,11 @@ package artur
 			/*73  */ new btnArenaSilver(),
 			/*74  */ new btnTake(),
 			/*75  */ new btnTakeNextFight(),
+			
+			/*76  */ new imgKyz(),
+			/*77  */ new imgTown(),
+			/*78  */ new imgBtnArena()
+
 		];
 			
 			

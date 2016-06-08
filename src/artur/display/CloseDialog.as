@@ -18,6 +18,9 @@ package artur.display {
 		private var btnBanK:BaseButton;
 		private var btnEnergy:BaseButton;
 		private var btnFortun:BaseButton;
+		private var btnKyz:BaseButton;
+		private var btnTow:BaseButton;
+		private var btnAren:BaseButton;
 		private var txt:TextField = Functions.getTitledTextfield(315, 163, 183, 0, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, false, 2);
 		private var spr:Sprite = new Sprite();
 		private var btns:Array;
@@ -30,13 +33,17 @@ package artur.display {
 			this.btnMision = new BaseButton(46);
 			this.btnEnergy = new BaseButton(50);
 			this.btnFortun = new BaseButton(68);
+			this.btnKyz = new BaseButton(76);
+			this.btnTow = new BaseButton(77);
+			this.btnAren = new BaseButton(78);
+			
 			this.iconGold.visible = false
 			this.iconSilver.visible = false;
 			this.txt.wordWrap = true;
 			this.addChild(btnEx);
 			this.addChild(this.txt);
 			this.txt.y += 0;
-			this.btns = [this.btnCastl, this.btnBanK, this.btnMision, this.btnEnergy, this.btnFortun];
+			this.btns = [this.btnCastl, this.btnBanK, this.btnMision, this.btnEnergy, this.btnFortun, this.btnAren, this.btnKyz, this.btnTow];
 			this.spr.y = 310;
 			this.addChild(this.spr);
 			this.txt.filters = [new GlowFilter(0x0, 1, 2, 2)];
@@ -97,11 +104,23 @@ package artur.display {
 				case btnFortun:
 					App.winManajer.swapWin(6);
 					break;
+				case btn_Arena:
+					App.winManajer.swapWin(5);
+					this.frees();
+					break;
+				case btnTow:
+					App.winManajer.swapWin(0);
+					this.frees();
+					break;
+				case btnKyz:
+					App.winManajer.swapWin(4);
+					this.frees();
+					break;
 			}
 			
 		}
 		
-		public function init1(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false, showEnergy:Boolean = false, playSoung:Boolean = true, showFortuna:Boolean = false):void {
+		public function init1(text:String, showCastle:Boolean = false, showMision:Boolean = false, showBank:Boolean = false, showEnergy:Boolean = false, playSoung:Boolean = true, showFortuna:Boolean = false, show_arena:Boolean = false, show_kyz:Boolean = false, show_town:Boolean = false):void {
 			if(playSoung) {
 				App.sound.playSound('inventar', App.sound.onVoice, 1);
 			}
@@ -109,7 +128,7 @@ package artur.display {
 				spr.removeChildAt(0);
 			}
 			Functions.compareAndSet(this.txt, text);
-			var arr:Array = [showCastle, showBank, showMision, showEnergy, showFortuna];
+			var arr:Array = [showCastle, showBank, showMision, showEnergy, showFortuna, show_arena, show_kyz, show_town];
 			this.addBtnsEvents(this.btnEx);
 			var count:int = 0;
 			for (var i:int = 0; i < arr.length; i++) {

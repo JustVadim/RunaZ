@@ -161,7 +161,6 @@ package artur.win
 				this.timer.addEventListener(TimerEvent.TIMER, this.onTImer);
 				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
 				this.timer.start();
-				App.dialogManager.canShow();
 			} else {
 				if(!this.bin) {
 					WinFortuna.dialogChecked = true;
@@ -172,6 +171,10 @@ package artur.win
 				this.addChild(this.btnFree);
 			}
 			
+		}
+		
+		private function onComplete():void {
+			App.dialogManager.canShow()
 		}
 		
 		private function onTImerCmplt(e:TimerEvent):void {
@@ -242,6 +245,7 @@ package artur.win
 			this.addEvents(false);
 			this.sp = 0;
 			this.spin(0);
+			TweenLite.to(this, 0, {delay:4, onComplete:onComplete});
 		}
 		
 		private function spin(price:int):void {

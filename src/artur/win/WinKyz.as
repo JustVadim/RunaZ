@@ -122,6 +122,7 @@ package artur.win {
 				this.timer2.start();
 				this.addChild(this.timerTextGift);
 			} else {
+				App.dialogManager.checkKyzGift();
 				if(!this.btnStone.parent) {
 					this.addChild(this.btnStone);
 				}
@@ -185,6 +186,7 @@ package artur.win {
 				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
 				this.timer.start();
 			} else {
+				App.dialogManager.checkKyzZakaz();
 				for (var i:int = 1; i < 6; i++) {
 					KyzStone(this.zakazBtns[i]).showZakazBtn(true);
 				}
