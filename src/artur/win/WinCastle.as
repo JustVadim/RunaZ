@@ -69,16 +69,25 @@ package artur.win {
 			App.spr.addChild(bg);
 			App.spr.addChild(txtCastle);
 			WinCastle.chest.init();
+			var prefferSlot:int = 0;
+			var fs:Boolean = false;
+			var selected:Boolean = false
 			for (var i:int = 0; i < slots.length; i++) {
 				Slot(slots[i]).init();
 				Swaper(swappers[i]).init();
-				if(UserStaticData.hero.units[i] != null && this.mcCurr.parent == null) {
-					this.selectSlot(i);
+				if (UserStaticData.hero.units[i] != null) {
+					if(!selected) {
+						prefferSlot = i;
+						selected = true;
+					} else {
+						if(UserStaticData.hero.units[i].fs > 0 && !fs) {
+							prefferSlot = i;
+							fs = true;
+						}
+					}
 				}
 			}
-			if(this.mcCurr.parent == null) {
-				this.selectSlot(0);
-			}
+			this.selectSlot(prefferSlot);
 			App.topMenu.updateGold();
 			App.topMenu.init(false, true, false);
 			App.topPanel.init(this);
@@ -87,7 +96,11 @@ package artur.win {
 			} else if(UserStaticData.hero.demo == 1) {
 				App.tutor.init(4);
 			}
-			
+			if(UserStaticData.hero.units[WinCastle.currSlotClick] != null) {
+				if(UserStaticData.hero.units[WinCastle.currSlotClick].fs == 0) {
+					App.dialogManager.canShow();
+				}
+			}
 		}
 		
 		public function selectSlot(i:int, anim:Boolean = true):void {

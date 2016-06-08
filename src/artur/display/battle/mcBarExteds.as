@@ -11,6 +11,7 @@ package artur.display.battle
 		public function mcBarExteds() {
 			this.addChild(this.title);
 			this.title.filters = [new GlowFilter(0x0, 1, 2, 2, 3)];
+			this.title.mouseEnabled = false;
 		}	
 		
 		public function setText(selected:Boolean):void 

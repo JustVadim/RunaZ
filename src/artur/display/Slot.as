@@ -30,6 +30,8 @@ package artur.display {
 		namesUnit[106] = 'BotTroll';
 		
 		public function Slot(i:int) {
+			this.tabEnabled = false;
+			this.tabChildren = false;
 			Functions.SetPriteAtributs(this, true, false, 73.1, 68.25 + i * 95);
 			this.name = String(i);
 			btnByeUnit = new BaseButton(8, 0.9, 5, 'click1', 'over1', 0x000000);
@@ -100,17 +102,6 @@ package artur.display {
 			if (UserStaticData.hero.units[int(name)] == null) {
 				this.addChild(btnByeUnit);
 			} else { 
-				/*var mcCurr:mcCurrSlot = WinCastle.getCastle().mcCurr;
-				if (!mcCurr.parent) {
-					WinCastle.currSlotClick = this.name;
-					this.addChild(mcCurr);
-					WinCastle.inventar.init1(UserStaticData.hero.units[this.name]);
-				} else {
-					if (WinCastle.getCastle().mcCurr.parent == this) {
-						WinCastle.inventar.init1(UserStaticData.hero.units[this.name], false);
-					}
-				}*/
-				
 				this.unit = UnitCache.getUnit(namesUnit[UserStaticData.hero.units[int(this.name)].t]);
 				this.unit.itemUpdate(Slot.getUnitItemsArray(UserStaticData.hero.units[this.name]));
 				this.unit.init(this);

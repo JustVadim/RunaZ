@@ -21,7 +21,7 @@ package artur.display
 			this.setBtn(this.full);
 			this.setBtn(this.muz);
 			this.setBtn(this.sound);
-			Report.addMassage(JSON.stringify(UserStaticData.data.data));
+			//Report.addMassage(JSON.stringify(UserStaticData.data.data));
 			if (!UserStaticData.data.data.s) {
 				this.sound.gotoAndStop(2);
 				App.sound.onVoice = 0;

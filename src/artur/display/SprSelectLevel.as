@@ -74,7 +74,7 @@ package artur.display {
 			var obj:Object = new Object();
 			obj.mn = this.missNum;
 			obj.d = d;
-			data.sendData(COMMANDS.CREAT_BATTLE, JSON2.encode(obj), true);
+			data.sendData(COMMANDS.CREAT_MISSION_BATTLE, JSON2.encode(obj), true);
 		}
 		
 		private function getRessBattle(e:DataExchangeEvent):void {

@@ -128,7 +128,14 @@ package artur.win
 		
 		private function onCloseWin(e:MouseEvent):void {
 			if (this.gift_id == 0) {
-				App.winManajer.swapWin(2);
+				if(Hero.isMiss(bat.id)) {
+					App.winManajer.swapWin(2);
+				} else if(Hero.isCave(bat.id)) {
+					App.winManajer.swapWin(7);
+				} else {
+					App.winManajer.swapWin(5);
+				}
+				
 			} else {
 				WinBattle.sprGift.init(this.gift_id);
 				this.gift_id = 0;
@@ -180,7 +187,7 @@ package artur.win
 			WinBattle.battleChat.addChild(App.prop);
 			App.prop.y = -405;
 			App.spr.addChild(bigLifeBar);
-			this.is_bot = String(WinBattle.bat.ids[1]).substr(0, 3) == "bot";
+			this.is_bot = (String(WinBattle.bat.ids[1]).substr(0, 3) == "bot" || String(WinBattle.bat.ids[1]).substr(0, 4) == "cave");
 			if(!this.is_bot) {
 				WinBattle.timer.init();
 			}
@@ -479,7 +486,10 @@ package artur.win
 			if (obj.is_w) {
 				mc = WinBattle.winAfterBattle;
 				App.sound.playSound('win', App.sound.onVoice, 1);
-				if (obj.mcd != null) {
+				//if (obj.mcd != null) {
+				Report.addMassage(bat.id);
+				if (Hero.isMiss(bat.id)) {
+					Report.addMassage(bat.id + " " + " miss");
 					var mapNum:int = int(obj.mcd.mapn);
 					var missNum:int = int(obj.mcd.misn);
 					var miss:Object = UserStaticData.hero.miss[mapNum].mn[missNum];
@@ -507,8 +517,6 @@ package artur.win
 					hero.addAndCheckExp(int(obj.exp) / 2);
 					hero.addAndCheckUnitExp(int(obj.exp), obj.ul);
 					App.topMenu.updateAva();
-					
-					
 					mc.starBar.visible = true;
 					mc.ress.visible = true;
 					McWinAfterBattleExtend(mc).ressTxtGold.text = obj.mcd.g;
@@ -520,12 +528,22 @@ package artur.win
 							mc.starBar["st" + j].visible = false;
 						}
 					}
+				} else if(Hero.isCave(bat.id)) {
+					UserStaticData.hero.cur_vitality += 10;
+					UserStaticData.caveInfo.cn++;
+					mc.starBar.visible = false;
+					WinCave.inst.updateBtns();
 				} else {
 					mc.starBar.visible = false;
 					mc.ress.visible = false;
 				}
 			} else {
 				mc = WinBattle.looseAfterBattle;
+				if(Hero.isCave(bat.id)) {
+					UserStaticData.caveInfo.cn = 0;
+					UserStaticData.caveInfo.tl = UserStaticData.cbt;
+					WinCave.inst.updateBtns();
+				}
 			}
 			UserStaticData.hero.rat = obj.rat;
 			mc.gotoAndPlay(1);
@@ -569,7 +587,7 @@ package artur.win
 			Main.THIS.stage.removeChild(WinBattle.battleChat);
 			Main.THIS.chat.setFocus();
 			App.dialogManager.canShow();
-			WinBattle.bat = null;
+			//WinBattle.bat = null;
 		}
 		
 		private function onShowTask():void {

@@ -38,7 +38,7 @@ package artur.display
 		
 		private function onGetFriends(e:Array):void {
 			UserStaticData.ASK_FRIENDS = e;
-			Report.addMassage(JSON.stringify(e));
+			//Report.addMassage(JSON.stringify(e));
 			users_arr = new Array();
 			for (var i:int = 0; i < e.length; i++) {
 				users_arr[i] = new AskGiftFriend(i,this.type, 1 + int(i % 7) * 52, 1 + int(i / 7) * 52);
@@ -46,7 +46,7 @@ package artur.display
 		}
 		
 		private function onFailFriends(e:Object):void {
-			Report.addMassage("getFriends failed: " + JSON.stringify(e));
+			//Report.addMassage("getFriends failed: " + JSON.stringify(e));
 		}
 		
 		public function init(stoneNum:int):void {

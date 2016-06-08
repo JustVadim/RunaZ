@@ -172,9 +172,6 @@ package artur.display
 				
 			}
 			App.spr.addChild(this);
-			if(UserStaticData.hero.demo == 1) {
-				
-			}
 		}
 		
 		private function initRemoveBtn():void {
@@ -265,7 +262,6 @@ package artur.display
 			this.compareAndSet(this.mcText.txt_sk_miss, unit.b[1].l);
 			this.compareAndSet(this.mcText.txt_sk_out, unit.b[3].l);
 			this.compareAndSet(this.mcText.txt_sk_ult, unit.ult.lvl);
-			
 			this.compareAndSet(this.mcText.txt_available, Lang.getTitle(77) + ": " + unit.fs);
 		}
 		
@@ -416,6 +412,16 @@ package artur.display
 					removeClickEventFromBuff(unit.fs == 0);
 					mcText.mcFreeskils.visible = unit.fs > 0;
 					App.lock.frees();
+					if(unit.fs == 0) {
+						for(var key:Object in UserStaticData.hero.units) {
+							if(UserStaticData.hero.units[key].fs > 0) {
+								WinCastle.inst.selectSlot(int(key));
+								return;
+							}
+						}
+						App.dialogManager.canShow();
+					}
+					
 				}
 				else {
 					App.lock.init(obj.error);

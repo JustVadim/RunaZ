@@ -58,9 +58,6 @@ package artur.win {
 			this.goldBtn.x = 646;
 			this.goldBtn.y = 128.7;
 			
-			/*btn1 = new BaseButton(40);
-			btn1.x = 400;
-			btn1.y = 100;*/
 			btnClose = new BaseButton(31);
 			mcFound.x = 400;
 			mcFound.y = 250;
@@ -82,32 +79,6 @@ package artur.win {
 			App.spr.removeChild(btnClose);
 			App.lock.frees();
 		}
-		
-		/*private function onBtn(e:MouseEvent):void {
-			App.info.frees();
-			if(UserStaticData.hero.level >= WinArena.NEEDED_LVL && GetServerData.getUserIsReadyToBattle() && UserStaticData.hero.cur_vitality > 9) {
-				mcFound.rotation = 0;
-				mcFound.rot.visible = false;
-				mcFound.gotoAndPlay(1);
-				App.spr.addChild(mcFound);
-				App.spr.addChild(btnClose);
-				btnClose.x = e.currentTarget.x;
-				btnClose.y = e.currentTarget.y + 50;
-				var data:DataExchange = new DataExchange();
-				data.addEventListener(DataExchangeEvent.ON_RESULT, this.onRes);
-				data.sendData(COMMANDS.FIND_BATTLE, "", true);
-				App.lock.init();
-				
-			} else {
-				if(UserStaticData.hero.level < WinArena.NEEDED_LVL) {
-					App.closedDialog.init1(Lang.getTitle(44), false, true);
-				} else if(!GetServerData.getUserIsReadyToBattle()) {
-					App.closedDialog.init1(Lang.getTitle(36), true);
-				} else if(UserStaticData.hero.cur_vitality < 10) {
-					App.closedDialog.init1(Lang.getTitle(170), false, false, false, true);
-				}
-			}
-		}*/
 		
 		private function onRes(e:DataExchangeEvent):void {
 			var obj:Object = JSON2.decode(e.result);
@@ -160,7 +131,7 @@ package artur.win {
 			switch(btn) {
 				case this.pointBtn:
 					Report.addMassage(0);
-					if(UserStaticData.hero.level >= 1) {
+					if(UserStaticData.hero.level >= 3) {
 						if(!GetServerData.getUserIsReadyToBattle()) {
 							App.closedDialog.init1(Lang.getTitle(36), true);
 						} else if(UserStaticData.hero.cur_vitality < 10) {
@@ -173,7 +144,7 @@ package artur.win {
 					}
 					break;
 				case this.silverBtn:
-					if(UserStaticData.hero.level >= 1) {
+					if(UserStaticData.hero.level >= 5) {
 						if(!GetServerData.getUserIsReadyToBattle()) {
 							App.closedDialog.init1(Lang.getTitle(36), true);
 						} else if(UserStaticData.hero.cur_vitality < 10) {
@@ -188,7 +159,7 @@ package artur.win {
 					}
 					break;
 				case this.goldBtn:
-					if (UserStaticData.hero.level >= 1) {
+					if (UserStaticData.hero.level >= 7) {
 						var g:int = 1 + UserStaticData.hero.level / 3;
 						if(!GetServerData.getUserIsReadyToBattle()) {
 							App.closedDialog.init1(Lang.getTitle(36), true);

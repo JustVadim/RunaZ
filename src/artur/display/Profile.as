@@ -39,7 +39,7 @@ package artur.display {
 		}
 		
 		public function init(userId:String, obj:Object = null):void {
-			Report.addMassage(JSON.stringify(obj) + userId);
+			//Report.addMassage(JSON.stringify(obj) + userId);
 			this.frees();
 			this.userId = userId;
 			App.spr.addChild(this);

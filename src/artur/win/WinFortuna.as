@@ -123,6 +123,9 @@ package artur.win
 			this.addEvents(true);
 			App.topPanel.init(this);
 			App.topMenu.init(true, true);
+			if(WinFortuna.dt > 10) {
+				App.dialogManager.canShow();
+			}
 		}
 		
 		private function checkTime(state:Boolean):void {
@@ -158,6 +161,7 @@ package artur.win
 				this.timer.addEventListener(TimerEvent.TIMER, this.onTImer);
 				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
 				this.timer.start();
+				App.dialogManager.canShow();
 			} else {
 				if(!this.bin) {
 					WinFortuna.dialogChecked = true;

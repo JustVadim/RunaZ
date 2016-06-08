@@ -98,7 +98,9 @@ package artur
 			/*70  */ new btnFriendsStone(),
 			/*71  */ new btnArenaGold(),
 			/*72  */ new btnArenaPoint(),
-			/*73  */ new btnArenaSilver()
+			/*73  */ new btnArenaSilver(),
+			/*74  */ new btnTake(),
+			/*75  */ new btnTakeNextFight(),
 		];
 			
 			

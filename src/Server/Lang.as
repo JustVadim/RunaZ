@@ -588,6 +588,7 @@ package Server
 			Lang.lang_table[201] = ["Подарить другу ", "", ""];
 			Lang.lang_table[202] = ["Попросить у друга ", "", ""];
 			Lang.lang_table[203] = ["Отправить в крафтер ", "", ""];
+			Lang.lang_table[204] = ["В бой", "", ""];
 			
 			
 		}

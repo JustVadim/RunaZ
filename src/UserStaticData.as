@@ -8,7 +8,7 @@
 		//public static const server_ip:String = "151.80.10.33";
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
-		public static var id:String = "22";
+		public static var id:String = "24";
 		public static var sig:String = "11111";
 		public static var fname:String = "Laukhin";
 		public static var sname:String = "Vadim";
@@ -28,6 +28,8 @@
 		static public var fd:Object;
 		static public var data:SharedObject = SharedObject.getLocal("DarkLands");
 		static public var top:Object;
+		public static var cbt:int;
+		static public var caveInfo:Object;
 		static public var vkAcievs:Array =	[
 												[
 													"photo-118450370_412855525",

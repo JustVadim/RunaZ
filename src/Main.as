@@ -17,6 +17,7 @@ package  {
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -50,6 +51,12 @@ package  {
 			} else {
 				this.addEventListener(Event.ADDED_TO_STAGE, this.init);
 			}
+			//this.addEventListener(MouseEvent.RIGHT_CLICK, this.onRightClick);
+		}
+		
+		private function onRightClick(e:MouseEvent):void 
+		{
+			Report.addMassage("Right click");
 		}
 		
 		private function init(e:Event = null):void {

@@ -42,7 +42,6 @@ package artur.win
 			} else {
 			    swapWin(3)	 
 			}
-			
 			var bm1:Bitmap = RasterClip.getBitmap(new mcBrmPart(), 1,-1,-1,null,0.9);
 			RasterClip.getBitmapFromBmd(App.prepare.cach[16]);
 			var bm2:Bitmap = RasterClip.getBitmap(new mcBrmPart(), 1,-1,-1,null,0.9);
@@ -79,7 +78,7 @@ package artur.win
 					App.spr.removeChild(brama);
 					brama.stop();
 					swapMode = false;
-					if(currWin != 3) {
+					if(currWin != 3 && currWin != 1 && currWin != 6) {
 						App.dialogManager.canShow();
 					}
 				}

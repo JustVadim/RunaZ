@@ -39,7 +39,6 @@ package datacalsses
 			this.bat = obj.bat;
 			this.rat = obj.rat;
 			this.nle = obj.nle;
-			//// - crab;
 			this.level = obj.lvl;
 			this.exp = obj.exp;
 			this.miss = obj.miss;
@@ -50,8 +49,6 @@ package datacalsses
 			this.t = obj.t;
 			this.sett = obj.fbs;
 			this.ach = obj.ach;
-			
-			/// - crab;
 		}
 		
 		public function addAndCheckExp(exp_:int):void {
@@ -62,6 +59,7 @@ package datacalsses
 				this.fs++;
 				this.nle = UserStaticData.levels[this.level];
 				Main.THIS.chat.addFortunaBtn();
+				App.dialogManager.checkPerson();
 			}
 		}
 		
@@ -80,11 +78,11 @@ package datacalsses
 				var unit:Object = this.units[ul[key]];
 				unit.exp += exp;
 				if (unit.exp >= unit.nle) {
-					App.dialogManager.checkUnits();
 					unit.lvl++;
 					unit.fs += 2;
 					unit.exp = 0;
 					unit.nle = UserStaticData.levels[unit.lvl];
+					App.dialogManager.checkUnits();
 				}
 			}
 		}
@@ -93,6 +91,20 @@ package datacalsses
 			for(var key:Object in temp_obj) {
 				this.ach[key].q = temp_obj[key];
 			}
+		}
+		
+		public static function isMiss(id:Number):Boolean {
+			if(id>-1 && id<20000) {
+				return true;
+			}
+			return false;
+		}
+		
+		public static function isCave(id:Number):Boolean {
+			if(id>=20000 && id< 40000) {
+				return true;
+			}
+			return false;
 		}
 	}
 }

@@ -9,8 +9,10 @@ package artur.display
 	import report.Report;
 	public class DialogManager extends Sprite {
 		
-		private var show_task:Boolean = false;
+		private var show_person_lvl_up:Boolean = false;
 		private var show_unit_lvl_up:Boolean = false;
+		private var show_task:Boolean = false;
+		
 		private var show_show_achieve:Boolean = false;
 		public var show_bonus:Boolean = false;
 		
@@ -19,6 +21,7 @@ package artur.display
 		}
 		
 		public function init():void {
+			this.checkPerson();
 			this.checkTask();
 			this.checkUnits();
 			this.checkBonus();
@@ -27,15 +30,19 @@ package artur.display
 		
 		
 		public function canShow():void {
-			if(!App.winManajer.swapMode) {
-				if(show_unit_lvl_up) {
-					App.closedDialog.init1(Lang.getTitle(2), true);
-					this.show_unit_lvl_up = false;
-					return;
+			if (!App.winManajer.swapMode) {
+				if(this.show_person_lvl_up) {
+						
 				}
+				
 				if(show_task) {
 					App.task.init();
 					this.show_task = false;
+					return;
+				}
+				if(show_unit_lvl_up) {
+					App.closedDialog.init1(Lang.getTitle(2), true);
+					this.show_unit_lvl_up = false;
 					return;
 				}
 				if (show_bonus) {
@@ -110,6 +117,10 @@ package artur.display
 		
 		public function checkUnits():void {
 			show_unit_lvl_up = UserStaticData.hero.checkLevelUp();
+		}
+		
+		public function checkPerson():void {
+			this.show_person_lvl_up = UserStaticData.hero.fs > 0;
 		}
 	}
 

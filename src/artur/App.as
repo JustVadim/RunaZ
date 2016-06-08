@@ -85,6 +85,7 @@ package artur
 		public static var dialogManager:DialogManager;
 		public static var sprTop:SprTop;
 		
+		
 		public function App(stg:Stage) {
 			this.tabEnabled = false;
 			this.tabChildren = false;
