@@ -76,9 +76,6 @@ package artur.display
 				this.setBuffsBtnsProperties();
 			}
 			this.addChild(this.bg = RasterClip.getBitmapFromBmd(App.prepare.cach[13]));
-			
-			//new MyBitMap(App.prepare.cach[13]));
-			
 			this.addChild(this.mcText);
 			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6];
 			

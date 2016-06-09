@@ -80,6 +80,9 @@ package artur.display {
 		
 		private function onBtn(e:MouseEvent):void {
 			var mc:BaseButton = BaseButton(e.currentTarget);
+			if(UserStaticData.hero.demo == 6) {
+				App.tutor.frees();
+			}
 			switch(mc) {
 				case this.btnEx:
 					this.frees();

@@ -17,7 +17,7 @@ package artur.display {
 		}
 		
 		public function setText(num:int):void {
-			Functions.compareAndSet(this.text, Lang.getTitle(157+num));
+			Functions.compareAndSet(this.text, Lang.getTitle(157, num));
 		}
 		
 		public function init(xx:Number, yy:Number, text:int):void 

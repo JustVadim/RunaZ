@@ -78,6 +78,9 @@ package artur.display
 					if(this.showKyzZakaz) {
 						App.closedDialog.init1(Lang.getTitle(206), false, false, false, false, true, false, false, true);
 						this.showKyzZakaz = false;
+						if(UserStaticData.hero.demo == 6) {
+							App.tutor.init(13);
+						}
 						return;
 					}
 					

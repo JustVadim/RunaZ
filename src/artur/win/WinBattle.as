@@ -653,6 +653,10 @@ package artur.win
 						} else if (UserStaticData.hero.demo == 4 && this.isHeroRange(loc, (r+1))) {
 							WinBattle.tutor.init(currUnit.x + 15, currUnit.y -40, 1);
 							UserStaticData.hero.demo++;
+						} else if(UserStaticData.hero.demo == 5 && this.isHeroRange(loc, (r+1))) {
+							App.tutor.init(12);
+							WinBattle.tutor.init(currUnit.x + 15, currUnit.y -40, 2);
+							UserStaticData.hero.demo++;
 						}
 					} 
 				} else {
@@ -816,6 +820,11 @@ package artur.win
 				this.grid.disLightUltCells(unit_type);
 				this.getControlAfterUlt(true);
 			}
+			if(UserStaticData.hero.demo == 6) {
+				App.tutor.frees();
+				WinBattle.tutor.frees();
+			}
+			
 		}
 		 
 		private function onUltOut(e:MouseEvent):void {

@@ -353,6 +353,11 @@ package artur.win {
 			this.btnStone.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
 			this.btnCraft.addEventListener(MouseEvent.ROLL_OVER, this.onCraftOver);
 			this.btnCraft.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
+			if(UserStaticData.hero.demo == 6) {
+				App.tutor.init(14);
+			}  else if(UserStaticData.hero.demo == 7) {
+				App.tutor.init(16);
+			}
 		}
 			
 		private function onMakeGiftOver(e:MouseEvent):void {

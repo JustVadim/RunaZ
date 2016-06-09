@@ -121,7 +121,7 @@ package artur.display
 				}
 			}
 			App.spr.addChild(this);
-			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
+			if(UserStaticData.hero.demo == 0) {
 				App.tutor.init(6);
 			}
 		}
@@ -204,6 +204,10 @@ package artur.display
 						if(UserStaticData.hero.gold >= this.g) {
 							WinKyz.inst.zakazKamnja(this.itemType);
 							this.frees();
+							if(UserStaticData.hero.demo == 6) {
+								UserStaticData.hero.demo++;
+								App.tutor.init(16);
+							}
 						} else {
 							App.closedDialog.init1(Lang.getTitle(45), false, true, true);
 						}

@@ -168,7 +168,7 @@ package artur.win {
 						} else if(UserStaticData.hero.gold < g) {
 							
 						} else {
-							type = 1;
+							type = 2;
 						}
 					} else {
 						App.closedDialog.init1(Lang.getTitle(44, 2), false, true);
