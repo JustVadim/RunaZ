@@ -61,6 +61,7 @@ package artur.display {
 			this.closeBtn.mouseEnabled = false;
 			TweenLite.to(this.title, 2, { alpha:1, onComplete:this.addBtn } );
 			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
+			
 		}
 		
 		private function onRemovedFromStage(e:Event):void {
@@ -90,6 +91,11 @@ package artur.display {
 				this.nextMiss.addEventListener(MouseEvent.CLICK, this.onNextClick);
 				this.nextMiss.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
 				this.nextMiss.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+				
+				if (UserStaticData.hero.demo == 10) {
+					UserStaticData.hero.demo = 11;
+					App.tutor.init(18)
+				}
 			}
 		}
 		
@@ -113,12 +119,20 @@ package artur.display {
 		}
 		
 		private function onThisMissClick(e:MouseEvent):void {
+			if (UserStaticData.hero.demo == 11) {
+				UserStaticData.hero.demo = 12;
+				App.tutor.frees();
+			}
 			McWinAfterBattleExtend.rebattleUse = true;
 			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substr(3))%11;
 			WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
 		}
 		
 		private function onNextClick(e:MouseEvent):void {
+			if (UserStaticData.hero.demo == 11) {
+				UserStaticData.hero.demo = 12;
+				App.tutor.frees();
+			}
 			McWinAfterBattleExtend.rebattleUse = true;
 			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substr(3));
 			if (missNum != 0 && (missNum + 1) % 11 == 0) {

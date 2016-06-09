@@ -206,8 +206,9 @@ package artur.display
 							this.frees();
 							if(UserStaticData.hero.demo == 6) {
 								UserStaticData.hero.demo++;
-								App.tutor.init(16);
+								App.tutor.init(19);
 							}
+							
 						} else {
 							App.closedDialog.init1(Lang.getTitle(45), false, true, true);
 						}

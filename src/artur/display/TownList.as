@@ -44,13 +44,11 @@ package artur.display
 			App.spr.removeChild(this);
 		}
 		
-		public function init(currMap:int, currTwon:int, title:String):void
-		{
+		public function init(currMap:int, currTwon:int, title:String):void {
 			MapTown.currTownClick = currTwon;
 			this.txtTitle.text = title;
 			App.spr.addChild(this);
 			var obj:Object = UserStaticData.hero.miss[currTwon].mn;
-			
 			for (var i:int = 0; i < blanks.length; i++) {
 				var blank:MissionBlank = MissionBlank(blanks[i]);
 				blank.setName(Lang.getTitle(0,MapTown.currTownClick * 11 + i));

@@ -85,8 +85,9 @@ package artur.display {
 			}
 			switch(mc) {
 				case this.btnEx:
+					if(App.winManajer.currWin != 3)
+						App.dialogManager.canShow();
 					this.frees();
-					App.dialogManager.canShow();
 					break;
 				case this.btnCastl:
 					App.winManajer.swapWin(1);
@@ -145,7 +146,6 @@ package artur.display {
 			this.txt.height = 18 * this.txt.numLines;
 			this.txt.y = 163 + (110 - this.txt.height) / 2;
 			spr.x = 410 - spr.width / 2;
-			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
 			App.spr.addChild(this);
 		}
 		
@@ -155,9 +155,7 @@ package artur.display {
 			mc.addEventListener(MouseEvent.ROLL_OUT, onOut);
 		}
 		
-		private function onRemovedFromStage(e:Event):void {
-			this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
-		}
+		
 		
 		private function removeBtnsEvents(mc:BaseButton):void {
 			Report.addMassage("sdfsdf");

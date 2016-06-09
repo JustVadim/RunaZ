@@ -38,7 +38,6 @@ package artur.display
 		
 		private function onGetFriends(e:Array):void {
 			UserStaticData.ASK_FRIENDS = e;
-			//Report.addMassage(JSON.stringify(e));
 			users_arr = new Array();
 			for (var i:int = 0; i < e.length; i++) {
 				users_arr[i] = new AskGiftFriend(i,this.type, 1 + int(i % 7) * 52, 1 + int(i / 7) * 52);
@@ -69,6 +68,9 @@ package artur.display
 		}
 		
 		public function frees():void {
+			if (UserStaticData.hero.demo == 8) {
+				App.tutor.init(7);
+			}
 			if(this.parent) {
 				App.spr.removeChild(this);
 				for (var i:int = 0; i < UserStaticData.ASK_FRIENDS.length; i++) {

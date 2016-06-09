@@ -8,9 +8,9 @@ package artur.display {
 	import report.Report;
 	public class Tutor extends mcTutorial {
 		private var txt:TextField = Functions.getTitledTextfield(0, 0, 300, 0, new Art().fontName, 15, 0xFFFFFF, TextFormatAlign.CENTER, "", 0.9);
-		private var coordX:Array = [0, 250, 170, 500, 270, 500, 500, 500, 8, 9, 10,11, 400,0];
+		private var coordX:Array = [0, 250, 170, 500, 270, 500, 500, 500, 8, 9, 10,11, 400, 0, 0, 0, 0];
 		
-		private var coordY:Array = [0, 300, 45, 250, 250, 50, 50, 50, 8, 9, 10,11, 450,0];
+		private var coordY:Array = [0, 300, 45, 250, 250, 50, 50, 50, 8, 9, 10,11, 450, 0, 0, 0, 0, 0];
 		
 		public function Tutor() {
 			//this.addChild(this.txt);
@@ -37,7 +37,7 @@ package artur.display {
 				this.removeChild(this.txt);
 			}
 			if (Lang.getTitle(60, this.currentFrame) != "") {
-				Report.addMassage("famr + " + this.currentFrame + Lang.getTitle(60, this.currentFrame));
+				//Report.addMassage("famr + " + this.currentFrame + Lang.getTitle(60, this.currentFrame));
 				this.addChild(this.txt);
 				this.txt.x = coordX[this.currentFrame];
 				this.txt.y = coordY[this.currentFrame];

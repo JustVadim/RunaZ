@@ -168,6 +168,9 @@ package artur.win
 		}
 		
 		public function init():void {
+			if(UserStaticData.hero.demo == 8) {
+				UserStaticData.hero.demo = 9;
+			}
 			this.bin = true;
 			App.swapMuz('BatleSong');
 			this.gift_id = 0;
@@ -193,6 +196,7 @@ package artur.win
 			}
 			App.spr.addChild(this.showHP);
 			this.showHP.addEventListener(MouseEvent.CLICK, this.onCheckDigitClick);
+			
 		}
 		
 		private function addBG():void {
@@ -483,13 +487,14 @@ package artur.win
 			this.grid.clearNodesControl();
 			var mc:MovieClip;
 			var hero:Hero = UserStaticData.hero;
+			hero.addAndCheckExp(int(obj.exp) / 2);
+			hero.addAndCheckUnitExp(int(obj.exp), obj.ul);
+			App.topMenu.updateAva();
 			if (obj.is_w) {
 				mc = WinBattle.winAfterBattle;
 				App.sound.playSound('win', App.sound.onVoice, 1);
-				//if (obj.mcd != null) {
 				Report.addMassage(bat.id);
 				if (Hero.isMiss(bat.id)) {
-					Report.addMassage(bat.id + " " + " miss");
 					var mapNum:int = int(obj.mcd.mapn);
 					var missNum:int = int(obj.mcd.misn);
 					var miss:Object = UserStaticData.hero.miss[mapNum].mn[missNum];
@@ -514,9 +519,6 @@ package artur.win
 					hero.miss[mapNum].mn[missNum].st = obj.mcd.sa;
 					hero.gold += int(obj.mcd.g);
 					hero.silver += int(obj.mcd.s);
-					hero.addAndCheckExp(int(obj.exp) / 2);
-					hero.addAndCheckUnitExp(int(obj.exp), obj.ul);
-					App.topMenu.updateAva();
 					mc.starBar.visible = true;
 					mc.ress.visible = true;
 					McWinAfterBattleExtend(mc).ressTxtGold.text = obj.mcd.g;
@@ -532,10 +534,27 @@ package artur.win
 					UserStaticData.hero.cur_vitality += 10;
 					UserStaticData.caveInfo.cn++;
 					mc.starBar.visible = false;
+					mc.ress.visible = false;
 					WinCave.inst.updateBtns();
 				} else {
 					mc.starBar.visible = false;
-					mc.ress.visible = false;
+					var tt:int = bat.tt[WinBattle.myTeam];
+					var coef:int = obj.is_w?1: -1;
+					if(tt == 1) {
+						var silver:int = coef * (UserStaticData.hero.level * 10);
+						UserStaticData.hero.silver += silver;
+						mc.ress.visible = false;
+						McWinAfterBattleExtend(mc).ressTxtGold.text = String(0);
+						McWinAfterBattleExtend(mc).ressTxtSilver.text = String(silver);
+						
+					} else if(tt == 2) {
+						var gold:int = coef * int(1 + UserStaticData.hero.level/ 3);
+						UserStaticData.hero.gold += gold;
+						McWinAfterBattleExtend(mc).ressTxtGold.text = String(gold);
+						McWinAfterBattleExtend(mc).ressTxtSilver.text = String(0);
+					} else {
+						mc.ress.visible = false;
+					}
 				}
 			} else {
 				mc = WinBattle.looseAfterBattle;
@@ -658,7 +677,12 @@ package artur.win
 							WinBattle.tutor.init(currUnit.x + 15, currUnit.y -40, 2);
 							UserStaticData.hero.demo++;
 						}
-					} 
+					} else if(UserStaticData.hero.demo == 9)  {
+						App.tutor.init(17);
+					} else if(UserStaticData.hero.demo == 12) {
+						UserStaticData.hero.demo = 13;
+						App.closedDialog.init1(Lang.getTitle(209), false, false, false, false, true);
+					}
 				} else {
 					TweenLite.to(this, 0, {delay:0.2, onComplete: this.onDelay});
 					

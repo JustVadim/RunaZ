@@ -355,8 +355,8 @@ package artur.win {
 			this.btnCraft.addEventListener(MouseEvent.ROLL_OUT, this.onRollOut);
 			if(UserStaticData.hero.demo == 6) {
 				App.tutor.init(14);
-			}  else if(UserStaticData.hero.demo == 7) {
-				App.tutor.init(16);
+			}  else if (UserStaticData.hero.demo == 7) {
+				App.tutor.init(19);
 			}
 		}
 			
@@ -375,6 +375,11 @@ package artur.win {
 		
 		private function onMakeGift(e:MouseEvent):void {
 			this.makeGiftDialog.init(UserStaticData.hero.sg.t);
+			if(UserStaticData.hero.demo == 7) {
+				UserStaticData.hero.demo = 8;
+				App.tutor.frees();
+				Report.addMassage("demo == 8");
+			}
 		}
 		
 		public function frees():void {

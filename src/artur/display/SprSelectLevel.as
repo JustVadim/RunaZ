@@ -127,7 +127,7 @@ package artur.display {
 					}
 				}
 				
-				if(UserStaticData.hero.demo == 2) {
+				if(UserStaticData.hero.demo == 2 || UserStaticData.hero.demo == 8) {
 					App.tutor.init(11);
 				}
 			} else {

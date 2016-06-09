@@ -74,7 +74,7 @@ package artur.win {
 			App.spr.addChild(mcRess);
 			App.topPanel.init(this);
 			App.topMenu.init(true, true);
-			if(UserStaticData.hero.demo == 2) {
+			if(UserStaticData.hero.demo == 2 || UserStaticData.hero.demo == 8) {
 				App.tutor.init(9);
 			}
 		}
@@ -84,6 +84,8 @@ package artur.win {
 			townList.init(currMap, num , names[currMap][num]);
 			if(UserStaticData.hero.demo == 2) {
 				App.tutor.init(10);
+			} else if(UserStaticData.hero.demo == 8) {
+				App.tutor.init(16);
 			}
 		}
 		
@@ -100,4 +102,4 @@ package artur.win {
 		
 	}
 
-}
+} 
