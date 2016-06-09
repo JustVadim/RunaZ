@@ -126,7 +126,7 @@ package artur.display {
 		private function onClick(e:MouseEvent):void {
 			if(UserStaticData.hero.gold >= 2) {
 				App.byeWin.init(Lang.getTitle(75), Lang.getTitle(43, this.id), 2, 0, 0, 4, this.id);
-				if(UserStaticData.hero.demo == 6) {
+				if(UserStaticData.hero.demo == 6 || UserStaticData.hero.level<3 && UserStaticData.hero.demo > 6) {
 					App.tutor.init(15);
 				}
 			} else {

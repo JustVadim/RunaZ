@@ -50,6 +50,9 @@ package artur.display
 					this.show_person_lvl_up = false;
 					if(App.winManajer.currWin != 0) {
 						App.closedDialog.init1(Lang.getTitle(2), false, false, false, false, true, false, false, false, true);
+						if (UserStaticData.hero.level < 5) {
+							App.tutor.init(13);
+						}
 					} else {
 						
 					}
@@ -59,6 +62,9 @@ package artur.display
 				if(show_unit_lvl_up) {
 					App.closedDialog.init1(Lang.getTitle(2), true);
 					this.show_unit_lvl_up = false;
+					if (UserStaticData.hero.level < 5) {
+						App.tutor.init(13);
+					}
 					return;
 				}
 				
@@ -78,7 +84,7 @@ package artur.display
 					if(this.showKyzZakaz) {
 						App.closedDialog.init1(Lang.getTitle(206), false, false, false, false, true, false, false, true);
 						this.showKyzZakaz = false;
-						if(UserStaticData.hero.demo == 6) {
+						if (UserStaticData.hero.demo == 6 || UserStaticData.hero.level < 4 &&UserStaticData.hero.demo>6){
 							App.tutor.init(13);
 						}
 						return;

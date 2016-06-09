@@ -207,6 +207,8 @@ package artur.display
 							if(UserStaticData.hero.demo == 6) {
 								UserStaticData.hero.demo++;
 								App.tutor.init(19);
+							} else if (UserStaticData.hero.level<3 && UserStaticData.hero.demo> 6) {
+								App.tutor.frees();
 							}
 							
 						} else {

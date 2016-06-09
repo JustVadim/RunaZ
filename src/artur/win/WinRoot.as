@@ -135,6 +135,11 @@ package artur.win
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}
+			if (UserStaticData.hero.fs > 0 && UserStaticData.hero.level < 5) {
+				App.tutor.init(21);
+			} else {
+				App.dialogManager.canShow();
+			}
 		}
 		
 		public function updateBar():void {

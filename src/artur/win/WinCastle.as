@@ -96,11 +96,7 @@ package artur.win {
 			} else if(UserStaticData.hero.demo == 1) {
 				App.tutor.init(4);
 			}
-			if(UserStaticData.hero.units[WinCastle.currSlotClick] != null) {
-				if(UserStaticData.hero.units[WinCastle.currSlotClick].fs == 0) {
-					App.dialogManager.canShow();
-				}
-			}
+			
 		}
 		
 		public function selectSlot(i:int, anim:Boolean = true):void {
@@ -116,6 +112,15 @@ package artur.win {
 				WinCastle.inventar.init1(UserStaticData.hero.units[i], anim);
 			}
 			Slot(this.slots[i]).addChildAt(this.mcCurr, 1);
+			if(UserStaticData.hero.units[WinCastle.currSlotClick] != null) {
+				if(UserStaticData.hero.units[WinCastle.currSlotClick].fs == 0) {
+					App.dialogManager.canShow();
+				} else {
+					if(UserStaticData.hero.level < 5) {
+						App.tutor.init(22);
+					}
+				}
+			}
 		}
 		
 		public function updateSlots():void {

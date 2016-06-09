@@ -78,7 +78,7 @@ package artur.win
 					App.spr.removeChild(brama);
 					brama.stop();
 					swapMode = false;
-					if(currWin != 3 && currWin != 1 && currWin != 6) {
+					if(currWin != 3 && currWin != 1 && currWin != 6 && currWin != 0) {
 						App.dialogManager.canShow();
 					}
 				}

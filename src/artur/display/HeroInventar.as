@@ -354,6 +354,7 @@ package artur.display
 		}
 		
 		private function onBuffClick(e:MouseEvent):void {
+			App.tutor.frees();
 			var skill_num:int = -1;
 			var mc:MovieClip = MovieClip(e.currentTarget);
 			switch(true) {
@@ -417,8 +418,11 @@ package artur.display
 							}
 						}
 						App.dialogManager.canShow();
+					} else {
+						if (UserStaticData.hero.level < 5) {
+							App.tutor.init(22);
+						}
 					}
-					
 				}
 				else {
 					App.lock.init(obj.error);
@@ -465,7 +469,7 @@ package artur.display
 				this.itemType = int(mc.name);
 				this.itemID = int(mc.currentFrame);
 				this.invPlace = this.getIsInv(mc);
-				this.call = ItemCall.getCall();
+				this.call = ItemCall.getCall(); 
 				this.call.mouseEnabled = false;
 				this.call.init(this.heroType, this.itemType, this.itemID - 1);
 				this.call.x = App.spr.mouseX  - this.call.width / 2 + 8;

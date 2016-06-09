@@ -36,6 +36,9 @@ package artur.display {
 		}
 		
 		private function onBtn(e:MouseEvent):void {
+			if(UserStaticData.hero.level < 5) {
+				App.tutor.frees();
+			}
 			var str:String = e.currentTarget.name;
 			App.lock.init();
 			var data:DataExchange = new DataExchange();
@@ -72,6 +75,9 @@ package artur.display {
 			}
 			else {
 				App.lock.init(res.error);
+			}
+			if(UserStaticData.hero.fs == 0) {
+				App.dialogManager.canShow();
 			}
 		}
 		
