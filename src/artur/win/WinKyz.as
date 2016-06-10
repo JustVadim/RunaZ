@@ -357,7 +357,10 @@ package artur.win {
 				App.tutor.init(14);
 			}  else if (UserStaticData.hero.demo == 7) {
 				App.tutor.init(19);
+			} else if(UserStaticData.hero.level < 5 && UserStaticData.hero.gold >= 2 && WinKyz.dt == 0) {
+				App.tutor.init(14);
 			}
+			
 		}
 			
 		private function onMakeGiftOver(e:MouseEvent):void {

@@ -2,6 +2,7 @@ package artur.win {
 	import artur.App;
 	import artur.RasterClip;
 	import artur.display.BaseButton;
+	import flash.text.engine.Kerning;
 	
 	import artur.units.U_Lyk;
 	import artur.units.U_Mag;
@@ -43,6 +44,10 @@ package artur.win {
 		private var silverBtn:BaseButton;
 		private var goldBtn:BaseButton;
 		
+		private var pointTitle:TextField = Functions.getTitledTextfield( -80, -8, 160, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(212,0), 1, Kerning.AUTO, 0, false, 2);
+		private var silvetTitle:TextField = Functions.getTitledTextfield( -80, -8, 160, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(212,1), 1, Kerning.AUTO, 0, false, 2);
+		private var goldTitle:TextField = Functions.getTitledTextfield( -80, -8, 160, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, Lang.getTitle(212,2), 1, Kerning.AUTO, 0, false, 2);
+		
 		
 		public function WinArena() {
 			bg = RasterClip.getBitmap(new mcArena());
@@ -62,7 +67,10 @@ package artur.win {
 			mcFound.x = 400;
 			mcFound.y = 250;
 			mcFound.gotoAndStop(1);
-			this.ratText.filters = [new GlowFilter(0x0, 1, 2, 2)];
+			this.ratText.filters = this.pointTitle.filters = this.silvetTitle.filters = this.goldTitle.filters = [new GlowFilter(0x0, 1, 2, 2)] ;
+			this.pointBtn.addChild(this.pointTitle);
+			this.silverBtn.addChild(this.silvetTitle);
+			this.goldBtn.addChild(this.goldTitle)
 		}
 		
 		private function onBtnClose(e:MouseEvent):void {
@@ -119,8 +127,35 @@ package artur.win {
 			App.spr.addChild(this.ratText);
 			btnClose.addEventListener(MouseEvent.CLICK, onBtnClose);
 			this.pointBtn.addEventListener(MouseEvent.CLICK, this.onClick);
+			this.pointBtn.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.pointBtn.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
 			this.silverBtn.addEventListener(MouseEvent.CLICK, this.onClick);
+			this.silverBtn.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.silverBtn.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
 			this.goldBtn.addEventListener(MouseEvent.CLICK, this.onClick);
+			this.goldBtn.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.goldBtn.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+		}
+		
+		private function onOut(e:MouseEvent):void {
+			App.info.frees();
+		}
+		
+		private function onOver(e:MouseEvent):void {
+			var mc:BaseButton = BaseButton(e.target);
+			var c:int = 0;
+			switch(mc) {
+				case pointBtn:
+					c = 0;
+					break;
+				case silverBtn:
+					c = 1;
+					break;
+				case goldBtn:
+					c = 2;
+					break;
+			}
+			App.info.init(mc.x - 150 , mc.y + mc.height / 2 + 15, { txtInfo_w:300, txtInfo_h:0, txtInfo_t:Lang.getArenaBtnTitle(c), type:0 });
 		}
 		
 		

@@ -128,17 +128,13 @@ package artur.win
 			App.spr.addChild(bg);
 			App.spr.addChild(mcText);
 			App.topMenu.init(true, true);
-			this.updateBar();
+			
 			for (var i:int = 0; i < btns.length; i++) {
 				App.spr.addChild(btns[i]);
 			}
+			this.updateBar();
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
-			}
-			if (UserStaticData.hero.fs > 0 && UserStaticData.hero.level < 5) {
-				App.tutor.init(21);
-			} else {
-				App.dialogManager.canShow();
 			}
 		}
 		

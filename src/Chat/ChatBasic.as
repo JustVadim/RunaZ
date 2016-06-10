@@ -124,9 +124,11 @@ package Chat
 		}
 		
 		private function onRoulettClick(e:MouseEvent):void {
-			if(App.winManajer.swapMode == false && App.winManajer.currWin != 6) {
-				App.winManajer.swapWin(6);
-				App.info.frees()
+			if(!App.tutor.stage) {
+				if(App.winManajer.swapMode == false && App.winManajer.currWin != 6) {
+					App.winManajer.swapWin(6);
+					App.info.frees()
+				}
 			}
 		}
 		

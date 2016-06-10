@@ -44,6 +44,7 @@ package artur.display {
 		
 		private function onBtn(e:MouseEvent):void {
 			var mc:BaseButton = BaseButton(e.target);
+			App.tutor.frees();
 			switch(mc) {
 				case this.btn:
 					break;

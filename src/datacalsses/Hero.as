@@ -60,6 +60,10 @@ package datacalsses
 				this.nle = UserStaticData.levels[this.level];
 				Main.THIS.chat.addFortunaBtn();
 				App.dialogManager.checkPerson();
+				if(this.level == 3 || this.level == 5 || this.level == 7) {
+					App.dialogManager.show_arena_one = true;
+					App.dialogManager.show_arena_two = false;
+				}
 			}
 		}
 		

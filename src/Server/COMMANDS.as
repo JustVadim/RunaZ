@@ -45,6 +45,7 @@ package Server
 		static public const MAKE_GIFT:String = "42";
 		static public const CREATE_CAVE_BATTLE:String = "43";
 		static public const GET_CAVE_INFO:String = "44";
+		static public const GET_CAVE_MONEY:String = "45";
 		
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;

@@ -86,6 +86,9 @@ package artur.display {
 				App.spr.addChild(this);
 			}
 			Functions.compareAndSet(this.titel, text);
+			if (UserStaticData.hero.level < 5) {
+				App.tutor.init(22);
+			}
 		}
 		
 		public function frees():void {

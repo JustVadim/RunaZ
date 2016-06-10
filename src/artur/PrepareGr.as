@@ -104,7 +104,8 @@ package artur
 			
 			/*76  */ new imgKyz(),
 			/*77  */ new imgTown(),
-			/*78  */ new imgBtnArena()
+			/*78  */ new imgBtnArena(),
+			/*79  */ new imgBtnCave(),
 
 		];
 			

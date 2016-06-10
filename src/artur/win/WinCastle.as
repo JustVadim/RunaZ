@@ -117,7 +117,7 @@ package artur.win {
 					App.dialogManager.canShow();
 				} else {
 					if(UserStaticData.hero.level < 5) {
-						App.tutor.init(22);
+						App.tutor.init(21);
 					}
 				}
 			}

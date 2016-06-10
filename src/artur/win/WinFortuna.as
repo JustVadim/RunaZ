@@ -126,6 +126,9 @@ package artur.win
 			if(WinFortuna.dt > 10) {
 				App.dialogManager.canShow();
 			}
+			if(WinFortuna.dt == 0 && UserStaticData.hero.level < 4) {
+				App.tutor.init(23);
+			}
 		}
 		
 		private function checkTime(state:Boolean):void {
@@ -242,6 +245,7 @@ package artur.win
 		}
 		
 		private function onSpinClick(e:MouseEvent):void {
+			App.tutor.frees();
 			this.addEvents(false);
 			this.sp = 0;
 			this.spin(0);

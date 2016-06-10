@@ -22,7 +22,8 @@ package artur
 			
 		}
 		
-		public static function getBitmap(clip:MovieClip, frame:int = 1, wd:Number = -1, hg:Number = -1, filter:Array = null, scalef:Number = 1):Bitmap {	 
+		public static function getBitmap(clip:MovieClip, frame:int = 1, wd:Number = -1, hg:Number = -1, filter:Array = null, scalef:Number = 1):Bitmap {
+			clip.gotoAndStop(frame);
 			var bmd:BitmapData = RasterClip.getBitmapData(clip, frame, wd, hg, filter, scalef);
 			var bm:Bitmap= new Bitmap(bmd, PixelSnapping.AUTO, true);
 			if(scalef == 1) {

@@ -50,6 +50,8 @@ package artur.display {
 		public function init(frame:int):void {
 			App.spr.addChild(this);
 			this.gotoAndStop(frame);
+			
+			
 		}
 		
 		public function frees():void {

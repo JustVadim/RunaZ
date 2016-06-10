@@ -35,7 +35,7 @@ package artur.display
 			this.dmg.iconRange.visible = false;
 			this.title.addChild(this.titleTxtName);
 			this.titleTxtName.filters = [new DropShadowFilter(1, 42, 0xFFFFFF, 1, 1, 1, 0.5, 1, true), new DropShadowFilter(1, 234, 0xFFCC99, 1, 1, 1, 0.5, 1, true), new GlowFilter(0x0, 1, 3, 3, 1, 1)];
-			this.txtInfo.filters = [new GlowFilter(0x0, 0.2, 1)];
+			this.txtInfo.filters = [new GlowFilter(0x0, 1, 1,1)];
 			this.txtInfo.multiline = true;
 			this.txtInfo.wordWrap = true;
 			this.addChild(this.txtInfo);

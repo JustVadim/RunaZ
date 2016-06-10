@@ -54,7 +54,7 @@ package artur.win
 
 	public class WinBattle 
 	{
-		private var bgs:Array = [RasterClip.getBitmap(new Bg_Battle_1(), 1, -1, -1), RasterClip.getBitmap(new Bg_Battle_2(), 1, -1, -1)];
+		private var bgs:Array = [RasterClip.getBitmap(new Bg_Battle_1(), 1, -1, -1), RasterClip.getBitmap(new Bg_Battle_2(), 1, -1, -1), RasterClip.getBitmap(new Bg_Battle_3(), 1, -1, -1)];
 		public var grid:BattleGrid = new BattleGrid();
 		public static var units:Array;
 		public static var myTeam:int;
@@ -200,8 +200,10 @@ package artur.win
 		}
 		
 		private function addBG():void {
-			if (String(WinBattle.bat.ids[1]).substring(0, 3) == "bot") {
+			if (Hero.isMiss(bat.id)) {
 				App.spr.addChild(bgs[int(String(WinBattle.bat.ids[1]).substring(3))%2]);
+			} else if(Hero.isCave(bat.id)) {
+				App.spr.addChild(bgs[2]);
 			} else {
 				App.spr.addChild(bgs[Numbs1.RandomInt(0,1)]);
 			}	
@@ -537,33 +539,52 @@ package artur.win
 					mc.ress.visible = false;
 					WinCave.inst.updateBtns();
 				} else {
-					mc.starBar.visible = false;
-					var tt:int = bat.tt[WinBattle.myTeam];
-					var coef:int = obj.is_w?1: -1;
-					if(tt == 1) {
-						var silver:int = coef * (UserStaticData.hero.level * 10);
-						UserStaticData.hero.silver += silver;
-						mc.ress.visible = false;
-						McWinAfterBattleExtend(mc).ressTxtGold.text = String(0);
-						McWinAfterBattleExtend(mc).ressTxtSilver.text = String(silver);
-						
-					} else if(tt == 2) {
-						var gold:int = coef * int(1 + UserStaticData.hero.level/ 3);
-						UserStaticData.hero.gold += gold;
-						McWinAfterBattleExtend(mc).ressTxtGold.text = String(gold);
-						McWinAfterBattleExtend(mc).ressTxtSilver.text = String(0);
-					} else {
-						mc.ress.visible = false;
-					}
+					
 				}
+				
 			} else {
 				mc = WinBattle.looseAfterBattle;
-				if(Hero.isCave(bat.id)) {
+				if(Hero.isMiss(bat.id)) {
+					mc.ress.visible = false;
+				} else if(Hero.isCave(bat.id)) {
 					UserStaticData.caveInfo.cn = 0;
 					UserStaticData.caveInfo.tl = UserStaticData.cbt;
 					WinCave.inst.updateBtns();
+					mc.ress.visible = false;
+				} else {
+					
 				}
 			}
+			
+			if (!Hero.isMiss(bat.id) && !Hero.isCave(bat.id)) {
+				if(mc is McWinAfterBattleExtend){
+					mc.starBar.visible = false;
+				}
+				var tt:int = bat.tt[WinBattle.myTeam];
+				var coef:int = obj.is_w?1: -1;
+				if(tt == 1) {
+					var silver:int = coef * (UserStaticData.hero.level * 10);
+					UserStaticData.hero.silver += silver;
+					mc.ress.visible = true;
+					mc.ressTxtGold.text = String(0);
+					mc.ressTxtSilver.text = String(silver);
+				} else if(tt == 2) {
+					var gold:int = coef * int(1 + UserStaticData.hero.level/ 3);
+					UserStaticData.hero.gold += gold;
+					mc.ress.visible = true;
+					mc.ressTxtGold.text = String(gold);
+					mc.ressTxtSilver.text = String(0);
+				} else {
+					mc.ress.visible = false;
+				}
+				mc.reiting.visible = true;
+				var str:String = (coef == 1) ? "+1" : "-1";
+				Functions.compareAndSet(mc.ratText, str);
+			} else {
+				mc.reiting.visible = false;
+			}
+			
+			
 			UserStaticData.hero.rat = obj.rat;
 			mc.gotoAndPlay(1);
 			App.spr.addChild(mc);
@@ -816,8 +837,7 @@ package artur.win
 			
 		}
 		
-		private function addUltEvents():void
-		{
+		private function addUltEvents():void {
 			WinBattle.ult_btn.addEventListener(MouseEvent.ROLL_OVER, this.onUltOver);
 			WinBattle.ult_btn.addEventListener(MouseEvent.ROLL_OUT, this.onUltOut);
 			WinBattle.ult_btn.addEventListener(MouseEvent.CLICK, this.onUltClick);
@@ -826,23 +846,27 @@ package artur.win
 		 
 		private function onUltClick(e:MouseEvent):void {
 			App.info.frees();
-			if (!RemindCursors.is_ult) {
-				if (WinBattle.atackNode.parent) {
-					WinBattle.atackNode.parent.removeChild(WinBattle.atackNode);
-					WinBattle.atackNode.currNode = null;
+			if(UserStaticData.hero.demo > 5) {
+				if (!RemindCursors.is_ult) {
+					if (WinBattle.atackNode.parent) {
+						WinBattle.atackNode.parent.removeChild(WinBattle.atackNode);
+						WinBattle.atackNode.currNode = null;
+					}
+					RemindCursors.is_ult = true;
+					App.cursor.changeCursor("ult");
+					this.grid.clearNodesControl();
+					var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
+					var unit_type:int = WinBattle.bat.u[WinBattle.myTeam][cus.p].t;
+					this.grid.highLightUltCells(unit_type);
+				} else {
+					RemindCursors.is_ult = false;
+					App.cursor.changeCursor(App.cursor.mainCursor);
+					this.addUltEvents();
+					this.grid.disLightUltCells(unit_type);
+					this.getControlAfterUlt(true);
 				}
-				RemindCursors.is_ult = true;
-				App.cursor.changeCursor("ult");
-				this.grid.clearNodesControl();
-				var cus:Object = WinBattle.bat['set'][WinBattle.bat.cus];
-				var unit_type:int = WinBattle.bat.u[WinBattle.myTeam][cus.p].t;
-				this.grid.highLightUltCells(unit_type);
 			} else {
-				RemindCursors.is_ult = false;
-				App.cursor.changeCursor(App.cursor.mainCursor);
-				this.addUltEvents();
-				this.grid.disLightUltCells(unit_type);
-				this.getControlAfterUlt(true);
+				App.closedDialog.init1(Lang.getTitle(207));
 			}
 			if(UserStaticData.hero.demo == 6) {
 				App.tutor.frees();
