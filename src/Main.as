@@ -89,7 +89,7 @@ package  {
 			UserStaticData.plink = api_res.response[0].photo_100;
 			UserStaticData.id = api_res.response[0].uid;
 			if(UserStaticData.flash_vars.user_id != "0") {
-				UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
+				UserStaticData.friend_invited = UserStaticData.flash_vars.user_id;
 			}
 		}
 		
@@ -114,6 +114,7 @@ package  {
 		}
 		
 		private function onLogin(e:DataExchangeEvent = null):void {
+			Report.addMassage("log im")
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
 			this.app = new App(this.stage);

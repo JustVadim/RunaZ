@@ -89,6 +89,7 @@ package artur.win
 		private var is_bot:Boolean = false;
 		public var showHP:CheckBox = new CheckBox();
 		
+		
 		public function WinBattle() {
 			WinBattle.winAfterBattle.closeBtn.addEventListener(MouseEvent.CLICK, this.onCloseWin);
 			WinBattle.sprGift = new GiftDialog(this.onCloseWin);
@@ -105,8 +106,7 @@ package artur.win
 			WinBattle.ult_btn.x = 719.8; WinBattle.ult_btn.y = 514.2;
 			WinBattle.ult_btn.stop();
 			WinBattle.ult_btn.buttonMode = WinBattle.ult_btn.mouseChildren = WinBattle.ult_btn.tabEnabled = WinBattle.ult_btn.tabChildren = this.chekLifeBar.tabEnabled = this.chekLifeBar.tabChildren = false;
-			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) 
-			{
+			for (var i:int = 0; i < WinBattle.inv_btns.length; i++) {
 				var mc:Panel_Inv = WinBattle.inv_btns[i];
 				mc.x = 456.3 + 66.3*i;
 				mc.y = 546.2;
@@ -124,6 +124,7 @@ package artur.win
 			this.showHP.label = Lang.getTitle(173);
 			this.showHP.selected = true;
 			DataExchange.socket.addEventListener(DataExchangeEvent.BATTLE_MASSAGE, this.onBattleMassage);
+			this.chekLifeBar
 		}
 		
 		private function onCloseWin(e:MouseEvent):void {
@@ -627,6 +628,9 @@ package artur.win
 			Main.THIS.stage.removeChild(WinBattle.battleChat);
 			Main.THIS.chat.setFocus();
 			App.dialogManager.canShow();
+			//if(UserStaticData.hero.demo > 12) {
+				//
+			//}
 			//WinBattle.bat = null;
 		}
 		

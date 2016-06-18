@@ -204,10 +204,13 @@ package artur.display
 						if(UserStaticData.hero.gold >= this.g) {
 							WinKyz.inst.zakazKamnja(this.itemType);
 							this.frees();
+							Report.addMassage(UserStaticData.hero.demo);
 							if(UserStaticData.hero.demo == 6) {
-								UserStaticData.hero.demo++;
+								UserStaticData.hero.demo = 7;
 								App.tutor.init(19);
-							} else if (UserStaticData.hero.level<3 && UserStaticData.hero.demo> 6 || UserStaticData.hero.level< 5) {
+								/*UserStaticData.hero.demo = 8;
+								App.tutor.init(7);*/
+							} else if (UserStaticData.hero.level < 3 && UserStaticData.hero.demo> 6 || UserStaticData.hero.level< 5) {
 								App.tutor.frees();
 							}
 							

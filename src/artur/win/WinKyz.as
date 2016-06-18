@@ -36,7 +36,7 @@ package artur.win {
 		private var is_free_lock:Boolean = false;
 		public var zakazBtns:Array = new Array();
 		private var timerText:TextField = Functions.getTitledTextfield(38.65, 364, 485, 33, new Art().fontName, 20, 0xFFF642, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
-		private var timerTextGift:TextField = Functions.getTitledTextfield(0, 0, 485, 33, new Art().fontName, 15, 0xFFF642, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
+		private var timerTextGift:TextField = Functions.getTitledTextfield(29.75, 268.28, 111, 33, new Art().fontName, 15, 0xFFF642, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
 		private var timer:Timer;
 		private var progress:KyzProgress;
 		private var btnStone:BaseButton;

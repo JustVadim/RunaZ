@@ -25,7 +25,7 @@ package artur.display
 		public function AskGiftDialog(type:int) {
 			this.type = type;
 			if(UserStaticData.from == "v") {
-				Main.VK.api("friends.get", {user_id:UserStaticData.id, order:"hints",fields:"photo_100"}, onGetFriends, onFailFriends);
+				Main.VK.api("friends.get", {user_id:UserStaticData.id, order:"hints",fields:"photo_100", count:60}, onGetFriends, onFailFriends);
 			}
 			this.scroll.source = cont;
 			this.title.filters = [new GlowFilter(0x0, 1, 3, 3)];

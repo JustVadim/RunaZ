@@ -8,7 +8,7 @@ package artur.display {
 			super(index);
 			this.activeAfter = activeAfter;
 			this.galochkaX = galochkaX;
-			this.visible = false;
+			//this.visible = false;
 		}
 		
 		public function addGalochka():void {

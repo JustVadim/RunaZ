@@ -78,11 +78,13 @@ package artur.win
 					App.spr.removeChild(brama);
 					brama.stop();
 					swapMode = false;
-					if(currWin != 3 && currWin != 1 && currWin != 6 && currWin != 0 && currWin != 7) {
+					if(currWin != 3 && currWin != 1 && currWin != 6 && currWin != 0 && currWin != 7 && currWin != 4 && currWin != 2) {
 						App.dialogManager.canShow();
 					} else if(currWin == 0 && UserStaticData.hero.fs == 0){
 						App.dialogManager.canShow();
 					} else if(currWin == 7 && WinCave.dt > 0) {
+						App.dialogManager.canShow();
+					} else if(currWin == 2 && UserStaticData.hero.demo > 12)  {
 						App.dialogManager.canShow();
 					}
 				}

@@ -78,7 +78,7 @@ package artur.win {
 			App.lock.init();
 			var data:DataExchange = new DataExchange();
 			data.addEventListener(DataExchangeEvent.ON_RESULT, this.onRes1);
-			data.sendData(COMMANDS.FIND_BATTLE, "", true);
+			data.sendData(COMMANDS.CANCEL_BATTLE, "", true);
 		}
 		
 		private function onRes1(e:DataExchangeEvent):void {

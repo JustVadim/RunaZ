@@ -108,7 +108,7 @@ package artur.display
 				
 				
 				if(this.show_cave_info) {
-					App.closedDialog.init1(Lang.getTitle(206), false, false, false, false, true, false, false, false, false, true);
+					App.closedDialog.init1(Lang.getTitle(215), false, false, false, false, true, false, false, false, false, true);
 					this.show_cave_info = false;
 					return;
 				}
@@ -132,7 +132,7 @@ package artur.display
 				
 				}
 				
-				if(UserStaticData.hero.demo>4) {
+				if(UserStaticData.hero.demo > 12) {
 					if (this.showKyzGift) {
 						this.showKyzGift = false;
 						if (App.winManajer.currWin != 4) {
