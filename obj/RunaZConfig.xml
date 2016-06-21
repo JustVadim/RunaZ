@@ -16,11 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-<<<<<<< HEAD
-      <value>'17.06.2016'</value>
-=======
-      <value>'18.06.2016'</value>
->>>>>>> f5d5a0e209991b78e32d2ea1e7992fecd01e02a0
+      <value>'21.06.2016'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -52,7 +48,7 @@
     <path-element>D:\Working\AS3Projects\RunaZ\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#000000</default-background-color>
-  <default-frame-rate>30</default-frame-rate>
+  <default-frame-rate>35</default-frame-rate>
   <default-size>
     <width>800</width>
     <height>644</height>
