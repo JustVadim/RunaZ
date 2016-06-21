@@ -5,6 +5,7 @@ package artur
 	import artur.display.BonusDialog;
 	import artur.display.DialogManager;
 	import artur.display.HeroAchievments;
+	import artur.display.LevelUpDialog;
 	import artur.display.Profile;
 	import artur.display.battle.TopPanel;
 	import artur.display.ByeWin;
@@ -32,6 +33,7 @@ package artur
 	
 	public class App extends Sprite
 	{
+		[Embed(source = "../../bin/sounds/levelUp.mp3")]    private var s_levelUp:Class;
 		[Embed(source = "../../bin/sounds/useBotle.mp3")]    private var s_useBotl:Class;
 		[Embed(source = "../../bin/sounds/Switok.mp3")]    private var s_Switok:Class;
 		[Embed(source = "../../bin/sounds/BramaCnock.mp3")]    private var s_Cnock:Class;
@@ -83,10 +85,82 @@ package artur
 		public static var profile:Profile;
 		public static var achievm:HeroAchievments;
 		public static var dialogManager:DialogManager;
+<<<<<<< HEAD
 		public static var sprTop:SprTop;
 		
 		
 		public function App(stg:Stage) {
+=======
+		public static var sprTop:SprTop
+		public static var levelUpDialog:LevelUpDialog 
+		public function App(stg:Stage) 
+		{
+			sound.addSound('levelUp', new s_levelUp());
+			sound.addSound('EffMaxDamage', new EffMaxSound());
+			sound.addSound('MaxSpeed', new EffSpeedSound());
+			sound.addSound('achiv', new s_achiv());
+			sound.addSound('onLose', new s_onLose());
+			sound.addSound('BatleSong', new s_BatleSong());
+			sound.addSound('MenuSong', new s_menuSong());
+			sound.addSound('MapSong', new s_mapSong());
+			
+			sound.addSound('stone', new s_stone());
+			sound.addSound('craft', new s_craft());
+			sound.addSound('gDie', new s_g_die());
+			sound.addSound('gAtack', new s_g_atack());
+			sound.addSound('gHurt', new s_g_hurt());
+			sound.addSound('magHurt', new s_mag_hurt());
+			sound.addSound('magDie', new s_mag_die());
+			sound.addSound('sw', new s_Switok());
+			sound.addSound('botl', new s_useBotl());
+			sound.addSound('cnock', new s_Cnock());
+			sound.addSound('move', new s_Move());
+			sound.addSound('over1', new Over());
+			sound.addSound('click1', new Click());
+			sound.addSound('over3', new Over3());
+			sound.addSound('click3', new Click3());
+			sound.addSound('overItem', new over_item());
+			sound.addSound('gold', new S_Gold());
+			sound.addSound('gloves1', new S_Gloves1());
+			sound.addSound('inventar', new s_inventar());
+			sound.addSound('bot1_attack', new bot1_attack());
+			sound.addSound('bot1_hurt', new bot1_hurt());
+			sound.addSound('bot1_init', new bot1_Init());
+			sound.addSound('bot1_fs1', new bot1_fs1);
+			sound.addSound('bot1_fs2', new bot1_fs2);
+			sound.addSound('bot1_die', new s_bot1_die());
+			sound.addSound('bow1', new Bow1());
+			sound.addSound('pall_hurt', new s_pall_hurt());
+			sound.addSound('pall_death', new s_pall_death());
+			sound.addSound('fow1', new Fow1());
+			sound.addSound('fow2', new Fow2());
+			sound.addSound('blade1', new Blade1());
+			sound.addSound('blade2', new Blade2());
+			sound.addSound('war_hurt', new s_war_hurt());
+			sound.addSound('win', new s_win());
+			sound.addSound('shok', new s_shok());
+			sound.addSound('battle_cry', new BattleCry());
+			sound.addSound('eff_heal', new s_effHill());
+			sound.addSound('eff_arrow', new SoundEffArrow());
+			sound.addSound('skillUp', new upSkill());
+			sound.addSound('over2', new Over2);
+			sound.addSound('click2', new CLick2);
+			sound.addSound('golemAtack', new GolemAtack);
+			sound.addSound('golemHurt', new GolemHurt );
+			sound.addSound('fortuna_win', new s_fortuna_win );
+			sound.addSound('fortuna_lose', new s_fortuna_lose );
+			spr = Sprite(this);
+			App.prop = new PropExtended();
+			winManajer = new WinManajer();
+			this.addEventListener(Event.ENTER_FRAME, update);
+			byeWin = new ByeWin();
+			closedDialog = new CloseDialog();
+			achivDialog = new AchivDialog();
+			cursor.addCursor(mcCursorArrow, 'arr');
+			cursor.addCursor(mcCursorHand, 'hand');		
+			cursor.changeCursor('arr');
+			cursor.setButtonCursor('arr', 'hand', stg);	
+>>>>>>> f0304805400d103b9ac419de3ec97615a333967b
 			this.tabEnabled = false;
 			this.tabChildren = false;
 			App.sound 		= SoundManager.getInstance();
@@ -108,6 +182,7 @@ package artur
 			App.bomusDialog = new BonusDialog();
 			App.profile = new Profile();
 			App.achievm = new HeroAchievments();
+<<<<<<< HEAD
 			App.dialogManager = new DialogManager();
 			App.spr = Sprite(this);
 			App.closedDialog = new CloseDialog();
@@ -118,6 +193,12 @@ package artur
 			cursor.changeCursor('arr');
 			cursor.setButtonCursor('arr', 'hand', stg);
 			this.addEventListener(Event.ENTER_FRAME, update);
+=======
+			App.levelUpDialog = new LevelUpDialog();
+			Main.THIS.addChild(App.upPanel = new UpPanel());
+			App.dialogManager = new DialogManager();
+		    
+>>>>>>> f0304805400d103b9ac419de3ec97615a333967b
 			if(UserStaticData.from == "v") {
 				Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);
 				Main.VK.addEventListener('onSettingsChanged', App.upPanel.onVKSettingsChange);
