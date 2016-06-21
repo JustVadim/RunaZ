@@ -33,11 +33,17 @@ package Chat
 		public var btnQ:BaseButton;
 		public var btnAds:BaseButton;
 		public var btnRullet:BaseButton;
+		public var btnDell:BaseButton;
+		public var btnVip:BaseButton;
 		public static var userDialog:UserInListDialog = new UserInListDialog();
 		
 		
 		public function ChatBasic() {
 			this.name = "chat";
+			btnDell = new BaseButton(79);
+			btnDell.x = 679; btnDell.y = 421.5;
+			btnVip = new BaseButton(80);
+			btnVip.x = 642.25, btnVip.y = 422.25;
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			this.tabEnabled = false;
 			this.massages_scrollbar.addEventListener(MouseEvent.CLICK, setFocus);
@@ -86,6 +92,8 @@ package Chat
 			this.massages_scrollbar.tabEnabled = false;
 			this.massages_sprite.mouseChildren = true;
 			this.setFocus();
+			this.addChild(btnDell);
+			this.addChild(btnVip);
 			if(UserStaticData.hero.t.tn != 0 && UserStaticData.hero.t.tp < UserStaticData.hero.t.pa) {
 				this.addChild(this.btnQ);
 			}

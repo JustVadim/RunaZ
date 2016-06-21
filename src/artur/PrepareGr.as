@@ -96,7 +96,14 @@ package artur
 			/*70  */ new btnFriendsStone(),
 			/*71  */ new imgKyz(),
 			/*72  */ new imgTown(),
-			/*73  */ new imgBtnArena()
+			/*73  */ new imgBtnArena(),
+			/*74  */ new btnSkill1(),
+			/*75  */ new btnSkill2(),
+			/*76  */ new btnSkill3(),
+			/*77  */ new btnSkill4(),
+			/*78  */ new btnOkUpdSkill(),
+			/*79  */ new btnClear(),
+			/*80  */ new btnVip()
 		];
 		
 		public static var scaleFactor:Number = 2;

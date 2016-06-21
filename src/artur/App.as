@@ -5,6 +5,7 @@ package artur
 	import artur.display.BonusDialog;
 	import artur.display.DialogManager;
 	import artur.display.HeroAchievments;
+	import artur.display.LevelUpDialog;
 	import artur.display.Profile;
 	import artur.display.battle.TopPanel;
 	import artur.display.ByeWin;
@@ -32,6 +33,7 @@ package artur
 	
 	public class App extends Sprite
 	{
+		[Embed(source = "../../bin/sounds/levelUp.mp3")]    private var s_levelUp:Class;
 		[Embed(source = "../../bin/sounds/useBotle.mp3")]    private var s_useBotl:Class;
 		[Embed(source = "../../bin/sounds/Switok.mp3")]    private var s_Switok:Class;
 		[Embed(source = "../../bin/sounds/BramaCnock.mp3")]    private var s_Cnock:Class;
@@ -85,9 +87,10 @@ package artur
 		public static var achievm:HeroAchievments;
 		public static var dialogManager:DialogManager;
 		public static var sprTop:SprTop
-		
+		public static var levelUpDialog:LevelUpDialog 
 		public function App(stg:Stage) 
 		{
+			sound.addSound('levelUp', new s_levelUp());
 			sound.addSound('EffMaxDamage', new EffMaxSound());
 			sound.addSound('MaxSpeed', new EffSpeedSound());
 			sound.addSound('achiv', new s_achiv());
@@ -159,8 +162,10 @@ package artur
 			App.bomusDialog = new BonusDialog();
 			App.profile = new Profile();
 			App.achievm = new HeroAchievments();
+			App.levelUpDialog = new LevelUpDialog();
 			Main.THIS.addChild(App.upPanel = new UpPanel());
 			App.dialogManager = new DialogManager();
+		    
 			if(UserStaticData.from == "v") {
 				Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);
 				Main.VK.addEventListener('onSettingsChanged', App.upPanel.onVKSettingsChange);
