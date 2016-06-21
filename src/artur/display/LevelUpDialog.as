@@ -45,11 +45,12 @@ package artur.display
 				btn.name = String(i);
 				btn.x = 282.75 + i * 75;
 				btn.y = 194.25;
-				//this.addChild(btn);
+				this.addChild(btn);
 				var txt:TextField = Functions.getTitledTextfield(btn.x -18, btn.y + 20.5, 40, 23, new Art().fontName, 15,0x393502, TextFormatAlign.CENTER, "21", 1);
 				btn.addEventListener(MouseEvent.CLICK, onBtn);
 				txts.push(txt);
 				this.addChild(txt);
+				
 			}
 			btnOk = new BaseButton(78);
 			this.addChild(btnOk);
