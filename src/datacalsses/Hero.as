@@ -59,7 +59,8 @@ package datacalsses
 				this.fs++;
 				this.nle = UserStaticData.levels[this.level];
 				Main.THIS.chat.addFortunaBtn();
-				App.dialogManager.checkPerson();
+					//App.dialogManager.checkPerson();
+				App.dialogManager.show_new_person_level = true;
 				if(this.level == 3 || this.level == 5 || this.level == 7) {
 					App.dialogManager.show_arena_one = true;
 					App.dialogManager.show_arena_two = false;

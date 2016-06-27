@@ -96,7 +96,7 @@ package artur
 			/*68  */ new imgBtnFortuna(),
 			/*69  */ new btnPlus2(),
 			/*70  */ new btnFriendsStone(),
-<<<<<<< HEAD
+
 			/*71  */ new btnArenaGold(),
 			/*72  */ new btnArenaPoint(),
 			/*73  */ new btnArenaSilver(),
@@ -107,47 +107,15 @@ package artur
 			/*77  */ new imgTown(),
 			/*78  */ new imgBtnArena(),
 			/*79  */ new imgBtnCave(),
-=======
-			/*71  */ new imgKyz(),
-			/*72  */ new imgTown(),
-			/*73  */ new imgBtnArena(),
-			/*74  */ new btnSkill1(),
-			/*75  */ new btnSkill2(),
-			/*76  */ new btnSkill3(),
-			/*77  */ new btnSkill4(),
-			/*78  */ new btnOkUpdSkill(),
-			/*79  */ new btnClear(),
-			/*80  */ new btnVip()
-		];
-		
-		public static var scaleFactor:Number = 2;
-		
-		private static var spr:Sprite;
-		private static var bmd:BitmapData;
-		public static var scaleFactor2:Number = 3;
-		private static var drawSpr:Sprite = new Sprite();
-		private static var rect : Rectangle = new Rectangle();
-		private var flooredX : int;
-		private var flooredY : int;
-		private static var mtx : Matrix;
-		private static var bm:Bitmap;
-	       
-		public function PrepareGr() {
-			while (clips.length > 0) {
-				spr = clips.shift();
-				spr.width *= scaleFactor;
-				spr.height *= scaleFactor;
-				drawSpr.addChild(spr);
-				bmd = new BitmapData(drawSpr.width, drawSpr.height, true, 0);
-				bmd.draw(drawSpr);
-				cach.push(bmd);
-				drawSpr.removeChild(spr);
-				spr = null;
-			}
-		}
-		
->>>>>>> f0304805400d103b9ac419de3ec97615a333967b
-
+			/*80  */ new btnSkill1(),
+			/*81  */ new btnSkill2(),
+			/*82  */ new btnSkill3(),
+			/*83  */ new btnSkill4(),
+			/*84  */ new btnOkUpdSkill(),
+			/*85  */ new btnClear(),
+			/*86  */ new btnVip()
+			
+			
 		];
 			
 			

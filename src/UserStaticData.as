@@ -8,7 +8,7 @@
 		//public static const server_ip:String = "151.80.10.33";
 		public static const server_port:int = 3002;
 		public static var from:String = "c";
-		public static var id:String = "2";
+		public static var id:String = "1";
 		public static var sig:String = "11111";
 		public static var fname:String = "Laukhin";
 		public static var sname:String = "Vadim";
@@ -78,7 +78,7 @@
 												],
 												[
 													"photo-118450370_412855927",
-													"photo-118450370_412855940",
+													"photo-118450370_412855940",'7=
 													"photo-118450370_412855953"
 												],
 												[
@@ -167,7 +167,6 @@
 														"photo-118450370_413055294",
 														"photo-118450370_413055297",
 														"photo-118450370_413055300", 
-			
 													];
 		public static var ASK_FRIENDS:Array = null;
 		static public var st:int;

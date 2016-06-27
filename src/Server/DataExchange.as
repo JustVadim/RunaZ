@@ -228,8 +228,11 @@ package Server
 						}
 					} else {
 						if ( int(temp_obj.c) == 0 && temp_obj.n == 0 ) {
+							
 							var obj:Object = JSON2.decode(temp_obj.m);
+							
 							if (obj.error == null) {
+								
 								UserStaticData.hero.setHero(obj.h);
 								UserStaticData.hero.mbat = obj.bat;
 								UserStaticData.my_info = obj.ui;
@@ -250,8 +253,8 @@ package Server
 								if (Main.THIS.chat != null) {
 									Main.THIS.chat.updateUserList();
 								}
-								socket.dispatchEvent(new DataExchangeEvent(DataExchangeEvent.ON_LOGIN_COMPLETE));
 								Report.addMassage("Login in complete ID: " + UserStaticData.from + UserStaticData.id);
+								socket.dispatchEvent(new DataExchangeEvent(DataExchangeEvent.ON_LOGIN_COMPLETE));
 								loged = true;
 							} else {
 								Report.addMassage("Error while logining on")

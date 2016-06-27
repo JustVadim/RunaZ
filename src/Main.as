@@ -51,12 +51,6 @@ package  {
 			} else {
 				this.addEventListener(Event.ADDED_TO_STAGE, this.init);
 			}
-			//this.addEventListener(MouseEvent.RIGHT_CLICK, this.onRightClick);
-		}
-		
-		private function onRightClick(e:MouseEvent):void 
-		{
-			Report.addMassage("Right click");
 		}
 		
 		private function init(e:Event = null):void {
@@ -93,20 +87,16 @@ package  {
 			}
 		}
 		
-		private function vkInited(e:CustomEvent):void 
-		{
+		private function vkInited(e:CustomEvent):void {
 			Main.VK.removeEventListener(CustomEvent.CONN_INIT, vkInited);
-			Report.addMassage("vk inited");
 		}
 		
-		private function onPost():void 
-		{
-			Report.addMassage("done");
+		private function onPost():void {
+			//Report.addMassage("done");
 		}
 		
-		private function onError():void 
-		{
-			Report.addMassage("error");
+		private function onError():void {
+			//Report.addMassage("error");
 		}
 		
 		public static function onVkPayment(e:CustomEvent):void {
@@ -114,10 +104,11 @@ package  {
 		}
 		
 		private function onLogin(e:DataExchangeEvent = null):void {
-			Report.addMassage("log im")
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
+			
 			this.app = new App(this.stage);
+			Report.addMassage("vv")
 			this.chat = new ChatBasic();
 			App.dialogManager.init();
 			if (Preloader.loader != null) {

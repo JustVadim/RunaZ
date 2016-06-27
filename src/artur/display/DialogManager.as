@@ -22,6 +22,7 @@ package artur.display
 		public var show_arena_one:Boolean = false;
 		public var show_arena_two:Boolean = false;
 		public var show_cave_info:Boolean = false;
+		public var show_new_person_level:Boolean = false;
 		
 		public function DialogManager() {
 			
@@ -58,6 +59,11 @@ package artur.display
 					return;
 				}
 				
+				if (this.show_new_person_level) {
+					App.levelUpDialog.init();
+					this.show_new_person_level = false;
+					return;
+				}
 				if (this.show_person_lvl_up ) {
 					this.show_person_lvl_up = false;
 					if(App.winManajer.currWin != 0) {
@@ -71,7 +77,7 @@ package artur.display
 					return;
 				}
 				
-				if (show_unit_lvl_up) {
+				if (show_unit_lvl_up && UserStaticData.hero.demo > 11) {
 					App.closedDialog.init1(Lang.getTitle(2), true);
 					this.show_unit_lvl_up = false;
 					if (UserStaticData.hero.level < 5) {
@@ -86,7 +92,7 @@ package artur.display
 					return;
 				}
 				
-				if (UserStaticData.hero.level > 1 && WinFortuna.dt == 0 && WinFortuna.dialogChecked) {
+				if (UserStaticData.hero.level > 1 && WinFortuna.dt == 0 && WinFortuna.dialogChecked && UserStaticData.hero.demo > 11) {
 					App.closedDialog.init1(Lang.getTitle(24), false, false, false, false, true, true);
 					WinFortuna.dialogChecked = false;
 					if(UserStaticData.hero.level < 4) {

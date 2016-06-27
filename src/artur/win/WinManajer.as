@@ -63,6 +63,7 @@ package artur.win
 					App.sound.playSound('move', App.sound.onVoice,1);
 				}
 				if (brama.currentFrame == 20) {
+					Report.addMassage("bramamiddle" + swapMode + " apoo: " + App.spr.name)
 					App.clear();
 					App.topPanel.frees();
 					if(this.currWin==3 && this.neadWin == 6) {
@@ -75,9 +76,14 @@ package artur.win
 					windows[currWin].init();
 					App.spr.addChild(brama);
 				} else if (brama.currentFrame == brama.totalFrames) {
+					
+					Report.addMassage("swapmode" + swapMode + " apoo: " + App.spr.name)
 					App.spr.removeChild(brama);
+					
 					brama.stop();
+					
 					swapMode = false;
+					
 					if(currWin != 3 && currWin != 1 && currWin != 6 && currWin != 0 && currWin != 7 && currWin != 4 && currWin != 2) {
 						App.dialogManager.canShow();
 					} else if(currWin == 0 && UserStaticData.hero.fs == 0){

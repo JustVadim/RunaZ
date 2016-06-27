@@ -22,7 +22,7 @@ package artur.display {
 		private var units:Array;
 		private var ava_loader:Loader;
 		public var btnClose:BaseButton = new BaseButton(61);
-		private var userId:String
+		private var userId:String;
 		private var obj:Object;
 		private var txts:Object;
 		
