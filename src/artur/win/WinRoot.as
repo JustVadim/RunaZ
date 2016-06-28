@@ -126,7 +126,7 @@ package artur.win
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}
-			App.levelUpDialog.init();
+			//App.levelUpDialog.init();
 		}
 		
 		public function updateBar():void {
