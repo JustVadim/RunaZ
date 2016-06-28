@@ -1,5 +1,6 @@
 package artur.units {
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
@@ -20,7 +21,7 @@ package artur.units {
 		public function U_WarwarItemsCash(type:int, id:int) {
 			this.type = type;
 			this.id = id;
-			this.getImage(type, id+1);
+			this.getImage(type, id + 1);
 		}
 		
 		public function get getId():int {
@@ -28,31 +29,7 @@ package artur.units {
 		}
 		
 		private function getImage(type:int, frame:int):void {
-			var rect:Rectangle = new Rectangle();
-			var cont:Sprite = new Sprite();
-			var bmd:BitmapData;
-			var mtx:Matrix = new Matrix();
-			var bm:Bitmap;
-			var vector:MovieClip = MovieClip(itemsVector[type]);
-			vector.gotoAndStop(frame);
-			vector.filters = [U_Lyk.f];
-			if(vector.scaleX != PrepareGr.scaleFactor) {
-				vector.scaleX = PrepareGr.scaleFactor;
-				vector.scaleY = PrepareGr.scaleFactor;
-			}
-			cont.addChild(vector);
-			rect = cont.getBounds(cont);
-			mtx.tx = -rect.x;
-			mtx.ty = -rect.y;
-			bmd = new BitmapData(cont.width, cont.height, true, 0);
-			bmd.draw(cont, mtx);
-			this.bitmapData = bmd;
-			this.pixelSnapping = PixelSnapping.AUTO;
-			this.smoothing = true;
-			this.scaleX /= PrepareGr.scaleFactor; 
-			this.scaleY /= PrepareGr.scaleFactor;
-			this.x -= mtx.tx/PrepareGr.scaleFactor;
-			this.y -= mtx.ty / PrepareGr.scaleFactor;
+			UnitCache.getItem(this, itemsVector, type, frame);
 		}
 		
 		public static function getItem(type:int, id:int):U_WarwarItemsCash {

@@ -11,7 +11,7 @@ package Server
 		static public const FROM_CHEST_TO_UNIT:String = '8';
 		static public const SELL_ITEM_CHEST:String = '9';
 		static public const SELL_ITEM_UNIT:String = '10';
-		static public const CREAT_BATTLE:String = "11";
+		static public const CREAT_MISSION_BATTLE:String = "11";
 		static public const SEND_MISS_STEP:String = "12";
 		static public const FIND_BATTLE:String = "13";
 		static public const BATTLE_STEP:String = "14";
@@ -41,6 +41,11 @@ package Server
 		static public const GET_FORTUNA_TIMER:String = "38";
 		static public const SPIN_FORTUNA:String = "39";
 		static public const UPDATE_TOP:String = "40";
+		static public const CHECK_STONE_GIFT:String = "41";
+		static public const MAKE_GIFT:String = "42";
+		static public const CREATE_CAVE_BATTLE:String = "43";
+		static public const GET_CAVE_INFO:String = "44";
+		static public const GET_CAVE_MONEY:String = "45";
 		
 		static public var massage_come:int = 3;
 		static public var new_window:int = 100;

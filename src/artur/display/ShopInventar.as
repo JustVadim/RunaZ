@@ -1,6 +1,7 @@
 package artur.display {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import artur.win.WinCastle;
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
@@ -11,14 +12,14 @@ package artur.display {
 	import Server.Lang;
 	
 	public class ShopInventar extends mcShopInventar {
-		private var heads:Array           	= 	PrepareGr.creatBms(new Shop_Head(),true)
-		private var bodys:Array           	= 	PrepareGr.creatBms(new Shop_Bodys(),true) 
-		private var boots:Array            	= 	PrepareGr.creatBms(new Shop_Boots(),true)
-		private var hends_top:Array 		=	PrepareGr.creatBms(new Shop_HendTop(),true)
-		private var hends_down:Array 		= 	PrepareGr.creatBms(new Shop_HendDown,true) 
-		private var guns1:Array            	=	[PrepareGr.creatBms(new Shop_Gun, true), PrepareGr.creatBms(new Shop_Gun1Pall, true), PrepareGr.creatBms(new Shop_Lyk(), true), PrepareGr.creatBms(new Shop_Totem(), true)];
-		private var guns2:Array            	=	[[],PrepareGr.creatBms(new Shop_Gun2Pall(), true), [], []];
-		private var invent:Array 			= 	PrepareGr.creatBms(new Shop_Inv, true);
+		private var heads:Array           	= 	RasterClip.getAnimationBitmaps(new Shop_Head);// PrepareGr.creatBms(new Shop_Head(), true)
+		private var bodys:Array           	= 	RasterClip.getAnimationBitmaps(new Shop_Bodys());//PrepareGr.creatBms(,true) 
+		private var boots:Array            	= 	RasterClip.getAnimationBitmaps(new Shop_Boots());
+		private var hends_top:Array 		=	RasterClip.getAnimationBitmaps(new Shop_HendTop());
+		private var hends_down:Array 		= 	RasterClip.getAnimationBitmaps(new Shop_HendDown());
+		private var guns1:Array            	=	[RasterClip.getAnimationBitmaps(new Shop_Gun()), RasterClip.getAnimationBitmaps(new Shop_Gun1Pall), RasterClip.getAnimationBitmaps(new Shop_Lyk()), RasterClip.getAnimationBitmaps(new Shop_Totem())];
+		private var guns2:Array            	=	[[],RasterClip.getAnimationBitmaps(new Shop_Gun2Pall), [], []];
+		private var invent:Array 			= 	RasterClip.getAnimationBitmaps(new Shop_Inv());
 		private var parts_of_parts:Array 	= 	[heads, bodys, boots, hends_top, hends_down];
 		private var btnClosed:BaseButton 	= 	new BaseButton(15);
 		private var currPart:Array;
@@ -69,7 +70,7 @@ package artur.display {
 				var it_obj:Object = UserStaticData.magazin_items[this.unitType][this.itemType][i];	
 				if(it_obj !=null) {
 					var mov:ShopItemBG = this.getBg();
-					mov.init(this.scroll_sprite, Sprite(currPart[i-1]), it_obj);
+					mov.init(this.scroll_sprite, Bitmap(currPart[i-1]), it_obj);
 					mov.y = h;
 					h += mov.height;
 				}

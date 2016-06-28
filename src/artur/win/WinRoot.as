@@ -1,10 +1,11 @@
 package artur.win 
 {
 	import Chat.UserInListDialog;
+	import _SN_vk.events.CustomEvent;
 	import artur.App;
+	import artur.RasterClip;
 	import artur.display.BaseButton;
 	import artur.display.battle.eff.EffManajer;
-	import artur.display.MyBitMap;
 	import artur.display.SprUserNewLevel;
 	import artur.display.WinRootMcText;
 	import artur.PrepareGr;
@@ -17,6 +18,7 @@ package artur.win
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.utils.getQualifiedClassName;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -31,14 +33,14 @@ package artur.win
 		private var btns:Array = [];
 		private var mcText:WinRootMcText = new WinRootMcText();
 		public static var lvlUp:SprUserNewLevel = new SprUserNewLevel();
-		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision];
+		private var indxBtn:Array = [btn_Bank, btn_Top, btn_Castle, btn_Arena, btn_Shop, btn_Mision, btnCave];
 		
 		public function WinRoot() {
-			this.bg = new MyBitMap(App.prepare.cach[0]);
+			this.bg = RasterClip.getBitmap(new bg1Root());
 			this.bg.x = bg.y = -33;
-			var xps:Array       = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5];
-			var yps:Array       = [214.75  , 218  , 291.25 , 367, 367.35, 89.15];
-			var names:Array = ['bank','top','castle','arena','shop','map'];
+			var xps:Array = [176.05 ,607.65 , 395.1, 206.2 , 578.35, 394.5, 300.7];
+			var yps:Array = [214.75  , 218  , 291.25 , 367, 367.35, 89.15, 126.1];
+			var names:Array = ['bank','top','castle','arena','shop','map', 'cave'];
 			for (var i:int = 0; i < indxBtn.length; i++) {
 				var btn:MovieClip = new indxBtn[i]();
 				Functions.SetPriteAtributs(btn, true, false, xps[i], yps[i]);
@@ -69,10 +71,14 @@ package artur.win
 		
 		private function onOverBtn(e:MouseEvent):void {
 			MovieClip(e.target).gotoAndStop(2);
-			var t:String
+			var t:String;
 			for (var i:int = 0; i < indxBtn.length; i++) {
 				if (e.currentTarget is indxBtn[i]) {
-					t = Lang.getTitle(3,i);
+					if(i==6) {
+						t = Lang.getTitle(3, i+1);
+					} else {
+						t = Lang.getTitle(3, i);
+					}
 					break;
 				}
 			}
@@ -100,6 +106,9 @@ package artur.win
 			case 'top':
 				App.sprTop.init();
 				break;
+			case 'cave':
+				App.winManajer.swapWin(7);
+				break;
 			}
 			
 		}
@@ -119,10 +128,11 @@ package artur.win
 			App.spr.addChild(bg);
 			App.spr.addChild(mcText);
 			App.topMenu.init(true, true);
-			this.updateBar();
+			
 			for (var i:int = 0; i < btns.length; i++) {
 				App.spr.addChild(btns[i]);
 			}
+			this.updateBar();
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}

@@ -1,6 +1,7 @@
 package artur.display 
 {
 	import artur.App;
+	import artur.RasterClip;
 	import artur.UnitBlankTxt;
 	import artur.units.UnitCache;
 	import artur.util.Maker;
@@ -27,7 +28,8 @@ package artur.display
 		public function UnitBlank(index:int, unit:String, chars:Object) {
 			this.index = index;
 			this.unitType = unit;
-			this.addChild(new  MyBitMap(App.prepare.cach[10]));
+			this.addChild(RasterClip.getBitmapFromBmd(App.prepare.cach[10]));
+			//MyBitMap());
 			//whRect
 			this.whRect.alpha = 0.01; this.whRect.width = this.width; whRect.height = this.height; this.addChild(this.whRect);
 			//btn

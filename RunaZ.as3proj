@@ -5,11 +5,11 @@
     <movie outputType="Application" />
     <movie input="" />
     <movie path="bin\OurNewProject.swf" />
-    <movie fps="30" />
+    <movie fps="35" />
     <movie width="800" />
     <movie height="644" />
     <movie version="11" />
-    <movie minorVersion="0" />
+    <movie minorVersion="9" />
     <movie platform="Flash Player" />
     <movie background="#000000" />
   </output>

@@ -36,6 +36,9 @@ package artur.display {
 		}
 		
 		private function onBtn(e:MouseEvent):void {
+			if(UserStaticData.hero.level < 5) {
+				App.tutor.frees();
+			}
 			var str:String = e.currentTarget.name;
 			App.lock.init();
 			var data:DataExchange = new DataExchange();
@@ -44,8 +47,7 @@ package artur.display {
 			this.pushedBtn = str;
 		}
 		
-		private function onRes(e:DataExchangeEvent):void 
-		{
+		private function onRes(e:DataExchangeEvent):void {
 			var res:Object = JSON2.decode(e.result);
 			if (res.error == null) {
 				var hero:Hero = UserStaticData.hero;
@@ -66,10 +68,16 @@ package artur.display {
 						break;
 				}
 				WinRoot(App.winManajer.windows[0]).updateBar();
+				if(UserStaticData.hero.fs == 0) {
+					App.dialogManager.canShow();
+				}
 				App.lock.frees();
 			}
 			else {
 				App.lock.init(res.error);
+			}
+			if(UserStaticData.hero.fs == 0) {
+				App.dialogManager.canShow();
 			}
 		}
 		
@@ -78,6 +86,9 @@ package artur.display {
 				App.spr.addChild(this);
 			}
 			Functions.compareAndSet(this.titel, text);
+			if (UserStaticData.hero.level < 5) {
+				App.tutor.init(22);
+			}
 		}
 		
 		public function frees():void {

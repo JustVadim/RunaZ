@@ -21,7 +21,6 @@ package artur.display
 			this.setBtn(this.full);
 			this.setBtn(this.muz);
 			this.setBtn(this.sound);
-			Report.addMassage(JSON.stringify(UserStaticData.data.data));
 			if (!UserStaticData.data.data.s) {
 				this.sound.gotoAndStop(2);
 				App.sound.onVoice = 0;
@@ -30,7 +29,6 @@ package artur.display
 				this.muz.gotoAndStop(2);
 				App.sound.onSound = 0;
 			}
-			
 			Main.THIS.stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFull);
 		}
 		

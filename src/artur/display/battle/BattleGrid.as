@@ -46,11 +46,11 @@ package artur.display.battle
 		
 		public function frees():void
 		{
-			for (var i:int = 0; i < wd; i++) 
-			{
+			for (var i:int = 0; i < wd; i++) {
 				for (var j:int = 0; j < hg; j++) 
 					Node(nodes[i][j]).frees();
 			}
+			
 			/*for (var key:Object in MapStone.stonesArr) {
 				var ms:MapStone = MapStone.stonesArr[key];
 				if(!ms.free) {

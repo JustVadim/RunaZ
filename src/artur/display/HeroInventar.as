@@ -3,12 +3,14 @@ package artur.display
 	import Utils.BuffsVars;
 	import artur.App;
 	import artur.ProgressBarExtended;
+	import artur.RasterClip;
 	import artur.win.WinBattle;
 	import artur.win.WinCastle;
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.TweenLite;
 	import datacalsses.Hero;
 	import fl.text.TLFTextField;
+	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -27,7 +29,7 @@ package artur.display
 	import report.Report;
 	
 	public class HeroInventar extends Sprite  {
-		private var bg:MyBitMap;
+		private var bg:Bitmap;
 		private var currHead:MovieClip = new I_Head();
 		private var currBody:MovieClip = new I_Body();
 		private var currBoot:MovieClip  = new I_Boot();
@@ -73,7 +75,7 @@ package artur.display
 				progresEXP.x = 10;  progresEXP.y = 283;
 				this.setBuffsBtnsProperties();
 			}
-			this.addChild(this.bg = new MyBitMap(App.prepare.cach[13]));
+			this.addChild(this.bg = RasterClip.getBitmapFromBmd(App.prepare.cach[13]));
 			this.addChild(this.mcText);
 			var yps:Array = [91, 164.4, 233.1, 133.6, 175.6];
 			
@@ -167,9 +169,6 @@ package artur.display
 				
 			}
 			App.spr.addChild(this);
-			if(UserStaticData.hero.demo == 1) {
-				
-			}
 		}
 		
 		private function initRemoveBtn():void {
@@ -260,7 +259,6 @@ package artur.display
 			this.compareAndSet(this.mcText.txt_sk_miss, unit.b[1].l);
 			this.compareAndSet(this.mcText.txt_sk_out, unit.b[3].l);
 			this.compareAndSet(this.mcText.txt_sk_ult, unit.ult.lvl);
-			
 			this.compareAndSet(this.mcText.txt_available, Lang.getTitle(77) + ": " + unit.fs);
 		}
 		
@@ -356,6 +354,7 @@ package artur.display
 		}
 		
 		private function onBuffClick(e:MouseEvent):void {
+			App.tutor.frees();
 			var skill_num:int = -1;
 			var mc:MovieClip = MovieClip(e.currentTarget);
 			switch(true) {
@@ -411,6 +410,19 @@ package artur.display
 					removeClickEventFromBuff(unit.fs == 0);
 					mcText.mcFreeskils.visible = unit.fs > 0;
 					App.lock.frees();
+					if(unit.fs == 0) {
+						for(var key:Object in UserStaticData.hero.units) {
+							if(UserStaticData.hero.units[key].fs > 0) {
+								WinCastle.inst.selectSlot(int(key));
+								return;
+							}
+						}
+						App.dialogManager.canShow();
+					} else {
+						if (UserStaticData.hero.level < 5) {
+							App.tutor.init(21);
+						}
+					}
 				}
 				else {
 					App.lock.init(obj.error);
@@ -457,7 +469,7 @@ package artur.display
 				this.itemType = int(mc.name);
 				this.itemID = int(mc.currentFrame);
 				this.invPlace = this.getIsInv(mc);
-				this.call = ItemCall.getCall();
+				this.call = ItemCall.getCall(); 
 				this.call.mouseEnabled = false;
 				this.call.init(this.heroType, this.itemType, this.itemID - 1);
 				this.call.x = App.spr.mouseX  - this.call.width / 2 + 8;

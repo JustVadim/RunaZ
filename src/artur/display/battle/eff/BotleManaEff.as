@@ -16,7 +16,7 @@ package artur.display.battle.eff {
 		public var type:String = 'manaHill'
 		
 		public function BotleManaEff() {
-			this.frm = PrepareGr.creatBms(new EffManallBotl(), false);
+			this.frm = RasterClip.getAnimationBitmaps(new EffManallBotl());//PrepareGr.creatBms(new EffManallBotl(), false);
 			this.maxFrame = this.frm.length-3;
 		}
 		

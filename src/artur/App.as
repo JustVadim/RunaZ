@@ -40,7 +40,6 @@ package artur
 		[Embed(source = "../../bin/sounds/BramaMove.mp3")]      private var s_Move:Class;
 		[Embed(source = "../../bin/sounds/overItem.mp3")]          private var over_item:Class;
 		[Embed(source = "../../bin/sounds/inventar.mp3")]              private var s_inventar:Class;
-		
 		[Embed(source = "../../bin/sounds/Pall_Death.mp3")] private var s_pall_death:Class;
 		[Embed(source = "../../bin/sounds/Pall_Hurt.mp3")] private var s_pall_hurt:Class;
 		[Embed(source = "../../bin/sounds/War_hurt.mp3")] private var s_war_hurt:Class;
@@ -60,26 +59,26 @@ package artur
 		[Embed(source = "../../bin/sounds/onLose.mp3")] private var s_onLose:Class;
 		[Embed(source = "../../bin/sounds/achiv.mp3")] private var s_achiv:Class;
 		[Embed(source = "../../bin/sounds/FortunaWin.mp3")] private var s_fortuna_win:Class;
-		[Embed(source="../../bin/sounds/FortunaLose.mp3")] private var s_fortuna_lose:Class;
-		public static var sound:SoundManager = SoundManager.getInstance();
+		[Embed(source = "../../bin/sounds/FortunaLose.mp3")] private var s_fortuna_lose:Class;
+		
+		
+		public static var currMuzPlay:String = 'BatleSong';
+		public static var prepare:PrepareGr;
+		public static var sound:SoundManager;
 		public static var winManajer:WinManajer;
 		public static var spr:Sprite;
-		public static var prepare:PrepareGr = new PrepareGr();
-		public static var btnOverFilter:GlowFilter = new GlowFilter(0xFFFFFF, 1, 4, 4, 5);
+		public static var btnOverFilter:GlowFilter;
 		public static var byeWin:ByeWin 
 		public static var closedDialog:CloseDialog
 		public static var achivDialog:AchivDialog
-	   // static public var btns:Array = [];
-		public static var info:InfoWin = new InfoWin();
-		public static var lock:LockSpr = new LockSpr();
-		public static var cursor:RemindCursors = new RemindCursors();
-		public static var topPanel:TopPanel = new TopPanel();
-		public static var winBank:WinBank = new WinBank();
-		public static var tutor:Tutor = new Tutor();
-		public static var topMenu:TopMenu = new TopMenu();
+		public static var info:InfoWin;
+		public static var lock:LockSpr;
+		public static var cursor:RemindCursors;
+		public static var topPanel:TopPanel
+		public static var winBank:WinBank;
+		public static var tutor:Tutor;
+		public static var topMenu:TopMenu;
 		public static var task:Task;
-		//public static var topMenu:
-		public static var currMuzPlay:String = 'BatleSong';
 		public static var prop:PropExtended;
 		public static var upPanel:UpPanel;
 		public static var bomusDialog:BonusDialog;
@@ -88,89 +87,103 @@ package artur
 		public static var dialogManager:DialogManager;
 		public static var sprTop:SprTop
 		public static var levelUpDialog:LevelUpDialog 
+		
 		public function App(stg:Stage) 
 		{
-			sound.addSound('levelUp', new s_levelUp());
-			sound.addSound('EffMaxDamage', new EffMaxSound());
-			sound.addSound('MaxSpeed', new EffSpeedSound());
-			sound.addSound('achiv', new s_achiv());
-			sound.addSound('onLose', new s_onLose());
-			sound.addSound('BatleSong', new s_BatleSong());
-			sound.addSound('MenuSong', new s_menuSong());
-			sound.addSound('MapSong', new s_mapSong());
-			
-			sound.addSound('stone', new s_stone());
-			sound.addSound('craft', new s_craft());
-			sound.addSound('gDie', new s_g_die());
-			sound.addSound('gAtack', new s_g_atack());
-			sound.addSound('gHurt', new s_g_hurt());
-			sound.addSound('magHurt', new s_mag_hurt());
-			sound.addSound('magDie', new s_mag_die());
-			sound.addSound('sw', new s_Switok());
-			sound.addSound('botl', new s_useBotl());
-			sound.addSound('cnock', new s_Cnock());
-			sound.addSound('move', new s_Move());
-			sound.addSound('over1', new Over());
-			sound.addSound('click1', new Click());
-			sound.addSound('over3', new Over3());
-			sound.addSound('click3', new Click3());
-			sound.addSound('overItem', new over_item());
-			sound.addSound('gold', new S_Gold());
-			sound.addSound('gloves1', new S_Gloves1());
-			sound.addSound('inventar', new s_inventar());
-			sound.addSound('bot1_attack', new bot1_attack());
-			sound.addSound('bot1_hurt', new bot1_hurt());
-			sound.addSound('bot1_init', new bot1_Init());
-			sound.addSound('bot1_fs1', new bot1_fs1);
-			sound.addSound('bot1_fs2', new bot1_fs2);
-			sound.addSound('bot1_die', new s_bot1_die());
-			sound.addSound('bow1', new Bow1());
-			sound.addSound('pall_hurt', new s_pall_hurt());
-			sound.addSound('pall_death', new s_pall_death());
-			sound.addSound('fow1', new Fow1());
-			sound.addSound('fow2', new Fow2());
-			sound.addSound('blade1', new Blade1());
-			sound.addSound('blade2', new Blade2());
-			sound.addSound('war_hurt', new s_war_hurt());
-			sound.addSound('win', new s_win());
-			sound.addSound('shok', new s_shok());
-			sound.addSound('battle_cry', new BattleCry());
-			sound.addSound('eff_heal', new s_effHill());
-			sound.addSound('eff_arrow', new SoundEffArrow());
-			sound.addSound('skillUp', new upSkill());
-			sound.addSound('over2', new Over2);
-			sound.addSound('click2', new CLick2);
-			sound.addSound('golemAtack', new GolemAtack);
-			sound.addSound('golemHurt', new GolemHurt );
-			sound.addSound('fortuna_win', new s_fortuna_win );
-			sound.addSound('fortuna_lose', new s_fortuna_lose );
-			spr = Sprite(this);
-			App.prop = new PropExtended();
-			winManajer = new WinManajer();
-			this.addEventListener(Event.ENTER_FRAME, update);
-			byeWin = new ByeWin();
-			closedDialog = new CloseDialog();
-			achivDialog = new AchivDialog();
-			cursor.addCursor(mcCursorArrow, 'arr');
-			cursor.addCursor(mcCursorHand, 'hand');		
-			cursor.changeCursor('arr');
-			cursor.setButtonCursor('arr', 'hand', stg);	
 			this.tabEnabled = false;
 			this.tabChildren = false;
+			App.sound 		= SoundManager.getInstance();
+			this.prepareSound();
+			App.prepare = new PrepareGr();
+			App.btnOverFilter = new GlowFilter(0xFFFFFF, 1, 4, 4, 5);
+			App.info = new InfoWin();
+			App.lock = new LockSpr();
+			App.cursor = new RemindCursors();
+			App.topPanel = new TopPanel();
+			App.winBank = new WinBank();
+			App.tutor = new Tutor();
+			App.topMenu = new TopMenu();
+			App.prop = new PropExtended();
+			App.byeWin = new ByeWin();
+			App.achivDialog = new AchivDialog();
 			App.task = new Task();
 			App.sprTop = new SprTop();
 			App.bomusDialog = new BonusDialog();
 			App.profile = new Profile();
 			App.achievm = new HeroAchievments();
+			App.dialogManager = new DialogManager();
+			App.spr = Sprite(this);
+			App.closedDialog = new CloseDialog();
+			App.winManajer = new WinManajer();
+			Main.THIS.stage.addChild(App.upPanel = new UpPanel());
+			cursor.addCursor(mcCursorArrow, 'arr');
+			cursor.addCursor(mcCursorHand, 'hand');		
+			cursor.changeCursor('arr');
+			cursor.setButtonCursor('arr', 'hand', stg);
+			this.addEventListener(Event.ENTER_FRAME, update);
 			App.levelUpDialog = new LevelUpDialog();
 			Main.THIS.addChild(App.upPanel = new UpPanel());
 			App.dialogManager = new DialogManager();
-		    
 			if(UserStaticData.from == "v") {
 				Main.VK.addEventListener('onOrderSuccess', Main.onVkPayment);
 				Main.VK.addEventListener('onSettingsChanged', App.upPanel.onVKSettingsChange);
 			}
-
+		}
+		
+		private function prepareSound():void {
+			App.sound.addSound('EffMaxDamage', new EffMaxSound());
+			App.sound.addSound('MaxSpeed', new EffSpeedSound());
+			App.sound.addSound('achiv', new s_achiv());
+			App.sound.addSound('onLose', new s_onLose());
+			App.sound.addSound('BatleSong', new s_BatleSong());
+			App.sound.addSound('MenuSong', new s_menuSong());
+			App.sound.addSound('MapSong', new s_mapSong());
+			App.sound.addSound('stone', new s_stone());
+			App.sound.addSound('craft', new s_craft());
+			App.sound.addSound('gDie', new s_g_die());
+			App.sound.addSound('gAtack', new s_g_atack());
+			App.sound.addSound('gHurt', new s_g_hurt());
+			App.sound.addSound('magHurt', new s_mag_hurt());
+			App.sound.addSound('magDie', new s_mag_die());
+			App.sound.addSound('sw', new s_Switok());
+			App.sound.addSound('botl', new s_useBotl());
+			App.sound.addSound('cnock', new s_Cnock());
+			App.sound.addSound('move', new s_Move());
+			App.sound.addSound('over1', new Over());
+			App.sound.addSound('click1', new Click());
+			App.sound.addSound('over3', new Over3());
+			App.sound.addSound('click3', new Click3());
+			App.sound.addSound('overItem', new over_item());
+			App.sound.addSound('gold', new S_Gold());
+			App.sound.addSound('gloves1', new S_Gloves1());
+			App.sound.addSound('inventar', new s_inventar());
+			App.sound.addSound('bot1_attack', new bot1_attack());
+			App.sound.addSound('bot1_hurt', new bot1_hurt());
+			App.sound.addSound('bot1_init', new bot1_Init());
+			App.sound.addSound('bot1_fs1', new bot1_fs1);
+			App.sound.addSound('bot1_fs2', new bot1_fs2);
+			App.sound.addSound('bot1_die', new s_bot1_die());
+			App.sound.addSound('bow1', new Bow1());
+			App.sound.addSound('pall_hurt', new s_pall_hurt());
+			App.sound.addSound('pall_death', new s_pall_death());
+			App.sound.addSound('fow1', new Fow1());
+			App.sound.addSound('fow2', new Fow2());
+			App.sound.addSound('blade1', new Blade1());
+			App.sound.addSound('blade2', new Blade2());
+			App.sound.addSound('war_hurt', new s_war_hurt());
+			App.sound.addSound('win', new s_win());
+			App.sound.addSound('shok', new s_shok());
+			App.sound.addSound('battle_cry', new BattleCry());
+			App.sound.addSound('eff_heal', new s_effHill());
+			App.sound.addSound('eff_arrow', new SoundEffArrow());
+			App.sound.addSound('skillUp', new upSkill());
+			App.sound.addSound('over2', new Over2);
+			App.sound.addSound('click2', new CLick2);
+			App.sound.addSound('golemAtack', new GolemAtack);
+			App.sound.addSound('golemHurt', new GolemHurt );
+			App.sound.addSound('fortuna_win', new s_fortuna_win );
+			App.sound.addSound('fortuna_lose', new s_fortuna_lose );
+			App.sound.addSound('levelUp', new s_levelUp);
 		}
 		
 		public static function swapMuz(str:String):void {

@@ -1,10 +1,10 @@
 package artur.win {
 	import artur.App;
+	import artur.RasterClip;
 	import artur.display.BaseButton;
 	import artur.display.Chest;
 	import artur.display.HeroInventar;
 	import artur.display.ItemCall;
-	import artur.display.MyBitMap;
 	import artur.display.ShopInventar;
 	import artur.display.Slot;
 	import artur.display.Swaper;
@@ -12,11 +12,12 @@ package artur.win {
 	import artur.display.WinSellExtend;
 	import artur.McTextCastleWinExtend;
 	import artur.units.UnitCache;
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	public class WinCastle {
-		private var bg:MyBitMap;
+		private var bg:Bitmap;
 		private var spr_units:Sprite = new Sprite();
 		public var bin:Boolean = false;
 		public var slots:Array = [];
@@ -29,7 +30,7 @@ package artur.win {
 		public static var shopInventar:ShopInventar
 		public static var chest:Chest = new Chest();
 		public static var mcSell:WinSellExtend = new WinSellExtend();
-		public static var currSlotClick:String;
+		public static var currSlotClick:String = "0";
 		public static var inst:WinCastle;
 		
 		public function WinCastle() {
@@ -41,7 +42,8 @@ package artur.win {
 			WinCastle.shopInventar = new ShopInventar();
 			WinCastle.txtCastle.scroll.source = this.spr_units;
 			this.mcCurr.x = -7;
-			this.bg = new MyBitMap(App.prepare.cach[7]);
+			this.bg = RasterClip.getBitmap(new bgCastle1());
+			//new MyBitMap(App.prepare.cach[7]);
 			for (var i:int = 0; i < 4; i++) {
 				this.slots.push(new Slot(i));
 				this.swappers.push(new Swaper(i));
@@ -67,16 +69,25 @@ package artur.win {
 			App.spr.addChild(bg);
 			App.spr.addChild(txtCastle);
 			WinCastle.chest.init();
+			var prefferSlot:int = 0;
+			var fs:Boolean = false;
+			var selected:Boolean = false
 			for (var i:int = 0; i < slots.length; i++) {
 				Slot(slots[i]).init();
 				Swaper(swappers[i]).init();
-				if(UserStaticData.hero.units[i] != null && this.mcCurr.parent == null) {
-					this.selectSlot(i);
+				if (UserStaticData.hero.units[i] != null) {
+					if(!selected) {
+						prefferSlot = i;
+						selected = true;
+					} else {
+						if(UserStaticData.hero.units[i].fs > 0 && !fs) {
+							prefferSlot = i;
+							fs = true;
+						}
+					}
 				}
 			}
-			if(this.mcCurr.parent == null) {
-				this.selectSlot(0);
-			}
+			this.selectSlot(prefferSlot);
 			App.topMenu.updateGold();
 			App.topMenu.init(false, true, false);
 			App.topPanel.init(this);
@@ -101,6 +112,15 @@ package artur.win {
 				WinCastle.inventar.init1(UserStaticData.hero.units[i], anim);
 			}
 			Slot(this.slots[i]).addChildAt(this.mcCurr, 1);
+			if(UserStaticData.hero.units[WinCastle.currSlotClick] != null) {
+				if(UserStaticData.hero.units[WinCastle.currSlotClick].fs == 0) {
+					App.dialogManager.canShow();
+				} else {
+					if(UserStaticData.hero.level < 5) {
+						App.tutor.init(21);
+					}
+				}
+			}
 		}
 		
 		public function updateSlots():void {

@@ -123,7 +123,6 @@ package Server
 		}
 		
 		static private function onSocketDataHandler(e:ProgressEvent=null):void {
-			try {
 				temp_str += socket.readUTFBytes(socket.bytesAvailable);
 				var temp_array:Array = temp_str.split("#end#");
 				var temp_obj:Object = new Object();
@@ -192,9 +191,6 @@ package Server
 								if (!WinBattle.inst.bin) {
 									App.dialogManager.canShow();
 								}
-								/*if ( (UserStaticData.hero.t.tp == 0 && UserStaticData.hero.t.tn !=1) || (UserStaticData.hero.t.tp == UserStaticData.hero.t.pa && (UserStaticData.hero.t.tn == 6 || UserStaticData.hero.t.tn == 10))) {
-									TweenLite.to(Main.THIS, 0, { delay:0.2, onComplete: DataExchange.onShowTask} );
-								} */
 								break;
 							case int(COMMANDS.BYE_COINS):
 								var res:Object = JSON2.decode(temp_obj.m);
@@ -232,8 +228,11 @@ package Server
 						}
 					} else {
 						if ( int(temp_obj.c) == 0 && temp_obj.n == 0 ) {
+							
 							var obj:Object = JSON2.decode(temp_obj.m);
+							
 							if (obj.error == null) {
+								
 								UserStaticData.hero.setHero(obj.h);
 								UserStaticData.hero.mbat = obj.bat;
 								UserStaticData.my_info = obj.ui;
@@ -244,6 +243,9 @@ package Server
 								UserStaticData.achievments_table = JSON2.decode(obj.ach);
 								UserStaticData.fd = obj.fd;
 								UserStaticData.top = JSON2.decode(obj.top);
+								UserStaticData.st = obj.st / 1000;
+								UserStaticData.cbt = obj.cbt / 1000;
+								UserStaticData.caveInfo = JSON2.decode(obj.ct);
 								for (var key:Object in obj.uis) {
 									UserStaticData.users_info[key] = JSON2.decode(obj.uis[key]);
 									UserStaticData.users_info[key][6] = 1;
@@ -251,8 +253,8 @@ package Server
 								if (Main.THIS.chat != null) {
 									Main.THIS.chat.updateUserList();
 								}
-								socket.dispatchEvent(new DataExchangeEvent(DataExchangeEvent.ON_LOGIN_COMPLETE));
 								Report.addMassage("Login in complete ID: " + UserStaticData.from + UserStaticData.id);
+								socket.dispatchEvent(new DataExchangeEvent(DataExchangeEvent.ON_LOGIN_COMPLETE));
 								loged = true;
 							} else {
 								Report.addMassage("Error while logining on")
@@ -264,9 +266,6 @@ package Server
 					}
 				}
 				temp_str = temp_array[count];
-			} catch (err:Error) {
-				Report.addMassage("Error in event-function onSocketDataHandler in class DataExchange: " + err);
-			}
 		}
 		
 		public static function onShowTask():void {

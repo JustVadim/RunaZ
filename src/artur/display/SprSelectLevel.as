@@ -44,6 +44,7 @@ package artur.display {
 		
 		private function onBtn(e:MouseEvent):void {
 			var mc:BaseButton = BaseButton(e.target);
+			App.tutor.frees();
 			switch(mc) {
 				case this.btn:
 					break;
@@ -74,7 +75,7 @@ package artur.display {
 			var obj:Object = new Object();
 			obj.mn = this.missNum;
 			obj.d = d;
-			data.sendData(COMMANDS.CREAT_BATTLE, JSON2.encode(obj), true);
+			data.sendData(COMMANDS.CREAT_MISSION_BATTLE, JSON2.encode(obj), true);
 		}
 		
 		private function getRessBattle(e:DataExchangeEvent):void {
@@ -127,7 +128,7 @@ package artur.display {
 					}
 				}
 				
-				if(UserStaticData.hero.demo == 2) {
+				if(UserStaticData.hero.demo == 2 || UserStaticData.hero.demo == 8) {
 					App.tutor.init(11);
 				}
 			} else {

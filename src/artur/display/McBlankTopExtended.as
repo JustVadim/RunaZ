@@ -1,9 +1,11 @@
 package artur.display {
 	import Server.Lang;
 	import Utils.Functions;
+	import artur.App;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
@@ -19,6 +21,7 @@ package artur.display {
 		private var txtSilver:TextField = Functions.getTitledTextfield(186.75, 17, 59.75, 16, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.CENTER, "99999", 1, Kerning.ON, 0.5, false);
 		private var ratText:TextField = Functions.getTitledTextfield(306.5, 18, 50, 16, new Art().fontName, 12, 0xFFF642, TextFormatAlign.CENTER, "99999", 1, Kerning.ON, 0.5, false);
 		private var loader:Loader = new Loader();
+		private var ui:Object;
 		
 		public function McBlankTopExtended(xx:Number, yy:Number, place:int) {
 			this.mouseChildren = false;
@@ -42,6 +45,24 @@ package artur.display {
 			this.loader.x = 35;
 			this.loader.y = 1;
 			this.txtName.filters = this.txtLevel.filters = this.txtExp.filters = this.place.filters = this.txtGold.filters = this.txtSilver.filters = [new GlowFilter(0x0, 1, 3, 3, 2)];
+			this.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			this.addEventListener(MouseEvent.CLICK, this.onClick)
+		}
+		
+		private function onOut(e:MouseEvent):void 
+		{
+			this.filters = [];
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			App.profile.init(ui.id, ui);
+		}
+		
+		private function onOver(e:MouseEvent):void {
+			this.filters = [new GlowFilter(0xFFFFFF, 1, 3, 3, 2)];
+			App.sound.playSound("over1", App.sound.onVoice, 1);
 		}
 		
 		public function update(obj:Object):void {
@@ -57,7 +78,9 @@ package artur.display {
 				this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoad);
 				this.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 				this.loader.unload();
+				this.ui = obj.ui;
 				this.loader.load(new URLRequest(obj.ui.pl));
+				//this.id = obj.ui.id;
 			}
 		}
 		

@@ -6,14 +6,15 @@ package artur.win
 	import Server.Lang;
 	import Utils.json.JSON2;
 	import artur.App;
+	import artur.RasterClip;
 	import artur.display.BaseButton;
-	import artur.display.MyBitMap;
 	import artur.util.Numbs1;
 	import com.greensock.easing.Circ;
 	import com.greensock.easing.Cubic;
 	import com.greensock.TweenLite;
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.filters.GlowFilter;
@@ -28,7 +29,6 @@ package artur.win
 	public class WinFortuna extends Sprite {
 		public var bin:Boolean = false;
 		private var circle:Sprite = new Sprite();
-		private var currStep:int = 0;
 		private var arrow:mcFortuna = new mcFortuna();
 		private var bgCircle:mcBgFortuna = new mcBgFortuna();
 		private var bg:Bitmap;
@@ -53,7 +53,7 @@ package artur.win
 		private var freeBtnText:TextField;
 		private var donateBtnText:TextField;
 		private var animFortuna:mcFortunaAnim = new mcFortunaAnim();
-		private var animFortunaText:TextField = Functions.getTitledTextfield( -42, -12.5, 84, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);;
+		private var animFortunaText:TextField = Functions.getTitledTextfield( -42, -12.5, 84, 25, new Art().fontName, 16, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.ON, 1, true);
 		public static var dialogChecked:Boolean = false;
 		
 		
@@ -64,7 +64,8 @@ package artur.win
 			animFortuna.mc.gotoAndStop(1);
 			animFortuna.x = 400;
 		    animFortuna.y = 233;
-			bg = new MyBitMap(App.prepare.cach[62]);
+			bg = RasterClip.getBitmap(new mcBgFortuna2());
+			//new MyBitMap();
 			btnClose = new BaseButton(63);
 			btnFree = new BaseButton(64);
 			btnDonate = new BaseButton(65);
@@ -114,6 +115,7 @@ package artur.win
 			this.btnFree.addChild(this.freeBtnText);
 			this.donateBtnText.filters = this.freeBtnText.filters = this.exitBtnText.filters = this.timerText.filters = [new GlowFilter(0x0,1,3,3,1)];
 		}
+		
 		public function init(rot:int = 0 ):void {
 			bin = true;
 			this.circle.rotation = 1;
@@ -121,6 +123,12 @@ package artur.win
 			this.addEvents(true);
 			App.topPanel.init(this);
 			App.topMenu.init(true, true);
+			if(WinFortuna.dt > 10) {
+				App.dialogManager.canShow();
+			}
+			if(WinFortuna.dt == 0 && UserStaticData.hero.level < 4) {
+				App.tutor.init(23);
+			}
 		}
 		
 		private function checkTime(state:Boolean):void {
@@ -134,6 +142,7 @@ package artur.win
 		}
 		
 		private function checkTimeRes(e:DataExchangeEvent):void {
+			DataExchange(e.target).removeEventListener(e.type, this.checkTimeRes);
 			var obj:Object = JSON2.decode(e.result);
 			WinFortuna.dt = obj.res;
 			this.updateFreeBtn();
@@ -150,6 +159,7 @@ package artur.win
 				if(this.timerText.parent == null) {
 					this.addChild(this.timerText);
 				}
+				this.setTimeText(dt);
 				this.timer = new Timer(1000, WinFortuna.dt);
 				this.timer.addEventListener(TimerEvent.TIMER, this.onTImer);
 				this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
@@ -166,6 +176,10 @@ package artur.win
 			
 		}
 		
+		private function onComplete():void {
+			App.dialogManager.canShow()
+		}
+		
 		private function onTImerCmplt(e:TimerEvent):void {
 			this.timer.removeEventListener(TimerEvent.TIMER, this.onTImer);
 			this.timer.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onTImerCmplt);
@@ -179,23 +193,25 @@ package artur.win
 		}
 		
 		private function setTimeText(time:int):void {
-			var h:int = time / 3600;
-			time = time - h * 3600;
-			var m:int = (time / 60);
-			time = time - m * 60;
-			this.timerText.text = "";
-			if (h < 10) {
-				this.timerText.appendText("0");
+			if(this.parent) {
+				var h:int = time / 3600;
+				time = time - h * 3600;
+				var m:int = (time / 60);
+				time = time - m * 60;
+				this.timerText.text = "";
+				if (h < 10) {
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(h.toString() + ":");
+				if (m < 10) { 
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(m.toString()+":");
+				if(time< 10) {
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(time.toString());
 			}
-			this.timerText.appendText(h.toString() + ":");
-			if (m < 10) { 
-				this.timerText.appendText("0");
-			}
-			this.timerText.appendText(m.toString()+":");
-			if(time< 10) {
-				this.timerText.appendText("0");
-			}
-			this.timerText.appendText(time.toString());
 		}
 		
 		private function addEvents(state:Boolean):void {
@@ -229,9 +245,11 @@ package artur.win
 		}
 		
 		private function onSpinClick(e:MouseEvent):void {
+			App.tutor.frees();
 			this.addEvents(false);
 			this.sp = 0;
 			this.spin(0);
+			TweenLite.to(this, 0, {delay:4, onComplete:onComplete});
 		}
 		
 		private function spin(price:int):void {

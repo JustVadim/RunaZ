@@ -65,18 +65,13 @@ package artur.util
 			return Boolean(sounds[id]);
 		}
 		
-		public function playSound(id:String, volume:Number = 1.0, timesToRepeat:int = 999):void 
-		{ 
-		
-		    //Check for an existing sound, and play it.
-		
-				
+		public function playSound(id:String, volume:Number = 1.0, timesToRepeat:int = 999):void { 
 			
-			    var t:SoundTransform;
-			    for (var currID:String in currPlayingSounds)
-			    {
-				   if (currID == id)
-				   {
+			var t:SoundTransform;
+			for (var currID:String in currPlayingSounds)
+			{
+				if (currID == id)
+				{
 					var c:SoundChannel = currPlayingSounds[id].channel as SoundChannel;
 					var s:Sound = currPlayingSounds[id].sound as Sound;
 					t = new SoundTransform(volume);
@@ -84,25 +79,17 @@ package artur.util
 					c.soundTransform = t;
 					currPlayingSounds[id] = { channel: c, sound: s, volume: volume };
 					return;
-				   }
-			    }
-			
-			     //Create a new sound
-			     var soundFactory:Sound = new Sound();
-			     soundFactory.addEventListener(IOErrorEvent.IO_ERROR, handleLoadError);
-			     soundFactory =  sounds[id]
-			
-			     var channel:SoundChannel = new SoundChannel();
-			     channel = soundFactory.play(0, timesToRepeat);
-			
-			     t = new SoundTransform(volume);
-			     channel.soundTransform = t;
-			
-			     currPlayingSounds[id] = { channel: channel, sound: soundFactory, volume: volume };
-				
-			
-		
-		
+				}
+			}
+			//Create a new sound
+			var soundFactory:Sound = new Sound();
+			soundFactory.addEventListener(IOErrorEvent.IO_ERROR, handleLoadError);
+			soundFactory =  sounds[id]
+			var channel:SoundChannel = new SoundChannel();
+			channel = soundFactory.play(0, timesToRepeat);
+			t = new SoundTransform(volume);
+			channel.soundTransform = t;
+			currPlayingSounds[id] = { channel: channel, sound: soundFactory, volume: volume };
 		}
 		
 		public function stopSound(id:String):void 

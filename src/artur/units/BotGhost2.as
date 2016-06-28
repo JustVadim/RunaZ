@@ -2,7 +2,9 @@ package artur.units
 {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import com.greensock.TweenLite;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -27,7 +29,7 @@ package artur.units
 		 private var isOver:Boolean = false;
 		 private var parts:Array ;
 		 private var parts_of_parts:Array;
-		 private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(), true)[0];
+		 private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());//PrepareGr.creatBms(new mcShawdow(), true)[0];
 		 private static var sounds:Array = [{id:'gAtack', frame:55}, {id:'gHurt', frame:62}, {id:'blade2', frame:59}, {id:'gDie', frame:74}, {id:'blade1', frame:71}];
 		 private static var normalScales:Array = [1, 1, 1.5, 1, 1, 1, 1, 1];
 		 private var lvl:int=1;
@@ -36,13 +38,13 @@ package artur.units
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh);
-			bodys1 = PrepareGr.creatBms(new Item_body1G2());
-			bodys2 = PrepareGr.creatBms(new Item_body2G2());
-			hendsR = PrepareGr.creatBms(new Item_handsG2());
-			hendsL =  PrepareGr.creatBms(new Item_handsG2());
-			heads =  PrepareGr.creatBms(new Item_headG2());
-			centers = PrepareGr.creatBms(new Item_centerG2());
-			blades =  PrepareGr.creatBms(new Item_bladeG2());
+			bodys1 	= RasterClip.getAnimationBitmaps(new Item_body1G2());// PrepareGr.creatBms();
+			bodys2 	= RasterClip.getAnimationBitmaps(new Item_body2G2());//PrepareGr.creatBms();
+			hendsR 	= RasterClip.getAnimationBitmaps(new Item_handsG2());//PrepareGr.creatBms();
+			hendsL 	= RasterClip.getAnimationBitmaps(new Item_handsG2());//PrepareGr.creatBms();
+			heads 	= RasterClip.getAnimationBitmaps(new Item_headG2());//PrepareGr.creatBms();
+			centers = RasterClip.getAnimationBitmaps(new Item_centerG2());//PrepareGr.creatBms();
+			blades 	= RasterClip.getAnimationBitmaps(new Item_bladeG2());//PrepareGr.creatBms();
 			
 			parts =               [this.body1, this.body2, this.handL,this.handR,this._head,this.center, this.blade];
 			parts_of_parts = [bodys1,bodys2, hendsL , hendsR,heads,centers,blades ];

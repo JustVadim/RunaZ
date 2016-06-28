@@ -2,10 +2,12 @@ package artur.display {
 	import artur.App;
 	import artur.win.WinManajer;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.filters.GlowFilter;
 	import flash.text.engine.Kerning;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import flash.utils.Timer;
 	import report.Report;
 	import Server.COMMANDS;
 	import Server.DataExchange;
@@ -23,6 +25,8 @@ package artur.display {
 		private var priceTitle:TextField  = Functions.getTitledTextfield(302, 313, 100, 20, new Art().fontName, 14,0xFBF199, TextFormatAlign.LEFT, "", 0.9);
 		private var txtGold:TextField    = Functions.getTitledTextfield(420, 314, 50, 20, new Art().fontName, 13, 0xFBF199, TextFormatAlign.RIGHT, "", 1, Kerning.OFF, -1);
 		private var preText:TextField    = Functions.getTitledTextfield(302, 95, 200, 60, new Art().fontName, 13, 0x4AFF4A, TextFormatAlign.CENTER, "", 0.9);
+		private var timer:Timer = new Timer(1000, 3);
+		private var timerText:TextField = Functions.getTitledTextfield(350, 360, 100, 25, new Art().fontName, 13, 0xFF0606, TextFormatAlign.CENTER, "00:00:00", 1, Kerning.ON, 1, true);
 
 		public function Task() {
 			Functions.SetPriteAtributs(this, true, true);
@@ -61,10 +65,14 @@ package artur.display {
 						}
 					}
 					if(UserStaticData.hero.t.tp != UserStaticData.hero.t.pa) {
-						this.addChild(this.close);
-						this.close.addEventListener(MouseEvent.CLICK, this.onClose);
 						Functions.compareAndSet(this.preText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 0));
 						Functions.compareAndSet(this.textText, Lang.getTitle(int(UserStaticData.hero.t.tn) + 96, 1));
+						this.timer.reset();
+						this.timer.addEventListener(TimerEvent.TIMER, this.onTimer);
+						this.timer.addEventListener(TimerEvent.TIMER_COMPLETE, this.onComplete);
+						this.setTimeText(3 - this.timer.currentCount);
+						this.addChild(this.timerText);
+						this.timer.start();
 					} else {
 						this.addChild(this.take);
 						this.take.addEventListener(MouseEvent.CLICK, this.onTake);
@@ -79,6 +87,40 @@ package artur.display {
 				} else {
 					this.frees();
 				}
+			}
+		}
+		
+		private function onComplete(e:TimerEvent):void {
+			this.timer.removeEventListener(TimerEvent.TIMER, this.onTimer);
+			this.timer.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onComplete);
+			this.addChild(this.close);
+			this.removeChild(this.timerText);
+			this.close.addEventListener(MouseEvent.CLICK, this.onClose);
+		}
+		
+		private function onTimer(e:TimerEvent):void {
+			this.setTimeText(3 - this.timer.currentCount);
+		}
+		
+		private function setTimeText(time:int):void {
+			if(this.parent) {
+				var h:int = time / 3600;
+				time = time - h * 3600;
+				var m:int = (time / 60);
+				time = time - m * 60;
+				this.timerText.text = "";
+				if (h < 10) {
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(h.toString() + ":");
+				if (m < 10) { 
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(m.toString()+":");
+				if(time< 10) {
+					this.timerText.appendText("0");
+				}
+				this.timerText.appendText(time.toString());
 			}
 		}
 		

@@ -34,16 +34,16 @@ package Chat
 		public var btnAds:BaseButton;
 		public var btnRullet:BaseButton;
 		public var btnDell:BaseButton;
-		public var btnVip:BaseButton;
+		public var btn_Vip:BaseButton;
 		public static var userDialog:UserInListDialog = new UserInListDialog();
 		
 		
 		public function ChatBasic() {
 			this.name = "chat";
-			btnDell = new BaseButton(79);
+			btnDell = new BaseButton(85);
 			btnDell.x = 679; btnDell.y = 421.5;
-			btnVip = new BaseButton(80);
-			btnVip.x = 642.25, btnVip.y = 422.25;
+			btn_Vip = new BaseButton(86);
+			btn_Vip.x = 642.25, btn_Vip.y = 422.25;
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			this.tabEnabled = false;
 			this.massages_scrollbar.addEventListener(MouseEvent.CLICK, setFocus);
@@ -93,7 +93,7 @@ package Chat
 			this.massages_sprite.mouseChildren = true;
 			this.setFocus();
 			this.addChild(btnDell);
-			this.addChild(btnVip);
+			this.addChild(btn_Vip);
 			if(UserStaticData.hero.t.tn != 0 && UserStaticData.hero.t.tp < UserStaticData.hero.t.pa) {
 				this.addChild(this.btnQ);
 			}
@@ -132,9 +132,11 @@ package Chat
 		}
 		
 		private function onRoulettClick(e:MouseEvent):void {
-			if(App.winManajer.swapMode == false && App.winManajer.currWin != 6) {
-				App.winManajer.swapWin(6);
-				App.info.frees()
+			if(!App.tutor.stage) {
+				if(App.winManajer.swapMode == false && App.winManajer.currWin != 6) {
+					App.winManajer.swapWin(6);
+					App.info.frees()
+				}
 			}
 		}
 		

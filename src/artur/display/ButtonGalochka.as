@@ -10,8 +10,7 @@ package artur.display {
 		public function ButtonGalochka() {
 			Functions.SetPriteAtributs(this, false, false);
 			var mc:MovieClip = new SprTrue();
-			///this.addChild(mc);
-			this.addChild(RasterClip.raster(mc, mc.width, mc.height));
+			this.addChild(RasterClip.getBitmap(mc, 1, mc.width, mc.height));
 			this.y = -30;
 			this.scaleX = this.scaleY = 0.6;
 		}

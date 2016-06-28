@@ -1,6 +1,7 @@
 package artur.display.battle {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import artur.win.WinBattle;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
@@ -16,10 +17,10 @@ package artur.display.battle {
 	import Utils.json.JSON2;
 	
 	public class TopPanelBattle extends Sprite {
-		private var bg:Bitmap  = PrepareGr.creatBms(new mcBgTopPanelBatle(), false)[0];
-		private var bmAutoFight :Bitmap = PrepareGr.creatBms(new mcActiveAuto(), false)[0];
-		private var bmHold        :Bitmap = PrepareGr.creatBms(new mcBtnsTopPanelBattle(), false)[0];
-		private var mcBtns:mcBtnTopPanelBatle = new mcBtnTopPanelBatle();
+		private var bg			:Bitmap = RasterClip.getMovedBitmap(new mcBgTopPanelBatle());
+		private var bmAutoFight	:Bitmap = RasterClip.getMovedBitmap(new mcActiveAuto());
+		private var bmHold      :Bitmap = RasterClip.getMovedBitmap(new mcBtnsTopPanelBattle());
+		private var mcBtns		:mcBtnTopPanelBatle = new mcBtnTopPanelBatle();
 		
 		private var winBattle:WinBattle;
 		
@@ -128,31 +129,55 @@ package artur.display.battle {
 			var mc:MovieClip = MovieClip(e.target);
 			switch(mc) {
 				case this.mcBtns.btnHold:
-					WinBattle.inst.grid.clearNodesControl();
-					var loc:Object = WinBattle.bat.locs[WinBattle.myTeam][WinBattle.bat["set"][WinBattle.bat.cus].p];
-					var obj:Object = new Object();
-					obj.a = 0;
-					obj.x = loc.x;
-					obj.y = loc.y;
-					WinBattle.atackNode.frees();
-					Node(winBattle.grid.nodes[0][0]).sendStep(obj);//this.sendStep(obj);
+					if(UserStaticData.hero.demo > 10) {
+						WinBattle.inst.grid.clearNodesControl();
+						var loc:Object = WinBattle.bat.locs[WinBattle.myTeam][WinBattle.bat["set"][WinBattle.bat.cus].p];
+						var obj:Object = new Object();
+						obj.a = 0;
+						obj.x = loc.x;
+						obj.y = loc.y;
+						WinBattle.atackNode.frees();
+						Node(winBattle.grid.nodes[0][0]).sendStep(obj);//this.sendStep(obj);
+					} else {
+						App.closedDialog.init1(Lang.getTitle(207));
+					}
 					break;
 				case this.mcBtns.btnAuto:
-					this.bmAutoFight.visible = !this.bmAutoFight.visible;
-					this.mcBtns.btnHold.visible = false;
-					this.bmHold.visible = false;
-					if (bmAutoFight.visible && this.isOurStep()) {
-						Node(this.winBattle.grid.nodes[0][0]).sendStep();
-						return
+					if(UserStaticData.hero.demo > 10) {
+						this.bmAutoFight.visible = !this.bmAutoFight.visible;
+						this.mcBtns.btnHold.visible = false;
+						this.bmHold.visible = false;
+						if (bmAutoFight.visible && this.isOurStep()) {
+							Node(this.winBattle.grid.nodes[0][0]).sendStep();
+							return
+						}
+					} else  if (UserStaticData.hero.demo == 9) {
+						this.bmAutoFight.visible = !this.bmAutoFight.visible;
+						this.mcBtns.btnHold.visible = false;
+						this.bmHold.visible = false;
+						UserStaticData.hero.demo = 10;
+						App.tutor.frees();
+						if (bmAutoFight.visible && this.isOurStep()) {
+							Node(this.winBattle.grid.nodes[0][0]).sendStep();
+							return
+						}
+					} else if(UserStaticData.hero.demo == 10) {
+						App.closedDialog.init1(Lang.getTitle(208));
+					} else {
+						App.closedDialog.init1(Lang.getTitle(207));
 					}
 					break;
 				case this.mcBtns.btnFree:
-					App.lock.init();
-					var data:DataExchange = new DataExchange();
-					data.addEventListener(DataExchangeEvent.ON_RESULT, this.onSurrenderRes);
-					data.sendData(COMMANDS.SURRENDER, "", true);
-					this.btnsEventsRemove(this.mcBtns.btnFree);
-					this.out(e);
+					if(UserStaticData.hero.demo > 10) {
+						App.lock.init();
+						var data:DataExchange = new DataExchange();
+						data.addEventListener(DataExchangeEvent.ON_RESULT, this.onSurrenderRes);
+						data.sendData(COMMANDS.SURRENDER, "", true);
+						this.btnsEventsRemove(this.mcBtns.btnFree);
+						this.out(e);
+					}  else {
+						App.closedDialog.init1(Lang.getTitle(207));
+					}
 					break;
 			
 			}

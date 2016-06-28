@@ -19,13 +19,16 @@ package artur.display {
 		public var closeBtn:BaseButton = new BaseButton(15);
 		private var nextMiss:BaseButton;
 		private var thisMiss:BaseButton;
-		
+		public var ressTxtGold:TextField = Functions.getTitledTextfield(24, 6, 55, 22.2, new Art().fontName, 17, 0xFFF642, TextFormatAlign.CENTER, "1234", 1, Kerning.OFF, -1, false);
+		public var ressTxtSilver:TextField = Functions.getTitledTextfield(105, 6, 55, 22.2, new Art().fontName, 17, 0xFFFFFF, TextFormatAlign.CENTER, "1234", 1, Kerning.OFF, -1, false);
+		public var ratText:TextField = Functions.getTitledTextfield(-45.85, 33.5, 91, 22, new Art().fontName, 17, 0xFFFFFF, TextFormatAlign.CENTER, "+1", 1, Kerning.OFF, -1, false);
 		
 		public function McAfterBattleLoseExtend() {
 			this.addChild(this.title);
 			this.title.filters = [new GlowFilter(0x0, 1, 3, 3, 1, 1) , new DropShadowFilter(1, 42, 0xFFFFFF, 1, 1, 1, 0.5, 1, true), new DropShadowFilter(1, 234, 0xFFCC99, 1, 1, 1, 0.5, 1, true)];
 			this.addEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 			var filtres:Array = [new GlowFilter(0x0, 1, 2, 2, 2, 1)];
+			this.ressTxtGold.filters = this.ressTxtSilver.filters = this.ratText.filters = filtres;
 			for (var i:int = 0; i < 4; i++) {
 				var blank:mcBlankWinn = this[String("k" + i)];
 				var txt:TextField = Functions.getTitledTextfield(57.15, 0, 100, 14, new Art().fontName, 10, 0xF3F3F3, TextFormatAlign.LEFT, "Убил", 0.7);
@@ -37,6 +40,9 @@ package artur.display {
 				blank.addChild(txt);
 				txt2[i] = txt;
 			}
+			this.ress.addChild(this.ressTxtGold);
+			this.ress.addChild(this.ressTxtSilver);
+			this.reiting.addChild(this.ratText);
 			this.addChild(this.closeBtn);
 			this.closeBtn.x = 419.5;
 			this.closeBtn.y = 408.2;
@@ -46,7 +52,6 @@ package artur.display {
 			this.nextMiss.y = 340;
 			this.thisMiss.x = 600;
 			this.thisMiss.y = 340;
-			
 		}	
 		
 		private function onAddedToStage(e:Event):void {
@@ -91,7 +96,6 @@ package artur.display {
 				this.thisMiss.removeEventListener(MouseEvent.ROLL_OVER, this.onOver);
 				this.thisMiss.removeEventListener(MouseEvent.ROLL_OUT, this.onOut);
 			}
-			
 		}
 		
 		private function onOut(e:MouseEvent):void 

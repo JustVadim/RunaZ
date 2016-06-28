@@ -19,8 +19,8 @@ package artur.display
 		private var delay:int = 0;
 		private var infos:Array;
 		private var infos1:Array;
-		public var titleTxtName:TextField = Functions.getTitledTextfield( -78, -9, 150, 16, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0, true);
-		public var txtInfo:TextField = Functions.getTitledTextfield( -1.5, 0.5, 237, 108.25, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.AUTO, 0);
+		public var titleTxtName:TextField = Functions.getTitledTextfield( -78, -9, 150, 16, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER , "", 1, Kerning.OFF, 0, true);
+		public var txtInfo:TextField = Functions.getTitledTextfield( -1.5, 0.5, 237, 108.25, new Art().fontName, 13, 0xFFFFFF, TextFormatAlign.CENTER, "", 1, Kerning.OFF, 0);
 		public var txtGold:TextField = Functions.getTitledTextfield( 69, 1, 45, 18, new Art().fontName, 12, 0xFFF642, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
 		public var txtSilver:TextField = Functions.getTitledTextfield( 159, 1, 45, 18, new Art().fontName, 12, 0xFFFFFF, TextFormatAlign.LEFT, "", 1, Kerning.OFF, -1);
 		
@@ -35,7 +35,7 @@ package artur.display
 			this.dmg.iconRange.visible = false;
 			this.title.addChild(this.titleTxtName);
 			this.titleTxtName.filters = [new DropShadowFilter(1, 42, 0xFFFFFF, 1, 1, 1, 0.5, 1, true), new DropShadowFilter(1, 234, 0xFFCC99, 1, 1, 1, 0.5, 1, true), new GlowFilter(0x0, 1, 3, 3, 1, 1)];
-			this.txtInfo.filters = [new GlowFilter(0x0, 0.2, 1)];
+			this.txtInfo.filters = [new GlowFilter(0x0, 1, 1,1)];
 			this.txtInfo.multiline = true;
 			this.txtInfo.wordWrap = true;
 			this.addChild(this.txtInfo);
@@ -78,14 +78,14 @@ package artur.display
 			}
 			switch(data.type) {
 				case int(0):
+					this.txtInfo.wordWrap = true;
 					this.txtInfo.visible = true;
-					this.txtInfo.text = "";
 					this.txtInfo.width = data.txtInfo_w;
-					this.txtInfo.htmlText = data.txtInfo_t;
+					this.txtInfo.htmlText = String(data.txtInfo_t);
 					this.txtInfo.height = txtInfo.numLines * 18;
 					this.txtInfo.x = this.bg.x + 2;
 					this.txtInfo.y = cur_Y;
-					this.bg.width = data.txtInfo_w+4;
+					this.bg.width = data.txtInfo_w + 4;
 					this.bg.height = txtInfo.height + cur_Y + 8;
 					break;
 				case(1):

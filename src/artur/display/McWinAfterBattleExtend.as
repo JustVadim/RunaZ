@@ -16,6 +16,7 @@ package artur.display {
 		public var title:TextField = Functions.getTitledTextfield(0, 6, 820, 50, new Art().fontName, 34, 0xD2A055, TextFormatAlign.CENTER, Lang.getTitle(71), 1, Kerning.AUTO, 0, false);
 		public var ressTxtGold:TextField = Functions.getTitledTextfield(24, 6, 55, 22.2, new Art().fontName, 17, 0xFFF642, TextFormatAlign.CENTER, "1234", 1, Kerning.OFF, -1, false);
 		public var ressTxtSilver:TextField = Functions.getTitledTextfield(105, 6, 55, 22.2, new Art().fontName, 17, 0xFFFFFF, TextFormatAlign.CENTER, "1234", 1, Kerning.OFF, -1, false);
+		public var ratText:TextField = Functions.getTitledTextfield(-45.85, 33.5, 91, 22, new Art().fontName, 17, 0xFFFFFF, TextFormatAlign.CENTER, "+1", 1, Kerning.OFF, -1, false);
 		public var txt1:Array = [];
 		public var txt2:Array = [];
 		public var closeBtn:BaseButton = new BaseButton(15);
@@ -28,9 +29,10 @@ package artur.display {
 			this.addChild(this.title);
 			this.title.filters = [new GlowFilter(0x0, 1,3,3,1,1) , new DropShadowFilter(1, 42, 0xFFFFFF, 1, 1, 1, 0.5,1,true), new DropShadowFilter(1, 234, 0xFFCC99, 1, 1, 1, 0.5,1,true)];
 			var filtres:Array = [new GlowFilter(0x0, 1, 2, 2, 2, 1)];
-			this.ressTxtGold.filters = this.ressTxtSilver.filters = filtres;
+			this.ressTxtGold.filters = this.ressTxtSilver.filters = this.ratText.filters = filtres;
 			this.ress.addChild(this.ressTxtGold);
 			this.ress.addChild(this.ressTxtSilver);
+			this.reiting.addChild(this.ratText);
 			for (var i:int = 0; i < 4; i++) {
 				var blank:mcBlankWinn = this[String("k" + i)];
 				var txt:TextField = Functions.getTitledTextfield(57.15, 0, 100, 14, new Art().fontName, 10, 0xF3F3F3, TextFormatAlign.LEFT, Lang.getTitle(76), 0.7);
@@ -61,6 +63,7 @@ package artur.display {
 			this.closeBtn.mouseEnabled = false;
 			TweenLite.to(this.title, 2, { alpha:1, onComplete:this.addBtn } );
 			this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
+			
 		}
 		
 		private function onRemovedFromStage(e:Event):void {
@@ -90,6 +93,11 @@ package artur.display {
 				this.nextMiss.addEventListener(MouseEvent.CLICK, this.onNextClick);
 				this.nextMiss.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
 				this.nextMiss.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+				
+				if (UserStaticData.hero.demo == 10) {
+					UserStaticData.hero.demo = 11;
+					App.tutor.init(18)
+				}
 			}
 		}
 		
@@ -113,12 +121,20 @@ package artur.display {
 		}
 		
 		private function onThisMissClick(e:MouseEvent):void {
+			if (UserStaticData.hero.demo == 11) {
+				UserStaticData.hero.demo = 12;
+				App.tutor.frees();
+			}
 			McWinAfterBattleExtend.rebattleUse = true;
 			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substr(3))%11;
 			WinMap.sprSelLevel.init(missNum, UserStaticData.hero.miss[MapTown.currTownClick].mn[missNum]);
 		}
 		
 		private function onNextClick(e:MouseEvent):void {
+			if (UserStaticData.hero.demo == 11) {
+				UserStaticData.hero.demo = 12;
+				App.tutor.frees();
+			}
 			McWinAfterBattleExtend.rebattleUse = true;
 			var missNum:int = int(String(UserStaticData.hero.mbat.ids[1]).substr(3));
 			if (missNum != 0 && (missNum + 1) % 11 == 0) {

@@ -89,7 +89,9 @@ package Server
 									["Арена", "Arena", ""], 
 									["Кузница", "Smithy", ""], 
 									["Миссии", "Missions", ""],
-									["В город","Vilagge",""]
+									["В город", "Vilagge", ""],
+									["Катакомбы", "", ""]
+									
 								];
 			Lang.lang_table[4] = ["У Вас недостаточно ресурсов для этой покупки. Вы можете купить ресурсы в банке или же заработать в миссиях.", "You do not have the resources for this purchase. You can buy the resources at the bank or the earn in missions.", ""];
 			
@@ -128,7 +130,7 @@ package Server
 											""
 										],
 										[
-											"Оглушает вражеского юнита огненной стрелой при єтом наносит ему урон",
+											"Оглушает вражеского юнита огненной стрелой при этом наносит ему урон",
 											"",
 											""
 										],
@@ -167,11 +169,11 @@ package Server
 			Lang.lang_table[41] = ["Что бы улучшить, надо вещь и как минимум один камeнь.", "In order to improve, you have an item and at least one stone", ""];
 			Lang.lang_table[42] = ["У Вас недостаточно золота для улучшения. Вы можете купить золото в банке или заработать в миссиях.", "You do not have gold to improve. You can buy gold in a bank or earn it in the missions.", ""];
 			Lang.lang_table[43] = new Array();
-			Lang.lang_table[43][0] = ["Рубин ур.1", "Ruby lvl.1", ""];
-			Lang.lang_table[43][1] = ["Изумруд ур.1", "Emerald lvl.1", ""];
-			Lang.lang_table[43][2] = ["Аметист ур.1", "Amethyst lvl.1", ""];
-			Lang.lang_table[43][3] = ["Сапфир ур.1", "Sapphire lvl.1", ""];
-			Lang.lang_table[43][4] = ["Топаз ур.1", "Topaz lvl.1", ""];
+			Lang.lang_table[43][0] = ["Рубин", "Ruby", ""];
+			Lang.lang_table[43][1] = ["Изумруд", "Emerald", ""];
+			Lang.lang_table[43][2] = ["Аметист", "Amethyst", ""];
+			Lang.lang_table[43][3] = ["Топаз", "Topaz", ""];
+			Lang.lang_table[43][4] = ["Сапфир", "Sapphire", ""];
 			
 			Lang.lang_table[43][5] = ["Рубин ур.2", "Ruby lvl.1", ""];
 			Lang.lang_table[43][6] = ["Изумруд ур.2", "Emerald lvl.2", ""];
@@ -185,7 +187,13 @@ package Server
 			Lang.lang_table[43][13] = ["Сапфир ур.3", "Sapphire lvl.3", ""];
 			Lang.lang_table[43][14] = ["Топаз ур.3", "Topaz lvl.3", ""];
 			
-			Lang.lang_table[44] = ["Что бы участвовать в поединкe нужен уровень " + WinArena.NEEDED_LVL + ". Уровень Вы можете заработать в миссиях.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""];
+			Lang.lang_table[44] = 	[
+										["Что бы участвовать в поединкe на рейтинг нужен уровень " + 3 + ". Уровень Вы можете заработать в миссиях.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""],
+										["Что бы участвовать в поединкe на рейтинг и серебно нужен уровень " + 5 + ". Уровень Вы можете заработать в миссиях и на арене.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""],
+										["Что бы участвовать в поединкe на золото и рейтинг нужен уровень " + 7 + ". Уровень Вы можете заработать в миссиях и на арене.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""],
+										["Что бы войти воевать в пещере нужен уровень 4. Уровень Вы можете заработать в миссиях и на арене.", "To participate in the match level " + WinArena.NEEDED_LVL + " is needed. Pass the missions to get it.", ""]
+									]
+										
 			Lang.lang_table[45] = ["У Вас недостаточно золота для этой покупки. Вы можете купить золото в банке или заработать в миссиях.", "You do not have enough gold for this purchase. You can buy gold in a bank or earn it in the missions.", ""];
 			Lang.lang_table[46] = ["У Вас недостаточно серебра для этой покупки. Вы можете купить серебро в банке или заработать в миссиях.", "You do not have enough silver for this purchase. You can buy enough in a bank or money in the missions.", ""];
 			Lang.lang_table[47] = ["Закрыть", "Close", ""];
@@ -193,38 +201,22 @@ package Server
 			Lang.lang_table[49] = ["Купить за серебро", "Buy for silver", ""];
 			Lang.lang_table[50] = ["Продать за серебро", "Sell for silver", ""];
 			Lang.lang_table[51] = ["Искать игру", "Find game", ""];
-			Lang.lang_table[52] = ["Заказать камeнь", "Order stone", ""];
+			Lang.lang_table[52] = ["Заказать ", "Order ", ""];
 			Lang.lang_table[53] = ["Улучшить вещь", "Improve item", ""];
 			Lang.lang_table[54] = ["Добавить в сундук", "", ""];
 			//Lang.lang_table[55] = [" в сундук", "", ""];
 			//Lang.lang_table[56] = ["Забрать ", "", ""];
 			Lang.lang_table[57] = ["Забрать из сундука", "Pick up from the chest", ""];
 			
-			Lang.lang_table[58] = new Array();
-			Lang.lang_table[58][0] = ["Добавит +1 к здоровью", "Add 1 to health", ""];
-			Lang.lang_table[58][1] = ["Добавит +1 к манне", "Add 1 to manna", ""];
-			Lang.lang_table[58][2] = ["Добавит +1 к урону", "Add 1 to damage", ""];
-			Lang.lang_table[58][3] = ["Добавит +1 к физ. защите", "Add 1 to phys. protection", ""];
-			Lang.lang_table[58][4] = ["Добавит +1 к маг. защите", "Add 1 to mag. protection", ""];
+			Lang.lang_table[58] = [];
 			
-			Lang.lang_table[58][5] = ["Добавит +2 к здоровью", "Add +2 to health", ""];
-			Lang.lang_table[58][6] = ["Добавит +2 к манне", "Add 2 to manna", ""];
-			Lang.lang_table[58][7] = ["Добавит +2 к урону", "Add 2 to damage", ""];
-			Lang.lang_table[58][8] = ["Добавит +2 к физ. защите", "Add 2 to phys. protection", ""];
-			Lang.lang_table[58][9] = ["Добавит +2 к маг. защите", "Add 2 to to mag. protection", ""];
-			
-			Lang.lang_table[58][10] = ["Добавит +3 к здоровью", "Add 3 to health", ""];
-			Lang.lang_table[58][11] = ["Добавит +3 к манне", "Add 3 to manna", ""];
-			Lang.lang_table[58][12] = ["Добавит +3 к урону", "Add 3 to damage", ""];
-			Lang.lang_table[58][13] = ["Добавит +3 к физ. защите", "Add 3 to phys. protection", ""];
-			Lang.lang_table[58][14] = ["Добавит +3 к маг. защите", "Add 3 to to mag. protection", ""];
 			
 			Lang.lang_table[59] = new Array();
-			Lang.lang_table[59][0] = ["10 камней добавят +1 к здоровью ", "10 stones add 1 to health ", ""];
-			Lang.lang_table[59][1] = ["10 камней добавят +1 к манне", "10 stones add 1 to manna ", ""];
-			Lang.lang_table[59][2] = ["10 камней добавят +1 к урону", "10 stones add 1 to damage ", ""];
-			Lang.lang_table[59][3] = ["10 камней добавят +1 к физ. защите", "10 stones add 1 to phys. protection ", ""];
-			Lang.lang_table[59][4] = ["10 камней добавят +1 к маг. защите", "10 stones add 1 to mag. protection ", ""];
+			Lang.lang_table[59][0] = ["10 камней добавят 5 к здоровью ", "10 stones add 1 to health ", ""];
+			Lang.lang_table[59][1] = ["10 камней добавят +1 к физ. защите", "10 stones add 1 to manna ", ""];
+			Lang.lang_table[59][2] = ["10 камней добавят +1 к маг. защите", "10 stones add 1 to damage ", ""];
+			Lang.lang_table[59][3] = ["10 камней добавят +5 к манне", "10 stones add 1 to phys. protection ", ""];
+			Lang.lang_table[59][4] = ["10 камней добавят +1 к урону", "10 stones add 1 to mag. protection ", ""];
 			
 			Lang.lang_table[59][5] = ["10 камней добавят +2 к здоровью", "10 stones add 2 to health ", ""];
 			Lang.lang_table[59][6] = ["10 камней добавят +2 к манне", "10 stones add 2 to manna ", ""];
@@ -243,6 +235,7 @@ package Server
 			Lang.lang_table[60][3] = ["Наймите юнита", "Hire unit"];
 			Lang.lang_table[60][4] = ["У Вас есть юнит, но ему надо оружие", "You have unit, but he needs weapon", ""];
 			Lang.lang_table[60][7] = ["Время выполнить миссию", "Time to complete mission"];
+			Lang.lang_table[60][12] = ["Используйте магию юнита. Магия Варвара увеличивает его урон на один ход.", ""];
 			Lang.lang_table[61] = ["Нанять", "Hire", ""];
 			Lang.lang_table[62] = ["Я хочу продать", "I want to sell", ""];
 			Lang.lang_table[63] = ["Жизни", "Health", ""];
@@ -260,7 +253,7 @@ package Server
 			Lang.lang_table[75] = ["Я хочу заказать", "I want to order", ""];
 			Lang.lang_table[76] = ["Убил", "Killed", ""];
 			Lang.lang_table[77] = ["Доступно", "Available", ""];
-			Lang.lang_table[78] = ["Заказать", "Order", ""];
+			Lang.lang_table[78] = ["Подарить", "Gift", ""];
 			Lang.lang_table[79] = ["шанс ударить указанную цель 2 раза", "chance to attack target 2 times", ""];
 			Lang.lang_table[80] = ["шанс нанести двойной урон", "chance for double damage", ""];
 			Lang.lang_table[81] = ["шанс нанести урон сквозь броню", "chance to deal damage through armor", ""];
@@ -285,11 +278,11 @@ package Server
 									];
 			Lang.lang_table[98] = 	[ 
 										["Использовать 3 раза баночку востановления здоровья.", "", ""], 
-										["Положите в инвентарь юнита баночку востановления здоровья и в бою используйте их по необходимости. Такой тактический ход может увеличить сильно ваши шансы на победу.", "", ""]
+										["Положите в инвентарь юнита баночку востановления здоровья и в бою используйте их по необходимости. Такой тактический ход может увеличить Ваши шансы на победу.", "", ""]
 									];
 			Lang.lang_table[99] = 	[ 
 										["Использовать 3 раза баночку востановления манны.", "", ""], 
-										["Положите в инвентарь юнита баночку востановления манны и в бою используйте их по необходимости. Такой тактический ход может увеличить сильно ваши шансы на победу.", "", ""]
+										["Положите в инвентарь юнита баночку востановления манны и в бою используйте их по необходимости. Такой тактический ход может увеличить Ваши шансы на победу.", "", ""]
 									];
 			Lang.lang_table[100] = 	[ 
 										["Использовать 2 раза свиток атаки.", "", ""], 
@@ -318,15 +311,36 @@ package Server
 			Lang.lang_table[106] = 	[
 										["Купить третьего юнита.","",""],
 										["Что бы быть сильнее в бою, зайдите в замок и наймите еще одного юнита. Внимательно присмотритесь какой тип юнита вам подойдет лучше.","",""]
-									]
+									];
+			Lang.lang_table[107] = 	[
+										["Провести 10 сражений в катакомбах", "",""],
+										["Проведите 10 сражений в катакомбах. В катакомбах вы можете получить много бесценного опыта и золото. Катакомба доступна раз в 6 часов."]
+									];
+			Lang.lang_table[108] = 	[
+										["Купить четвертого юнита.","",""],
+										["Что бы быть сильнее в бою, зайдите в замок и наймите еще одного юнита. Внимательно присмотритесь какой тип юнита вам подойдет лучше.","",""]
+									];
+			Lang.lang_table[109] = 	[
+										["Использовать 5 раз свиток ускорения", "", ""],
+										["Свиток ускорения добавляет вам +2 к скорости юнита на 1 ход, что дает Вам большое преимущество в бою.","",""],
+									];
+			Lang.lang_table[110] = 	[
+										["Использовать 5 раз свиток максимального урона", "", ""],
+										["Свиток максимального урона на один ход делает урон Вашего юнита максимальным. Используйте его и враги будет боятся вас.","",""],
+									];
 			///
 			Lang.lang_table[152] = ["Задание выполнено!!!\nВы можете забрать награду.", "", ""];
 			Lang.lang_table[153] = ["Награда:", "", ""];
 			Lang.lang_table[154] = ["У вас недостаточно энергии для входа в миссию. Вы можете купить её или со временем она восстановится.", "", ""];
 			Lang.lang_table[155] = ["Повторить миссию", "", ""];
 			Lang.lang_table[156] = ["Следующая миссия", "", ""];
-			Lang.lang_table[157] = ["Вы можете походить в любую выделенную ячейку. Вам необходимо дойти к монстру и ударить его.", "", ""];
-			Lang.lang_table[158] = ["Наведя курсор на монстра, правым кликом вы можете ударить его. Что бы выиграть бой - надо его убить.", "", ""];
+			Lang.lang_table[157] = new Array();
+			Lang.lang_table[157][0] = ["Вы можете походить в любую выделенную ячейку. Вам необходимо дойти к монстру и ударить его.", "", ""];
+			Lang.lang_table[157][1] = ["Наведя курсор на монстра, правым кликом вы можете ударить его. Что бы выиграть бой - надо его убить.", "", ""];
+			Lang.lang_table[157][2] = ["Каждый юнит имеет свою уникальную способность. Нажмите на выделенную область что бы использовать спосонобность Варвара.", "", ""];
+			
+			
+			
 			Lang.lang_table[159] = ["На Ваш счет было зачислено ", "", ""];
 			Lang.lang_table[160] = [" серебряных монет", "", ""];
 			Lang.lang_table[161] = [" золотых монет", "", ""];
@@ -592,8 +606,36 @@ package Server
 										["Богатство", "", ""],
 										["Опыт", "", ""]
 									];
+			Lang.lang_table[199] = ["Попросить", "", ""];
+			Lang.lang_table[200] = ["Подарить", "", ""];
+			Lang.lang_table[201] = ["Подарить другу ", "", ""];
+			Lang.lang_table[202] = ["Попросить у друга ", "", ""];
+			Lang.lang_table[203] = ["Отправить в крафтер ", "", ""];
+			Lang.lang_table[204] = ["В бой", "", ""];
+			Lang.lang_table[205] = ["У Вашего персонажа повысился уровень. Зайдите в город, чтобы улучшить его.", "", "" ];
+			Lang.lang_table[206] = ["Ваш кузнец сидит без дела. Закажите камень, ведь добыча камня долгая история - не теряйте время зря.", "", ""];
+			Lang.lang_table[207] = ["В обучающем режиме эта функция недоступна.", "", ""];
+			Lang.lang_table[208] = ["Этот бой до конца надо пройти в режиме \"Автоатака\".", "", ""];
+			Lang.lang_table[209] = ["Поздравляем, Ваш режим обучения закончен. Далее следуйте указаниям заданий. Первое задание получите после этого боя.", "", ""];
+			Lang.lang_table[210] = new Array();
+			Lang.lang_table[210][0] = ["Вы теперь можете воевать в Арене на рейтинг. Посмотреть лидеров рейтинга вы можете в городе.", "", ""];
+			Lang.lang_table[210][1] = ["Вы теперь можете воевать в Арене на рейтинг и серебро. Посмотреть лидеров рейтинга вы можете в городе..", "", ""];
+			Lang.lang_table[210][2] = ["Вы теперь можете воевать в Арене на рейтинг и золото. Посмотреть лидеров рейтинга вы можете в городе.", "", ""];
+			Lang.lang_table[211]  = new Array();
+			Lang.lang_table[211][0] = ["<font color=\"#00FF00\">Игра на рейтинг</font>\n<font color=\"#FFFFFF\">\nЕсли вы выиграете бой получите +1 к рейтингу.\nВ случае поражения -1 к рейтингу."]
+			Lang.lang_table[211][1] = ["<font color=\"#00FF00\">Игра на рейтинг и серебро</font>\n<font color=\"#FFFFFF\">\nЕсли вы выиграете бой получите +1 к рейтингу и получите серебро.\nВ случае поражения -1 к рейтингу и с вас будет снято серебро.\n\n<font color=\"#11B1FF\">Ставка: "]
+			Lang.lang_table[211][2] = ["<font color=\"#00FF00\">Игра на рейтинг и золото</font>\n<font color=\"#FFFFFF\">\nЕсли вы выиграете бой получите +1 к рейтингу и получите золото.\nВ случае поражения -1 к рейтингу и с вас будет снято золото.\n\n<font color=\"#11B1FF\">Ставка: "]
 			
+			Lang.lang_table[212] = new Array();
+			Lang.lang_table[212][0] = ["Рейтинг"]
+			Lang.lang_table[212][1] = ["Рейтинг и серебро"]
+			Lang.lang_table[212][2] = ["Рейтинг и золото"]
 			
+			Lang.lang_table[213] = [];
+			Lang.lang_table[213][1] = [" серебра"];
+			Lang.lang_table[213][2] = [" золота"];
+			Lang.lang_table[214] = ["Вы можете подарить другу подарок, не теряйте шанс. Подарок востанавливается очень долго."]
+			Lang.lang_table[215] = ["У Вас доступны игры в катакомбах. Это очень хорошая возможность заработать золото и опыт."]
 			
 		}
 		
@@ -681,6 +723,16 @@ package Server
 				}
 			}
 			return str;
+		}
+		
+		static public function getArenaBtnTitle(c:int):String {
+			var text:String = getTitle(211, c);
+			if(c == 1) {
+				text += UserStaticData.hero.level * 10;
+			} else if(c == 2) {
+				text += int(UserStaticData.hero.level / 3) + 1;
+			}
+			return text + Lang.getTitle(213, c) + "</font>";
 		}
 	}
 }

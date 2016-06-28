@@ -4,6 +4,7 @@ package artur.win {
 	import Utils.Functions;
 	import artur.App;
 	import artur.McTextCastleWinExtend;
+	import artur.RasterClip;
 	import artur.display.BaseButton;
 	import artur.PrepareGr;
 	import artur.util.Maker;
@@ -17,7 +18,7 @@ package artur.win {
 	import report.Report;
 	
 	public class WinBank {
-		private var bg:Bitmap = PrepareGr.creatBms(new mcBank())[0];
+		private var bg:Bitmap = RasterClip.getMovedBitmap(new mcBank());//PrepareGr.creatBms(new mcBank())[0];
 		private var close:BaseButton;
 		private var mcBtns:mcBankBtns = new mcBankBtns();
 		private static var f:GlowFilter = new GlowFilter(0xFFFFFF, 1, 3, 3, 2, 1);
@@ -116,6 +117,7 @@ package artur.win {
 		}
 		
 		public function init():void {
+			App.sound.playSound('inventar', App.sound.onVoice, 1);
 			if (!close) {
 				close = new BaseButton(61);
 				close.addEventListener(MouseEvent.CLICK, onClose);

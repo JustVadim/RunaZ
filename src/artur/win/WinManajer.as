@@ -1,7 +1,8 @@
 package artur.win 
 {
 	import artur.App;
-	import artur.display.MyBitMap;
+	import artur.RasterClip;
+	
 	import artur.display.Task;
 	import flash.display.Bitmap;
 	import flash.events.Event;
@@ -16,16 +17,17 @@ package artur.win
 	
 	public class WinManajer 
 	{
-		public var windows:Array = 
-		[
+		public var windows:Array = [
 			new WinRoot(),//0 
 			new WinCastle(), //1
 			new WinMap(), //2
 			new WinBattle(),//3
 			new WinKyz(),//4
 			new WinArena(),//5
-		    new WinFortuna()//6
+		    new WinFortuna(),//6
+			new WinCave(), //7
 		];
+		
 		public var prevWin:int = 0;
 		public var currWin:int = 0;
 		public var neadWin:int = 0;
@@ -40,9 +42,9 @@ package artur.win
 			} else {
 			    swapWin(3)	 
 			}
-			
-			var bm1:MyBitMap = new MyBitMap(App.prepare.cach[16]);
-			var bm2:MyBitMap = new MyBitMap(App.prepare.cach[16]);
+			var bm1:Bitmap = RasterClip.getBitmap(new mcBrmPart(), 1,-1,-1,null,0.9);
+			RasterClip.getBitmapFromBmd(App.prepare.cach[16]);
+			var bm2:Bitmap = RasterClip.getBitmap(new mcBrmPart(), 1,-1,-1,null,0.9);
 			brama.mc.addChild(bm1); brama.mc2.addChild(bm2);
 		}
 		
@@ -61,6 +63,7 @@ package artur.win
 					App.sound.playSound('move', App.sound.onVoice,1);
 				}
 				if (brama.currentFrame == 20) {
+					Report.addMassage("bramamiddle" + swapMode + " apoo: " + App.spr.name)
 					App.clear();
 					App.topPanel.frees();
 					if(this.currWin==3 && this.neadWin == 6) {
@@ -73,10 +76,21 @@ package artur.win
 					windows[currWin].init();
 					App.spr.addChild(brama);
 				} else if (brama.currentFrame == brama.totalFrames) {
+					
+					Report.addMassage("swapmode" + swapMode + " apoo: " + App.spr.name)
 					App.spr.removeChild(brama);
+					
 					brama.stop();
+					
 					swapMode = false;
-					if(currWin != 3) {
+					
+					if(currWin != 3 && currWin != 1 && currWin != 6 && currWin != 0 && currWin != 7 && currWin != 4 && currWin != 2) {
+						App.dialogManager.canShow();
+					} else if(currWin == 0 && UserStaticData.hero.fs == 0){
+						App.dialogManager.canShow();
+					} else if(currWin == 7 && WinCave.dt > 0) {
+						App.dialogManager.canShow();
+					} else if(currWin == 2 && UserStaticData.hero.demo > 12)  {
 						App.dialogManager.canShow();
 					}
 				}

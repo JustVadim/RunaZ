@@ -1,7 +1,9 @@
 package artur.units {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import com.greensock.TweenLite;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -12,7 +14,7 @@ package artur.units {
 		public var free:Boolean = true;
 		private var isOver:Boolean = false;
 		private var parts:Array ;
-		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
+		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());
 		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 }, { id:'pall_hurt', frame:75 },{id:'blade1',frame:78},{id:'pall_death',frame:81}];
 		public static var onSound:Boolean = true;
 		public function U_Paladin() {

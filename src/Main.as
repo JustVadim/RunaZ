@@ -17,6 +17,7 @@ package  {
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -74,6 +75,7 @@ package  {
 		private function vkPrepare():void {
 			Report.addMassage(JSON2.encode(UserStaticData.flash_vars));
 			Main.VK = new APIConnection(UserStaticData.flash_vars);
+			Main.VK.addEventListener(CustomEvent.CONN_INIT, vkInited);
 			var api_res:Object = JSON2.decode(UserStaticData.flash_vars.api_result);
 			UserStaticData.from = "v";
 			UserStaticData.fname = api_res.response[0].first_name;
@@ -81,20 +83,20 @@ package  {
 			UserStaticData.plink = api_res.response[0].photo_100;
 			UserStaticData.id = api_res.response[0].uid;
 			if(UserStaticData.flash_vars.user_id != "0") {
-				UserStaticData.friend_invited = "v" + UserStaticData.flash_vars.user_id;
+				UserStaticData.friend_invited = UserStaticData.flash_vars.user_id;
 			}
-			//Main.VK.api("wall.post", {owner_id:UserStaticData.id, friends_only:0, message:"Test massage", attachments:"photo218688849_321317918", signed:1}, onPost, onError);
-			//VKAdds.init();
 		}
 		
-		private function onPost():void 
-		{
-			Report.addMassage("done");
+		private function vkInited(e:CustomEvent):void {
+			Main.VK.removeEventListener(CustomEvent.CONN_INIT, vkInited);
 		}
 		
-		private function onError():void 
-		{
-			Report.addMassage("error");
+		private function onPost():void {
+			//Report.addMassage("done");
+		}
+		
+		private function onError():void {
+			//Report.addMassage("error");
 		}
 		
 		public static function onVkPayment(e:CustomEvent):void {
@@ -104,10 +106,12 @@ package  {
 		private function onLogin(e:DataExchangeEvent = null):void {
 			DataExchange.socket.removeEventListener(DataExchangeEvent.ON_LOGIN_COMPLETE, this.onLogin);
 			DataExchange.socket.addEventListener(DataExchangeEvent.DISCONECTED, this.CloseApp);
+			
 			this.app = new App(this.stage);
+			Report.addMassage("vv")
 			this.chat = new ChatBasic();
 			App.dialogManager.init();
-			if(Preloader.loader!=null) {
+			if (Preloader.loader != null) {
 				TweenLite.to(Preloader.loader, 0.4, { alpha:0.2 , onComplete:this.onHalfPreloader} );
 			}
 			
@@ -117,7 +121,6 @@ package  {
 			stage.addChildAt(this.chat, 1);
 			this.addChild(this.app);
 			this.addChild(this.mcOff);
-			///stage.addChild(new movieMonitor());
 			TweenLite.to(Preloader.loader, 0.1, { alpha:0 , onComplete:this.onPreloader } );
 		}
 		
@@ -137,6 +140,7 @@ package  {
 			if(WinBattle.battleChat.parent != null) {
 				WinBattle.battleChat.parent.removeChild(WinBattle.battleChat);
 			}
+			App.upPanel.parent.removeChild(App.upPanel);
 			App.lock.init("Connection was closed. Reload application please.")
 		}
 		

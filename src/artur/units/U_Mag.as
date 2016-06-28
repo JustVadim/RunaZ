@@ -2,7 +2,9 @@ package artur.units
 {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import com.greensock.TweenLite;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -31,7 +33,7 @@ package artur.units
 		private var isOver:Boolean = false;
 		private var parts:Array ;
 		private var parts_of_parts:Array;
-		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
+		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow()); //PrepareGr.creatBms(new mcShawdow(),true)[0];
 		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 },{id:'shok',frame:59},{id:'magHurt',frame:72},{id:'blade1',frame:68},{id:'magDie',frame:75}];
 		//public static var andAtackFrame:int = 72;
 		
@@ -40,21 +42,22 @@ package artur.units
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh)
-			heads = PrepareGr.creatBms(new ItemHeadMag(),false,U_Lyk.f);
-			bodys = PrepareGr.creatBms(new ItemBodyMag(),false,U_Lyk.f);
-			sikirs = PrepareGr.creatBms(new ItemGun1Mag(),false,U_Lyk.f);
-			appArmsR = PrepareGr.creatBms(new ItemUpArmMag(),false,U_Lyk.f);
-			hends1R  = PrepareGr.creatBms(new ItemHand1RMag(),false,U_Lyk.f);
-			hends2R  = PrepareGr.creatBms(new ItemHand2RMag(),false,U_Lyk.f);
-			hends1L  = PrepareGr.creatBms(new ItemHand1LMag(),false,U_Lyk.f);
-			hends2L  = PrepareGr.creatBms(new ItemHand2LMag(),false,U_Lyk.f);
-			legs1R =  PrepareGr.creatBms(new ItemLeg1RMag(),false,U_Lyk.f);
-			legs2R =  PrepareGr.creatBms(new ItemLeg2RMag(),false,U_Lyk.f);
-			legs3R =  PrepareGr.creatBms(new ItemLeg3RMag(),false,U_Lyk.f);
-			legs1L =  PrepareGr.creatBms(new ItemLeg1LMag(),false,U_Lyk.f);
-			legs2L =  PrepareGr.creatBms(new ItemLeg2LMag(),false,U_Lyk.f);
-			legs3L =  PrepareGr.creatBms(new ItemLeg3LMag(),false,U_Lyk.f);
-			sikirs2 =  PrepareGr.creatBms(new ItemPlaschMag(),false,U_Lyk.f);
+			var arr:Array = [U_Lyk.f];
+			heads 		= RasterClip.getAnimationBitmaps(new ItemHeadMag(), arr);// PrepareGr.creatBms(, false, U_Lyk.f);
+			bodys 		= RasterClip.getAnimationBitmaps(new ItemBodyMag(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			sikirs 		= RasterClip.getAnimationBitmaps(new ItemGun1Mag(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			appArmsR 	= RasterClip.getAnimationBitmaps(new ItemUpArmMag(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			hends1R  	= RasterClip.getAnimationBitmaps(new ItemHand1RMag(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			hends2R  	= RasterClip.getAnimationBitmaps(new ItemHand2RMag(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			hends1L  	= RasterClip.getAnimationBitmaps(new ItemHand1LMag(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			hends2L  	= RasterClip.getAnimationBitmaps(new ItemHand2LMag(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			legs1R 		= RasterClip.getAnimationBitmaps(new ItemLeg1RMag(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			legs2R 		= RasterClip.getAnimationBitmaps(new ItemLeg2RMag(), arr);//  PrepareGr.creatBms(,false,U_Lyk.f);
+			legs3R 		= RasterClip.getAnimationBitmaps(new ItemLeg3RMag(), arr);//  PrepareGr.creatBms(,false,U_Lyk.f);
+			legs1L 		= RasterClip.getAnimationBitmaps(new ItemLeg1LMag(), arr);//  PrepareGr.creatBms(,false,U_Lyk.f);
+			legs2L 		= RasterClip.getAnimationBitmaps(new ItemLeg2LMag(), arr);//  PrepareGr.creatBms(,false,U_Lyk.f);
+			legs3L 		= RasterClip.getAnimationBitmaps(new ItemLeg3LMag(), arr);//  PrepareGr.creatBms(,false,U_Lyk.f);
+			sikirs2 	= RasterClip.getAnimationBitmaps(new ItemPlaschMag(), arr);//  PrepareGr.creatBms(,false,U_Lyk.f);
 			parts = [this._head, this._body, this._sikira, this._appArmR, this._appArmL, this._hend1R, this._hend2R, this._hend2L,  this._leg1R, this._leg2R, this._leg3R, this._leg1L, this._leg2L, this._leg3L,_sikira2];
 			parts_of_parts = [heads, bodys, sikirs, appArmsR, hends1L, hends1R, hends2R,  hends2L, legs1R, legs2R, legs3R, legs1L, legs2L, legs3L, sikirs2];
 			

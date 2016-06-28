@@ -24,6 +24,7 @@ package datacalsses
 		public var rat:int;
 		public var nle:int;
 		public var ach:Object;
+		public var sg:Object;
 		
 		public function setHero(obj:Object):void {
 			this.silver = obj.s;
@@ -38,7 +39,6 @@ package datacalsses
 			this.bat = obj.bat;
 			this.rat = obj.rat;
 			this.nle = obj.nle;
-			//// - crab;
 			this.level = obj.lvl;
 			this.exp = obj.exp;
 			this.miss = obj.miss;
@@ -49,8 +49,6 @@ package datacalsses
 			this.t = obj.t;
 			this.sett = obj.fbs;
 			this.ach = obj.ach;
-			
-			/// - crab;
 		}
 		
 		public function addAndCheckExp(exp_:int):void {
@@ -61,6 +59,12 @@ package datacalsses
 				this.fs++;
 				this.nle = UserStaticData.levels[this.level];
 				Main.THIS.chat.addFortunaBtn();
+					//App.dialogManager.checkPerson();
+				App.dialogManager.show_new_person_level = true;
+				if(this.level == 3 || this.level == 5 || this.level == 7) {
+					App.dialogManager.show_arena_one = true;
+					App.dialogManager.show_arena_two = false;
+				}
 			}
 		}
 		
@@ -79,11 +83,11 @@ package datacalsses
 				var unit:Object = this.units[ul[key]];
 				unit.exp += exp;
 				if (unit.exp >= unit.nle) {
-					App.dialogManager.checkUnits();
 					unit.lvl++;
 					unit.fs += 2;
 					unit.exp = 0;
 					unit.nle = UserStaticData.levels[unit.lvl];
+					App.dialogManager.checkUnits();
 				}
 			}
 		}
@@ -92,6 +96,20 @@ package datacalsses
 			for(var key:Object in temp_obj) {
 				this.ach[key].q = temp_obj[key];
 			}
+		}
+		
+		public static function isMiss(id:Number):Boolean {
+			if(id>-1 && id<20000) {
+				return true;
+			}
+			return false;
+		}
+		
+		public static function isCave(id:Number):Boolean {
+			if(id>=20000 && id< 40000) {
+				return true;
+			}
+			return false;
 		}
 	}
 }

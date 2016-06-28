@@ -2,10 +2,13 @@ package artur.units
 {
 	import artur.App;
 	import artur.PrepareGr;
+	import artur.RasterClip;
 	import com.greensock.TweenLite;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import report.Report;
 	
 	public class Bot2 extends PallDoll
 	{
@@ -30,50 +33,33 @@ package artur.units
 		public var type:String = 'Bot2';
 		public var free:Boolean = true;
 		private var isOver:Boolean = false;
-		private var sh:Sprite = PrepareGr.creatBms(new mcShawdow(),true)[0];
+		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());//PrepareGr.creatBms(new mcShawdow(),true)[0];
 		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 }, { id:'pall_hurt', frame:75 },{id:'blade1',frame:78},{id:'pall_death',frame:81}];
 		
 		 
-		public function Bot2() 
-		{
+		public function Bot2() {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh)
-			heads = PrepareGr.creatBms(new ItemHeadBot2(),false,U_Lyk.f);
-			bodys = PrepareGr.creatBms(new ItemBodyBot2(),false,U_Lyk.f);
-			sikirs = PrepareGr.creatBms(new ItemGun1Bot2(),false,U_Lyk.f);
-			appArmsR = PrepareGr.creatBms(new ItemUpArmBot2(),false,U_Lyk.f);
-			hends1R  = PrepareGr.creatBms(new ItemHand1RBot2(),false,U_Lyk.f);
-			hends2R  = PrepareGr.creatBms(new ItemHand2RBot2(),false,U_Lyk.f);
-			hends1L  = PrepareGr.creatBms(new ItemHand1LBot2(),false,U_Lyk.f);
-			hends2L  = PrepareGr.creatBms(new ItemHand2LBot2(),false,U_Lyk.f);
-			legs1R =  PrepareGr.creatBms(new ItemLeg1RBot2(),false,U_Lyk.f);
-			legs2R =  PrepareGr.creatBms(new ItemLeg2RBot2(),false,U_Lyk.f);
-			legs3R =  PrepareGr.creatBms(new ItemLeg3RBot2(),false,U_Lyk.f);
-			legs1L =  PrepareGr.creatBms(new ItemLeg1LBot2(),false,U_Lyk.f);
-			legs2L =  PrepareGr.creatBms(new ItemLeg2LBot2(),false,U_Lyk.f);
-			legs3L =  PrepareGr.creatBms(new ItemLeg3LBot2(),false,U_Lyk.f);
-			sikirs2 =  PrepareGr.creatBms(new ItemShildBot2(),false,U_Lyk.f);
+			var arr:Array = [U_Lyk.f];
+			heads 		= RasterClip.getAnimationBitmaps(new ItemHeadBot2(), arr);// PrepareGr.creatBms(, false, U_Lyk.f);
+			bodys 		= RasterClip.getAnimationBitmaps(new ItemBodyBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			sikirs 		= RasterClip.getAnimationBitmaps(new ItemGun1Bot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			appArmsR 	= RasterClip.getAnimationBitmaps(new ItemUpArmBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			hends1R  	= RasterClip.getAnimationBitmaps(new ItemHand1RBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			hends2R  	= RasterClip.getAnimationBitmaps(new ItemHand2RBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			hends1L  	= RasterClip.getAnimationBitmaps(new ItemHand1LBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			hends2L  	= RasterClip.getAnimationBitmaps(new ItemHand2LBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			legs1R 		= RasterClip.getAnimationBitmaps(new ItemLeg1RBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			legs2R 		= RasterClip.getAnimationBitmaps(new ItemLeg2RBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			legs3R 		= RasterClip.getAnimationBitmaps(new ItemLeg3RBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			legs1L 		= RasterClip.getAnimationBitmaps(new ItemLeg1LBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			legs2L 		= RasterClip.getAnimationBitmaps(new ItemLeg2LBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			legs3L 		= RasterClip.getAnimationBitmaps(new ItemLeg3LBot2(), arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			sikirs2 	= RasterClip.getAnimationBitmaps(new ItemShildBot2, arr);// PrepareGr.creatBms(,false,U_Lyk.f);
+			
 			parts = [this._head, this._body, this._sikira, this._appArmR, this._appArmL, this._hend1R, this._hend2R, this._hend2L,  this._leg1R, this._leg2R, this._leg3R, this._leg1L, this._leg2L, this._leg3L,_sikira2];
-			parts_of_parts = [heads, bodys, sikirs, appArmsR, hends1L, hends1R, hends2R,  hends2L, legs1R, legs2R, legs3R, legs1L, legs2L, legs3L,sikirs2];
-			//parts = [heads,bodys,sikirs,appArmsR,hends1R,hends2R,hends3R,appArmsL,hends1L,hends2L,hends3L];
-			this._head.addChild(heads[0]);
-			this._body.addChild(bodys[0]);
-		    this._sikira.addChild(sikirs[0]);
-			this._appArmR.addChild(appArmsR[0]);
-			this._appArmL.addChild(hends1L[0]);
-			
-			this._hend1R.addChild(hends1R[0]);
-			this._hend2R.addChild(hends2R[0]);
-			this._hend2L.addChild(hends2L[0]);
-			
-			this._leg1R.addChild(legs1R[0]);
-			this._leg2R.addChild(legs2R[0]);
-			this._leg3R.addChild(legs3R[0]);
-			this._leg1L.addChild(legs1L[0]);
-			this._leg2L.addChild(legs2L[0]);
-			this._leg3L.addChild(legs3L[0]);
-			this._sikira2.addChild(sikirs2[0]);
+			parts_of_parts = [heads, bodys, sikirs, appArmsR, hends1L, hends1R, hends2R,  hends2L, legs1R, legs2R, legs3R, legs1L, legs2L, legs3L, sikirs2];
 			itemUpdate ( [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] );
 		}
 		 public function onWalk():void
@@ -95,13 +81,13 @@ package artur.units
 		
 		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
 		{
+			Report.addMassage("bot2 vllv: " + lvl);
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
-			if (parr) 
-			{
+			if (parr) {
 				parr.addChild(this);
 			}
 			
@@ -137,7 +123,9 @@ package artur.units
 			
 			for (var i:int = 0; i < parts.length; i++) 
 			{
-				Sprite(parts[i]).removeChildAt(1);
+				if (Sprite(parts[i]).numChildren < 0){
+					Sprite(parts[i]).removeChildAt(1);
+				}
 				switch(true)
 			    {
 				    case (i == 0):
@@ -159,8 +147,8 @@ package artur.units
 						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[2])]);
 					    break;
 					case(i == 14):
-					     Sprite(parts[14]).addChild(this.parts_of_parts[i][int(obj[6])]);
-						 break;
+						Sprite(parts[14]).addChild(this.parts_of_parts[i][int(obj[6])]);
+						break;
 			   }
 			}
 		}
