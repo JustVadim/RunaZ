@@ -113,9 +113,9 @@ package artur
 			/*83  */ new btnSkill4(),
 			/*84  */ new btnOkUpdSkill(),
 			/*85  */ new btnClear(),
-			/*86  */ new btnVip()
-			
-			
+			/*86  */ new btnVip(),
+			/*87  */ new mcExitWinVip(),
+			/*88  */ new mcBtnByeVip()
 		];
 			
 			
