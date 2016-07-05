@@ -14,6 +14,7 @@ package artur
 	import artur.display.LockSpr;
 	import artur.display.PropExtended;
 	import artur.display.SprTop;
+	import artur.display.SprVip;
 	import artur.display.Task;
 	import artur.display.TopMenu;
 	import artur.display.Tutor;
@@ -86,7 +87,8 @@ package artur
 		public static var achievm:HeroAchievments;
 		public static var dialogManager:DialogManager;
 		public static var sprTop:SprTop
-		public static var levelUpDialog:LevelUpDialog 
+		public static var levelUpDialog:LevelUpDialog;
+		public static var vipDialog:SprVip 
 		
 		public function App(stg:Stage) 
 		{
@@ -115,6 +117,7 @@ package artur
 			App.spr = Sprite(this);
 			App.closedDialog = new CloseDialog();
 			App.winManajer = new WinManajer();
+			vipDialog = new SprVip();
 			Main.THIS.stage.addChild(App.upPanel = new UpPanel());
 			cursor.addCursor(mcCursorArrow, 'arr');
 			cursor.addCursor(mcCursorHand, 'hand');		
