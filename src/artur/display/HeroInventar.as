@@ -517,7 +517,7 @@ package artur.display
 			DataExchange(e.currentTarget).removeEventListener(e.type, onPutItemToChest);
 			var obj:Object = JSON2.decode(e.result);
 			if (obj.error == null) {
-				App.sound.playSound(ItemCall.sounds[itemType][itemID - 2], App.sound.onVoice, 1);
+				App.sound.playSound('gloves1', App.sound.onVoice, 1);
 				var unit:Object = UserStaticData.hero.units[WinCastle.currSlotClick];
 				if (this.invPlace == -1) {
 					delete(unit.it[this.itemType]);

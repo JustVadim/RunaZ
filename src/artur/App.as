@@ -159,6 +159,7 @@ package artur
 			App.sound.addSound('overItem', new over_item());
 			App.sound.addSound('gold', new S_Gold());
 			App.sound.addSound('gloves1', new S_Gloves1());
+			App.sound.playSound('gloves1', App.sound.onVoice, 1);
 			App.sound.addSound('inventar', new s_inventar());
 			App.sound.addSound('bot1_attack', new bot1_attack());
 			App.sound.addSound('bot1_hurt', new bot1_hurt());
