@@ -35,8 +35,9 @@ package artur.units
 		private var isOver:Boolean = false;
 		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());//PrepareGr.creatBms(new mcShawdow(),true)[0];
 		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 }, { id:'pall_hurt', frame:75 },{id:'blade1',frame:78},{id:'pall_death',frame:81}];
+		private var lvl:int;
 		
-		 
+		
 		public function Bot2() {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
@@ -60,7 +61,8 @@ package artur.units
 			
 			parts = [this._head, this._body, this._sikira, this._appArmR, this._appArmL, this._hend1R, this._hend2R, this._hend2L,  this._leg1R, this._leg2R, this._leg3R, this._leg1L, this._leg2L, this._leg3L,_sikira2];
 			parts_of_parts = [heads, bodys, sikirs, appArmsR, hends1L, hends1R, hends2R,  hends2L, legs1R, legs2R, legs3R, legs1L, legs2L, legs3L, sikirs2];
-			itemUpdate ( [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] );
+			this.lvl = 1;
+			this.itemUpdate(this.lvl);
 		}
 		 public function onWalk():void
 		 {
@@ -79,8 +81,7 @@ package artur.units
 			this.filters = [App.btnOverFilter];
 		}
 		
-		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
-		{
+		public function init(parr:DisplayObjectContainer=null, lvl:int=0):void {
 			Report.addMassage("bot2 vllv: " + lvl);
 			scaleX = normScale;
 			scaleY = normScale;
@@ -90,37 +91,33 @@ package artur.units
 			if (parr) {
 				parr.addChild(this);
 			}
-			
+			this.lvl = lvl;
+			this.itemUpdate(lvl);
 		}
-		public function update():void
-		{
-			if (!isOver && this.scaleX == 1.3)
-			{
+		public function update():void {
+			if (!isOver && this.scaleX == 1.3) {
 				TweenLite.to(this, 0.25, { scaleX:1, scaleY:1 } );
 				this.filters = [];
 			}
-			for (var i:int = 0; i < sounds.length; i++) 
-			{
-				if (sounds[i].frame == currentFrame) 
-				{
+			for (var i:int = 0; i < sounds.length; i++)  {
+				if (sounds[i].frame == currentFrame) {
 					App.sound.playSound(sounds[i].id, App.sound.onVoice, 1);
 				}
 			}
 		}
-		public function frees():void
-		{
+		
+		public function frees():void {
 			free = true;
 			gotoAndStop(1);
-			if (parent) 
-			{
+			if (parent) {
 				parent.removeChild(this);
 			}
-			
 		}
 		
 		public function itemUpdate(obj:Object):void
 		{
 			
+			Report.addMassage(this.lvl)
 			for (var i:int = 0; i < parts.length; i++) 
 			{
 				if (Sprite(parts[i]).numChildren < 0){
@@ -129,25 +126,25 @@ package artur.units
 				switch(true)
 			    {
 				    case (i == 0):
-					   Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[0])]);
+					   Sprite(parts[i]).addChild(this.parts_of_parts[i][this.lvl-1]);
 					   break;
 					case(i == 1):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[1])]);
+						Sprite(parts[i]).addChild(this.parts_of_parts[i][this.lvl-1]);
 					    break;
 					case(i == 2):
-					    Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[5])]);
+					    Sprite(parts[i]).addChild(this.parts_of_parts[i][this.lvl-1]);
 					    break;
 					case(i == 3 || i == 4):
-						 Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[3])]);
+						 Sprite(parts[i]).addChild(this.parts_of_parts[i][this.lvl-1]);
 					    break;
 					case(i > 4 && i < 8):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[4])]);
+						Sprite(parts[i]).addChild(this.parts_of_parts[i][this.lvl-1]);
 					    break;
 					case(i > 7 && i < 14):
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[2])]);
+						Sprite(parts[i]).addChild(this.parts_of_parts[i][this.lvl-1]);
 					    break;
 					case(i == 14):
-						Sprite(parts[14]).addChild(this.parts_of_parts[i][int(obj[6])]);
+						Sprite(parts[14]).addChild(this.parts_of_parts[i][this.lvl-1]);
 						break;
 			   }
 			}
