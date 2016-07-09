@@ -20,13 +20,13 @@ package artur.display
 		
 		public static var sounds:Array =
 		[
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
-			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
+		['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1','gloves1','gloves1','gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1','gloves1','gloves1','gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1','gloves1','gloves1','gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1','gloves1','gloves1','gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1','gloves1','gloves1','gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1','gloves1','gloves1','gloves1'],
+			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1','gloves1','gloves1','gloves1'],
 			['gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1', 'gloves1'],
 		]
 		
