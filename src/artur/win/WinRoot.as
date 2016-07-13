@@ -138,9 +138,6 @@ package artur.win
 			}
 			//App.vipDialog.init();
 			//App.levelUpDialog.init();
-			var head2:ItemHeadBot2 = new ItemHeadBot2();
-			head2.gotoAndStop(4);
-			App.spr.addChild(head2);
 		}
 		
 		public function updateBar():void {
