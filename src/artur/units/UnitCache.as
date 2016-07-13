@@ -19,10 +19,11 @@ package artur.units
 			{ className:Bot1, type:'Bot1' },
 			{ className:Bot2, type:'Bot2' }, 
 			{ className:BotGolem, type:'BotGolem' },
-			{ className:U_LykBot, type:'LykBot' } ,
+			{ className:BotMag, type:'LykBot' } ,
 			{ className:BotGhost, type:'BotGhost' },
 			{ className:BotGhost2, type:'BotGhost2' },
 			{ className:BotTroll, type:'BotTroll' }
+			//{ className:BotMag, type:'MagBot' }
 		];
 		public static var unitCache:Array = [];
 		

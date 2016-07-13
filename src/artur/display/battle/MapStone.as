@@ -18,6 +18,8 @@ package artur.display.battle {
 		public function MapStone(id:int) {
 			this.id = id;
 			this.getImage(this.id);
+			this.mouseEnabled = false;
+			this.mouseChildren = false;
 		}
 		
 		public static function getStone(id:int):MapStone {

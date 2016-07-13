@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'11.07.2016'</value>
+      <value>'13.07.2016'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -39,9 +39,9 @@
     <library-path append="true">
       <path-element>D:\Working\AS3Projects\RunaZ\lib\dolls.swc</path-element>
       <path-element>D:\Working\AS3Projects\RunaZ\lib\Zadniki.swc</path-element>
-      <path-element>D:\Working\AS3Projects\RunaZ\lib\character.swc</path-element>
       <path-element>D:\Working\AS3Projects\RunaZ\lib\loader.swc</path-element>
       <path-element>D:\Working\AS3Projects\RunaZ\lib\tile1.swc</path-element>
+      <path-element>D:\Working\AS3Projects\RunaZ\lib\character.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>

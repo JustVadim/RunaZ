@@ -36,7 +36,7 @@ package artur.units
 		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());//PrepareGr.creatBms(new mcShawdow(),true)[0];
 		private static var sounds:Array = [ {id:'fow1', frame:55},{ id:'bot1_fs1', frame:40 }, { id:'bot1_fs2', frame:50 }, { id:'pall_hurt', frame:75 },{id:'blade1',frame:78},{id:'pall_death',frame:81}];
 		private var lvl:int;
-		
+		private static var normalScales:Array = [1, 1.5, 1, 1, 1, 1, 1, 1];
 		
 		public function Bot2() {
 			this.mouseEnabled = false;
@@ -82,7 +82,10 @@ package artur.units
 		}
 		
 		public function init(parr:DisplayObjectContainer=null, lvl:int=0):void {
-			Report.addMassage("bot2 vllv: " + lvl);
+			//Report.addMassage("bot2 vllv: " + lvl);
+			this.lvl = lvl;
+			this.itemUpdate(lvl);
+			//normalScales = normalScales[lvl]
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
@@ -91,8 +94,7 @@ package artur.units
 			if (parr) {
 				parr.addChild(this);
 			}
-			this.lvl = lvl;
-			this.itemUpdate(lvl);
+			
 		}
 		public function update():void {
 			if (!isOver && this.scaleX == 1.3) {
