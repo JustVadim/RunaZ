@@ -22,6 +22,7 @@ package artur.units {
 		private var sh:Bitmap = RasterClip.getMovedBitmap(new mcShawdow());//PrepareGr.creatBms(new mcShawdow(), true)[0];
 		private static var sounds:Array = [{id:'gAtack',frame:55},{id:'gHurt',frame:65},{id:'blade2',frame:60},{id:'gDie',frame:70},{id:'blade1',frame:68}];
 		public var _head:Sprite 
+		public var lvl:int = 0
 		
 		public function BotGhost() 
 		{
@@ -39,7 +40,7 @@ package artur.units {
 			this.body.addChild(bodys[0]);
 			this.h1.addChild(hendsL[0]);
 		    this.h2.addChild(hendsR[0]);
-		//	 itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+			 itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 			 this.scaleX = 1.5;
 			 this.scaleY = 1.5;
 			 _head = this.body;
@@ -59,7 +60,8 @@ package artur.units {
 			App.btnOverFilter.color = 0xFFFFFF;
 			this.filters = [App.btnOverFilter];
 		}
-		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
+		
+		public function init(parr:DisplayObjectContainer=null, lvl:int=0):void
 		{
 			scaleX = normScale;
 			scaleY = normScale;
@@ -70,6 +72,8 @@ package artur.units {
 			{
 				parr.addChild(this);
 			}
+			this.lvl = lvl;
+			itemUpdate([lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl]);
 		}
 		public function update():void
 		{
@@ -86,6 +90,7 @@ package artur.units {
 				}
 			}
 		}
+		
 		public function frees():void
 		{
 			free = true;
@@ -98,23 +103,15 @@ package artur.units {
 			 this.removeEventListener(MouseEvent.MOUSE_OVER, over);
 		     this.removeEventListener(MouseEvent.MOUSE_OUT, out);
 		}
+		
 		public function itemUpdate(obj:Object):void
 		{
 			for (var i:int = 0; i < parts.length; i++) 
 			{
 			   Sprite(parts[i]).removeChildAt(1);
-			   switch(true)
-			   {
-				   case i == 0:
-					   Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[0])]);
-					   break;
-					case i == 1:
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[1])]);
-						break;
-					case i == 2:
-						Sprite(parts[i]).addChild(this.parts_of_parts[i][int(obj[5])]);
-						break;
-			   }
+			   Sprite(parts[i]).addChild(this.parts_of_parts[i][lvl]);
+					
+			   
 			}
 			
 		}
