@@ -10,6 +10,7 @@ package artur.display.battle
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.ui.Mouse;
+	import report.Report;
 	
 	
 	public class BattleGrid 
@@ -71,16 +72,20 @@ package artur.display.battle
 					var node:Node = nodes[loc.x][loc.y];
 					unit.x = node.x;
 					unit.y = node.y + 10;
-					unit.init(WinBattle.spr,units[loc.pos].lvl);
+				//	Report.addMassage("bot inited 1   " + units[loc.pos].t + "  " + units[loc.pos].lvl)
+					unit.init(WinBattle.spr, units[loc.pos].lvl);
+					
 					WinBattle.sortArr.push(unit);
 					if(scalse)
 						unit.scaleX = unit.normScale;
 					else
 						unit.scaleX = -unit.normScale;
+					//Report.addMassage("bot inited 2");
 					unit.itemUpdate(Slot.getUnitItemsArray(units[loc.pos]));
 					sc_array[loc.pos] = unit
 					var life_data:Object = {unit:unit,maxLife:units[loc.pos].hp, currLife:hp[loc.pos], maxMana:units[loc.pos].mp,currMana:mp[loc.pos]}
 					life_array[loc.pos] = life_data;
+					//Report.addMassage("bot inited 3")
 				}
 				else
 				{

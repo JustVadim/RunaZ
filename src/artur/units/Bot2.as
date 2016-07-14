@@ -116,10 +116,7 @@ package artur.units
 			}
 		}
 		
-		public function itemUpdate(obj:Object):void
-		{
-			
-			Report.addMassage(this.lvl)
+		public function itemUpdate(obj:Object):void {
 			for (var i:int = 0; i < parts.length; i++) 
 			{
 				if (Sprite(parts[i]).numChildren < 0){
