@@ -385,7 +385,7 @@ package artur.win
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
 					BaseEff(EffManajer.getEff("base")).init(WinBattle.spr, node.x, node.y, 1);
 					break;
-				case obj.t == 2 || (obj.t == 104 && (bat.u[obj.wh.t][obj.wh.p].lvl == 1)):
+				case obj.t == 2 || (obj.t == 104):
 					App.sound.playSound("eff_arrow", App.sound.onVoice, 1);
 					ef_coord = bat.locs[obj.whm.t][obj.whm.p];
 					node = WinBattle.inst.grid.nodes[ef_coord.x][ef_coord.y];
@@ -415,7 +415,7 @@ package artur.win
 			LifeManajer.un_Data[obj.whm.t][obj.whm.p].currLife = obj.hpl;
 			var hurt_unit:MovieClip = WinBattle.units[obj.whm.t][obj.whm.p];
 			var tim1:Timer;;
-			if (obj.t == 2 || obj.t == 0 || (obj.t == 104&&(bat.u[obj.wh.t][obj.wh.p].lvl == 1)) ) {
+			if (obj.t == 2 || obj.t == 0 || (obj.t == 104) ) {
 				tim1 = new Timer(470, 1);
 			} else if (obj.t == 3) {
 				tim1 = new Timer(350, 1);
@@ -436,7 +436,7 @@ package artur.win
 					bigLifeBar.txtMp.text = WinBattle.bat.mps[obj.wh.t][obj.wh.p] + "/" + WinBattle.bat.u[obj.wh.t][obj.wh.p].mp;
 					bigLifeBar.mcMana.gotoAndStop(1 + int(WinBattle.bat.mps[obj.wh.t][obj.wh.p] * 100 / WinBattle.bat.u[obj.wh.t][obj.wh.p].mp));
 					
-					if (obj.t == 2 || obj.t == 3 || obj.t == 104&&(bat.u[obj.wh.t][obj.wh.p].lvl == 1)) {
+					if (obj.t == 2 || obj.t == 3 || obj.t == 104) {
 						if(obj.hpl != 0) {
 							hurt_unit.gotoAndPlay("hurt");
 							TextEff(EffManajer.getEff('text')).init(hurt_unit.x, hurt_unit.y - 60, String(diff.toString()), 0xF75757);
