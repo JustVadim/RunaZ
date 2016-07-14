@@ -7,6 +7,7 @@ package artur.units {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import report.Report;
 	
 	public class BotGhost extends GhostDoll {
 		public  var normScale:Number = 1;
@@ -24,61 +25,49 @@ package artur.units {
 		public var _head:Sprite 
 		public var lvl:int = 0
 		
-		public function BotGhost() 
-		{
+		public function BotGhost() {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
 			this.shawdow.addChild(sh);
-			
 			bodys = RasterClip.getAnimationBitmaps(new Item_BodysGhost());// PrepareGr.creatBms(new Item_BodysGhost());
 			hendsR = RasterClip.getAnimationBitmaps(new Item_HandsGhost());//PrepareGr.creatBms(new Item_HandsGhost());
 			hendsL = RasterClip.getAnimationBitmaps(new Item_HandsGhost());//PrepareGr.creatBms(new Item_HandsGhost());
-			
 			parts = [this.body, this.h1, this.h2];
 			parts_of_parts = [bodys, hendsL , hendsR ];
-			
-			this.body.addChild(bodys[0]);
-			this.h1.addChild(hendsL[0]);
-		    this.h2.addChild(hendsR[0]);
-			 itemUpdate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-			 this.scaleX = 1.5;
-			 this.scaleY = 1.5;
-			 _head = this.body;
+			this.scaleX = 1.5;
+			this.scaleY = 1.5;
+			_head = this.body;
 		}
-		public function onWalk():void
-		 {
-			 //App.sound.playSound('bot1_init', App.sound.onVoice, 1);
-		 }
-		public function out(e:MouseEvent=null):void 
-		 {
+		public function onWalk():void {
+			//App.sound.playSound('bot1_init', App.sound.onVoice, 1);
+		}
+		 
+		public function out(e:MouseEvent=null):void {
 			isOver = false;
-		 }
-		public function over(e:MouseEvent=null):void 
-		{
+		}
+		 
+		public function over(e:MouseEvent=null):void {
 			isOver = true;
 			TweenLite.to(this, 0.25, { scaleX:1.3, scaleY:1.3} );
 			App.btnOverFilter.color = 0xFFFFFF;
 			this.filters = [App.btnOverFilter];
 		}
 		
-		public function init(parr:DisplayObjectContainer=null, lvl:int=0):void
-		{
+		public function init(parr:DisplayObjectContainer = null, lvl:int = 1):void {
+			this.lvl = lvl;
+			itemUpdate(null);
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
-			if (parr) 
-			{
+			if (parr) {
 				parr.addChild(this);
 			}
-			this.lvl = lvl;
-			itemUpdate([lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl, lvl]);
 		}
-		public function update():void
-		{
-			if (!isOver && this.scaleX == 1.3)
-			{
+		
+		public function update():void {
+			if (!isOver && this.scaleX == 1.3) {
 				TweenLite.to(this, 0.25, { scaleX:1, scaleY:1 } );
 				this.filters = [];
 			}
@@ -91,29 +80,23 @@ package artur.units {
 			}
 		}
 		
-		public function frees():void
-		{
+		public function frees():void {
 			free = true;
 			gotoAndStop(1);
-			if (this.parent) 
-			{
+			if (this.parent) {
 				parent.removeChild(this);
 			}
-			
-			 this.removeEventListener(MouseEvent.MOUSE_OVER, over);
-		     this.removeEventListener(MouseEvent.MOUSE_OUT, out);
+			this.removeEventListener(MouseEvent.MOUSE_OVER, over);
+			this.removeEventListener(MouseEvent.MOUSE_OUT, out);
 		}
 		
-		public function itemUpdate(obj:Object):void
-		{
-			for (var i:int = 0; i < parts.length; i++) 
-			{
-			   Sprite(parts[i]).removeChildAt(1);
-			   Sprite(parts[i]).addChild(this.parts_of_parts[i][lvl]);
-					
-			   
-			}
-			
+		public function itemUpdate(obj:Object=null):void {
+			for (var i:int = 0; i < parts.length; i++) {
+				if (Sprite(parts[i]).numChildren < 0) {
+					Sprite(parts[i]).removeChildAt(1);
+				}
+				Sprite(parts[i]).addChild(this.parts_of_parts[i][this.lvl-1]);
+			}	
 		}
 	
 		

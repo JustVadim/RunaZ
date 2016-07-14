@@ -29,6 +29,7 @@ package artur.units
 		private var lvl:int = 0;
 		private static var normalScales:Array = [0.8, 1, 1, 1, 1, 1, 1, 1]; 
 		
+		
 		public function BotTroll() {
 			this.mouseEnabled = false;
 			this.mouseChildren = false;
@@ -46,17 +47,12 @@ package artur.units
 			
 			parts =                [this._head, this._body, this._hand1R, this._hand2R,  this._hand1L , this._hand2L, this._legR , this._legL];
 			parts_of_parts =  [heads       , bodys      , hends1R       , hends2R       ,  hends1L       ,  hends2L       ,  legsR      , legsL];
-			this._head.addChild(heads[0]);
-			this._body.addChild(bodys[0]);
-		   
-		    this._hand1R.addChild(hends1R[0]);
-			this._hand2R.addChild(hends2R[0]);
 			
-			this._hand1L.addChild( hends1L[0]);
-			this._hand2L.addChild( hends2L[0]);
 			
-			this._legR.addChild(legsR[0]);
-			this._legL.addChild(legsL[0]);
+			
+			
+			
+			
 			for (var i:int = 0; i < this.parts_of_parts.length; i++) 
 			{
 				parts_of_parts[i].x += 20;
@@ -80,21 +76,19 @@ package artur.units
 			this.filters = [App.btnOverFilter];
 		}
 		
-		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
-		{
+		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void {
 			this.lvl = lvl;
-			normScale = normalScales[lvl-1]
+			normScale = normalScales[lvl - 1];
 			scaleX = normScale;
 			scaleY = normScale;
 			filters = [];
 			free = false;
 			this.gotoAndPlay('idle');
-			if (parr) 
-			{
+			if (parr) {
 				parr.addChild(this);
 			}
-			
 		}
+		
 		public function update():void
 		{
 			if (!isOver && this.scaleX == 1.3)
@@ -121,9 +115,18 @@ package artur.units
 			this.removeEventListener(MouseEvent.MOUSE_OVER, over);
 			this.removeEventListener(MouseEvent.MOUSE_OUT, out);
 		}
-		public function itemUpdate(obj:Object):void
-		{
+		public function itemUpdate(obj:Object):void {
+		   this._head.addChild(heads[lvl - 1]);
+			this._body.addChild(bodys[lvl-1]);
 		   
+		    this._hand1R.addChild(hends1R[lvl-1]);
+			this._hand2R.addChild(hends2R[lvl-1]);
+			
+			this._hand1L.addChild( hends1L[lvl-1]);
+			this._hand2L.addChild( hends2L[lvl-1]);
+			
+			this._legR.addChild(legsR[lvl-1]);
+			this._legL.addChild(legsL[lvl-1]);
 		}
 		
 		

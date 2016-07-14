@@ -129,10 +129,12 @@ package artur.units
 			this.filters = [App.btnOverFilter];
 		}
 	
-		public function init(parr:DisplayObjectContainer=null,lvl:int=0):void
+		public function init(parr:DisplayObjectContainer=null, lvl:int=0):void
 		{
-			//itemUpdate(lvl );
+			
 			this.lvl = lvl;
+			Report.addMassage(lvl);
+			itemUpdate(lvl);
 			//Report.addMassage(lvl+' lvl BOSS')
 			normScale = normalScales[lvl - 1];
 			scaleX = normScale;
@@ -172,7 +174,7 @@ package artur.units
 			this.removeEventListener(MouseEvent.MOUSE_OUT, out);
 		}
 		
-		public function itemUpdate(ix:int=0):void {
+		public function itemUpdate(obj:Object = null):void {
 			for (var i:int = 0; i < parts.length; i++) {
 			   Sprite(parts[i]).removeChildAt(1);
 			   Sprite(parts[i]).addChild(this.parts_of_parts[i][lvl-1]);

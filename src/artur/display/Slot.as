@@ -28,6 +28,7 @@ package artur.display {
 		namesUnit[104] = 'BotGhost';
 		namesUnit[105] = 'BotGhost2';
 		namesUnit[106] = 'BotTroll';
+		namesUnit[107] = 'BotMag';
 		
 		public function Slot(i:int) {
 			this.tabEnabled = false;

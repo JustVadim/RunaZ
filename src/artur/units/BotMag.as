@@ -28,7 +28,7 @@ package artur.units
 		private var legs2L       	:Array;
 		private var legs3L       	:Array;
 		private var sikirs2       	:Array;
-		public var type:String = 'LykBot';
+		public var type:String = 'BotMag';
 		public var free:Boolean = true;
 		private var isOver:Boolean = false;
 		private var parts:Array ;

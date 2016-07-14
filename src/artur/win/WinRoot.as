@@ -136,13 +136,7 @@ package artur.win
 			if(UserStaticData.hero.demo == 0 || UserStaticData.hero.demo == 1) {
 				App.tutor.init(1);
 			}
-			//App.vipDialog.init();
-			//App.levelUpDialog.init();
-			//var head2:Item_BodysGhost = new Item_BodysGhost();
-			//head2.gotoAndStop(2);
-			//head2.x = 100;
-			//head2.y = 100;
-			//App.spr.addChild(head2);
+			
 		}
 		
 		public function updateBar():void {

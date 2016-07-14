@@ -124,7 +124,7 @@ package artur.display.battle {
 							this.arrow_anim = int(unit_dist / MoveUnit.arrow_speed);
 							this.speedX = arrow_speed *  Math.cos(Amath.toRadians(arrow.rotation));
 							this.speedY = arrow_speed * Math.sin(Amath.toRadians(arrow.rotation));
-						} else if(this.type == 3) {
+						} else if(this.type == 3 || this.type == 107) {
 							this.arrow_anim = 2;
 						}
 					} else {
@@ -146,7 +146,7 @@ package artur.display.battle {
 				{
 					arrow.x += speedX;
 					arrow.y += speedY;
-				} else if (type == 3) {
+				} else if (type == 3 || this.type == 107) {
 					EffManajer.lgs.update();
 				}
 				arrow_anim--;
@@ -155,7 +155,7 @@ package artur.display.battle {
 				this.unit.dispatchEvent(new Event("ATTACK"));
 				if(type == 2 || type == 103) {
 					WinBattle.spr.removeChild(this.arrow);
-				} else if (type == 3) {
+				} else if (type == 3 || type == 107) {
 					if(EffManajer.lgs.parent) {
 						EffManajer.lgs.parent.removeChild(EffManajer.lgs);
 					}
@@ -173,7 +173,7 @@ package artur.display.battle {
 		
 		private function magEffect():void 
 		{
-			if (this.type == 3)
+			if (this.type == 3 || this.type == 107)
 				{
 					if (this.unit.currentFrame == 59)
 					{
@@ -204,7 +204,7 @@ package artur.display.battle {
 					WinBattle.spr.swapChildren(hurt_unit, this.unit);
 				}
 			} else {
-				if (this.type != 3) {
+				if (this.type != 3 && this.type != 107) {
 					this.unit.rotation = (hurt_unit.y > this.unit.y) ? 25: -25;
 					this.unit.rotation *= this.unit.scaleX;
 				}
