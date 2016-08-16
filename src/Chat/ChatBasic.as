@@ -92,20 +92,44 @@ package Chat
 			this.massages_scrollbar.tabEnabled = false;
 			this.massages_sprite.mouseChildren = true;
 			this.setFocus();
-			this.addChild(btnDell);
-			this.addChild(btn_Vip);
+			//this.addChild(btnDell);
+			if (UserStaticData.hero.level > 4 && UserStaticData.hero.vip.type == 0) {
+				this.addChild(this.btn_Vip);
+			}
+			if(UserStaticData.hero.level > 4) {
+				this.addChild(this.btnDell);
+			}
+			
 			if(UserStaticData.hero.t.tn != 0 && UserStaticData.hero.t.tp < UserStaticData.hero.t.pa) {
 				this.addChild(this.btnQ);
 			}
 			this.btnQ.addEventListener(MouseEvent.CLICK, this.onAddedBtnQCLick);
 			this.btnQ.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
 			this.btnQ.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			
 			this.btnAds.addEventListener(MouseEvent.CLICK, this.onAdds);
 			this.btnAds.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
 			this.btnAds.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			
 			this.btnRullet.addEventListener(MouseEvent.CLICK, this.onRoulettClick);
 			this.btnRullet.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
 			this.btnRullet.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			
+			this.btn_Vip.addEventListener(MouseEvent.CLICK, this.onVip);
+			this.btn_Vip.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.btn_Vip.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+			
+			this.btnDell.addEventListener(MouseEvent.CLICK, this.onDell);
+			this.btnDell.addEventListener(MouseEvent.ROLL_OVER, this.onOver);
+			this.btnDell.addEventListener(MouseEvent.ROLL_OUT, this.onOut);
+		}
+		
+		private function onDell(e:MouseEvent):void {
+			
+		}
+		
+		private function onVip(e:MouseEvent):void {
+			App.vipDialog.init();
 		}
 		
 		private function onOut(e:MouseEvent):void {
@@ -128,6 +152,13 @@ package Chat
 				case this.btnQ://
 					App.info.init(btn.x + btn.width, btn.y - btn.height, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(20), type:0 } );
 					break;
+					
+				case this.btn_Vip:
+					App.info.init(btn.x - 198, btn.y - btn.height, { txtInfo_w:168, txtInfo_h:37, txtInfo_t:Lang.getTitle(158), type:0 } );
+					break;
+				case this.btnDell:
+					App.info.init(btn.x - 175, btn.y - btn.height, { txtInfo_w:150, txtInfo_h:37, txtInfo_t:Lang.getTitle(111), type:0 } );
+					break;	
 			}
 		}
 		
@@ -212,6 +243,14 @@ package Chat
 		private function sortonlevel(Aobj:Object, Bobj:Object):int {
 			var alvl:int = int(Aobj.lvl);
 			var blvl:int = int(Bobj.lvl);
+			if (Aobj.vip != Bobj.vip) {
+				if (Aobj.vip < Bobj.vip) {
+					return 1;
+				} else {
+					return -1;
+				}
+			}
+			
 			if (alvl < blvl) {
 				return 1;
 			} else if (alvl > blvl)  {
@@ -306,6 +345,12 @@ package Chat
 			if(this.btnRullet.parent == null) {
 				this.addChild(this.btnRullet);
 			}
+		}
+		
+		public function ShowVipBtn():void 
+		{
+			this.addChild(this.btn_Vip);
+			this.addChild(this.btnDell);
 		}
 		
 		private function onTextLink(e:TextEvent):void {

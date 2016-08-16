@@ -18,10 +18,11 @@ package artur.display {
 	
 	public class SprSelectLevel extends mcSelect {
 		private var btn:BaseButton = new BaseButton(15); // close win
-		private var b1:BaseButton = new BaseButton(35); // btn noob
-		private var b2:BaseButton = new BaseButton(36); // btn voin
-		private var b3:BaseButton = new BaseButton(37); // btn strateg
-		private var b4:BaseButton = new BaseButton(38); // btn king
+		private var b1:BaseButton = new BaseButton(35);  // btn noob
+		private var b2:BaseButton = new BaseButton(36);  // btn voin
+		private var b3:BaseButton = new BaseButton(37);  // btn strateg
+		private var b4:BaseButton = new BaseButton(38);  // btn king
+		private var b5:BaseButton = new BaseButton(38);  //vip
 		private var missNum:int;
 		
 		
@@ -111,7 +112,8 @@ package artur.display {
 				App.spr.addChild(this);
 				this.addChild(this.btn);
 				this.btn.addEventListener(MouseEvent.CLICK, onBtn);
-				for (var i:int = 0; i < 4; i++) {
+				for (var i:int = 0; i < 5; i++) {
+					//Report.addMassage(misObj.st[i] + " i= " + i)
 					if(misObj.st[i]==1) {
 						this["s" + i].visible = true;
 						this.addChild(this["b" + String(i + 1)]);
@@ -138,7 +140,7 @@ package artur.display {
 		
 		public function frees():void {
 			App.spr.removeChild(this);
-			for (var i:int = 0; i < 4; i++) {
+			for (var i:int = 0; i < 5; i++) {
 				if(this["b" + String(i + 1)].parent) {
 					this.removeChild(this["b" + String(i + 1)]);
 					this["b" + String(i + 1)].removeEventListener(MouseEvent.CLICK, onBtn);

@@ -25,6 +25,7 @@ package datacalsses
 		public var nle:int;
 		public var ach:Object;
 		public var sg:Object;
+		public var vip:Object;
 		
 		public function setHero(obj:Object):void {
 			this.silver = obj.s;
@@ -49,6 +50,7 @@ package datacalsses
 			this.t = obj.t;
 			this.sett = obj.fbs;
 			this.ach = obj.ach;
+			this.vip = obj.vip;
 		}
 		
 		public function addAndCheckExp(exp_:int):void {

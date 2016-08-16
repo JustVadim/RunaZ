@@ -21,8 +21,7 @@ package Chat
 		
 		private var user_id:String = "";
 		
-		public function UserInList(array_num:int) 
-		{
+		public function UserInList(array_num:int) {
 			this.mouseChildren = false;
 			this.gotoAndStop(1);
 			this.y = 25 * array_num;
@@ -43,6 +42,7 @@ package Chat
 			var userObj:Object = UserStaticData.users_info[id];
 			Functions.compareAndSet(this.level_textfield, userObj["lvl"]);
 			Functions.compareAndSet(this.title, userObj["sn"] + " " + userObj["fn"]);
+			this.gotoAndStop(userObj.vip + 1);
 		}
 		
 		public function remove():void {

@@ -74,6 +74,10 @@ package artur.display
 					btn.removeEventListener(MouseEvent.ROLL_OUT, this.onOut);
 				}
 			}
+			if(UserStaticData.hero.level == 5) {
+				Main.THIS.chat.ShowVipBtn();
+				App.vipDialog.init();
+			}
 		}
 		
 		
