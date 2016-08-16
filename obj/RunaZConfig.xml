@@ -34,20 +34,20 @@
     <omit-trace-statements>true</omit-trace-statements>
     <verbose-stacktraces>false</verbose-stacktraces>
     <source-path append="true">
-      <path-element>D:\Working\AS3Projects\RunaZ\src</path-element>
-      <path-element>D:\Working\AS3Projects\RunaZ\source</path-element>
+      <path-element>C:\RunaCode\src</path-element>
+      <path-element>C:\RunaCode\source</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>D:\Working\AS3Projects\RunaZ\lib\dolls.swc</path-element>
-      <path-element>D:\Working\AS3Projects\RunaZ\lib\Zadniki.swc</path-element>
-      <path-element>D:\Working\AS3Projects\RunaZ\lib\loader.swc</path-element>
-      <path-element>D:\Working\AS3Projects\RunaZ\lib\tile1.swc</path-element>
-      <path-element>D:\Working\AS3Projects\RunaZ\lib\character.swc</path-element>
+      <path-element>C:\RunaCode\lib\dolls.swc</path-element>
+      <path-element>C:\RunaCode\lib\Zadniki.swc</path-element>
+      <path-element>C:\RunaCode\lib\loader.swc</path-element>
+      <path-element>C:\RunaCode\lib\tile1.swc</path-element>
+      <path-element>C:\RunaCode\lib\character.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Working\AS3Projects\RunaZ\src\Main.as</path-element>
+    <path-element>C:\RunaCode\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#000000</default-background-color>
   <default-frame-rate>35</default-frame-rate>
