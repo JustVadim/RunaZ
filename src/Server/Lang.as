@@ -665,7 +665,7 @@ package Server
 				if (Lang.lang_table[id1] != null && Lang.lang_table[id1][Lang.lang] != null) {
 					return Lang.lang_table[id1][Lang.lang];
 				} else {
-					return "";
+					return "null";
 				}
 			}
 		}

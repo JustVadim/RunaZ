@@ -28,16 +28,16 @@ package artur.display {
 		
 		//  зелени галочкы s0 s1 s2 s3
 		public function SprSelectLevel() {
-			Lang
+			
 			Functions.SetPriteAtributs(this, true, true);
-			Functions.SetPriteAtributs(this.btn, true, false, 405, 302);
-			for (var i:int = 1; i < 5; i++) {
+			Functions.SetPriteAtributs(this.btn, true, false, 405, 312);
+			for (var i:int = 1; i < 6; i++) {
 				if (i > 1) {
 					var text:TextField = Functions.getTitledTextfield(289, 117.5 + 30.2 * i, 147, 22, new Art().fontName, 16, 0xEFEFEF, TextFormatAlign.CENTER, Lang.getTitle(40,i-1));
 					text.filters = [new GlowFilter(0, 1, 2, 2, 1)];
 					this.addChild(text);
 				}
-				Functions.SetPriteAtributs(this["b" + i], true, false, 362.2, 128.75 + 30.2 * i);
+				Functions.SetPriteAtributs(this["b" + i], true, false, 362.2, 128.75 + 30 * i);
 				Functions.SetPriteAtributs(this["s" + int(i - 1).toString()], false, false);
 				this["s" + int(i - 1).toString()].visible = false;
 			}
