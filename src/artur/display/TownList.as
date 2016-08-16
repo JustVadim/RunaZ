@@ -28,7 +28,7 @@ package artur.display
 		public function TownList() {
 			for (var i:int = 0; i < 11; i++) 
 			{
-				var blank:MissionBlank = new MissionBlank(i, 235, 106 + 21 * i, this.onBatle);
+				var blank:MissionBlank = new MissionBlank(i, 229, 106 + 21 * i, this.onBatle);
 				blanks.push(blank);
 				this.addChild(blank);
 			}

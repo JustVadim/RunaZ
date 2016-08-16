@@ -21,7 +21,7 @@ package artur.display.battle {
 			this.addChild(this.btn);
 			this.btn.name = name.toString();
 			this.btn.addEventListener(MouseEvent.CLICK, handl);
-			this.btn.x = 260 + this.btn.width / 2; this.btn.y = -9.7 + this.btn.height / 2;
+			this.btn.x = 273.75 + this.btn.width / 2; this.btn.y = -9.7 + this.btn.height / 2;
 			this.title.mouseEnabled = false;
 			this.title.selectable = false;
 			this.title.autoSize = TextFieldAutoSize.LEFT;
